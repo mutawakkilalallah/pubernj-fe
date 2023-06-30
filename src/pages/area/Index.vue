@@ -230,7 +230,7 @@ export default {
   },
   methods: {
     async getData() {
-      const result = await axios.get("http://localhost:4001/area", {
+      const result = await axios.get("https://puber-api.kildev.my.id/area", {
         headers: {
           "x-auth-token": localStorage.getItem("token"),
         },
@@ -256,7 +256,7 @@ export default {
       };
       try {
         const result = await axios.post(
-          "http://localhost:4001/area",
+          "https://puber-api.kildev.my.id/area",
           tambahAreaData,
           {
             headers: {
@@ -284,7 +284,7 @@ export default {
       };
       try {
         const result = await axios.put(
-          `http://localhost:4001/area/${this.editAreaId}`,
+          `https://puber-api.kildev.my.id/area/${this.editAreaId}`,
           editAreaData,
           {
             headers: {
@@ -313,7 +313,7 @@ export default {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           axios
-            .delete(`http://localhost:4001/area/${this.editAreaId}`, {
+            .delete(`https://puber-api.kildev.my.id/area/${this.editAreaId}`, {
               headers: {
                 "x-auth-token": localStorage.getItem("token"),
               },

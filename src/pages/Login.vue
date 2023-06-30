@@ -76,7 +76,7 @@ export default {
 
         try {
           const result = await axios.post(
-            "http://localhost:4001/login",
+            "https://puber-api.kildev.my.id/login",
             dataLogin
           );
 

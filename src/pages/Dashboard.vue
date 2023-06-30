@@ -56,11 +56,14 @@ export default {
   },
   methods: {
     async getData() {
-      const result = await axios.get("http://localhost:4001/dashboard", {
-        headers: {
-          "x-auth-token": localStorage.getItem("token"),
-        },
-      });
+      const result = await axios.get(
+        "https://puber-api.kildev.my.id/dashboard",
+        {
+          headers: {
+            "x-auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
       this.counter[0].total = result.data.data.totalUser;
       this.counter[1].total = result.data.data.totalArea;
       this.counter[2].total = result.data.data.totalDropspot;

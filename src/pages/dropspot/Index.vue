@@ -275,15 +275,18 @@ export default {
   },
   methods: {
     async getData() {
-      const result = await axios.get("http://localhost:4001/dropspot", {
-        headers: {
-          "x-auth-token": localStorage.getItem("token"),
-        },
-        params: {
-          cari: this.cariDropspot,
-          area: this.filterAreaId,
-        },
-      });
+      const result = await axios.get(
+        "https://puber-api.kildev.my.id/dropspot",
+        {
+          headers: {
+            "x-auth-token": localStorage.getItem("token"),
+          },
+          params: {
+            cari: this.cariDropspot,
+            area: this.filterAreaId,
+          },
+        }
+      );
       this.area = result.data.filter.area;
       this.dropspot = result.data.data;
       this.jumlahData = result.headers["x_total_data"];
@@ -306,7 +309,7 @@ export default {
       };
       try {
         const result = await axios.post(
-          "http://localhost:4001/dropspot",
+          "https://puber-api.kildev.my.id/dropspot",
           tambahDropspotData,
           {
             headers: {
@@ -336,7 +339,7 @@ export default {
       };
       try {
         const result = await axios.put(
-          `http://localhost:4001/dropspot/${this.editDropspotId}`,
+          `https://puber-api.kildev.my.id/dropspot/${this.editDropspotId}`,
           editDropspotData,
           {
             headers: {
@@ -365,11 +368,14 @@ export default {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           axios
-            .delete(`http://localhost:4001/dropspot/${this.editDropspotId}`, {
-              headers: {
-                "x-auth-token": localStorage.getItem("token"),
-              },
-            })
+            .delete(
+              `https://puber-api.kildev.my.id/dropspot/${this.editDropspotId}`,
+              {
+                headers: {
+                  "x-auth-token": localStorage.getItem("token"),
+                },
+              }
+            )
             .then((result) => {
               this.showModalEdit = false;
               Swal.fire("Berhasil", result.data.message, "success");
