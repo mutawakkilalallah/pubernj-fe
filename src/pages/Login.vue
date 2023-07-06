@@ -13,20 +13,23 @@
         <h6>Pondok Pesantren Nurul Jadid</h6>
       </div>
       <input
-        v-model="username"
+        v-model="form.username"
         type="text"
         class="form-control mb-2"
         placeholder="Username"
       />
       <input
-        v-model="password"
+        v-model="form.password"
         type="password"
         class="form-control mb-3"
         placeholder="Password"
       />
-      <div v-if="errorLogin" class="error-login text-center text-danger mb-3">
+      <!-- <div
+        v-if="errorLogin"
+        class="error-login text-center text-danger mb-3"
+      >
         <small>Invalid login</small>
-      </div>
+      </div> -->
       <button
         type="button"
         class="btn btn-primary btn-block"
@@ -47,50 +50,62 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
+<script setup>
 import Swal from "sweetalert2";
-export default {
-  data() {
-    return {
-      // status komponen
-      errorLogin: false,
-      // data login
-      username: "",
-      password: "",
-    };
-  },
-  methods: {
-    async prosesLogin() {
-      if (this.username === "" && this.password === "") {
-        Swal.fire(
-          "Ops !",
-          "harap isi username & password telebih dahulu",
-          "error"
-        );
-      } else {
-        const dataLogin = {
-          username: this.username,
-          password: this.password,
-        };
+import { ref } from "vue";
+import { useAuthStore } from "../store/auth";
 
-        try {
-          const result = await axios.post(
-            "https://puber-api.kildev.my.id/login",
-            dataLogin
-          );
+const storeAuth = useAuthStore();
+const form = ref({
+  username: "",
+  password: "",
+});
+function prosesLogin() {
+  storeAuth.login(form.value);
+}
 
-          localStorage.setItem("token", result.data.token);
-          localStorage.setItem("nama", result.data.data.nama);
-          localStorage.setItem("role", result.data.data.role);
-          this.$router.replace("/");
-        } catch (err) {
-          this.errorLogin = true;
-        }
-      }
-    },
-  },
-};
+// import axios from "axios";
+// export default {
+//   data() {
+//     return {
+
+//       errorLogin: false,
+
+//       username: "",
+//       password: "",
+//     };
+//   },
+//   methods: {
+//     async prosesLogin() {
+//       if (this.username === "" && this.password === "") {
+//         Swal.fire(
+//           "Ops !",
+//           "harap isi username & password telebih dahulu",
+//           "error"
+//         );
+//       } else {
+//         const dataLogin = {
+//           username: this.username,
+//           password: this.password,
+//         };
+
+//         try {
+//           const result = await axios.post(
+//             "https://puber-api.kildev.my.id/login",
+//             dataLogin
+//           );
+
+//           localStorage.setItem("token", result.data.token);
+//           localStorage.setItem("nama", result.data.data.nama);
+//           localStorage.setItem("role", result.data.data.role);
+//           this.$router.replace("/");
+//         } catch (err) {
+//           this.errorLogin = true;
+//         }
+//       }
+//     },
+//   },
+// };
 </script>
 
 <style scoped>
