@@ -1,5 +1,7 @@
 import { createApp } from "vue";
+
 import { createPinia } from 'pinia'
+
 import "@/assets/main.scss";
 import "@/style.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
@@ -17,11 +19,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(faBrush, faSignOutAlt, faChartSimple, faMap, faLocationDot);
-
+const pinia = createPinia();
 const app = createApp(App);
-const pinia = createPinia()
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 app.use(router);
-app.use(pinia)
+
+app.use(pinia);
 app.mount("#app");
