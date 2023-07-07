@@ -1,10 +1,20 @@
 <template>
   <h3>Dashboard</h3>
+  <app-loading />
+
   <hr />
   <div class="user-card d-flex align-items-center bg-primary p-3 rounded">
-    <img src="/logo.png" alt="puber-logo" width="60" class="me-3" />
+    <img
+      src="/logo.png"
+      alt="puber-logo"
+      width="60"
+      class="me-3"
+    />
     <div class="user-info text-white">
-      <p style="font-size: 20px; margin-bottom: 0" class="fw-bold">
+      <p
+        style="font-size: 20px; margin-bottom: 0"
+        class="fw-bold"
+      >
         {{ namaUser }}
       </p>
       <i>{{ roleUser }}</i>
@@ -24,9 +34,11 @@
 <script>
 import WidgetDashboard from "../components/WidgetDashboard.vue";
 import axios from "axios";
+// import AppLoading from "../components/~global/AppLoading.vue";
 export default {
   components: {
     WidgetDashboard,
+    // AppLoading,
   },
   data() {
     return {
