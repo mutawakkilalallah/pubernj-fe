@@ -1,13 +1,24 @@
 import { defineStore } from "pinia";
 import * as storage from '../../modules/storage'
-import { routerInstance } from "../../plugins/router";
 import { api } from "../../plugins/axios";
+import router from "../../router";
+
+
+
+
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
-        token: localStorage.getItem('token') ? storage.getLocalToken() : null,
-        user:localStorage.getItem('data') ? storage.getUser():null
+        token : localStorage.getItem('token') ? storage.getLocalToken() : null,
+        user : localStorage.getItem('data') ? storage.getUser() : null
     }),
+    getters: {
+      isAuth(state) {
+      return state.token !== null || state.token !== undefined
+    },
+    getToken: () => storage.getLocalToken(),
+    useGetter: () => storage.getUser() !== null || storage.getUser() !== undefined
+    },
     actions: {
         async login(payload) {
             try {
@@ -20,7 +31,7 @@ export const useAuthStore = defineStore('auth', {
                         this.SET_TOKEN_USER(hdd, hddUser)
                     } else {
                         console.log('error')
-                        this.router.push('/login')
+                        this.$router.push('/login')
                     }
                     
                 })
