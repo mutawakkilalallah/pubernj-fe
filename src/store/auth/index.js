@@ -3,14 +3,12 @@ import * as storage from '../../modules/storage'
 import { api } from "../../plugins/axios";
 import router from "../../router";
 
-
-
-
-
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         token : localStorage.getItem('token') ? storage.getLocalToken() : null,
-        user : localStorage.getItem('data') ? storage.getUser() : null
+        user : localStorage.getItem('user') ? storage.getUser() : null,
+        loading: false,
+        alert : false,
     }),
     getters: {
       isAuth(state) {
@@ -21,6 +19,7 @@ export const useAuthStore = defineStore('auth', {
     },
     actions: {
         async login(payload) {
+            this.loading = true
             try {
                 await api.post('login', payload).then(resp => {
                     storage.setLocalToken(resp.data.token)
@@ -28,15 +27,18 @@ export const useAuthStore = defineStore('auth', {
                     const hdd = storage.getLocalToken()
                     const hddUser = storage.getUser()
                     if (hdd) {
+                        this.alert=true
                         this.SET_TOKEN_USER(hdd, hddUser)
+                        this.loading = false
                     } else {
-                        console.log('error')
-                        this.$router.push('/login')
+                        this.loading = false
+                        router.push('/login')
                     }
                     
                 })
             } catch (error) {
                 console.log('error', error);
+                this.loading = false
             }
         },
         SET_TOKEN_USER(token, user) {

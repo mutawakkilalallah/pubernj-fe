@@ -1,5 +1,6 @@
 <template>
   <div class="loginPage d-flex justify-content-center align-items-center">
+
     <div class="boxLogin shadow p-5">
       <div class="text-center">
         <img
@@ -24,13 +25,9 @@
         class="form-control mb-3"
         placeholder="Password"
       />
-      <!-- <div
-        v-if="errorLogin"
-        class="error-login text-center text-danger mb-3"
-      >
-        <small>Invalid login</small>
-      </div> -->
+
       <button
+        v-if="storeAuth.loading === false"
         type="button"
         class="btn btn-primary btn-block"
         style="width: 100%"
@@ -38,6 +35,7 @@
       >
         LOGIN
       </button>
+      <app-btn-loading v-else />
       <div class="developer text-center mt-5">
         <small>Nurul Jadid &copy; 2023</small>
       </div>
@@ -46,6 +44,7 @@
         <br />
         <i>@mutawakkilalallah</i>
       </div>
+
     </div>
   </div>
 </template>
