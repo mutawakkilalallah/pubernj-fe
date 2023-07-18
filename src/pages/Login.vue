@@ -13,29 +13,30 @@
         <h4>Aplikasi Pulang Bersama</h4>
         <h6>Pondok Pesantren Nurul Jadid</h6>
       </div>
-      <input
-        v-model="form.username"
-        type="text"
-        class="form-control mb-2"
-        placeholder="Username"
-      />
-      <input
-        v-model="form.password"
-        type="password"
-        class="form-control mb-3"
-        placeholder="Password"
-      />
+      <form @submit.prevent="prosesLogin">
+        <input
+          v-model="form.username"
+          type="text"
+          class="form-control mb-2"
+          placeholder="Username"
+        />
+        <input
+          v-model="form.password"
+          type="password"
+          class="form-control mb-3"
+          placeholder="Password"
+        />
 
-      <button
-        v-if="storeAuth.loading === false"
-        type="button"
-        class="btn btn-primary btn-block"
-        style="width: 100%"
-        @click="prosesLogin"
-      >
-        LOGIN
-      </button>
-      <app-btn-loading v-else />
+        <button
+          v-if="storeAuth.loading === false"
+          type="submit"
+          class="btn btn-primary btn-block"
+          style="width: 100%"
+        >
+          LOGIN
+        </button>
+        <app-btn-loading v-else />
+      </form>
       <div class="developer text-center mt-5">
         <small>Nurul Jadid &copy; 2023</small>
       </div>

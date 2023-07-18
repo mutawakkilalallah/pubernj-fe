@@ -13,7 +13,7 @@ export const useAreaTable = defineStore('table_area', {
             const params = { params: this.params }
             try {
                 await api.get('area', params).then(resp => {
-                    console.log('response area', resp.data.data)    
+                    console.log('response area', resp)    
                    this.items = resp.data.data
                 })
             } catch (error) {

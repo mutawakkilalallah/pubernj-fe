@@ -5,13 +5,15 @@
   <!-- jumlah data dan pencarian -->
   <div class="search-box row">
     <div class="col-md-10 d-flex align-items-center mb-2">
-      <small>Total data 20</small>
+      <small>Total data {{ table.items.length }}</small>
     </div>
     <div class="col-md-2 d-flex align-items-center">
       <input
         type="text"
         class="form-control form-control-sm mb-2"
         placeholder="Cari Area"
+        v-model="table.params.cari"
+        @keyup="table.getData"
       >
     </div>
   </div>
