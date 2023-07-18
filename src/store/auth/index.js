@@ -8,7 +8,7 @@ export const useAuthStore = defineStore('auth', {
         token : localStorage.getItem('token') ? storage.getLocalToken() : null,
         user : localStorage.getItem('user') ? storage.getUser() : null,
         loading: false,
-        alert : false,
+        alert: false,
     }),
     getters: {
       isAuth(state) {
@@ -22,6 +22,7 @@ export const useAuthStore = defineStore('auth', {
             this.loading = true
             try {
                 await api.post('login', payload).then(resp => {
+                    console.log('login', resp);
                     storage.setLocalToken(resp.data.token)
                     storage.setUser(resp.data.data)
                     const hdd = storage.getLocalToken()

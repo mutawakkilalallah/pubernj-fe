@@ -13,7 +13,7 @@ api.defaults.headers.common['x-auth-token'] = getLocalToken()
 
 const interceptResErrors = (err) => {
   try {
-    console.log('errors interceptors', err.response.status);
+    console.log('errors interceptors', err.response);
     notifErr(err.response)
   } catch (error) {
     console.log(error);
