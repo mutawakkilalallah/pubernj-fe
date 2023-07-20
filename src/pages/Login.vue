@@ -42,7 +42,7 @@
       <div class="developer text-center mt-3">
         <i>developed by:</i>
         <br />
-        <i>@mutawakkilalallah</i>
+        <i>@mutawakkilalallah @farhandardiri</i>
       </div>
     </div>
   </div>

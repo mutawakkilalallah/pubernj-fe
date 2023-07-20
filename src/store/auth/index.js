@@ -8,7 +8,7 @@ export const useAuthStore = defineStore("auth", {
     token: localStorage.getItem("token") ? storage.getLocalToken() : null,
     user: localStorage.getItem("user") ? storage.getUser() : null,
     nama: localStorage.getItem("nama") ? storage.getNama() : null,
-    foto: localStorage.getItem("foto") ? storage.getFoto() : null,
+    foto: "photo",
     loading: false,
     alert: false,
   }),
@@ -37,7 +37,6 @@ export const useAuthStore = defineStore("auth", {
           const namaLengkap = storage.getNama();
           if (hdd) {
             this.alert = true;
-            this.getImage(resp.data.santri.uuid);
             this.SET_TOKEN_USER(hdd, hddUser, namaLengkap);
             this.loading = false;
           } else {
@@ -57,9 +56,8 @@ export const useAuthStore = defineStore("auth", {
           responseType: "blob",
         };
         await api.get("santri/image/" + uuid, params).then((resp) => {
-          storage.setFoto(URL.createObjectURL(resp.data));
-          const src = storage.getFoto();
-          this.foto = src;
+          this.foto = URL.createObjectURL(resp.data);
+          this.loading = false;
         });
       } catch (error) {
         console.log("error", error);
