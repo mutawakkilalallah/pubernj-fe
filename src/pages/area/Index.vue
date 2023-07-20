@@ -76,47 +76,48 @@
             @click="form.setOpenAdd()"
           ></button>
         </div>
-        <div class="modal-body">
-          <div class="form-group mb-3">
-            <small>Nama Area</small>
-            <input
-              type="text"
-              v-model="form.form.nama"
-              class="form-control mt-2"
-              placeholder="Masukkan nama area .."
-            />
+        <form @submit.prevent="form.tambahData">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <small>Nama Area</small>
+              <input
+                type="text"
+                v-model="form.form.nama"
+                class="form-control mt-2"
+                placeholder="Masukkan nama area .."
+              />
+            </div>
+            <div class="form-group mb-3">
+              <small>PIC</small>
+              <input
+                type="text"
+                v-model="form.form.pic"
+                class="form-control mt-2"
+                placeholder="Masukkan nama pic .."
+              />
+            </div>
+            <div class="form-group mb-3">
+              <small>NO HP</small>
+              <input
+                type="text"
+                class="form-control mt-2"
+                v-model="form.form.no_hp"
+                placeholder="Masukkan nama no hp .."
+              />
+            </div>
           </div>
-          <div class="form-group mb-3">
-            <small>PIC</small>
-            <input
-              type="text"
-              v-model="form.form.pic"
-              class="form-control mt-2"
-              placeholder="Masukkan nama pic .."
-            />
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="form.setOpenAdd()"
+            >Tutup</button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >Simpan</button>
           </div>
-          <div class="form-group mb-3">
-            <small>NO HP</small>
-            <input
-              type="text"
-              class="form-control mt-2"
-              v-model="form.form.no_hp"
-              placeholder="Masukkan nama no hp .."
-            />
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-sm btn-secondary"
-            @click="form.setOpenAdd()"
-          >Tutup</button>
-          <button
-            type="button"
-            class="btn btn-sm btn-primary"
-            @click="form.tambahData"
-          >Simpan</button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -125,7 +126,7 @@
     class="modal fade"
     v-if="form.isOpenEdit === true"
     :class="{show : form.isOpenEdit}"
-    style="display : block"
+    style="display: block"
     id="modalEdit"
     tabindex="-1"
     aria-labelledby="modalEditLabel"

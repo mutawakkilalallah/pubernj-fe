@@ -28,7 +28,7 @@ export const useAreaForm = defineStore('form_area', {
              const resp = await api.post('area', this.form)              
                 Swal.fire("Berhasil", resp.data.message, "success")                
                 this.setOpenAdd()
-                this.form = ''
+                this.form = {}
                 const table = useAreaTable()
                 table.getData()
            } catch (err) {               
@@ -48,7 +48,7 @@ export const useAreaForm = defineStore('form_area', {
                 const resp = await api.put(`area/${this.idEdit}`, this.form)
                 this.isOpenEdit = false
                 Swal.fire("Berhasil", resp.data.message, "success");
-                this.form = ''
+                this.form = {}
                 const table = useAreaTable()
                 table.getData()
                 
@@ -70,7 +70,7 @@ export const useAreaForm = defineStore('form_area', {
                     api.delete(`area/${this.idEdit}`).then((result) => {
                         this.isOpenEdit = false
                         Swal.fire("Berhasil", result.data.message, "success");
-                        this.form = ''
+                        this.form = {}
                         const table = useAreaTable()
                         table.getData()
                     })

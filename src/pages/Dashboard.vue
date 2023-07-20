@@ -17,7 +17,7 @@
         style="font-size: 20px; margin-bottom: 0"
         class="fw-bold"
       >
-        {{ storeAuth.user.nama }}
+        {{ storeAuth.nama }}
       </p>
       <i>{{ storeAuth.user.role }}</i>
     </div>
