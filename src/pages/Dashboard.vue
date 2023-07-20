@@ -1,22 +1,16 @@
 <template>
   <h3>Dashboard</h3>
-  <app-alert
-    v-show="storeAuth.alert === true"
-    label="Berhasil login"
-  />
+  <app-alert v-show="storeAuth.alert === true" label="Berhasil login" />
   <hr />
-  <div class="user-card d-flex align-items-center bg-primary p-3 rounded">
+  <div class="user-card d-flex align-items-center bg-primary p-2 rounded">
     <img
-      src="/logo.png"
+      :src="storeAuth.foto"
       alt="puber-logo"
-      width="60"
-      class="me-3"
+      width="80"
+      class="rounded-circle me-3"
     />
     <div class="user-info text-white">
-      <p
-        style="font-size: 20px; margin-bottom: 0"
-        class="fw-bold"
-      >
+      <p style="font-size: 20px; margin-bottom: 0" class="fw-bold">
         {{ storeAuth.nama }}
       </p>
       <i>{{ storeAuth.user.role }}</i>

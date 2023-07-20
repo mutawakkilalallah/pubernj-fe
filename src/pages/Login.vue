@@ -1,6 +1,5 @@
 <template>
   <div class="loginPage d-flex justify-content-center align-items-center">
-
     <div class="boxLogin shadow p-5">
       <div class="text-center">
         <img
@@ -45,7 +44,6 @@
         <br />
         <i>@mutawakkilalallah</i>
       </div>
-
     </div>
   </div>
 </template>
