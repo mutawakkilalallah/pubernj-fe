@@ -11,7 +11,10 @@
         ),
       }"
     >
-      <font-awesome-icon :icon="icon" class="icon text-secondary" />
+      <font-awesome-icon
+        :icon="icon"
+        class="icon text-secondary"
+      />
       <p class="text-secondary nama">{{ title }}</p>
     </div>
   </router-link>

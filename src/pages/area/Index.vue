@@ -5,16 +5,16 @@
   <!-- jumlah data dan pencarian -->
   <div class="search-box row">
     <div class="col-md-10 d-flex align-items-center mb-2">
-      <small>Total data {{ jumlahData }}</small>
+      <small>Total data {{ table.items.length }}</small>
     </div>
     <div class="col-md-2 d-flex align-items-center">
       <input
         type="text"
-        v-model="cariArea"
-        @keyup="getData"
         class="form-control form-control-sm mb-2"
-        placeholder="Cari Area ..."
-      />
+        placeholder="Cari Area"
+        v-model="table.params.cari"
+        @keyup="table.getData"
+      >
     </div>
   </div>
   <hr />
@@ -22,7 +22,7 @@
   <button
     type="button"
     class="btn btn-sm btn-primary"
-    @click="showModalTambah = true"
+    @click="form.setOpenAdd()"
   >
     Tambah Area
   </button>
@@ -39,24 +39,25 @@
       </thead>
       <tbody>
         <tr
-          v-for="(a, index) in area"
-          :key="a.id"
-          @dblclick="handleDoubleClick(a.id, a.nama, a.pic, a.no_hp)"
+          v-for="(a, i) in table.items"
+          :key="i"
+          @dblclick="form.handleDoubleClick(a)"
         >
-          <td>{{ index + 1 }}</td>
+          <td>{{ i+1 }}</td>
           <td>{{ a.nama }}</td>
           <td>{{ a.pic }}</td>
           <td>{{ a.no_hp }}</td>
         </tr>
       </tbody>
     </table>
+
   </div>
-  <!-- modal untuk tambah data -->
+  <!-- modal tambah data -->
   <div
     class="modal fade"
-    v-if="showModalTambah"
-    :class="{ show: showModalTambah }"
     style="display: block"
+    v-if="form.isOpenAdd === true"
+    :class="{ show: form.isOpenAdd }"
     id="modalTambah"
     tabindex="-1"
     aria-labelledby="modalTambahLabel"
@@ -65,11 +66,100 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalTambahLabel">Tambah Area</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalTambahLabel"
+          >Tambah Area</h1>
           <button
             type="button"
             class="btn-close"
-            @click="showModalTambah = false"
+            @click="form.setOpenAdd()"
+          ></button>
+        </div>
+        <form
+          @submit.prevent="form.tambahData"
+          class="needs-validation"
+          novalidate
+        >
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <small>Nama Area</small>
+              <input
+                type="text"
+                v-model="form.form.nama"
+                :on-invalid="form.form.nama = ''"
+                class="form-control mt-2"
+                placeholder="Masukkan nama area .."
+                required
+              />
+              <div class="invalid-feedback">
+                Nama tidak boleh kosong
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <small>PIC</small>
+              <input
+                type="text"
+                v-model="form.form.pic"
+                class="form-control mt-2 is-invalid"
+                placeholder="Masukkan nama pic .."
+                required
+              />
+              <div class="invalid-feedback">
+                PIC tidak boleh kosong
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <small>NO HP</small>
+              <input
+                type="number"
+                class="form-control mt-2"
+                v-model="form.form.no_hp"
+                placeholder="Masukkan nama no hp .."
+                required
+              />
+              <div class="invalid-feedback">
+                NO HP tidak boleh kosong
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="form.setOpenAdd()"
+            >Tutup</button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- modal edit data -->
+  <div
+    class="modal fade"
+    v-if="form.isOpenEdit === true"
+    :class="{show : form.isOpenEdit}"
+    style="display: block"
+    id="modalEdit"
+    tabindex="-1"
+    aria-labelledby="modalEditLabel"
+    aria-hidden="true"
+  >
+    <div class="model-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >Edit Area</h1>
+          <button
+            type="button"
+            class="btn-close"
+            @click="form.isOpenEdit = false"
           ></button>
         </div>
         <div class="modal-body">
@@ -77,255 +167,57 @@
             <small>Nama Area</small>
             <input
               type="text"
-              v-model="namaTambah"
+              v-model="form.form.nama"
               class="form-control mt-2"
               placeholder="Masukkan nama area .."
-            />
+            >
           </div>
           <div class="form-group mb-3">
             <small>PIC</small>
             <input
               type="text"
-              v-model="picTambah"
+              v-model="form.form.pic"
               class="form-control mt-2"
               placeholder="Masukkan nama pic .."
-            />
+            >
           </div>
           <div class="form-group mb-3">
             <small>No. HP</small>
             <input
               type="text"
-              v-model="noHpTambah"
+              v-model="form.form.no_hp"
               class="form-control mt-2"
-              placeholder="Masukkan nomer handphone pic .."
-            />
+              placeholder="Masukkan nomor handphone pic .."
+            >
           </div>
         </div>
         <div class="modal-footer">
           <button
             type="button"
             class="btn btn-sm btn-secondary"
-            @click="showModalTambah = false"
-          >
-            Tutup
-          </button>
+            @click="form.isOpenEdit = false"
+          >Tutup</button>
+          <button
+            type="button"
+            class="btn btn-sm btn-danger"
+            @click="form.deleteData() "
+          >Hapus</button>
           <button
             type="button"
             class="btn btn-sm btn-primary"
-            @click="tambahData"
-          >
-            Simpan
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- modal edit data -->
-  <div
-    class="modal fade"
-    v-if="showModalEdit"
-    :class="{ show: showModalEdit }"
-    style="display: block"
-    id="modalEdit"
-    tabindex="-1"
-    aria-labelledby="modalEditLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Area</h1>
-          <button
-            type="button"
-            class="btn-close"
-            @click="showModalEdit = false"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div class="modal-body">
-            <div class="form-group mb-3">
-              <small>Nama Area</small>
-              <input
-                type="text"
-                v-model="namaEdit"
-                class="form-control mt-2"
-                placeholder="Masukkan nama area .."
-              />
-            </div>
-            <div class="form-group mb-3">
-              <small>PIC</small>
-              <input
-                type="text"
-                v-model="picEdit"
-                class="form-control mt-2"
-                placeholder="Masukkan nama pic .."
-              />
-            </div>
-            <div class="form-group mb-3">
-              <small>No. HP</small>
-              <input
-                type="text"
-                v-model="noHpEdit"
-                class="form-control mt-2"
-                placeholder="Masukkan nomer handphone pic .."
-              />
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-sm btn-secondary"
-              @click="showModalEdit = false"
-            >
-              Tutup
-            </button>
-            <button
-              type="button"
-              class="btn btn-sm btn-danger"
-              @click="deleteData"
-            >
-              Hapus
-            </button>
-            <button
-              type="button"
-              class="btn btn-sm btn-primary"
-              @click="editData"
-            >
-              Simpan
-            </button>
-          </div>
+            @click="form.editData()"
+          >Simpan</button>
         </div>
       </div>
     </div>
   </div>
 </template>
+<script setup>
+import { useAreaTable } from "../../store/area/table";
+import { useAreaForm } from "../../store/area/form";
 
-<script>
-import axios from "axios";
-import Swal from "sweetalert2";
-export default {
-  data() {
-    return {
-      // status component
-      showModalTambah: false,
-      showModalEdit: false,
-      // tambah data
-      namaTambah: "",
-      picTambah: "",
-      noHpTambah: null,
-      // edit data
-      namaEdit: "",
-      picEdit: "",
-      noHpEdit: null,
-      editAreaId: null,
-      // filter dan pencarian
-      cariArea: "",
-      // data utama
-      area: [],
-      jumlahData: 0,
-    };
-  },
-  mounted() {
-    this.getData();
-  },
-  methods: {
-    async getData() {
-      const result = await axios.get("https://puber-api.kildev.my.id/area", {
-        headers: {
-          "x-auth-token": localStorage.getItem("token"),
-        },
-        params: {
-          cari: this.cariArea,
-        },
-      });
-      this.area = result.data.data;
-      this.jumlahData = result.headers["x_total_data"];
-    },
-    handleDoubleClick(id, nama, pic, no_hp) {
-      this.editAreaId = id;
-      this.namaEdit = nama;
-      this.picEdit = pic;
-      this.noHpEdit = no_hp;
-      this.showModalEdit = true;
-    },
-    async tambahData() {
-      const tambahAreaData = {
-        nama: this.namaTambah,
-        pic: this.picTambah,
-        no_hp: this.noHpTambah,
-      };
-      try {
-        const result = await axios.post(
-          "https://puber-api.kildev.my.id/area",
-          tambahAreaData,
-          {
-            headers: {
-              "x-auth-token": localStorage.getItem("token"),
-            },
-          }
-        );
+const table = useAreaTable();
+const form = useAreaForm();
 
-        this.showModalTambah = false;
-        Swal.fire("Berhasil", result.data.message, "success");
-        this.getData();
-        this.namaTambah = "";
-        this.picTambah = "";
-        this.noHpTambah = "";
-      } catch (err) {
-        console.log(err.response);
-        Swal.fire(err.response.data.message, err.response.data.error, "error");
-      }
-    },
-    async editData() {
-      const editAreaData = {
-        nama: this.namaEdit,
-        pic: this.picEdit,
-        no_hp: this.noHpEdit,
-      };
-      try {
-        const result = await axios.put(
-          `https://puber-api.kildev.my.id/area/${this.editAreaId}`,
-          editAreaData,
-          {
-            headers: {
-              "x-auth-token": localStorage.getItem("token"),
-            },
-          }
-        );
-
-        this.showModalEdit = false;
-        Swal.fire("Berhasil", result.data.message, "success");
-        this.getData();
-      } catch (err) {
-        console.log(err.response);
-        Swal.fire(err.response.data.message, err.response.data.error, "error");
-      }
-    },
-    async deleteData() {
-      Swal.fire({
-        title: "Konfirmasi",
-        text: "Apakah anda yakin ingin menghapus data ?",
-        icon: "info",
-        showCancelButton: true,
-        confirmButtonText: "Hapus",
-        confirmButtonColor: "#DC3545",
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          axios
-            .delete(`https://puber-api.kildev.my.id/area/${this.editAreaId}`, {
-              headers: {
-                "x-auth-token": localStorage.getItem("token"),
-              },
-            })
-            .then((result) => {
-              this.showModalEdit = false;
-              Swal.fire("Berhasil", result.data.message, "success");
-              this.getData();
-            });
-        }
-      });
-    },
-  },
-};
+table.getData();
 </script>
