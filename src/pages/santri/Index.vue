@@ -97,7 +97,7 @@
             >
           </p>
           <div class="row">
-            <div class="col-8">
+            <div class="col-md-8 order-sm-2 order-md-2">
               <div class="mb-3 row">
                 <label class="col-sm-4 col-form-label">NIUP</label>
                 <div class="col-sm-8">
@@ -212,7 +212,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-4 text-end">
+            <div class="col-md-4 order-sm-1 order-md-2 mb-5 text-end">
               <img
                 :src="table.fotoDiri"
                 alt="foto-diri"
