@@ -1,7 +1,6 @@
-// src/interceptors.js
-import axios from "axios";
-import { getLocalToken } from "../modules/storage";
-import { notifErr } from "../modules/untils";
+import axios from 'axios';
+import { getLocalToken } from '../modules/storage';
+import {notifErr, notifSuccessVue} from '../modules/untils'
 
 const SERVER = "https://puber-api.phii.xyz";
 // const SERVER = "http://localhost:4001";
@@ -24,8 +23,9 @@ const interceptResErrors = (err) => {
 
 const interceptResponse = (res) => {
   try {
-    // console.log("ok", res);
-    return Promise.resolve(res);
+    console.log('ok', res);
+    // notifSuccessVue(res)
+    return Promise.resolve(res)
   } catch (error) {
     console.log(error);
 

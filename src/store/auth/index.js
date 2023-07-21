@@ -2,6 +2,8 @@ import { defineStore } from "pinia";
 import * as storage from "../../modules/storage";
 import { api } from "../../plugins/axios";
 import router from "../../router";
+import { notifSuccessVue } from "../../modules/untils";
+
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({

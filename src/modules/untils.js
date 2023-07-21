@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2'
 import * as storage from '../modules/storage'
 import router from '../router'
 
@@ -16,7 +17,46 @@ const notifErr = (resp, next) => {
         return removeToken()
     }
 }
+    
+const notifSuccessVue = (resp) => {
+    const msg = resp ? resp.data.message : 'Success'
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-right',
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast'
+        },
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true
+    })
+    Toast.fire({
+        icon: 'success',
+        title: msg || 'Success'
+})
+}
+const notifErrorVue = (resp) => {
+    const msg = resp ? resp.response.data.error : 'Error'
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-right',
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast'
+        },
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true
+    })
+    Toast.fire({
+        icon: 'error',
+        title: msg || 'Error'
+})
+}
 
 export {
-    notifErr
+    notifErr,
+    notifSuccessVue,
+    notifErrorVue
 }
