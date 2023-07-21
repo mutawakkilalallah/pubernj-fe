@@ -1,14 +1,9 @@
 <template>
-  <router-link
-    :to="{ name: title.toLowerCase() }"
-    style="text-decoration: none"
-  >
+  <router-link :to="{ name: path }" style="text-decoration: none">
     <div
       class="menu-atas-item text-center p-3 mx-3"
       :class="{
-        'menu-active': isActive(
-          '/' + (title != 'Dashboard' ? title.toLowerCase() : '')
-        ),
+        'menu-active': isActive('/' + (title != 'Dashboard' ? path : '')),
       }"
     >
       <font-awesome-icon
@@ -22,7 +17,7 @@
 
 <script>
 export default {
-  props: ["icon", "title", "isActive"],
+  props: ["icon", "title", "path", "isActive"],
   methods: {
     isActive(route) {
       return this.$route.path === route;

@@ -1,28 +1,43 @@
 <template>
   <h3>Dashboard</h3>
-  <app-alert
-    v-show="storeAuth.alert === true"
-    label="Berhasil login"
-  />
+  <app-alert v-show="storeAuth.alert === true" label="Berhasil login" />
   <hr />
-  <div class="user-card d-flex align-items-center bg-primary p-3 rounded">
-    <img
-      src="/logo.png"
-      alt="puber-logo"
-      width="60"
+  <div class="user-card d-flex align-items-center bg-primary p-2 rounded">
+    <div
+      v-show="storeAuth.loading === true"
+      style="
+        width: 80px;
+        height: 80px;
+        background-color: rgba(255, 255, 255, 0.363);
+        border-radius: 50%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      "
       class="me-3"
+    >
+      <div
+        class="spinner-border text-primary"
+        style="width: 3rem; height: 3rem"
+        role="status"
+      ></div>
+    </div>
+    <img
+      v-show="storeAuth.loading === false"
+      :src="storeAuth.foto"
+      alt="pohto-profile"
+      width="80"
+      class="rounded-circle me-3"
     />
     <div class="user-info text-white">
-      <p
-        style="font-size: 20px; margin-bottom: 0"
-        class="fw-bold"
-      >
+      <p style="font-size: 20px; margin-bottom: 0" class="fw-bold">
         {{ storeAuth.nama }}
       </p>
       <i>{{ storeAuth.user.role }}</i>
     </div>
   </div>
-  <div class="row p-3">
+  <div class="row mt-3">
     <widget-dashboard
       v-for="c in counter"
       :key="c.nama"
@@ -38,6 +53,8 @@ import WidgetDashboard from "../components/WidgetDashboard.vue";
 import { ref } from "vue";
 import { useAuthStore } from "../store/auth";
 const storeAuth = useAuthStore();
+
+storeAuth.getImage(storeAuth.user.santri_uuid, "small");
 
 setTimeout(() => (storeAuth.alert = false), 2000);
 const counter = [

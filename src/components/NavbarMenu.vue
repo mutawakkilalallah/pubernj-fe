@@ -41,6 +41,7 @@
       :key="m.title"
       :title="m.title"
       :icon="m.icon"
+      :path="m.path"
     />
   </div>
 </template>
@@ -59,14 +60,32 @@ export default {
         {
           icon: "chart-simple",
           title: "Dashboard",
+          path: "dashboard",
+        },
+        {
+          icon: "user",
+          title: "Santri",
+          path: "santri",
+        },
+        {
+          icon: "briefcase",
+          title: "Penumpang",
+          path: "dashboard",
         },
         {
           icon: "map",
           title: "Area",
+          path: "area",
         },
         {
           icon: "location-dot",
           title: "Dropspot",
+          path: "dropspot",
+        },
+        {
+          icon: "user-cog",
+          title: "User Account",
+          path: "user",
         },
       ],
     };

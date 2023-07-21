@@ -10,15 +10,8 @@
         v-model="table.params.area"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Area</option>
-        <option
-          v-for="a in form.isArea"
-          :key="a"
-          :value="a.id"
-        >
+        <option value="" selected>Semua Area</option>
+        <option v-for="a in form.isArea" :key="a" :value="a.id">
           {{ a.nama }}
         </option>
       </select>
@@ -41,20 +34,19 @@
   </div>
   <hr />
   <!-- tombol tambah data -->
-  <button
-    class="btn btn-sm btn-primary"
-    @click="form.setOpenAdd"
-  >Tambah Dropspot</button>
+  <button class="btn btn-sm btn-primary" @click="form.setOpenAdd">
+    Tambah Dropspot
+  </button>
   <!-- table data utama -->
   <div class="table-responsive">
     <table class="table table-sm table-hover mt-3">
       <thead>
         <tr>
-          <td scope="col">No</td>
-          <td scope="col">Nama Dropspot</td>
-          <td scope="col">Area</td>
-          <td scope="col">Cakupan</td>
-          <td scope="col">Harga</td>
+          <th scope="col">No</th>
+          <th scope="col">Nama Dropspot</th>
+          <th scope="col">Area</th>
+          <th scope="col">Cakupan</th>
+          <th scope="col">Harga</th>
         </tr>
       </thead>
       <tbody>
@@ -63,7 +55,7 @@
           :key="i"
           @dblclick="form.handleDoubleClik(d)"
         >
-          <td>{{ i+1 }}</td>
+          <td>{{ i + 1 }}</td>
           <td>{{ d.nama }}</td>
           <td>{{ d.area.nama }}</td>
           <td>{{ d.cakupan }}</td>
@@ -76,7 +68,7 @@
   <div
     class="modal fade"
     v-if="form.isOpenAdd === true"
-    :class="{show : form.isOpenAdd}"
+    :class="{ show: form.isOpenAdd }"
     style="display: block"
     id="modalTambah"
     tabindex="-1"
@@ -86,10 +78,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalTambahLabel"
-          >Tambah Dropsot</h1>
+          <h1 class="modal-title fs-5" id="modalTambahLabel">Tambah Dropsot</h1>
           <button
             class="btn-close"
             type="button"
@@ -108,23 +97,12 @@
           </div>
           <div class="form-group mb-3">
             <small>Area</small>
-            <select
-              class="form-select"
-              v-model="form.form.area_id"
-            >
-              <option
-                value=""
-                selected
-              >Pilih Area</option>
-              <option
-                v-for="a in form.isArea"
-                :key="a"
-                :value="a.id"
-              >
+            <select class="form-select" v-model="form.form.area_id">
+              <option value="" selected>Pilih Area</option>
+              <option v-for="a in form.isArea" :key="a" :value="a.id">
                 {{ a.nama }}
               </option>
             </select>
-
           </div>
           <div class="form-group mb-3">
             <small>Cakupan Daerah</small>
@@ -149,11 +127,12 @@
           <button
             class="btn btn-sm btn-secondary"
             @click="form.isOpenAdd = false"
-          >Tutup</button>
-          <button
-            class="btn btn-sm btn-primary"
-            @click="form.tambahData"
-          >Simpan</button>
+          >
+            Tutup
+          </button>
+          <button class="btn btn-sm btn-primary" @click="form.tambahData">
+            Simpan
+          </button>
         </div>
       </div>
     </div>
@@ -162,7 +141,7 @@
   <div
     class="modal fade"
     v-if="form.isOpenEdit === true"
-    :class="{show : form.isOpenEdit}"
+    :class="{ show: form.isOpenEdit }"
     style="display: block"
     id="modalEdit"
     tabindex="-1"
@@ -172,10 +151,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalEditLabel"
-          >Edit Dropspot</h1>
+          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Dropspot</h1>
           <button
             class="btn-close"
             type="button"
@@ -193,21 +169,11 @@
           </div>
           <div class="form-group mb-3">
             <small>Area</small>
-            <select
-              class="form-select"
-              v-model="form.form.area_id"
-            >
-              <option
-                value=""
-                selected
-              >
+            <select class="form-select" v-model="form.form.area_id">
+              <option value="" selected>
                 {{ form.namaArea }}
               </option>
-              <option
-                v-for="a in form.isArea"
-                :key="a"
-                :value="a.id"
-              >
+              <option v-for="a in form.isArea" :key="a" :value="a.id">
                 {{ a.nama }}
               </option>
             </select>
@@ -233,15 +199,15 @@
           <button
             class="btn btn-sm btn-secondary"
             @click="form.isOpenEdit = false"
-          >Tutup</button>
-          <button
-            class="btn btn-sm btn-danger"
-            @click="form.deleteData"
-          >Hapus</button>
-          <button
-            class="btn btn-sm btn-primary"
-            @click="form.editData"
-          >Simpan</button>
+          >
+            Tutup
+          </button>
+          <button class="btn btn-sm btn-danger" @click="form.deleteData">
+            Hapus
+          </button>
+          <button class="btn btn-sm btn-primary" @click="form.editData">
+            Simpan
+          </button>
         </div>
       </div>
     </div>
