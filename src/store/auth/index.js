@@ -2,6 +2,8 @@ import { defineStore } from "pinia";
 import * as storage from '../../modules/storage'
 import { api } from "../../plugins/axios";
 import router from "../../router";
+import { notifSuccessVue } from "../../modules/untils";
+
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
@@ -24,6 +26,7 @@ export const useAuthStore = defineStore('auth', {
             this.loading = true
             try {
                 await api.post('login', payload).then(resp => {
+                    notifSuccessVue(resp)
                     console.log('login', resp.data.santri);
                     storage.setLocalToken(resp.data.token)
                     storage.setUser(resp.data.data)

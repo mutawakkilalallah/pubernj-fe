@@ -76,34 +76,51 @@
             @click="form.setOpenAdd()"
           ></button>
         </div>
-        <form @submit.prevent="form.tambahData">
+        <form
+          @submit.prevent="form.tambahData"
+          class="needs-validation"
+          novalidate
+        >
           <div class="modal-body">
             <div class="form-group mb-3">
               <small>Nama Area</small>
               <input
                 type="text"
                 v-model="form.form.nama"
+                :on-invalid="form.form.nama = ''"
                 class="form-control mt-2"
                 placeholder="Masukkan nama area .."
+                required
               />
+              <div class="invalid-feedback">
+                Nama tidak boleh kosong
+              </div>
             </div>
             <div class="form-group mb-3">
               <small>PIC</small>
               <input
                 type="text"
                 v-model="form.form.pic"
-                class="form-control mt-2"
+                class="form-control mt-2 is-invalid"
                 placeholder="Masukkan nama pic .."
+                required
               />
+              <div class="invalid-feedback">
+                PIC tidak boleh kosong
+              </div>
             </div>
             <div class="form-group mb-3">
               <small>NO HP</small>
               <input
-                type="text"
+                type="number"
                 class="form-control mt-2"
                 v-model="form.form.no_hp"
                 placeholder="Masukkan nama no hp .."
+                required
               />
+              <div class="invalid-feedback">
+                NO HP tidak boleh kosong
+              </div>
             </div>
           </div>
           <div class="modal-footer">

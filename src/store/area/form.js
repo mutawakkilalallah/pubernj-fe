@@ -2,6 +2,8 @@ import { defineStore } from "pinia";
 import { useAreaTable } from "../area/table"
 import { api } from "../../plugins/axios";
 import Swal from "sweetalert2";
+import { notifErrorVue, notifSuccessVue } from "../../modules/untils";
+
 
 
 
@@ -26,17 +28,20 @@ export const useAreaForm = defineStore('form_area', {
       async tambahData() {
            try {
              const resp = await api.post('area', this.form)              
-                Swal.fire("Berhasil", resp.data.message, "success")                
+            //    Swal.fire("Berhasil", resp.data.message, "success")       
+            notifSuccessVue(resp)   
                 this.setOpenAdd()
                 this.form = {}
                 const table = useAreaTable()
                 table.getData()
-           } catch (err) {               
-           Swal.fire(err.response.data.message, err.response.data.error, "error");
+           } catch (err) {              
+            console.log(err);   
+        //    Swal.fire(err.response.data.message, err.response.data.error, "error");
+               notifErrorVue(err)
            }
         },
         handleDoubleClick(data) {
-            console.log('datahandle', data.id);
+            // console.log('datahandle', data.id);
             this.idEdit = data.id
             this.isOpenEdit = true
             this.form.nama = data.nama
@@ -47,7 +52,8 @@ export const useAreaForm = defineStore('form_area', {
             try {
                 const resp = await api.put(`area/${this.idEdit}`, this.form)
                 this.isOpenEdit = false
-                Swal.fire("Berhasil", resp.data.message, "success");
+                // Swal.fire("Berhasil", resp.data.message, "success");
+                notifSuccessVue(resp)
                 this.form = {}
                 const table = useAreaTable()
                 table.getData()
@@ -69,7 +75,8 @@ export const useAreaForm = defineStore('form_area', {
                 if (result.isConfirmed) {
                     api.delete(`area/${this.idEdit}`).then((result) => {
                         this.isOpenEdit = false
-                        Swal.fire("Berhasil", result.data.message, "success");
+                        // Swal.fire("Berhasil", result.data.message, "success");
+                        notifSuccessVue(result)
                         this.form = {}
                         const table = useAreaTable()
                         table.getData()
