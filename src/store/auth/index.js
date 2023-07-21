@@ -8,7 +8,7 @@ export const useAuthStore = defineStore("auth", {
     token: localStorage.getItem("token") ? storage.getLocalToken() : null,
     user: localStorage.getItem("user") ? storage.getUser() : null,
     nama: localStorage.getItem("nama") ? storage.getNama() : null,
-    foto: "photo",
+    foto: "",
     loading: false,
     alert: false,
   }),
@@ -49,16 +49,18 @@ export const useAuthStore = defineStore("auth", {
         this.loading = false;
       }
     },
-    async getImage(uuid) {
+    async getImage(uuid, size) {
       this.loading = true;
       try {
         const params = {
           responseType: "blob",
         };
-        await api.get("santri/image/" + uuid, params).then((resp) => {
-          this.foto = URL.createObjectURL(resp.data);
-          this.loading = false;
-        });
+        await api
+          .get("santri/image/" + uuid + "?size=" + size, params)
+          .then((resp) => {
+            this.foto = URL.createObjectURL(resp.data);
+            this.loading = false;
+          });
       } catch (error) {
         console.log("error", error);
         this.loading = false;

@@ -37,7 +37,7 @@
       <i>{{ storeAuth.user.role }}</i>
     </div>
   </div>
-  <div class="row p-3">
+  <div class="row mt-3">
     <widget-dashboard
       v-for="c in counter"
       :key="c.nama"
@@ -54,7 +54,7 @@ import { ref } from "vue";
 import { useAuthStore } from "../store/auth";
 const storeAuth = useAuthStore();
 
-storeAuth.getImage(storeAuth.user.santri_uuid);
+storeAuth.getImage(storeAuth.user.santri_uuid, "small");
 
 setTimeout(() => (storeAuth.alert = false), 2000);
 const counter = [

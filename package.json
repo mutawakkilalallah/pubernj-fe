@@ -14,12 +14,14 @@
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
+    "moment": "^2.29.4",
     "node-sass": "^9.0.0",
     "pinia": "^2.1.4",
     "sass": "^1.63.6",
     "sass-loader": "^13.3.2",
     "sweetalert2": "^11.7.12",
     "vue": "^3.2.47",
+    "vue-moment": "^4.1.0",
     "vue-router": "^4.2.2"
   },
   "devDependencies": {

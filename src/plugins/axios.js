@@ -3,7 +3,7 @@ import axios from "axios";
 import { getLocalToken } from "../modules/storage";
 import { notifErr } from "../modules/untils";
 
-const SERVER = "https://puber-api.kildev.my.id";
+const SERVER = "http://localhost:4001";
 const base = SERVER;
 // const storageServer = SERVER + '/storage/'
 
