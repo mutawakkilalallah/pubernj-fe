@@ -9,9 +9,11 @@ export const useSantriTable = defineStore("table_santri", {
     fotoDiri: "",
     headers: {
       totalData: 0,
+      totalPage: 0,
     },
     params: {
       cari: "",
+      page: 1,
     },
   }),
   actions: {
@@ -22,6 +24,7 @@ export const useSantriTable = defineStore("table_santri", {
           if ((resp.data.code = 200)) {
             this.items = resp.data.data;
             this.headers.totalData = resp.headers["x_total_data"];
+            this.headers.totalPage = resp.headers["x_total_page"];
           }
         });
       } catch (error) {}

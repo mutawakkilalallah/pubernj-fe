@@ -37,13 +37,13 @@
     <table class="table table-sm table-hover mt-3">
       <thead>
         <tr>
-          <td scope="col">No</td>
-          <td scope="col">NIUP</td>
-          <td scope="col">Nama Lengkap</td>
-          <td scope="col">JK</td>
-          <td scope="col">Wilayah</td>
-          <td scope="col">Daerah</td>
-          <td scope="col">Kab/Kota</td>
+          <th scope="col">No</th>
+          <th scope="col">NIUP</th>
+          <th scope="col">Nama Lengkap</th>
+          <th scope="col">JK</th>
+          <th scope="col">Wilayah</th>
+          <th scope="col">Daerah</th>
+          <th scope="col">Kab/Kota</th>
         </tr>
       </thead>
       <tbody>
@@ -62,6 +62,14 @@
         </tr>
       </tbody>
     </table>
+    <!-- <pagination
+      class="mb-3"
+      v-model="table.params.page"
+      :pages="table.headers.totalPage"
+      :range-size="5"
+      active-color="#DCEDFF"
+      @update:modelValue="table.getData()"
+    /> -->
   </div>
   <!-- modal detail data -->
   <div
@@ -233,7 +241,6 @@
 </template>
 <script setup>
 import { useSantriTable } from "../../store/santri/table";
-
 const table = useSantriTable();
 table.getData();
 </script>

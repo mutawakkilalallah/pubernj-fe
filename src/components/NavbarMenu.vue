@@ -73,7 +73,7 @@ export default {
         {
           icon: "user-cog",
           title: "User Account",
-          path: "dashboard",
+          path: "user",
         },
       ],
     };

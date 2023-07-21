@@ -10,12 +10,16 @@ import router from "@/router/index.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import axios from "./plugins/axios";
 
+import VPagination from "@hennge/vue3-pagination";
+import "@hennge/vue3-pagination/dist/vue3-pagination.css";
+
 import {
   faBriefcase,
   faBrush,
   faChartSimple,
   faLocationDot,
   faMap,
+  faPenAlt,
   faSignOutAlt,
   faUser,
   faUserCog,
@@ -31,19 +35,15 @@ library.add(
   faLocationDot,
   faUser,
   faUserCog,
-  faBriefcase
+  faBriefcase,
+  faPenAlt
 );
 const pinia = createPinia();
 const app = createApp(App);
 
-// import moment from "moment";
-// import vueMoment from "vue-moment";
-// import "moment/locale/es";
-
 app.component("font-awesome-icon", FontAwesomeIcon);
+app.component("pagination", VPagination);
 app.use(router);
-
-// app.use(moment);
 
 app.use(pinia);
 registerComponents(app);
