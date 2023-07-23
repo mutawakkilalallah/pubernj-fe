@@ -20,6 +20,7 @@ import {
   faLocationDot,
   faMap,
   faPenAlt,
+  faRotate,
   faSignOutAlt,
   faUser,
   faUserCog,
@@ -36,7 +37,8 @@ library.add(
   faUser,
   faUserCog,
   faBriefcase,
-  faPenAlt
+  faPenAlt,
+  faRotate
 );
 const pinia = createPinia();
 const app = createApp(App);

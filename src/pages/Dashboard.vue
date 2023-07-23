@@ -1,6 +1,5 @@
 <template>
   <h3>Dashboard</h3>
-  <app-alert v-show="storeAuth.alert === true" label="Berhasil login" />
   <hr />
   <div class="user-card d-flex align-items-center bg-primary p-2 rounded">
     <div
@@ -32,9 +31,18 @@
     />
     <div class="user-info text-white">
       <p style="font-size: 20px; margin-bottom: 0" class="fw-bold">
-        {{ storeAuth.nama }}
+        {{ storeAuth.user.santri_nama }}
       </p>
-      <i>{{ storeAuth.user.role }}</i>
+      <i v-if="storeAuth.user.role === 'wilayah'">{{
+        storeAuth.user.raw.domisili_santri[
+          storeAuth.user.raw.domisili_santri.length - 1
+        ].wilayah +
+        " - " +
+        storeAuth.user.raw.domisili_santri[
+          storeAuth.user.raw.domisili_santri.length - 1
+        ].blok
+      }}</i>
+      <i v-else>{{ storeAuth.user.role }}</i>
     </div>
   </div>
   <div class="row mt-3">

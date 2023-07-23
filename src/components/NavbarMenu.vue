@@ -1,25 +1,13 @@
 <template>
-  <nav class="navbar navbar-dark navbar-expand bg-primary p-2">
+  <nav class="navbar navbar-dark navbar-expand bg-primary p-2 fixed-top">
     <div class="container-fluid">
-      <a
-        v-if="isMobile"
-        class="navbar-brand fs-6"
-        href="#"
-      >PUBER NJ</a>
-      <a
-        v-else
-        class="navbar-brand fs-6"
-        href="#"
-      >Pulang Bersama - PP. Nurul Jadid</a>
-      <div
-        class="collapse navbar-collapse"
-        id="navbarSupportedContent"
+      <a v-if="isMobile" class="navbar-brand fs-6" href="#">PUBER NJ</a>
+      <a v-else class="navbar-brand fs-6" href="#"
+        >Pulang Bersama - PP. Nurul Jadid</a
       >
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-        <button
-          class="btn-kecil btn btn-outline-info me-2"
-          type="submit"
-        >
+        <button class="btn-kecil btn btn-outline-info me-2" type="submit">
           <font-awesome-icon icon="brush" /> Clear Cache
         </button>
         <button
@@ -33,7 +21,7 @@
     </div>
   </nav>
   <div
-    class="menu-atas shadow d-flex justify-content-start"
+    class="menu-atas shadow d-flex justify-content-start mt-5 fixed-top bg-white"
     style="overflow-x: auto"
   >
     <menu-item
@@ -70,7 +58,7 @@ export default {
         {
           icon: "briefcase",
           title: "Penumpang",
-          path: "dashboard",
+          path: "penumpang",
         },
         {
           icon: "map",
@@ -86,6 +74,11 @@ export default {
           icon: "user-cog",
           title: "User Account",
           path: "user",
+        },
+        {
+          icon: "rotate",
+          title: "Syncronize",
+          path: "sync",
         },
       ],
     };

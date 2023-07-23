@@ -1,53 +1,81 @@
 <template>
   <!-- judul -->
-  <h3>Data Dropspot</h3>
+  <h3>Data Penumpang</h3>
   <hr />
   <!-- menu filter -->
   <div class="filter-box mb-5 row">
     <div class="col-md-2">
       <select
-        class="form-select form-select-sm"
-        v-model="table.params.area"
-        @change="table.getData"
+        class="form-select form-select-sm mb-2"
+        v-model="table.areaId"
+        @change="table.getDropspot"
       >
         <option value="" selected>Semua Area</option>
-        <option v-for="a in form.isArea" :key="a" :value="a.id">
+        <option v-for="a in table.filter.area" :key="a" :value="a.id">
           {{ a.nama }}
         </option>
+      </select>
+      <select
+        class="form-select form-select-sm mb-2"
+        :disabled="table.areaId === ''"
+        v-model="table.params.dropspot"
+        @change="table.getData"
+      >
+        <option value="" selected>Semua Dropsot</option>
+        <option v-for="d in table.filter.dropspot" :key="d" :value="d.id">
+          {{ d.nama }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <select class="form-select form-select-sm mb-2">
+        <option value="" selected>Semua Tujuan</option>
+        <option value="">-- Sudah Ditentukan --</option>
+        <option value="">-- Tanpa Dropspot --</option>
+        <!-- <option v-for="a in table.filter.area" :key="a" :value="a.id">
+          {{ a.nama }}
+        </option> -->
       </select>
     </div>
   </div>
   <!-- jumlah data dan pencarian -->
   <div class="serach-box row">
     <div class="col-md-10 d-flex align-items-center mb-2">
-      <small>Total data {{ table.items.length }}</small>
+      <small>Total data {{ table.headers.totalData }}</small>
     </div>
     <div class="col-md-2 d-flex align-items-center">
       <input
         type="text"
         v-model="table.params.cari"
         class="form-control form-control-sm mb-2"
-        placeholder="Cari Dropspot ..."
+        placeholder="Cari Penumpang ..."
         @keyup="table.getData"
       />
     </div>
   </div>
   <hr />
   <!-- tombol tambah data -->
-  <button class="btn btn-sm btn-primary" @click="form.setOpenAdd">
+  <!-- <button class="btn btn-sm btn-primary" @click="form.setOpenAdd">
     Tambah Dropspot
-  </button>
+  </button> -->
   <!-- table data utama -->
   <div class="table-responsive">
     <table class="table table-sm table-hover mt-3">
       <thead>
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Nama Dropspot</th>
-          <th scope="col">Type</th>
+          <th scope="col">NIUP</th>
+          <th scope="col">Nama Santri</th>
+          <th scope="col">Wilayah</th>
+          <th scope="col">Daerah</th>
+          <th scope="col">Kecamatan</th>
+          <th scope="col">Kabupaten</th>
+          <th scope="col">Provinsi</th>
+          <th scope="col">Dropsot</th>
           <th scope="col">Area</th>
-          <th scope="col">Cakupan</th>
-          <th scope="col">Harga</th>
+          <th scope="col">Tarif</th>
+          <th scope="col">Jumlah Bayar</th>
+          <th scope="col">Status Pembayaran</th>
         </tr>
       </thead>
       <tbody>
@@ -57,17 +85,31 @@
           @dblclick="form.handleDoubleClik(d)"
         >
           <td>{{ i + 1 }}</td>
-          <td>{{ d.nama }}</td>
-          <td>{{ d.type }}</td>
-          <td>{{ d.area.nama }}</td>
-          <td>{{ d.cakupan }}</td>
-          <td>{{ d.harga }}</td>
+          <td>{{ d.santri_niup }}</td>
+          <td>{{ d.santri_nama }}</td>
+          <td>{{ d.santri_wilayah }}</td>
+          <td>{{ d.santri_blok }}</td>
+          <td>{{ d.raw.kecamatan }}</td>
+          <td>{{ d.raw.kabupaten }}</td>
+          <td>{{ d.raw.provinsi }}</td>
+          <td v-if="d.dropspot">{{ d.dropspot.nama }}</td>
+          <td v-else class="text-danger"><i>belum-ditentukan</i></td>
+          <td v-if="d.dropspot">
+            {{ d.dropspot.area.nama }}
+          </td>
+          <td v-else class="text-danger"><i>belum-ditentukan</i></td>
+          <td v-if="d.dropspot">{{ "Rp. " + d.dropspot.harga }}</td>
+          <td v-else class="text-danger">Rp. 0</td>
+          <td>{{ "Rp. " + d.jumlah_bayar }}</td>
+          <td>
+            <i>{{ d.status_bayar }}</i>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
   <!-- modal tambah -->
-  <div
+  <!-- <div
     class="modal fade"
     v-if="form.isOpenAdd === true"
     :class="{ show: form.isOpenAdd }"
@@ -96,15 +138,6 @@
               placeholder="Masukkan nama dropspot .."
               class="form-control mt-2"
             />
-          </div>
-          <div class="form-group mb-3">
-            <small>Type</small>
-            <select class="form-select" v-model="form.form.type">
-              <option value="" selected>Pilih Type</option>
-              <option value="by_provinsi" selected>by_provinsi</option>
-              <option value="by_kabupaten" selected>by_kabupaten</option>
-              <option value="by_kecamatan" selected>by_kecamatan</option>
-            </select>
           </div>
           <div class="form-group mb-3">
             <small>Area</small>
@@ -147,9 +180,9 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- modal edit data -->
-  <div
+  <!-- <div
     class="modal fade"
     v-if="form.isOpenEdit === true"
     :class="{ show: form.isOpenEdit }"
@@ -177,14 +210,6 @@
               class="form-control mt-2"
               v-model="form.form.nama"
             />
-          </div>
-          <div class="form-group mb-3">
-            <small>Type</small>
-            <select class="form-select" v-model="form.form.type">
-              <option value="by_provinsi" selected>by_provinsi</option>
-              <option value="by_kabupaten" selected>by_kabupaten</option>
-              <option value="by_kecamatan" selected>by_kecamatan</option>
-            </select>
           </div>
           <div class="form-group mb-3">
             <small>Area</small>
@@ -230,19 +255,19 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 <script setup>
 import { onMounted } from "vue";
-import { useDropspotForm } from "../../store/dropsot/form";
-import { useDropsotTable } from "../../store/dropsot/table";
+// import { useDropspotForm } from "../../store/dropsot/form";
+import { usePenumpangTable } from "../../store/penumpang/table";
 
-const table = useDropsotTable();
-const form = useDropspotForm();
+const table = usePenumpangTable();
+// const form = useDropspotForm();
 table.getData();
-form.getArea();
+// form.getArea();
 
-onMounted(() => {
-  form.getArea();
-});
+// onMounted(() => {
+//   form.getArea();
+// });
 </script>

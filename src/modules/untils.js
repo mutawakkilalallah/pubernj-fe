@@ -1,62 +1,46 @@
-import Swal from 'sweetalert2'
-import * as storage from '../modules/storage'
-import router from '../router'
+import Swal from "sweetalert2";
+import * as storage from "../modules/storage";
+import router from "../router";
 
-const removeToken = ()=>{
-    storage.deleteLocalToken()
-    storage.deleteHeaderToken()
-    storage.deleteUser()
-    router.replace('/login')
-}
+const removeToken = () => {
+  storage.deleteLocalToken();
+  storage.deleteHeaderToken();
+  storage.deleteUser();
+  router.replace("/login");
+};
 
-const notifErr = (resp, next) => {
-    const status = resp ? resp.data.code : 401
-    const message = resp ? resp.data.message : 401
-    console.log('status', status);
-    if (status === 401 && message === 'Unauthorized') {
-        return removeToken()
-    }
-}
-    
-const notifSuccessVue = (resp) => {
-    const msg = resp ? resp.data.message : 'Success'
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-right',
-        iconColor: 'white',
-        customClass: {
-            popup: 'colored-toast'
-        },
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true
-    })
-    Toast.fire({
-        icon: 'success',
-        title: msg || 'Success'
-})
-}
-const notifErrorVue = (resp) => {
-    const msg = resp ? resp.response.data.error : 'Error'
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-right',
-        iconColor: 'white',
-        customClass: {
-            popup: 'colored-toast'
-        },
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true
-    })
-    Toast.fire({
-        icon: 'error',
-        title: msg || 'Error'
-})
-}
+const swalError = (err, status) => {
+  if (status === 401) {
+    return removeToken();
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: err.message,
+      text: err.error,
+      showConfirmButton: true,
+    });
+  }
+};
 
-export {
-    notifErr,
-    notifSuccessVue,
-    notifErrorVue
-}
+const swalSuccess = (msg) => {
+  Swal.fire({
+    icon: "success",
+    title: "Berhasil",
+    text: msg,
+    showConfirmButton: false,
+    timer: 1500,
+  });
+};
+
+const swalSuccessDelete = () => {
+  console.log("deleted");
+  Swal.fire({
+    icon: "success",
+    title: "Berhasil",
+    text: "Berhasil menghapus data",
+    showConfirmButton: false,
+    timer: 1500,
+  });
+};
+
+export { swalError, swalSuccess, swalSuccessDelete };

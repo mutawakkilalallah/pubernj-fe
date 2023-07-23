@@ -43,8 +43,10 @@
       <thead>
         <tr>
           <th scope="col">No</th>
+          <th scope="col">Nama</th>
           <th scope="col">Username</th>
           <th scope="col">Hak Akses</th>
+          <th scope="col">Daerah</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -55,8 +57,12 @@
           @dblclick="form.handleDoubleClik(d)"
         >
           <td>{{ i + 1 }}</td>
-          <td>{{ d.username }}</td>
+          <td>{{ d.santri_nama }}</td>
+          <td>{{ "@" + d.username }}</td>
           <td>{{ d.role }}</td>
+          <td>
+            {{ d.raw.domisili_santri[d.raw.domisili_santri.length - 1].blok }}
+          </td>
           <td>
             <button
               @click="form.handleChangePassword(d)"

@@ -22,6 +22,11 @@ const routes = [
         component: () => import("@/pages/santri/Index.vue"),
       },
       {
+        path: "/penumpang",
+        name: "penumpang",
+        component: () => import("@/pages/penumpang/Index.vue"),
+      },
+      {
         path: "/area",
         name: "area",
         component: () => import("@/pages/area/Index.vue"),
@@ -35,6 +40,11 @@ const routes = [
         path: "/user",
         name: "user",
         component: () => import("@/pages/user/Index.vue"),
+      },
+      {
+        path: "/sync",
+        name: "sync",
+        component: () => import("@/pages/sync/Index.vue"),
       },
     ],
   },

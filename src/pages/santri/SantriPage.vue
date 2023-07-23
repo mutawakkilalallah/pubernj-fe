@@ -21,7 +21,7 @@
   <!-- jumlah data dan pencarian -->
   <div class="serach-box row">
     <div class="col-md-10 d-flex align-items-center mb-2">
-      <small>Total data {{ table.items.length}}</small>
+      <small>Total data {{ table.items.length }}</small>
     </div>
     <div class="col-md-2 d-flex align-items-center">
       <input
@@ -49,12 +49,12 @@
       </thead>
       <tbody>
         <tr
-          style="cursor: pointer;"
+          style="cursor: pointer"
           v-for="(d, i) in table.items"
           :key="i"
           @dblclick="table.handleDoubelClick(d.uuid)"
         >
-          <td>{{ i + 1 + (table.params.page -1)*table.params.limit}}</td>
+          <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
           <td>{{ d.warga_pesantren.niup }}</td>
           <td>{{ d.nama_lengkap }}</td>
           <td>{{ d.jenis_kelamin }}</td>
@@ -64,17 +64,17 @@
         </tr>
       </tbody>
     </table>
-    <app-paginate
-      v-if="table.items.length"
-      :meta="table.meta"
-      :per_page="table.params.limit"
-      @set-page="(val)=>table.setPage(val)"
-      @next="table.nexPage"
-      @prev="table.prevPage"
-      @last="table.setPage"
-      @first="table.setPage"
-    />
   </div>
+  <app-paginate
+    v-if="table.items.length"
+    :meta="table.meta"
+    :per_page="table.params.limit"
+    @set-page="(val) => table.setPage(val)"
+    @next="table.nexPage"
+    @prev="table.prevPage"
+    @last="table.setPage"
+    @first="table.setPage"
+  />
 
   <!-- modal detail data -->
   <div
@@ -90,10 +90,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalDetailLabel"
-          >Detail Santri</h1>
+          <h1 class="modal-title fs-5" id="modalDetailLabel">Detail Santri</h1>
           <button
             class="btn-close"
             type="button"
@@ -109,7 +106,8 @@
               style="text-decoration: none"
               target="_blank"
               class="text-info"
-            ><b>PEDATREN</b></a>
+              ><b>PEDATREN</b></a
+            >
           </p>
           <div class="row">
             <div class="col-md-8 order-sm-2 order-md-2">
@@ -238,10 +236,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary">Lihat Data Rombongan</button>
-          <button
-            class="btn btn-secondary"
-            @click="table.isOpenDetail = false"
-          >
+          <button class="btn btn-secondary" @click="table.isOpenDetail = false">
             Tutup
           </button>
         </div>
