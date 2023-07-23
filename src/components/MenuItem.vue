@@ -1,5 +1,8 @@
 <template>
-  <router-link :to="{ name: path }" style="text-decoration: none">
+  <router-link
+    :to="{ name: path }"
+    style="text-decoration: none"
+  >
     <div
       class="menu-atas-item text-center p-3 mx-3"
       :class="{
@@ -20,6 +23,8 @@ export default {
   props: ["icon", "title", "path", "isActive"],
   methods: {
     isActive(route) {
+      console.log("route menu", route);
+      console.log("$routePath", this.$route);
       return this.$route.path === route;
     },
   },
