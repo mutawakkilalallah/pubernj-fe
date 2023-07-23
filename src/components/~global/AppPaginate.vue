@@ -7,6 +7,7 @@
       >
         <a
           class="page-link"
+          :class="{disabled: meta.x_current_page <= 1}"
           @click="emits('first',1)"
         >First</a>
       </li>
@@ -55,6 +56,7 @@
       >
         <a
           class="page-link"
+          :class="{disabled: meta.x_current_page == meta.x_total_page}"
           @click="emits('last',meta.x_total_page)"
         >Last</a>
       </li>
