@@ -12,6 +12,7 @@ export const useDropspotForm = defineStore("form_dropspot", {
     namaArea: "",
     form: {
       nama: "",
+      type: "",
       area_id: "",
       cakupan: "",
       harga: "",
@@ -45,6 +46,7 @@ export const useDropspotForm = defineStore("form_dropspot", {
       this.idEdit = d.id;
       this.namaArea = d.area ? d.area.nama : "kosong";
       this.form.nama = d.nama;
+      this.form.type = d.type;
       this.form.area_id = d.area_id;
       this.form.cakupan = d.cakupan;
       this.form.harga = d.harga;

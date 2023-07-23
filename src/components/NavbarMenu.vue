@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-dark navbar-expand bg-primary p-2">
+  <nav class="navbar navbar-dark navbar-expand bg-primary p-2 fixed-top">
     <div class="container-fluid">
       <a v-if="isMobile" class="navbar-brand fs-6" href="#">PUBER NJ</a>
       <a v-else class="navbar-brand fs-6" href="#"
@@ -21,7 +21,7 @@
     </div>
   </nav>
   <div
-    class="menu-atas shadow d-flex justify-content-start"
+    class="menu-atas shadow d-flex justify-content-start mt-5 fixed-top bg-white"
     style="overflow-x: auto"
   >
     <menu-item

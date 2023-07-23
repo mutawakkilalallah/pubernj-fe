@@ -44,6 +44,7 @@
         <tr>
           <th scope="col">No</th>
           <th scope="col">Nama Dropspot</th>
+          <th scope="col">Type</th>
           <th scope="col">Area</th>
           <th scope="col">Cakupan</th>
           <th scope="col">Harga</th>
@@ -57,6 +58,7 @@
         >
           <td>{{ i + 1 }}</td>
           <td>{{ d.nama }}</td>
+          <td>{{ d.type }}</td>
           <td>{{ d.area.nama }}</td>
           <td>{{ d.cakupan }}</td>
           <td>{{ d.harga }}</td>
@@ -94,6 +96,15 @@
               placeholder="Masukkan nama dropspot .."
               class="form-control mt-2"
             />
+          </div>
+          <div class="form-group mb-3">
+            <small>Type</small>
+            <select class="form-select" v-model="form.form.type">
+              <option value="" selected>Pilih Type</option>
+              <option value="by_provinsi" selected>by_provinsi</option>
+              <option value="by_kabupaten" selected>by_kabupaten</option>
+              <option value="by_kecamatan" selected>by_kecamatan</option>
+            </select>
           </div>
           <div class="form-group mb-3">
             <small>Area</small>
@@ -166,6 +177,14 @@
               class="form-control mt-2"
               v-model="form.form.nama"
             />
+          </div>
+          <div class="form-group mb-3">
+            <small>Type</small>
+            <select class="form-select" v-model="form.form.type">
+              <option value="by_provinsi" selected>by_provinsi</option>
+              <option value="by_kabupaten" selected>by_kabupaten</option>
+              <option value="by_kecamatan" selected>by_kecamatan</option>
+            </select>
           </div>
           <div class="form-group mb-3">
             <small>Area</small>
