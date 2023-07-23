@@ -13,4 +13,8 @@ export const registerComponents = (app) => {
     "app-paginate",
     defineAsyncComponent(() => import("@/components/~global/AppPaginate.vue"))
   );
+  app.component(
+    "app-loading",
+    defineAsyncComponent(() => import("@/components/~global/AppLoading.vue"))
+  );
 };
