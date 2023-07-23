@@ -1,11 +1,10 @@
-import axios from 'axios';
-import { getLocalToken } from '../modules/storage';
-import {notifErr, notifSuccessVue} from '../modules/untils'
+import axios from "axios";
+import { getLocalToken } from "../modules/storage";
+import { swalError, swalSuccess, swalSuccessDelete } from "../modules/untils";
 
-const SERVER = "https://puber-api.phii.xyz";
-// const SERVER = "http://localhost:4001";
+// const SERVER = "https://puber-api.phii.xyz";
+const SERVER = "http://localhost:4001";
 const base = SERVER;
-// const storageServer = SERVER + '/storage/'
 
 const api = axios.create({ baseURL: base });
 api.defaults.headers.get.Accept = "applications/json";
@@ -13,8 +12,10 @@ api.defaults.headers.common["x-auth-token"] = getLocalToken();
 
 const interceptResErrors = (err) => {
   try {
-    console.log("errors interceptors", err.response);
-    notifErr(err.response);
+    swalError(
+      err.response.data ? err.response.data : null,
+      err.response.status
+    );
   } catch (error) {
     console.log(error);
   }
@@ -23,12 +24,15 @@ const interceptResErrors = (err) => {
 
 const interceptResponse = (res) => {
   try {
-    console.log('ok', res);
-    // notifSuccessVue(res)
-    return Promise.resolve(res)
+    if (res.status === 204) {
+      swalSuccessDelete();
+    } else if (res.status === 200) {
+      // swalSuccess(res.data.message);
+    } else {
+      swalSuccess(res.data.message);
+    }
+    return Promise.resolve(res);
   } catch (error) {
-    console.log(error);
-
     return Promise.resolve(res);
   }
 };

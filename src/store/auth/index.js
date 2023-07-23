@@ -2,17 +2,13 @@ import { defineStore } from "pinia";
 import * as storage from "../../modules/storage";
 import { api } from "../../plugins/axios";
 import router from "../../router";
-import { notifSuccessVue } from "../../modules/untils";
-
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     token: localStorage.getItem("token") ? storage.getLocalToken() : null,
     user: localStorage.getItem("user") ? storage.getUser() : null,
-    nama: localStorage.getItem("nama") ? storage.getNama() : null,
     foto: "",
     loading: false,
-    alert: false,
   }),
   getters: {
     isAuth(state) {
@@ -33,13 +29,10 @@ export const useAuthStore = defineStore("auth", {
         await api.post("login", payload).then((resp) => {
           storage.setLocalToken(resp.data.token);
           storage.setUser(resp.data.data);
-          storage.setNama(resp.data.santri.nama_lengkap);
           const hdd = storage.getLocalToken();
           const hddUser = storage.getUser();
-          const namaLengkap = storage.getNama();
           if (hdd) {
-            this.alert = true;
-            this.SET_TOKEN_USER(hdd, hddUser, namaLengkap);
+            this.SET_TOKEN_USER(hdd, hddUser);
             this.loading = false;
           } else {
             this.loading = false;
@@ -47,7 +40,6 @@ export const useAuthStore = defineStore("auth", {
           }
         });
       } catch (error) {
-        console.log("error", error);
         this.loading = false;
       }
     },
@@ -64,15 +56,13 @@ export const useAuthStore = defineStore("auth", {
             this.loading = false;
           });
       } catch (error) {
-        console.log("error", error);
         this.loading = false;
       }
     },
-    SET_TOKEN_USER(token, user, nama) {
+    SET_TOKEN_USER(token, user) {
       storage.setHeaderToken(token);
       this.token = token;
       this.user = user;
-      this.nama = nama;
       router.push("/");
     },
   },
