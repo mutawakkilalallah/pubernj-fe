@@ -87,7 +87,6 @@
               <input
                 type="text"
                 v-model="form.form.nama"
-                :on-invalid="form.form.nama = ''"
                 class="form-control mt-2"
                 placeholder="Masukkan nama area .."
                 required

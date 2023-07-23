@@ -9,4 +9,8 @@ export const registerComponents = (app) => {
     "app-alert",
     defineAsyncComponent(() => import("@/components/~global/AppAlert.vue"))
   );
+  app.component(
+    "app-paginate",
+    defineAsyncComponent(() => import("@/components/~global/AppPaginate.vue"))
+  );
 };
