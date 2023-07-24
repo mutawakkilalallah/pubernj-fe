@@ -4,9 +4,7 @@ import { api } from "../../plugins/axios";
 export const usePenumpangTable = defineStore("table_penumpang", {
   state: () => ({
     items: [],
-    headers: {
-      totalData: 0,
-    },
+    totalData: 0,
     filter: {
       area: [],
       dropspot: [],
@@ -23,7 +21,7 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       try {
         await api.get("penumpang", params).then((resp) => {
           if ((resp.data.code = 200)) {
-            this.headers.totalData = resp.headers["x_total_data"];
+            this.totalData = resp.headers["x_total_data"];
             this.items = resp.data.data;
             this.filter.area = resp.data.filter.area;
           }

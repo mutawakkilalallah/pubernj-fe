@@ -316,10 +316,20 @@
                   :key="i"
                   @dblclick="form.handleUserPilih(s.uuid, s.nama_lengkap)"
                 >
-                  <td>{{ s.warga_pesantren.niup }}</td>
-                  <td>{{ s.nama_lengkap }}</td>
-                  <td>{{ s.domisili_santri.wilayah }}</td>
-                  <td>{{ s.domisili_santri.blok }}</td>
+                  <td>{{ s.raw.warga_pesantren.niup }}</td>
+                  <td>{{ s.raw.nama_lengkap }}</td>
+                  <td>
+                    {{
+                      s.raw.domisili_santri[s.raw.domisili_santri.length - 1]
+                        .wilayah
+                    }}
+                  </td>
+                  <td>
+                    {{
+                      s.raw.domisili_santri[s.raw.domisili_santri.length - 1]
+                        .blok
+                    }}
+                  </td>
                 </tr>
               </tbody>
             </table>

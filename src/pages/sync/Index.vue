@@ -14,6 +14,12 @@
         Penumpang
       </button>
     </div>
+    <div class="col-md-3">
+      <button class="btn btn-warning w-100" @click="table.getSetupSantri">
+        <font-awesome-icon icon="rotate" class="icon" /> Setup - Sync Data
+        Santri
+      </button>
+    </div>
   </div>
   <hr />
   <div class="row" v-if="table.showSyncButtonPenumpang === true">
@@ -30,19 +36,36 @@
       </button>
     </div>
   </div>
+  <div class="row" v-if="table.showSyncButtonSantri === true">
+    <div
+      class="col-md-1"
+      v-for="index in parseInt(table.setupSantriItems)"
+      :key="index"
+    >
+      <button class="btn btn-info w-100" @click="table.generateSantri(index)">
+        Tahap {{ index }}
+      </button>
+    </div>
+  </div>
   <hr />
   <h3><font-awesome-icon icon="rotate" class="icon" /> Update Syncronize</h3>
   <hr />
   <div class="row">
     <div class="col-md-3">
-      <button class="btn btn-warning w-100" @click="table.updatePenumpang">
+      <button class="btn btn-primary w-100" @click="table.updatePenumpang">
         <font-awesome-icon icon="rotate" class="icon" /> Update - Sync Data
         Penumpang
       </button>
     </div>
     <div class="col-md-3">
-      <button class="btn btn-warning w-100" @click="table.updateUser">
+      <button class="btn btn-primary w-100" @click="table.updateUser">
         <font-awesome-icon icon="rotate" class="icon" /> Update - Sync Data User
+      </button>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-primary w-100" @click="table.updateSantri">
+        <font-awesome-icon icon="rotate" class="icon" /> Update - Sync Data
+        Santri
       </button>
     </div>
   </div>

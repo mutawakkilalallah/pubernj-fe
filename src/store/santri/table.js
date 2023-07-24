@@ -6,49 +6,47 @@ export const useSantriTable = defineStore("table_santri", {
     isOpenDetail: false,
     items: [],
     item: {},
+    totalData: 0,
     fotoDiri: "",
-  
-    meta: {      
-    },
-    myPage:'',
+    meta: {},
+    myPage: "",
     params: {
       cari: "",
       page: 1,
-      limit:25
+      limit: 25,
     },
-   
   }),
   actions: {
     nexPage(a) {
-      console.log('next', a);
-      this.params.page = parseInt(a) + 1
-      this.getData()
+      console.log("next", a);
+      this.params.page = parseInt(a) + 1;
+      this.getData();
     },
     prevPage(a) {
-      console.log('prev',a);
-      this.params.page = parseInt(a) - 1
-      this.getData()
+      console.log("prev", a);
+      this.params.page = parseInt(a) - 1;
+      this.getData();
     },
     setPage(a) {
-      console.log('setPAge', a);
-      this.params.page = parseInt(a)
-      this.getData()
+      console.log("setPAge", a);
+      this.params.page = parseInt(a);
+      this.getData();
     },
     searchPage() {
-      this.params.page = 1
-      this.getData()
+      this.params.page = 1;
+      this.getData();
     },
 
- 
     async getData() {
       const params = { params: this.params };
       try {
         await api.get("santri", params).then((resp) => {
-          console.log('meta headers', resp.headers);
+          console.log("meta headers", resp.headers);
           if ((resp.data.code = 200)) {
             this.items = resp.data.data;
-            this.meta = resp.headers
-            this.kelipatan()
+            this.meta = resp.headers;
+            this.totalData = resp.headers["x_total_data"];
+            this.kelipatan();
           }
         });
       } catch (error) {}
@@ -57,6 +55,7 @@ export const useSantriTable = defineStore("table_santri", {
       try {
         this.isOpenDetail = true;
         await api.get("santri/" + uuid).then((resp) => {
+          console.log(resp.data.data);
           if ((resp.data.code = 200)) {
             this.item = resp.data.data;
             this.getImage(resp.data.data.uuid, "medium");

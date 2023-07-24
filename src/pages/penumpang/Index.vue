@@ -41,7 +41,7 @@
   <!-- jumlah data dan pencarian -->
   <div class="serach-box row">
     <div class="col-md-10 d-flex align-items-center mb-2">
-      <small>Total data {{ table.headers.totalData }}</small>
+      <small>Total data {{ table.totalData }}</small>
     </div>
     <div class="col-md-2 d-flex align-items-center">
       <input
