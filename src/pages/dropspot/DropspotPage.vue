@@ -97,7 +97,7 @@
           <button
             class="btn-close"
             type="button"
-            @click="form.isOpenAdd = false"
+            @click="form.setOpenAdd"
           ></button>
         </div>
         <form @submit.prevent="form.tambahData">
@@ -178,7 +178,7 @@
             <button
               type="button"
               class="btn btn-sm btn-secondary"
-              @click="form.isOpenAdd = false"
+              @click="form.setOpenAdd"
             >
               Tutup
             </button>
@@ -214,96 +214,100 @@
           <button
             class="btn-close"
             type="button"
-            @click="form.isOpenEdit = false"
+            @click="form.setOpenEdit"
           ></button>
         </div>
-        <div class="modal-body">
-          <div class="form-group mb-3">
-            <small>Nama Dropspot</small>
-            <input
-              type="text"
-              class="form-control mt-2"
-              v-model="form.form.nama"
-            />
-          </div>
-          <div class="form-group mb-3">
-            <small>Type</small>
-            <select
-              class="form-select"
-              v-model="form.form.type"
-            >
-              <option
-                value="by_provinsi"
-                selected
-              >by_provinsi</option>
-              <option
-                value="by_kabupaten"
-                selected
-              >by_kabupaten</option>
-              <option
-                value="by_kecamatan"
-                selected
-              >by_kecamatan</option>
-            </select>
-          </div>
-          <div class="form-group mb-3">
-            <small>Area</small>
-            <select
-              class="form-select"
-              v-model="form.form.area_id"
-            >
-              <option
-                value=""
-                selected
+        <form @submit.prevent="form.editData">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <small>Nama Dropspot</small>
+              <input
+                type="text"
+                class="form-control mt-2"
+                v-model="form.form.nama"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <small>Type</small>
+              <select
+                class="form-select"
+                v-model="form.form.type"
               >
-                {{ form.namaArea }}
-              </option>
-              <option
-                v-for="a in form.isArea"
-                :key="a"
-                :value="a.id"
+                <option
+                  value="by_provinsi"
+                  selected
+                >by_provinsi</option>
+                <option
+                  value="by_kabupaten"
+                  selected
+                >by_kabupaten</option>
+                <option
+                  value="by_kecamatan"
+                  selected
+                >by_kecamatan</option>
+              </select>
+            </div>
+            <div class="form-group mb-3">
+              <small>Area</small>
+              <select
+                class="form-select"
+                v-model="form.form.area_id"
               >
-                {{ a.nama }}
-              </option>
-            </select>
+                <option
+                  value=""
+                  selected
+                >
+                  {{ form.namaArea }}
+                </option>
+                <option
+                  v-for="a in form.isArea"
+                  :key="a"
+                  :value="a.id"
+                >
+                  {{ a.nama }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group mb-3">
+              <small>Cakupan Daerah</small>
+              <input
+                type="text"
+                class="form-control mt-2"
+                v-model="form.form.cakupan"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <small>Harga</small>
+              <input
+                type="text"
+                class="form-control mt-2"
+                v-model="form.form.harga"
+              />
+            </div>
           </div>
-          <div class="form-group mb-3">
-            <small>Cakupan Daerah</small>
-            <input
-              type="text"
-              class="form-control mt-2"
-              v-model="form.form.cakupan"
-            />
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="form.setOpenEdit"
+            >
+              Tutup
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              @click="form.deleteData"
+            >
+              Hapus
+            </button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >
+              Simpan
+            </button>
           </div>
-          <div class="form-group mb-3">
-            <small>Harga</small>
-            <input
-              type="text"
-              class="form-control mt-2"
-              v-model="form.form.harga"
-            />
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            class="btn btn-sm btn-secondary"
-            @click="form.isOpenEdit = false"
-          >
-            Tutup
-          </button>
-          <button
-            class="btn btn-sm btn-danger"
-            @click="form.deleteData"
-          >
-            Hapus
-          </button>
-          <button
-            class="btn btn-sm btn-primary"
-            @click="form.editData"
-          >
-            Simpan
-          </button>
-        </div>
+        </form>
       </div>
     </div>
   </div>

@@ -106,88 +106,91 @@
           <button
             class="btn-close"
             type="button"
-            @click="form.isOpenAdd = false"
+            @click="form.setOpenAdd"
           ></button>
         </div>
-        <div class="modal-body">
-          <input
-            type="hidden"
-            v-model="form.form.santri_uuid"
-          />
-          <div class="form-group mb-3">
-            <div class="input-group mb-3">
-              <input
-                type="text"
-                v-model="form.namaSantri"
-                class="form-control"
-                placeholder="Pilih Santri .."
-                disabled
-                readonly
-                aria-describedby="basic-addon2"
-              />
-              <div class="input-group-append">
-                <button
-                  class="btn btn-outline-secondary"
-                  @click="form.setOpenPilihUser"
-                  type="button"
-                >
-                  <font-awesome-icon icon="pen-alt" />
-                </button>
+        <form @submit.prevent="form.tambahData">
+          <div class="modal-body">
+            <input
+              type="hidden"
+              v-model="form.form.santri_uuid"
+            />
+            <div class="form-group mb-3">
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  v-model="form.namaSantri"
+                  class="form-control"
+                  placeholder="Pilih Santri .."
+                  disabled
+                  readonly
+                  aria-describedby="basic-addon2"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-outline-secondary"
+                    @click="form.setOpenPilihUser"
+                    type="button"
+                  >
+                    <font-awesome-icon icon="pen-alt" />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="form-group mb-3">
-            <small>Hak Akses</small>
-            <select
-              class="form-select"
-              v-model="form.form.role"
-            >
-              <option
-                value=""
-                selected
-              >Pilih Hak Akses</option>
-              <option
-                v-for="r in table.roles"
-                :key="r.key"
-                :value="r.key"
+            <div class="form-group mb-3">
+              <small>Hak Akses</small>
+              <select
+                class="form-select"
+                v-model="form.form.role"
               >
-                {{ r.value }}
-              </option>
-            </select>
+                <option
+                  value=""
+                  selected
+                >Pilih Hak Akses</option>
+                <option
+                  v-for="r in table.roles"
+                  :key="r.key"
+                  :value="r.key"
+                >
+                  {{ r.value }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group mb-3">
+              <small>Username</small>
+              <input
+                type="text"
+                v-model="form.form.username"
+                placeholder="Masukkan username .."
+                class="form-control mt-2"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <small>Password</small>
+              <input
+                type="password"
+                v-model="form.form.password"
+                placeholder="Masukkan password .."
+                class="form-control mt-2"
+              />
+            </div>
           </div>
-          <div class="form-group mb-3">
-            <small>Username</small>
-            <input
-              type="text"
-              v-model="form.form.username"
-              placeholder="Masukkan username .."
-              class="form-control mt-2"
-            />
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="form.setOpenAdd"
+            >
+              Tutup
+            </button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >
+              Simpan
+            </button>
           </div>
-          <div class="form-group mb-3">
-            <small>Password</small>
-            <input
-              type="password"
-              v-model="form.form.password"
-              placeholder="Masukkan password .."
-              class="form-control mt-2"
-            />
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            class="btn btn-sm btn-secondary"
-            @click="form.isOpenAdd = false"
-          >
-            Tutup
-          </button>
-          <button
-            class="btn btn-sm btn-primary"
-            @click="form.tambahData"
-          >
-            Simpan
-          </button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -212,60 +215,64 @@
           <button
             class="btn-close"
             type="button"
-            @click="form.isOpenEdit = false"
+            @click="form.setOpenEdit"
           ></button>
         </div>
-        <div class="modal-body">
-          <input
-            type="hidden"
-            v-model="form.formEdit.santri_uuid"
-          />
-          <div class="form-group mb-3">
-            <small>Username</small>
+        <form @submit.prevent="form.editData">
+          <div class="modal-body">
             <input
-              type="text"
-              v-model="form.formEdit.username"
-              placeholder="Masukkan username .."
-              class="form-control mt-2"
+              type="hidden"
+              v-model="form.formEdit.santri_uuid"
             />
-          </div>
-          <div class="form-group mb-3">
-            <small>Hak Akses</small>
-            <select
-              class="form-select"
-              v-model="form.formEdit.role"
-            >
-              <!-- <option value="" selected>{{ form.roleValue }}</option> -->
-              <option
-                v-for="r in table.roles"
-                :key="r.key"
-                :value="r.key"
+            <div class="form-group mb-3">
+              <small>Username</small>
+              <input
+                type="text"
+                v-model="form.formEdit.username"
+                placeholder="Masukkan username .."
+                class="form-control mt-2"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <small>Hak Akses</small>
+              <select
+                class="form-select"
+                v-model="form.formEdit.role"
               >
-                {{ r.value }}
-              </option>
-            </select>
+                <!-- <option value="" selected>{{ form.roleValue }}</option> -->
+                <option
+                  v-for="r in table.roles"
+                  :key="r.key"
+                  :value="r.key"
+                >
+                  {{ r.value }}
+                </option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            class="btn btn-sm btn-secondary"
-            @click="form.isOpenEdit = false"
-          >
-            Tutup
-          </button>
-          <button
-            class="btn btn-sm btn-danger"
-            @click="form.deleteData"
-          >
-            Hapus
-          </button>
-          <button
-            class="btn btn-sm btn-primary"
-            @click="form.editData"
-          >
-            Simpan
-          </button>
-        </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="form.isOpenEdit = false"
+            >
+              Tutup
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              @click="form.deleteData"
+            >
+              Hapus
+            </button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >
+              Simpan
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -290,34 +297,37 @@
           <button
             class="btn-close"
             type="button"
-            @click="form.isOpenEditPassword = false"
+            @click="form.setOpenEditPassword"
           ></button>
         </div>
-        <div class="modal-body">
-          <div class="form-group mb-3">
-            <small>Password</small>
-            <input
-              type="password"
-              v-model="form.formEditPassword.password"
-              placeholder="Masukkan password .."
-              class="form-control mt-2"
-            />
+        <form @submit.prevent="form.editDataPassword">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <small>Password</small>
+              <input
+                type="password"
+                v-model="form.formEditPassword.password"
+                placeholder="Masukkan password .."
+                class="form-control mt-2"
+              />
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            class="btn btn-sm btn-secondary"
-            @click="form.isOpenEditPassword = false"
-          >
-            Tutup
-          </button>
-          <button
-            class="btn btn-sm btn-primary"
-            @click="form.editDataPassword"
-          >
-            Update Password
-          </button>
-        </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="form.setOpenEditPassword"
+            >
+              Tutup
+            </button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >
+              Update Password
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

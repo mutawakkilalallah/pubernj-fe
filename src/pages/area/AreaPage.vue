@@ -62,6 +62,7 @@
     aria-labelledby="modalTambahLabel"
     aria-hidden="true"
   >
+
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -72,7 +73,7 @@
           <button
             type="button"
             class="btn-close"
-            @click="form.setOpenAdd()"
+            @click="form.setOpenAdd"
           ></button>
         </div>
         <form @submit.prevent="form.tambahData">
@@ -109,7 +110,7 @@
             <button
               type="button"
               class="btn btn-sm btn-secondary"
-              @click="form.setOpenAdd()"
+              @click="form.setOpenAdd"
             >
               Tutup
             </button>
@@ -133,7 +134,7 @@
     aria-labelledby="modalEditLabel"
     aria-hidden="true"
   >
-    <div class="model-dialog">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h1
@@ -143,61 +144,62 @@
           <button
             type="button"
             class="btn-close"
-            @click="form.isOpenEdit = false"
+            @click="form.setOpenEdit"
           ></button>
         </div>
-        <div class="modal-body">
-          <div class="form-group mb-3">
-            <small>Nama Area</small>
-            <input
-              type="text"
-              v-model="form.form.nama"
-              class="form-control mt-2"
-              placeholder="Masukkan nama area .."
-            />
+        <form @submit.prevent="form.editData">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <small>Nama Area</small>
+              <input
+                type="text"
+                v-model="form.form.nama"
+                class="form-control mt-2"
+                placeholder="Masukkan nama area .."
+              />
+            </div>
+            <div class="form-group mb-3">
+              <small>PIC</small>
+              <input
+                type="text"
+                v-model="form.form.pic"
+                class="form-control mt-2"
+                placeholder="Masukkan nama pic .."
+              />
+            </div>
+            <div class="form-group mb-3">
+              <small>No. HP</small>
+              <input
+                type="text"
+                v-model="form.form.no_hp"
+                class="form-control mt-2"
+                placeholder="Masukkan nomor handphone pic .."
+              />
+            </div>
           </div>
-          <div class="form-group mb-3">
-            <small>PIC</small>
-            <input
-              type="text"
-              v-model="form.form.pic"
-              class="form-control mt-2"
-              placeholder="Masukkan nama pic .."
-            />
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="form.setOpenEdit"
+            >
+              Tutup
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              @click="form.deleteData()"
+            >
+              Hapus
+            </button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >
+              Simpan
+            </button>
           </div>
-          <div class="form-group mb-3">
-            <small>No. HP</small>
-            <input
-              type="text"
-              v-model="form.form.no_hp"
-              class="form-control mt-2"
-              placeholder="Masukkan nomor handphone pic .."
-            />
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-sm btn-secondary"
-            @click="form.isOpenEdit = false"
-          >
-            Tutup
-          </button>
-          <button
-            type="button"
-            class="btn btn-sm btn-danger"
-            @click="form.deleteData()"
-          >
-            Hapus
-          </button>
-          <button
-            type="button"
-            class="btn btn-sm btn-primary"
-            @click="form.editData()"
-          >
-            Simpan
-          </button>
-        </div>
+        </form>
       </div>
     </div>
   </div>

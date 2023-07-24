@@ -15,17 +15,23 @@ export const useAreaForm = defineStore("form_area", {
     },
   }),
   actions: {
+    resetForm() {
+      this.form.nama = ''
+      this.form.pic = ''
+      this.form.no_hp = ''
+    },
     setOpenAdd() {
       this.isOpenAdd = !this.isOpenAdd;
     },
     setOpenEdit() {
-      this.isOpenAdd = !this.isOpenAdd;
+      this.isOpenEdit = !this.isOpenEdit;
+      this.resetForm()
     },
     async tambahData() {
       try {
         const resp = await api.post("area", this.form);
         this.setOpenAdd();
-        this.form = {};
+        this.resetForm()
         const table = useAreaTable();
         table.getData();
       } catch (err) {}
@@ -41,7 +47,7 @@ export const useAreaForm = defineStore("form_area", {
       try {
         const resp = await api.put(`area/${this.idEdit}`, this.form);
         this.isOpenEdit = false;
-        this.form = {};
+        this.resetForm()
         const table = useAreaTable();
         table.getData();
       } catch (err) {}
@@ -59,7 +65,7 @@ export const useAreaForm = defineStore("form_area", {
         if (result.isConfirmed) {
           api.delete(`area/${this.idEdit}`).then((result) => {
             this.isOpenEdit = false;
-            this.form = {};
+           this.resetForm()
             const table = useAreaTable();
             table.getData();
           });
