@@ -1,10 +1,11 @@
 <template>
-  <router-link :to="{ name: path }" style="text-decoration: none">
+  <router-link
+    :to="{ name: path }"
+    style="text-decoration: none"
+  >
     <div
       class="menu-atas-item text-center p-3 mx-3"
-      :class="{
-        'menu-active': isActive('/' + (title != 'Dashboard' ? path : '')),
-      }"
+      :class="routePath == props.path ? 'menu-active' : '' "
     >
       <font-awesome-icon
         :icon="icon"
@@ -15,15 +16,29 @@
   </router-link>
 </template>
 
-<script>
-export default {
-  props: ["icon", "title", "path", "isActive"],
-  methods: {
-    isActive(route) {
-      return this.$route.path === route;
-    },
+<script setup>
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+
+const props = defineProps({
+  icon: {
+    type: String,
+    default: "chart-simple",
   },
-};
+  title: {
+    type: String,
+    default: "title",
+  },
+  path: {
+    type: String,
+    default: "path",
+  },
+});
+
+const route = useRoute();
+const routePath = computed(() => {
+  return route.name;
+});
 </script>
 <style scoped>
 .menu-active {

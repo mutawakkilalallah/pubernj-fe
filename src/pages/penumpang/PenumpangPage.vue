@@ -10,8 +10,15 @@
         v-model="table.areaId"
         @change="table.getDropspot"
       >
-        <option value="" selected>Semua Area</option>
-        <option v-for="a in table.filter.area" :key="a" :value="a.id">
+        <option
+          value=""
+          selected
+        >Semua Area</option>
+        <option
+          v-for="a in table.filter.area"
+          :key="a"
+          :value="a.id"
+        >
           {{ a.nama }}
         </option>
       </select>
@@ -21,15 +28,25 @@
         v-model="table.params.dropspot"
         @change="table.getData"
       >
-        <option value="" selected>Semua Dropsot</option>
-        <option v-for="d in table.filter.dropspot" :key="d" :value="d.id">
+        <option
+          value=""
+          selected
+        >Semua Dropsot</option>
+        <option
+          v-for="d in table.filter.dropspot"
+          :key="d"
+          :value="d.id"
+        >
           {{ d.nama }}
         </option>
       </select>
     </div>
     <div class="col-md-2">
       <select class="form-select form-select-sm mb-2">
-        <option value="" selected>Semua Tujuan</option>
+        <option
+          value=""
+          selected
+        >Semua Tujuan</option>
         <option value="">-- Sudah Ditentukan --</option>
         <option value="">-- Tanpa Dropspot --</option>
         <!-- <option v-for="a in table.filter.area" :key="a" :value="a.id">
@@ -93,13 +110,22 @@
           <td>{{ d.raw.kabupaten }}</td>
           <td>{{ d.raw.provinsi }}</td>
           <td v-if="d.dropspot">{{ d.dropspot.nama }}</td>
-          <td v-else class="text-danger"><i>belum-ditentukan</i></td>
+          <td
+            v-else
+            class="text-danger"
+          ><i>belum-ditentukan</i></td>
           <td v-if="d.dropspot">
             {{ d.dropspot.area.nama }}
           </td>
-          <td v-else class="text-danger"><i>belum-ditentukan</i></td>
+          <td
+            v-else
+            class="text-danger"
+          ><i>belum-ditentukan</i></td>
           <td v-if="d.dropspot">{{ "Rp. " + d.dropspot.harga }}</td>
-          <td v-else class="text-danger">Rp. 0</td>
+          <td
+            v-else
+            class="text-danger"
+          >Rp. 0</td>
           <td>{{ "Rp. " + d.jumlah_bayar }}</td>
           <td>
             <i>{{ d.status_bayar }}</i>
@@ -258,9 +284,16 @@
   </div> -->
 </template>
 <script setup>
-import { defineAsyncComponent } from "vue";
+import { onMounted } from "vue";
+// import { useDropspotForm } from "../../store/dropsot/form";
+import { usePenumpangTable } from "../../store/penumpang/table";
 
-const PenumpangPage = defineAsyncComponent(() =>
-  import("./PenumpangPage.vue" /* webpackChunkName: "BeritaPage" */)
-);
+const table = usePenumpangTable();
+// const form = useDropspotForm();
+table.getData();
+// form.getArea();
+
+// onMounted(() => {
+//   form.getArea();
+// });
 </script>

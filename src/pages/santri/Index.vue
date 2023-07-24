@@ -4,10 +4,14 @@
     <santri-page />
     <!-- loading state via #fallback slot -->
     <template #fallback>
-      Loading...
+      <app-loading />
     </template>
   </Suspense>
 </template>
 <script setup>
-import SantriPage from "./SantriPage.vue";
+import { defineAsyncComponent } from "vue";
+
+const SantriPage = defineAsyncComponent(() =>
+  import("./SantriPage.vue" /* webpackChunkName: "BeritaPage" */)
+);
 </script>

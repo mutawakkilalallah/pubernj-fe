@@ -1,18 +1,32 @@
 <template>
   <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-start">
-      <li class="page-item" style="cursor: pointer">
-        <a class="page-link" @click="emits('first', 1)">First</a>
+
+    <ul class="pagination justify-content-center">
+      <li
+        class="page-item"
+        style="cursor:pointer;"
+      >
+        <a
+          class="page-link"
+          :class="{disabled: meta.x_current_page <= 1}"
+          @click="emits('first',1)"
+        >First</a>
+
       </li>
-      <li class="page-item" style="cursor: pointer">
+      <li
+        class="page-item"
+        style="cursor: pointer"
+      >
         <a
           class="page-link"
           :class="{ disabled: meta.x_current_page <= 1 }"
           @click="emits('prev', meta.x_current_page)"
-          >Previous</a
-        >
+        >Previous</a>
       </li>
-      <template v-for="n in limit" :key="n">
+      <template
+        v-for="n in limit"
+        :key="n"
+      >
         <li
           v-if="bilangan(n) <= meta.x_total_page"
           style="cursor: pointer"
@@ -23,21 +37,31 @@
             class="page-link"
             aria-current="page"
             @click="emits('setPage', bilangan(n))"
-            >{{ bilangan(n) }}</a
-          >
+          >{{ bilangan(n) }}</a>
         </li>
       </template>
 
-      <li class="page-item" style="cursor: pointer">
+      <li
+        class="page-item"
+        style="cursor: pointer"
+      >
         <a
           :class="{ disabled: meta.x_current_page == meta.x_total_page }"
           class="page-link"
           @click="emits('next', meta.x_current_page)"
-          >Next</a
-        >
+        >Next</a>
       </li>
-      <li class="page-item" style="cursor: pointer">
-        <a class="page-link" @click="emits('last', meta.x_total_page)">Last</a>
+
+      <li
+        class="page-item"
+        style="cursor:pointer;"
+      >
+        <a
+          class="page-link"
+          :class="{disabled: meta.x_current_page == meta.x_total_page}"
+          @click="emits('last',meta.x_total_page)"
+        >Last</a>
+
       </li>
     </ul>
     <!-- {{ meta.x_current_page }} {{ kelipatan }} -->

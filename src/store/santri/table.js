@@ -41,7 +41,7 @@ export const useSantriTable = defineStore("table_santri", {
       const params = { params: this.params };
       try {
         await api.get("santri", params).then((resp) => {
-          console.log("meta headers", resp.headers);
+          // console.log("meta headers", resp.headers);
           if ((resp.data.code = 200)) {
             this.items = resp.data.data;
             this.meta = resp.headers;

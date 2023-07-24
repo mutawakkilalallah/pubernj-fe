@@ -31,14 +31,28 @@ export const useUserFrom = defineStore("form_user", {
     },
   }),
   actions: {
+    resetForm() {
+      this.form.santri_uuid = '',
+      this.form.username = ''
+      this.form.role = ''
+      this.form.password = ''
+      // form edit
+      this.formEdit.santri_uuid = ''
+      this.formEdit.username = ''
+      this.formEdit.role = ''
+      // form edit password
+      this.formEditPassword.password=''
+    },
     setOpenAdd() {
       this.isOpenAdd = !this.isOpenAdd;
     },
     setOpenEdit() {
       this.isOpenEdit = !this.isOpenEdit;
+      this.resetForm()
     },
     setOpenEditPassword() {
       this.isOpenEditPassword = !this.isOpenEditPassword;
+      this.resetForm()
     },
     setOpenPilihUser() {
       this.isOpenPilihUser = !this.isOpenPilihUser;
@@ -50,7 +64,7 @@ export const useUserFrom = defineStore("form_user", {
         Swal.fire("Berhasil", resp.data.message, "success");
         const table = useUserTable();
         table.getData();
-        this.form = {};
+        this.resetForm()
         this.namaSantri = "";
       } catch (err) {
         Swal.fire(err.response.data.message, err.response.data.error, "error");
@@ -96,7 +110,7 @@ export const useUserFrom = defineStore("form_user", {
       try {
         await api.put(`user/${this.idEdit}`, this.formEdit).then((resp) => {
           this.isOpenEdit = false;
-          this.formEdit = {};
+          this.resetForm()
           Swal.fire("Berhasil", resp.data.message, "success");
           const table = useUserTable();
           table.getData();
@@ -111,7 +125,7 @@ export const useUserFrom = defineStore("form_user", {
           .put(`user/password/${this.idEdit}`, this.formEditPassword)
           .then((resp) => {
             this.isOpenEditPassword = false;
-            this.formEditPassword = {};
+           this.resetForm()
             Swal.fire("Berhasil", resp.data.message, "success");
             const table = useUserTable();
             table.getData();
@@ -134,7 +148,7 @@ export const useUserFrom = defineStore("form_user", {
           api.delete(`user/${this.idEdit}`).then((result) => {
             this.isOpenEdit = false;
             Swal.fire("Berhasil", result.data.message, "success");
-            this.form = {};
+           this.resetForm()
             const table = useUserTable();
             table.getData();
           });

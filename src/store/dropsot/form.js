@@ -19,11 +19,19 @@ export const useDropspotForm = defineStore("form_dropspot", {
     },
   }),
   actions: {
+    resetForm() {
+      this.form.nama = ''
+      this.form.type = ''
+      this.form.area_id = ''
+      this.form.cakupan = ''
+      this.form.harga=''
+    },
     setOpenAdd() {
       this.isOpenAdd = !this.isOpenAdd;
     },
     setOpenEdit() {
       this.isOpenEdit = !this.isOpenEdit;
+      this.resetForm()
     },
     getArea() {
       try {
@@ -39,7 +47,7 @@ export const useDropspotForm = defineStore("form_dropspot", {
         this.isOpenAdd = false;
         const table = useDropsotTable();
         table.getData();
-        this.form = {};
+       this.resetForm()
       } catch (err) {}
     },
     handleDoubleClik(d) {
@@ -56,7 +64,7 @@ export const useDropspotForm = defineStore("form_dropspot", {
       try {
         await api.put(`dropspot/${this.idEdit}`, this.form).then((resp) => {
           this.isOpenEdit = false;
-          this.form = {};
+         this.resetForm()
           const table = useDropsotTable();
           table.getData();
         });
@@ -75,7 +83,7 @@ export const useDropspotForm = defineStore("form_dropspot", {
         if (result.isConfirmed) {
           api.delete(`dropspot/${this.idEdit}`).then((result) => {
             this.isOpenEdit = false;
-            this.form = {};
+          this.resetForm()
             const table = useDropsotTable();
             table.getData();
           });
