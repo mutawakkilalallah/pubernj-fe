@@ -102,6 +102,7 @@
               <small>Type</small>
               <select class="form-select" v-model="form.form.type">
                 <option value="" selected>Pilih Type</option>
+                <option value="by_negara" selected>by_negara</option>
                 <option value="by_provinsi" selected>by_provinsi</option>
                 <option value="by_kabupaten" selected>by_kabupaten</option>
                 <option value="by_kecamatan" selected>by_kecamatan</option>
@@ -184,6 +185,7 @@
             <div class="form-group mb-3">
               <small>Type</small>
               <select class="form-select" v-model="form.form.type">
+                <option value="by_negara" selected>by_negara</option>
                 <option value="by_provinsi" selected>by_provinsi</option>
                 <option value="by_kabupaten" selected>by_kabupaten</option>
                 <option value="by_kecamatan" selected>by_kecamatan</option>
