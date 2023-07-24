@@ -6,7 +6,6 @@ export const useSantriTable = defineStore("table_santri", {
     isOpenDetail: false,
     items: [],
     item: {},
-    totalData: 0,
     fotoDiri: "",
     meta: {},
     myPage: "",
@@ -18,17 +17,14 @@ export const useSantriTable = defineStore("table_santri", {
   }),
   actions: {
     nexPage(a) {
-      console.log("next", a);
       this.params.page = parseInt(a) + 1;
       this.getData();
     },
     prevPage(a) {
-      console.log("prev", a);
       this.params.page = parseInt(a) - 1;
       this.getData();
     },
     setPage(a) {
-      console.log("setPAge", a);
       this.params.page = parseInt(a);
       this.getData();
     },
@@ -45,8 +41,6 @@ export const useSantriTable = defineStore("table_santri", {
           if ((resp.data.code = 200)) {
             this.items = resp.data.data;
             this.meta = resp.headers;
-            this.totalData = resp.headers["x_total_data"];
-            this.kelipatan();
           }
         });
       } catch (error) {}
@@ -55,7 +49,6 @@ export const useSantriTable = defineStore("table_santri", {
       try {
         this.isOpenDetail = true;
         await api.get("santri/" + uuid).then((resp) => {
-          console.log(resp.data.data);
           if ((resp.data.code = 200)) {
             this.item = resp.data.data;
             this.getImage(resp.data.data.uuid, "medium");

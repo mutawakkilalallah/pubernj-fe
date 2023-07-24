@@ -58,13 +58,14 @@
 
 <script setup>
 import WidgetDashboard from "../components/WidgetDashboard.vue";
-import { ref } from "vue";
+import { onMounted } from "vue";
 import { useAuthStore } from "../store/auth";
 const storeAuth = useAuthStore();
 
-storeAuth.getImage(storeAuth.user.santri_uuid, "small");
+onMounted(() => {
+  storeAuth.getImage(storeAuth.user.santri_uuid, "small");
+});
 
-setTimeout(() => (storeAuth.alert = false), 2000);
 const counter = [
   {
     warna: "#315200",

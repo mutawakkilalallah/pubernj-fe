@@ -10,15 +10,8 @@
         v-model="table.areaId"
         @change="table.getDropspot"
       >
-        <option
-          value=""
-          selected
-        >Semua Area</option>
-        <option
-          v-for="a in table.filter.area"
-          :key="a"
-          :value="a.id"
-        >
+        <option value="" selected>Semua Area</option>
+        <option v-for="a in table.filter.area" :key="a" :value="a.id">
           {{ a.nama }}
         </option>
       </select>
@@ -28,37 +21,24 @@
         v-model="table.params.dropspot"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Dropsot</option>
-        <option
-          v-for="d in table.filter.dropspot"
-          :key="d"
-          :value="d.id"
-        >
+        <option value="" selected>Semua Dropsot</option>
+        <option v-for="d in table.filter.dropspot" :key="d" :value="d.id">
           {{ d.nama }}
         </option>
       </select>
     </div>
     <div class="col-md-2">
       <select class="form-select form-select-sm mb-2">
-        <option
-          value=""
-          selected
-        >Semua Tujuan</option>
+        <option value="" selected>Semua Tujuan</option>
         <option value="">-- Sudah Ditentukan --</option>
         <option value="">-- Tanpa Dropspot --</option>
-        <!-- <option v-for="a in table.filter.area" :key="a" :value="a.id">
-          {{ a.nama }}
-        </option> -->
       </select>
     </div>
   </div>
   <!-- jumlah data dan pencarian -->
   <div class="serach-box row">
     <div class="col-md-10 d-flex align-items-center mb-2">
-      <small>Total data {{ table.headers.totalData }}</small>
+      <small>Total data {{ table.totalData }}</small>
     </div>
     <div class="col-md-2 d-flex align-items-center">
       <input
@@ -101,7 +81,7 @@
           :key="i"
           @dblclick="form.handleDoubleClik(d)"
         >
-          <td>{{ i + 1 }}</td>
+          <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
           <td>{{ d.santri_niup }}</td>
           <td>{{ d.santri_nama }}</td>
           <td>{{ d.santri_wilayah }}</td>
@@ -110,22 +90,13 @@
           <td>{{ d.raw.kabupaten }}</td>
           <td>{{ d.raw.provinsi }}</td>
           <td v-if="d.dropspot">{{ d.dropspot.nama }}</td>
-          <td
-            v-else
-            class="text-danger"
-          ><i>belum-ditentukan</i></td>
+          <td v-else class="text-danger"><i>belum-ditentukan</i></td>
           <td v-if="d.dropspot">
             {{ d.dropspot.area.nama }}
           </td>
-          <td
-            v-else
-            class="text-danger"
-          ><i>belum-ditentukan</i></td>
+          <td v-else class="text-danger"><i>belum-ditentukan</i></td>
           <td v-if="d.dropspot">{{ "Rp. " + d.dropspot.harga }}</td>
-          <td
-            v-else
-            class="text-danger"
-          >Rp. 0</td>
+          <td v-else class="text-danger">Rp. 0</td>
           <td>{{ "Rp. " + d.jumlah_bayar }}</td>
           <td>
             <i>{{ d.status_bayar }}</i>
@@ -134,6 +105,16 @@
       </tbody>
     </table>
   </div>
+  <app-paginate
+    v-if="table.meta['x_total_data']"
+    :meta="table.meta"
+    :per_page="table.params.limit"
+    @set-page="(val) => table.setPage(val)"
+    @next="table.nexPage"
+    @prev="table.prevPage"
+    @last="table.setPage"
+    @first="table.setPage"
+  />
   <!-- modal tambah -->
   <!-- <div
     class="modal fade"
@@ -285,15 +266,11 @@
 </template>
 <script setup>
 import { onMounted } from "vue";
-// import { useDropspotForm } from "../../store/dropsot/form";
 import { usePenumpangTable } from "../../store/penumpang/table";
 
 const table = usePenumpangTable();
-// const form = useDropspotForm();
-table.getData();
-// form.getArea();
 
-// onMounted(() => {
-//   form.getArea();
-// });
+onMounted(() => {
+  table.getData();
+});
 </script>

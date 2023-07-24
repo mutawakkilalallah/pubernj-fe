@@ -11,7 +11,5 @@
 <script setup>
 import { defineAsyncComponent } from "vue";
 
-const SantriPage = defineAsyncComponent(() =>
-  import("./SantriPage.vue" /* webpackChunkName: "BeritaPage" */)
-);
+const SantriPage = defineAsyncComponent(() => import("./SantriPage.vue"));
 </script>

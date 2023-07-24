@@ -21,7 +21,7 @@
   <!-- jumlah data dan pencarian -->
   <div class="serach-box row">
     <div class="col-md-10 d-flex align-items-center mb-2">
-      <small>Total data {{ table.totalData }}</small>
+      <small>Total data {{ table.meta["x_total_data"] }}</small>
     </div>
     <div class="col-md-2 d-flex align-items-center">
       <input
@@ -76,7 +76,7 @@
     </table>
   </div>
   <app-paginate
-    v-if="table.items.length"
+    v-if="table.meta['x_total_data']"
     :meta="table.meta"
     :per_page="table.params.limit"
     @set-page="(val) => table.setPage(val)"
@@ -100,10 +100,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalDetailLabel"
-          >Detail Santri</h1>
+          <h1 class="modal-title fs-5" id="modalDetailLabel">Detail Santri</h1>
           <button
             class="btn-close"
             type="button"
@@ -119,7 +116,8 @@
               style="text-decoration: none"
               target="_blank"
               class="text-info"
-            ><b>PEDATREN</b></a>
+              ><b>PEDATREN</b></a
+            >
           </p>
           <div class="row">
             <div class="col-md-8 order-sm-2 order-md-2">
@@ -250,10 +248,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary">Lihat Data Rombongan</button>
-          <button
-            class="btn btn-secondary"
-            @click="table.isOpenDetail = false"
-          >
+          <button class="btn btn-secondary" @click="table.isOpenDetail = false">
             Tutup
           </button>
         </div>

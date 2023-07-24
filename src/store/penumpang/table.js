@@ -4,7 +4,8 @@ import { api } from "../../plugins/axios";
 export const usePenumpangTable = defineStore("table_penumpang", {
   state: () => ({
     items: [],
-    totalData: 0,
+    meta: {},
+    myPage: "",
     filter: {
       area: [],
       dropspot: [],
@@ -13,9 +14,28 @@ export const usePenumpangTable = defineStore("table_penumpang", {
     params: {
       cari: "",
       dropspot: "",
+      page: 1,
+      limit: 25,
     },
   }),
   actions: {
+    nexPage(a) {
+      this.params.page = parseInt(a) + 1;
+      this.getData();
+    },
+    prevPage(a) {
+      this.params.page = parseInt(a) - 1;
+      this.getData();
+    },
+    setPage(a) {
+      this.params.page = parseInt(a);
+      this.getData();
+    },
+    searchPage() {
+      this.params.page = 1;
+      this.getData();
+    },
+
     async getData() {
       const params = { params: this.params };
       try {
@@ -23,6 +43,7 @@ export const usePenumpangTable = defineStore("table_penumpang", {
           if ((resp.data.code = 200)) {
             this.totalData = resp.headers["x_total_data"];
             this.items = resp.data.data;
+            this.meta = resp.headers;
             this.filter.area = resp.data.filter.area;
           }
         });
