@@ -108,17 +108,14 @@
           ></button>
         </div>
         <div class="modal-body">
-          <p class="text-sm text-warning fst-italic">
-            *) Data ini bersifat secondary, untuk data lebih lanjut silahkan
-            lihat di
-            <a
-              href="https://nuruljadid.app"
-              style="text-decoration: none"
-              target="_blank"
-              class="text-info"
-              ><b>PEDATREN</b></a
+          <p class="alert alert-secondary p-1 fs-6" role="alert">
+            <i
+              ><font-awesome-icon icon="bell" class="icon" /> Data santri hanya
+              bersifat temporary sebagai kebutuhan Pulang Bersama, untuk data
+              lebih detail silahkan lihat di Aplikasi PEDATREN</i
             >
           </p>
+
           <div class="row">
             <div class="col-md-8 order-sm-2 order-md-2">
               <div class="mb-3 row">

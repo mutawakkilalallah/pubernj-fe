@@ -37,6 +37,8 @@
 <script>
 import MenuItem from "./MenuItem.vue";
 import Swal from "sweetalert2";
+import { useAuthStore } from "../store/auth";
+const storeAuth = useAuthStore();
 export default {
   components: {
     MenuItem,
@@ -70,16 +72,20 @@ export default {
           title: "Dropspot",
           path: "dropspot",
         },
-        {
-          icon: "user-cog",
-          title: "User Account",
-          path: "user",
-        },
-        {
-          icon: "rotate",
-          title: "Syncronize",
-          path: "sync",
-        },
+        ...(storeAuth.user.role == "sysadmin"
+          ? [
+              {
+                icon: "user-cog",
+                title: "User Account",
+                path: "user",
+              },
+              {
+                icon: "rotate",
+                title: "Syncronize",
+                path: "sync",
+              },
+            ]
+          : []),
       ],
     };
   },

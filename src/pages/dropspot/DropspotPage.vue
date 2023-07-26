@@ -34,7 +34,11 @@
   </div>
   <hr />
   <!-- tombol tambah data -->
-  <button class="btn btn-sm btn-primary" @click="form.setOpenAdd">
+  <button
+    v-if="table.user.role == 'sysadmin'"
+    class="btn btn-sm btn-primary"
+    @click="form.setOpenAdd"
+  >
     Tambah Dropspot
   </button>
   <!-- table data utama -->
@@ -44,24 +48,24 @@
         <tr>
           <th scope="col">No</th>
           <th scope="col">Nama Dropspot</th>
-          <th scope="col">Type</th>
+          <!-- <th scope="col">Type</th> -->
           <th scope="col">Area</th>
-          <th scope="col">Cakupan</th>
           <th scope="col">Harga</th>
+          <th scope="col">Cakupan</th>
         </tr>
       </thead>
       <tbody>
         <tr
           v-for="(d, i) in table.items"
           :key="i"
-          @dblclick="form.handleDoubleClik(d)"
+          @dblclick="table.user.role === 'sysadmin' && form.handleDoubleClik(d)"
         >
           <td>{{ i + 1 }}</td>
           <td>{{ d.nama }}</td>
-          <td>{{ d.type }}</td>
+          <!-- <td>{{ d.type }}</td> -->
           <td>{{ d.area.nama }}</td>
+          <td>{{ "Rp. " + d.harga }}</td>
           <td>{{ d.cakupan }}</td>
-          <td>{{ d.harga }}</td>
         </tr>
       </tbody>
     </table>
@@ -229,13 +233,20 @@
               Tutup
             </button>
             <button
+              v-if="table.user.role == 'sysadmin'"
               type="button"
               class="btn btn-sm btn-danger"
               @click="form.deleteData"
             >
               Hapus
             </button>
-            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+            <button
+              v-if="table.user.role == 'sysadmin'"
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >
+              Simpan
+            </button>
           </div>
         </form>
       </div>

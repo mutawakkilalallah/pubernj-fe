@@ -8,6 +8,7 @@ export const useAuthStore = defineStore("auth", {
     token: localStorage.getItem("token") ? storage.getLocalToken() : null,
     user: localStorage.getItem("user") ? storage.getUser() : null,
     foto: "",
+    stast: {},
     loading: false,
   }),
   getters: {
@@ -58,6 +59,14 @@ export const useAuthStore = defineStore("auth", {
       } catch (error) {
         this.loading = false;
       }
+    },
+    async getStats() {
+      try {
+        await api.get("dashboard").then((resp) => {
+          console.log(resp.data.data);
+          this.stast = resp.data.data;
+        });
+      } catch (error) {}
     },
     SET_TOKEN_USER(token, user) {
       storage.setHeaderToken(token);

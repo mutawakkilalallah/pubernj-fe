@@ -27,13 +27,6 @@
         </option>
       </select>
     </div>
-    <div class="col-md-2">
-      <select class="form-select form-select-sm mb-2">
-        <option value="" selected>Semua Tujuan</option>
-        <option value="">-- Sudah Ditentukan --</option>
-        <option value="">-- Tanpa Dropspot --</option>
-      </select>
-    </div>
   </div>
   <!-- jumlah data dan pencarian -->
   <div class="serach-box row">
@@ -76,11 +69,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="(d, i) in table.items"
-          :key="i"
-          @dblclick="form.handleDoubleClik(d)"
-        >
+        <!-- @dblclick="form.handleDoubleClik(d)" -->
+        <tr v-for="(d, i) in table.items" :key="i">
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
           <td>{{ d.santri_niup }}</td>
           <td>{{ d.santri_nama }}</td>

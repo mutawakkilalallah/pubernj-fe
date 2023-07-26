@@ -23,6 +23,15 @@
       ></div>
     </div>
     <img
+      v-if="storeAuth.user.santri_nama === 'Mutawakkil Alallah'"
+      v-show="storeAuth.loading === false"
+      src="/whoami.jpg"
+      alt="pohto-profile"
+      width="80"
+      class="rounded-circle me-3"
+    />
+    <img
+      v-else
       v-show="storeAuth.loading === false"
       :src="storeAuth.foto"
       alt="pohto-profile"
@@ -30,10 +39,20 @@
       class="rounded-circle me-3"
     />
     <div class="user-info text-white">
-      <p style="font-size: 20px; margin-bottom: 0" class="fw-bold">
+      <p
+        v-if="storeAuth.user.santri_nama === 'Mutawakkil Alallah'"
+        style="font-size: 20px; margin-bottom: 0"
+        class="fw-bold"
+      >
+        Aa
+      </p>
+      <p v-else style="font-size: 20px; margin-bottom: 0" class="fw-bold">
         {{ storeAuth.user.santri_nama }}
       </p>
-      <i v-if="storeAuth.user.role === 'wilayah'">{{
+      <i v-if="storeAuth.user.santri_nama === 'Mutawakkil Alallah'"
+        >Stayprogress:v</i
+      >
+      <i v-else-if="storeAuth.user.role === 'wilayah'">{{
         storeAuth.user.raw.domisili_santri[
           storeAuth.user.raw.domisili_santri.length - 1
         ].wilayah +
@@ -58,77 +77,62 @@
 
 <script setup>
 import WidgetDashboard from "../components/WidgetDashboard.vue";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useAuthStore } from "../store/auth";
 const storeAuth = useAuthStore();
 
-onMounted(() => {
+const totalSantri = ref(0);
+const totalPenumpang = ref(0);
+const totalTidakRombongan = ref(0);
+const totalArea = ref(0);
+const totalDropspot = ref(0);
+const totalUser = ref(0);
+
+onMounted(async () => {
   storeAuth.getImage(storeAuth.user.santri_uuid, "small");
+  await storeAuth.getStats();
+  totalSantri.value = storeAuth.stast.totalSantri;
+  totalPenumpang.value = storeAuth.stast.totalPenumpang;
+  totalTidakRombongan.value = storeAuth.stast.totalTidakRombongan;
+  totalArea.value = storeAuth.stast.totalArea;
+  totalDropspot.value = storeAuth.stast.totalDropspot;
+  totalUser.value = storeAuth.stast.totalUser;
 });
 
 const counter = [
   {
+    warna: "#006c8a",
+    total: totalSantri,
+    nama: "Total Santri",
+  },
+  {
+    warna: "#8a5700",
+    total: totalPenumpang,
+    nama: "Total Penumpang",
+  },
+  {
+    warna: "#8a5700",
+    total: totalTidakRombongan,
+    nama: "Total Santri Tidak Rombongan",
+  },
+  {
     warna: "#315200",
-    total: 0,
+    total: totalArea,
     nama: "Total Area",
   },
   {
     warna: "#2d0063",
-    total: 0,
+    total: totalDropspot,
     nama: "Total Dropspot",
   },
-  {
-    warna: "#5e0600",
-    total: 0,
-    nama: "Total User",
-  },
+  ...(storeAuth.user.role == "sysadmin"
+    ? [
+        {
+          warna: "#5e0600",
+          total: totalUser,
+          nama: "Total User",
+        },
+      ]
+    : []),
 ];
-// import WidgetDashboard from "../components/WidgetDashboard.vue";
-// import axios from "axios";
-// export default {
-//   components: {
-//     WidgetDashboard,
-//   },
-//   data() {
-//     return {
-//       namaUser: localStorage.getItem("nama"),
-//       roleUser: localStorage.getItem("role"),
-//       counter: [
-//         {
-//           warna: "#315200",
-//           total: 0,
-//           nama: "Total Area",
-//         },
-//         {
-//           warna: "#2d0063",
-//           total: 0,
-//           nama: "Total Dropspot",
-//         },
-//         {
-//           warna: "#5e0600",
-//           total: 0,
-//           nama: "Total User",
-//         },
-//       ],
-//     };
-//   },
-//   mounted() {
-//     this.getData();
-//   },
-//   methods: {
-//     async getData() {
-//       const result = await axios.get(
-//         "https://puber-api.kildev.my.id/dashboard",
-//         {
-//           headers: {
-//             "x-auth-token": localStorage.getItem("token"),
-//           },
-//         }
-//       );
-//       this.counter[0].total = result.data.data.totalUser;
-//       this.counter[1].total = result.data.data.totalArea;
-//       this.counter[2].total = result.data.data.totalDropspot;
-//     },
-//   },
-// };
 </script>
