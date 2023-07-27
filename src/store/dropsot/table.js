@@ -1,8 +1,10 @@
 import { defineStore } from "pinia";
+import * as storage from "../../modules/storage";
 import { api } from "../../plugins/axios";
 
 export const useDropsotTable = defineStore("table_dropspot", {
   state: () => ({
+    user: localStorage.getItem("user") ? storage.getUser() : null,
     items: [],
     params: {
       cari: "",

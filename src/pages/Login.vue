@@ -9,7 +9,7 @@
         />
       </div>
       <div class="title text-center mb-5 mt-5">
-        <h4>Aplikasi Pulang Bersama</h4>
+        <h4>Pulang Bersama</h4>
         <h6>Pondok Pesantren Nurul Jadid</h6>
       </div>
       <form @submit.prevent="prosesLogin">

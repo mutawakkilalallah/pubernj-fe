@@ -1,7 +1,7 @@
 <template>
   <Suspense>
     <!-- component with nested async dependencies  -->
-    <penumpang-page />
+    <drag-page />
     <!-- loading state via #fallback slot -->
     <template #fallback>
       <app-loading />
@@ -11,5 +11,7 @@
 <script setup>
 import { defineAsyncComponent } from "vue";
 
-const PenumpangPage = defineAsyncComponent(() => import("./PenumpangPage.vue"));
+const DragPage = defineAsyncComponent(() =>
+  import("./DragPage.vue" /* webpackChunkName: "BeritaPage" */)
+);
 </script>

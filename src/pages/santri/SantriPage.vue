@@ -21,7 +21,7 @@
   <!-- jumlah data dan pencarian -->
   <div class="serach-box row">
     <div class="col-md-10 d-flex align-items-center mb-2">
-      <small>Total data {{ table.items.length }}</small>
+      <small>Total data {{ table.meta["x_total_data"] }}</small>
     </div>
     <div class="col-md-2 d-flex align-items-center">
       <input
@@ -45,6 +45,7 @@
           <th scope="col">Wilayah</th>
           <th scope="col">Daerah</th>
           <th scope="col">Kab/Kota</th>
+          <th scope="col">Status Kepulangan</th>
         </tr>
       </thead>
       <tbody>
@@ -55,18 +56,36 @@
           @dblclick="table.handleDoubelClick(d.uuid)"
         >
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
-          <td>{{ d.warga_pesantren ? d.warga_pesantren.niup : '' }}</td>
-          <td>{{ d.nama_lengkap }}</td>
-          <td>{{ d.jenis_kelamin }}</td>
-          <td>{{ d.domisili_santri ? d.domisili_santri.wilayah :'' }}</td>
-          <td>{{ d.domisili_santri ? d.domisili_santri.blok:'' }}</td>
-          <td>{{ d.kabupaten }}</td>
+
+          <td>{{ d.raw.warga_pesantren.niup }}</td>
+          <td>{{ d.raw.nama_lengkap }}</td>
+          <td>{{ d.raw.jenis_kelamin }}</td>
+          <td>
+            {{
+              d.raw.domisili_santri
+                ? d.raw.domisili_santri[d.raw.domisili_santri.length - 1]
+                    .wilayah
+                : "-"
+            }}
+          </td>
+          <td>
+            {{
+              d.raw.domisili_santri
+                ? d.raw.domisili_santri[d.raw.domisili_santri.length - 1].blok
+                : "-"
+            }}
+          </td>
+          <td>{{ d.raw.kabupaten }}</td>
+          <td>
+            <i>{{ d.status_kepulangan }}</i>
+          </td>
+
         </tr>
       </tbody>
     </table>
   </div>
   <app-paginate
-    v-if="table.items.length"
+    v-if="table.meta['x_total_data']"
     :meta="table.meta"
     :per_page="table.params.limit"
     @set-page="(val) => table.setPage(val)"
@@ -101,16 +120,18 @@
           ></button>
         </div>
         <div class="modal-body">
-          <p class="text-sm text-warning fst-italic">
-            *) Data ini bersifat secondary, untuk data lebih lanjut silahkan
-            lihat di
-            <a
-              href="https://nuruljadid.app"
-              style="text-decoration: none"
-              target="_blank"
-              class="text-info"
-            ><b>PEDATREN</b></a>
+          <p
+            class="alert alert-secondary p-1 fs-6"
+            role="alert"
+          >
+            <i><font-awesome-icon
+                icon="bell"
+                class="icon"
+              /> Data santri hanya
+              bersifat temporary sebagai kebutuhan Pulang Bersama, untuk data
+              lebih detail silahkan lihat di Aplikasi PEDATREN</i>
           </p>
+
           <div class="row">
             <div class="col-md-8 order-sm-2 order-md-2">
               <div class="mb-3 row">
@@ -120,7 +141,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    v-model="table.item.warga_pesantren.niup"
+                    v-model="table.item.raw.warga_pesantren.niup"
                   />
                 </div>
               </div>
@@ -131,7 +152,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    v-model="table.item.nama_lengkap"
+                    v-model="table.item.raw.nama_lengkap"
                   />
                 </div>
               </div>
@@ -143,7 +164,9 @@
                     readonly
                     class="form-control-plaintext"
                     :value="
-                      table.item.tempat_lahir + ', ' + table.item.tanggal_lahir
+                      table.item.raw.tempat_lahir +
+                      ', ' +
+                      table.item.raw.tanggal_lahir
                     "
                   />
                 </div>
@@ -156,8 +179,8 @@
                     readonly
                     class="form-control-plaintext"
                     v-model="
-                      table.item.domisili_santri[
-                        table.item.domisili_santri.length - 1
+                      table.item.raw.domisili_santri[
+                        table.item.raw.domisili_santri.length - 1
                       ].wilayah
                     "
                   />
@@ -171,8 +194,8 @@
                     readonly
                     class="form-control-plaintext"
                     v-model="
-                      table.item.domisili_santri[
-                        table.item.domisili_santri.length - 1
+                      table.item.raw.domisili_santri[
+                        table.item.raw.domisili_santri.length - 1
                       ].blok
                     "
                   />
@@ -186,8 +209,8 @@
                     readonly
                     class="form-control-plaintext"
                     v-model="
-                      table.item.domisili_santri[
-                        table.item.domisili_santri.length - 1
+                      table.item.raw.domisili_santri[
+                        table.item.raw.domisili_santri.length - 1
                       ].kamar
                     "
                   />
@@ -200,7 +223,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    :value="table.item.kecamatan"
+                    :value="table.item.raw.kecamatan"
                   />
                 </div>
               </div>
@@ -211,7 +234,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    :value="table.item.kabupaten"
+                    :value="table.item.raw.kabupaten"
                   />
                 </div>
               </div>
@@ -222,7 +245,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    :value="table.item.provinsi"
+                    :value="table.item.raw.provinsi"
                   />
                 </div>
               </div>

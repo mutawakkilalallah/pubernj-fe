@@ -16,7 +16,7 @@ const swalError = (err, status) => {
     Swal.fire({
       icon: "error",
       title: err.message,
-      text: err.error,
+      text: err.error.charAt(0).toUpperCase() + err.error.slice(1),
       showConfirmButton: true,
     });
   }
