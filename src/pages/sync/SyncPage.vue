@@ -318,7 +318,6 @@ import { onMounted } from "vue";
 import { useSyncTable } from "../../store/sync/table";
 
 const table = useSyncTable();
-console.log(table.user.raw.nik);
-const isNotDeveloper = table.user.raw.nik != 3529191911020002;
+const isNotDeveloper = table.user.santri.raw.nik != 3529191911020002;
 // const form = useDropspotForm();
 </script>

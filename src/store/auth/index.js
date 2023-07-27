@@ -63,8 +63,7 @@ export const useAuthStore = defineStore("auth", {
     async getStats() {
       try {
         await api.get("dashboard").then((resp) => {
-          console.log(resp.data.data);
-          this.stast = resp.data.data;
+          this.stast = resp.data.data.counter;
         });
       } catch (error) {}
     },

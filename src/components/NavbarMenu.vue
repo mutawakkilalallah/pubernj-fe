@@ -80,6 +80,11 @@ export default {
                 path: "user",
               },
               {
+                icon: "clone",
+                title: "Drag & Drop",
+                path: "drag",
+              },
+              {
                 icon: "rotate",
                 title: "Syncronize",
                 path: "sync",

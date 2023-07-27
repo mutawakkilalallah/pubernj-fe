@@ -18,6 +18,7 @@ import {
   faBriefcase,
   faBrush,
   faChartSimple,
+  faClone,
   faLocationDot,
   faMap,
   faPenAlt,
@@ -40,7 +41,8 @@ library.add(
   faBriefcase,
   faPenAlt,
   faRotate,
-  faBell
+  faBell,
+  faClone
 );
 const pinia = createPinia();
 const app = createApp(App);

@@ -10,10 +10,11 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       area: [],
       dropspot: [],
     },
-    areaId: "",
+    // areaId: "",
     params: {
       cari: "",
       dropspot: "",
+      area: "",
       page: 1,
       limit: 25,
     },
@@ -50,10 +51,11 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       } catch (error) {}
     },
     async getDropspot() {
-      const params = { params: { area: this.areaId } };
+      this.params.dropspot = "";
+      this.getData();
+      const params = { params: { area: this.params.area } };
       try {
         await api.get("dropspot", params).then((resp) => {
-          console.log(resp.data);
           if ((resp.data.code = 200)) {
             this.filter.dropspot = resp.data.data;
           }

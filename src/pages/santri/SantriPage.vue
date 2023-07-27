@@ -57,15 +57,22 @@
         >
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
           <td>{{ d.raw.warga_pesantren.niup }}</td>
-          <td>{{ d.nama_lengkap }}</td>
+          <td>{{ d.raw.nama_lengkap }}</td>
           <td>{{ d.raw.jenis_kelamin }}</td>
           <td>
             {{
-              d.raw.domisili_santri[d.raw.domisili_santri.length - 1].wilayah
+              d.raw.domisili_santri
+                ? d.raw.domisili_santri[d.raw.domisili_santri.length - 1]
+                    .wilayah
+                : "-"
             }}
           </td>
           <td>
-            {{ d.raw.domisili_santri[d.raw.domisili_santri.length - 1].blok }}
+            {{
+              d.raw.domisili_santri
+                ? d.raw.domisili_santri[d.raw.domisili_santri.length - 1].blok
+                : "-"
+            }}
           </td>
           <td>{{ d.raw.kabupaten }}</td>
           <td>

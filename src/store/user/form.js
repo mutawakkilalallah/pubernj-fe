@@ -32,27 +32,26 @@ export const useUserFrom = defineStore("form_user", {
   }),
   actions: {
     resetForm() {
-      this.form.santri_uuid = '',
-      this.form.username = ''
-      this.form.role = ''
-      this.form.password = ''
+      (this.form.santri_uuid = ""), (this.form.username = "");
+      this.form.role = "";
+      this.form.password = "";
       // form edit
-      this.formEdit.santri_uuid = ''
-      this.formEdit.username = ''
-      this.formEdit.role = ''
+      this.formEdit.santri_uuid = "";
+      this.formEdit.username = "";
+      this.formEdit.role = "";
       // form edit password
-      this.formEditPassword.password=''
+      this.formEditPassword.password = "";
     },
     setOpenAdd() {
       this.isOpenAdd = !this.isOpenAdd;
     },
     setOpenEdit() {
       this.isOpenEdit = !this.isOpenEdit;
-      this.resetForm()
+      this.resetForm();
     },
     setOpenEditPassword() {
       this.isOpenEditPassword = !this.isOpenEditPassword;
-      this.resetForm()
+      this.resetForm();
     },
     setOpenPilihUser() {
       this.isOpenPilihUser = !this.isOpenPilihUser;
@@ -61,14 +60,12 @@ export const useUserFrom = defineStore("form_user", {
       try {
         const resp = await api.post("user", this.form);
         this.isOpenAdd = false;
-        Swal.fire("Berhasil", resp.data.message, "success");
         const table = useUserTable();
         table.getData();
-        this.resetForm()
+        this.resetForm();
         this.namaSantri = "";
-      } catch (err) {
-        Swal.fire(err.response.data.message, err.response.data.error, "error");
-      }
+        this.santriUser = [];
+      } catch (err) {}
     },
     async getSantri() {
       try {
@@ -80,9 +77,7 @@ export const useUserFrom = defineStore("form_user", {
             this.santriUser = resp.data.data;
           }
         });
-      } catch (error) {
-        Swal.fire(err.response.data.message, err.response.data.error, "error");
-      }
+      } catch (error) {}
     },
     handleDoubleClik(d) {
       this.idEdit = d.id;
@@ -110,14 +105,11 @@ export const useUserFrom = defineStore("form_user", {
       try {
         await api.put(`user/${this.idEdit}`, this.formEdit).then((resp) => {
           this.isOpenEdit = false;
-          this.resetForm()
-          Swal.fire("Berhasil", resp.data.message, "success");
+          this.resetForm();
           const table = useUserTable();
           table.getData();
         });
-      } catch (err) {
-        Swal.fire(err.response.data.message, err.response.data.error, "error");
-      }
+      } catch (err) {}
     },
     async editDataPassword() {
       try {
@@ -125,14 +117,11 @@ export const useUserFrom = defineStore("form_user", {
           .put(`user/password/${this.idEdit}`, this.formEditPassword)
           .then((resp) => {
             this.isOpenEditPassword = false;
-           this.resetForm()
-            Swal.fire("Berhasil", resp.data.message, "success");
+            this.resetForm();
             const table = useUserTable();
             table.getData();
           });
-      } catch (err) {
-        Swal.fire(err.response.data.message, err.response.data.error, "error");
-      }
+      } catch (err) {}
     },
     async deleteData() {
       Swal.fire({
@@ -147,8 +136,7 @@ export const useUserFrom = defineStore("form_user", {
         if (result.isConfirmed) {
           api.delete(`user/${this.idEdit}`).then((result) => {
             this.isOpenEdit = false;
-            Swal.fire("Berhasil", result.data.message, "success");
-           this.resetForm()
+            this.resetForm();
             const table = useUserTable();
             table.getData();
           });

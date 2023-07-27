@@ -42,6 +42,11 @@ const routes = [
         component: () => import("@/pages/user/Index.vue"),
       },
       {
+        path: "/drag",
+        name: "drag",
+        component: () => import("@/pages/drag/Index.vue"),
+      },
+      {
         path: "/sync",
         name: "sync",
         component: () => import("@/pages/sync/Index.vue"),

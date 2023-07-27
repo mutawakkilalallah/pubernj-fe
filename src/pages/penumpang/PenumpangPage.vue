@@ -7,7 +7,7 @@
     <div class="col-md-2">
       <select
         class="form-select form-select-sm mb-2"
-        v-model="table.areaId"
+        v-model="table.params.area"
         @change="table.getDropspot"
       >
         <option value="" selected>Semua Area</option>
@@ -17,7 +17,7 @@
       </select>
       <select
         class="form-select form-select-sm mb-2"
-        :disabled="table.areaId === ''"
+        :disabled="table.params.area === ''"
         v-model="table.params.dropspot"
         @change="table.getData"
       >
@@ -72,13 +72,25 @@
         <!-- @dblclick="form.handleDoubleClik(d)" -->
         <tr v-for="(d, i) in table.items" :key="i">
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
-          <td>{{ d.santri_niup }}</td>
-          <td>{{ d.santri_nama }}</td>
-          <td>{{ d.santri_wilayah }}</td>
-          <td>{{ d.santri_blok }}</td>
-          <td>{{ d.raw.kecamatan }}</td>
-          <td>{{ d.raw.kabupaten }}</td>
-          <td>{{ d.raw.provinsi }}</td>
+          <td>{{ d.santri.raw.warga_pesantren.niup }}</td>
+          <td>{{ d.santri.raw.nama_lengkap }}</td>
+          <td>
+            {{
+              d.santri.raw.domisili_santri[
+                d.santri.raw.domisili_santri.length - 1
+              ].wilayah
+            }}
+          </td>
+          <td>
+            {{
+              d.santri.raw.domisili_santri[
+                d.santri.raw.domisili_santri.length - 1
+              ].wilayah
+            }}
+          </td>
+          <td>{{ d.santri.raw.kecamatan }}</td>
+          <td>{{ d.santri.raw.kabupaten }}</td>
+          <td>{{ d.santri.raw.provinsi }}</td>
           <td v-if="d.dropspot">{{ d.dropspot.nama }}</td>
           <td v-else class="text-danger"><i>belum-ditentukan</i></td>
           <td v-if="d.dropspot">
