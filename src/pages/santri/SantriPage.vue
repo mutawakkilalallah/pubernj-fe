@@ -55,11 +55,11 @@
           @dblclick="table.handleDoubelClick(d.uuid)"
         >
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
-          <td>{{ d.warga_pesantren.niup }}</td>
+          <td>{{ d.warga_pesantren ? d.warga_pesantren.niup : '' }}</td>
           <td>{{ d.nama_lengkap }}</td>
           <td>{{ d.jenis_kelamin }}</td>
-          <td>{{ d.domisili_santri.wilayah }}</td>
-          <td>{{ d.domisili_santri.blok }}</td>
+          <td>{{ d.domisili_santri ? d.domisili_santri.wilayah :'' }}</td>
+          <td>{{ d.domisili_santri ? d.domisili_santri.blok:'' }}</td>
           <td>{{ d.kabupaten }}</td>
         </tr>
       </tbody>

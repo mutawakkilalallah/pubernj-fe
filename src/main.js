@@ -16,6 +16,7 @@ import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 import {
   faBriefcase,
   faBrush,
+  faBus,
   faChartSimple,
   faLocationDot,
   faMap,
@@ -38,7 +39,8 @@ library.add(
   faUserCog,
   faBriefcase,
   faPenAlt,
-  faRotate
+  faRotate,
+  faBus
 );
 const pinia = createPinia();
 const app = createApp(App);

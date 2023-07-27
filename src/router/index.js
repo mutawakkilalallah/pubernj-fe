@@ -46,6 +46,11 @@ const routes = [
         name: "sync",
         component: () => import("@/pages/sync/Index.vue"),
       },
+      {
+        path: "/bus",
+        name: "bus",
+        component: () => import("@/pages/armada/Index.vue"),
+      },
     ],
   },
 ];
