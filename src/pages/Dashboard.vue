@@ -23,7 +23,7 @@
       ></div>
     </div>
     <img
-      v-if="storeAuth.user.santri.raw.nama_lengkap === 'Mutawakkil Alallah'"
+      v-if="storeAuth.user.santri.nama_lengkap === 'Mutawakkil Alallah'"
       v-show="storeAuth.loading === false"
       src="/whoami.jpg"
       alt="pohto-profile"
@@ -40,34 +40,33 @@
     />
     <div class="user-info text-white">
       <p
-        v-if="storeAuth.user.santri.raw.nama_lengkap === 'Mutawakkil Alallah'"
+        v-if="storeAuth.user.santri.nama_lengkap === 'Mutawakkil Alallah'"
         style="font-size: 20px; margin-bottom: 0"
         class="fw-bold"
       >
         Aa
       </p>
       <p v-else style="font-size: 20px; margin-bottom: 0" class="fw-bold">
-        {{ storeAuth.user.santri.raw.nama_lengkap }}
+        {{ storeAuth.user.santri.nama_lengkap }}
       </p>
-      <i v-if="storeAuth.user.santri.raw.nama_lengkap === 'Mutawakkil Alallah'"
+      <i v-if="storeAuth.user.santri.nama_lengkap === 'Mutawakkil Alallah'"
         >Stayprogress:v</i
       >
       <i v-else-if="storeAuth.user.role === 'daerah'">{{
-        storeAuth.user.santri.raw.domisili_santri[
-          storeAuth.user.santri.raw.domisili_santri.length - 1
-        ].wilayah +
-        " - " +
-        storeAuth.user.santri.raw.domisili_santri[
-          storeAuth.user.santri.raw.domisili_santri.length - 1
-        ].blok
+        storeAuth.user.santri.wilayah + " - " + storeAuth.user.santri.blok
       }}</i>
       <i v-else-if="storeAuth.user.role === 'wilayah'">{{
-        storeAuth.user.santri.raw.domisili_santri[
-          storeAuth.user.santri.raw.domisili_santri.length - 1
-        ].wilayah
+        storeAuth.user.santri.wilayah
       }}</i>
       <i v-else>{{ storeAuth.user.role }}</i>
     </div>
+  </div>
+  <div style="margin-left: -120px">
+    <GChart
+      type="ColumnChart"
+      :data="storeAuth.chart"
+      :options="chartOptions"
+    />
   </div>
   <div class="row mt-3">
     <widget-dashboard
@@ -84,6 +83,14 @@
 import WidgetDashboard from "../components/WidgetDashboard.vue";
 import { onMounted, ref } from "vue";
 import { useAuthStore } from "../store/auth";
+
+import { GChart } from "vue-google-charts";
+const chartOptions = {
+  chart: {
+    title: "Company Performance",
+    subtitle: "Sales, Expenses, and Profit: 2014-2017",
+  },
+};
 const storeAuth = useAuthStore();
 
 const totalSantri = ref(0);

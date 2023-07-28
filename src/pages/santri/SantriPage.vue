@@ -56,25 +56,16 @@
           @dblclick="table.handleDoubelClick(d.uuid)"
         >
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
-          <td>{{ d.raw.warga_pesantren.niup }}</td>
-          <td>{{ d.raw.nama_lengkap }}</td>
-          <td>{{ d.raw.jenis_kelamin }}</td>
+          <td>{{ d.niup }}</td>
+          <td>{{ d.nama_lengkap }}</td>
+          <td>{{ d.jenis_kelamin }}</td>
           <td>
-            {{
-              d.raw.domisili_santri
-                ? d.raw.domisili_santri[d.raw.domisili_santri.length - 1]
-                    .wilayah
-                : "-"
-            }}
+            {{ d.wilayah ? d.wilayah : "-" }}
           </td>
           <td>
-            {{
-              d.raw.domisili_santri
-                ? d.raw.domisili_santri[d.raw.domisili_santri.length - 1].blok
-                : "-"
-            }}
+            {{ d.blok ? d.blok : "-" }}
           </td>
-          <td>{{ d.raw.kabupaten }}</td>
+          <td>{{ d.kabupaten }}</td>
           <td>
             <i>{{ d.status_kepulangan }}</i>
           </td>
@@ -132,7 +123,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    v-model="table.item.raw.warga_pesantren.niup"
+                    v-model="table.item.niup"
                   />
                 </div>
               </div>
@@ -143,7 +134,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    v-model="table.item.raw.nama_lengkap"
+                    v-model="table.item.nama_lengkap"
                   />
                 </div>
               </div>
@@ -169,11 +160,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    v-model="
-                      table.item.raw.domisili_santri[
-                        table.item.raw.domisili_santri.length - 1
-                      ].wilayah
-                    "
+                    v-model="table.item.wilayah"
                   />
                 </div>
               </div>
@@ -184,11 +171,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    v-model="
-                      table.item.raw.domisili_santri[
-                        table.item.raw.domisili_santri.length - 1
-                      ].blok
-                    "
+                    v-model="table.item.blok"
                   />
                 </div>
               </div>
@@ -214,7 +197,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    :value="table.item.raw.kecamatan"
+                    :value="table.item.kecamatan"
                   />
                 </div>
               </div>
@@ -225,7 +208,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    :value="table.item.raw.kabupaten"
+                    :value="table.item.kabupaten"
                   />
                 </div>
               </div>
@@ -236,7 +219,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    :value="table.item.raw.provinsi"
+                    :value="table.item.provinsi"
                   />
                 </div>
               </div>
