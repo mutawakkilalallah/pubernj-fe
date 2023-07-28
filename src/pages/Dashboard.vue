@@ -23,7 +23,7 @@
       ></div>
     </div>
     <img
-      v-if="storeAuth.user.santri.raw.nama_lengkap === 'Mutawakkil Alallah'"
+      v-if="storeAuth.user.santri ? storeAuth.user.santri.raw.nama_lengkap === 'Mutawakkil Alallah':''"
       v-show="storeAuth.loading === false"
       src="/whoami.jpg"
       alt="pohto-profile"
@@ -40,18 +40,20 @@
     />
     <div class="user-info text-white">
       <p
-        v-if="storeAuth.user.santri.raw.nama_lengkap === 'Mutawakkil Alallah'"
+        v-if="storeAuth.user.santri ? storeAuth.user.santri.raw.nama_lengkap === 'Mutawakkil Alallah':''"
         style="font-size: 20px; margin-bottom: 0"
         class="fw-bold"
       >
         Aa
       </p>
-      <p v-else style="font-size: 20px; margin-bottom: 0" class="fw-bold">
-        {{ storeAuth.user.santri.raw.nama_lengkap }}
-      </p>
-      <i v-if="storeAuth.user.santri.raw.nama_lengkap === 'Mutawakkil Alallah'"
-        >Stayprogress:v</i
+      <p
+        v-else
+        style="font-size: 20px; margin-bottom: 0"
+        class="fw-bold"
       >
+        {{ storeAuth.user.santri ? storeAuth.user.santri.raw.nama_lengkap:'' }}
+      </p>
+      <i v-if="storeAuth.user.santri ? storeAuth.user.santri.raw.nama_lengkap === 'Mutawakkil Alallah':''">Stayprogress:v</i>
       <i v-else-if="storeAuth.user.role === 'daerah'">{{
         storeAuth.user.santri.raw.domisili_santri[
           storeAuth.user.santri.raw.domisili_santri.length - 1

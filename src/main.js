@@ -42,12 +42,8 @@ library.add(
   faBriefcase,
   faPenAlt,
   faRotate,
-<<<<<<< HEAD
-  faBus
-=======
   faBell,
   faClone
->>>>>>> c4b60b8f00cf29de18e440e4ee91b8fb26d864c2
 );
 const pinia = createPinia();
 const app = createApp(App);

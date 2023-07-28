@@ -57,7 +57,7 @@
         >
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
 
-          <td>{{ d.raw.warga_pesantren.niup }}</td>
+          <td>{{ d.raw.warga_pesantren ? d.raw.warga_pesantren.niup :"" }}</td>
           <td>{{ d.raw.nama_lengkap }}</td>
           <td>{{ d.raw.jenis_kelamin }}</td>
           <td>
