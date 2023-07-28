@@ -72,25 +72,17 @@
         <!-- @dblclick="form.handleDoubleClik(d)" -->
         <tr v-for="(d, i) in table.items" :key="i">
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
-          <td>{{ d.santri.raw.warga_pesantren.niup }}</td>
-          <td>{{ d.santri.raw.nama_lengkap }}</td>
+          <td>{{ d.santri.niup }}</td>
+          <td>{{ d.santri.nama_lengkap }}</td>
           <td>
-            {{
-              d.santri.raw.domisili_santri[
-                d.santri.raw.domisili_santri.length - 1
-              ].wilayah
-            }}
+            {{ d.santri.wilayah }}
           </td>
           <td>
-            {{
-              d.santri.raw.domisili_santri[
-                d.santri.raw.domisili_santri.length - 1
-              ].wilayah
-            }}
+            {{ d.santri.blok }}
           </td>
-          <td>{{ d.santri.raw.kecamatan }}</td>
-          <td>{{ d.santri.raw.kabupaten }}</td>
-          <td>{{ d.santri.raw.provinsi }}</td>
+          <td>{{ d.santri.kecamatan }}</td>
+          <td>{{ d.santri.kabupaten }}</td>
+          <td>{{ d.santri.provinsi }}</td>
           <td v-if="d.dropspot">{{ d.dropspot.nama }}</td>
           <td v-else class="text-danger"><i>belum-ditentukan</i></td>
           <td v-if="d.dropspot">

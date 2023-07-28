@@ -57,15 +57,11 @@
           @dblclick="form.handleDoubleClik(d)"
         >
           <td>{{ i + 1 }}</td>
-          <td>{{ d.santri.raw.nama_lengkap }}</td>
+          <td>{{ d.santri.nama_lengkap }}</td>
           <td>{{ "@" + d.username }}</td>
           <td>{{ d.role }}</td>
           <td>
-            {{
-              d.santri.raw.domisili_santri[
-                d.santri.raw.domisili_santri.length - 1
-              ].blok
-            }}
+            {{ d.santri.blok }}
           </td>
           <td>
             <button
@@ -327,21 +323,15 @@
                 <tr
                   v-for="(s, i) in form.santriUser"
                   :key="i"
-                  @dblclick="form.handleUserPilih(s.uuid, s.raw.nama_lengkap)"
+                  @dblclick="form.handleUserPilih(s.uuid, s.nama_lengkap)"
                 >
-                  <td>{{ s.raw.warga_pesantren.niup }}</td>
-                  <td>{{ s.raw.nama_lengkap }}</td>
+                  <td>{{ s.niup }}</td>
+                  <td>{{ s.nama_lengkap }}</td>
                   <td>
-                    {{
-                      s.raw.domisili_santri[s.raw.domisili_santri.length - 1]
-                        .wilayah
-                    }}
+                    {{ s.wilayah }}
                   </td>
                   <td>
-                    {{
-                      s.raw.domisili_santri[s.raw.domisili_santri.length - 1]
-                        .blok
-                    }}
+                    {{ s.blok }}
                   </td>
                 </tr>
               </tbody>

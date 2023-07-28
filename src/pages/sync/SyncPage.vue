@@ -261,6 +261,16 @@
         Santri
       </button>
     </div>
+    <div class="col-md-3 mb-3">
+      <button
+        :disabled="isNotDeveloper"
+        class="btn btn-danger w-100"
+        @click="table.excludePenumpang"
+      >
+        <font-awesome-icon icon="rotate" class="icon" /> Exclude - Putra Non
+        Siswa
+      </button>
+    </div>
   </div>
   <div class="row" v-if="table.showSyncButtonPenumpang === true">
     <div
@@ -318,6 +328,6 @@ import { onMounted } from "vue";
 import { useSyncTable } from "../../store/sync/table";
 
 const table = useSyncTable();
-const isNotDeveloper = table.user.santri.raw.nik != 3529191911020002;
+const isNotDeveloper = table.user.santri.nama_lengkap != "Mutawakkil Alallah";
 // const form = useDropspotForm();
 </script>

@@ -9,6 +9,7 @@ export const useAuthStore = defineStore("auth", {
     user: localStorage.getItem("user") ? storage.getUser() : null,
     foto: "",
     stast: {},
+    chart: [],
     loading: false,
   }),
   getters: {
@@ -64,6 +65,7 @@ export const useAuthStore = defineStore("auth", {
       try {
         await api.get("dashboard").then((resp) => {
           this.stast = resp.data.data.counter;
+          this.chart = resp.data.data.stat;
         });
       } catch (error) {}
     },

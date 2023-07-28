@@ -141,6 +141,17 @@ export const useSyncTable = defineStore("table_sync", {
         });
       } catch (error) {}
     },
+    async excludePenumpang() {
+      try {
+        this.isLoading = true;
+        await api.delete("sync/exclude/penumpang/").then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.isLoading = false;
+            swalSuccess(resp.data.message);
+          }
+        });
+      } catch (error) {}
+    },
     async updatePenumpang() {
       try {
         this.isLoading = true;
