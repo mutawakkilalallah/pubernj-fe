@@ -17,51 +17,75 @@ export const useDragFrom = defineStore("form_drag", {
   }),
   actions: {
     handleRowClickSatu(id) {
+      const idnya = id
+      // kondisi mengambil event shift javascript
       if (event.shiftKey && this.lastSelectedIndexSatu !== null) {
         const minIndex = Math.min(id, this.lastSelectedIndexSatu);
         const maxIndex = Math.max(id, this.lastSelectedIndexSatu);
-        for (let i = minIndex + 1; i <= maxIndex; i++) {
-          this.addIdUserSatu(i);
+        // shift dari bawah
+        if (idnya === maxIndex) {          
+          for (let i = minIndex + 1; i <= maxIndex; i++) {     
+            this.addIdUserSatu(i);
+          }
+          // shift dari atas
+        } else if (idnya === minIndex) {          
+          for (let i = minIndex; i + 1 <= maxIndex; i++) {  
+           this.addIdUserSatu(i);
+         }
+        } else {
+           for (let i = minIndex; i <= maxIndex; i++) {  
+           this.addIdUserSatu(i);
+         }
         }
       } else {
         this.addIdUserSatu(id);
       }
-
       this.lastSelectedIndexSatu = id;
     },
     handleRowClickDua(id) {
+      const idnya = id
+      // kondisi mengambil event shift javascript
       if (event.shiftKey && this.lastSelectedIndexDua !== null) {
         const minIndex = Math.min(id, this.lastSelectedIndexDua);
         const maxIndex = Math.max(id, this.lastSelectedIndexDua);
-        for (let i = minIndex + 1; i <= maxIndex; i++) {
-          this.addIdUserDua(i);
+        if (idnya === maxIndex) {          
+          for (let i = minIndex + 1; i <= maxIndex; i++) {     
+            this.addIdUserDua(i);
+          }
+        } else if (idnya === minIndex) {          
+          for (let i = minIndex; i + 1 <= maxIndex; i++) {  
+           this.addIdUserDua(i);
+         }
+        } else {
+           for (let i = minIndex; i <= maxIndex; i++) {  
+           this.addIdUserDua(i);
+         }
         }
       } else {
         this.addIdUserDua(id);
       }
-
       this.lastSelectedIndexDua = id;
     },
     addIdUserSatu(id) {
       const index = this.formSatu.id_user.indexOf(id);
-      if (index === -1) {
+      if (index == -1) {
         this.formSatu.id_user.push(id);
       } else {
         this.formSatu.id_user.splice(index, 1);
       }
-      console.log(this.formSatu.id_user.length);
     },
     addIdUserDua(id) {
+       console.log('addUserDua', id);
       const index = this.formDua.id_user.indexOf(id);
       if (index === -1) {
         this.formDua.id_user.push(id);
       } else {
         this.formDua.id_user.splice(index, 1);
       }
-      console.log(this.formDua.id_user.length);
     },
     dragStartSatu(id) {
-      //
+      // pindah satu data tanpa terselect
+      this.formSatu.id_user.push(id)
     },
     allowDropDua(event) {
       event.preventDefault();
@@ -74,7 +98,9 @@ export const useDragFrom = defineStore("form_drag", {
       this.formDua.role = "";
     },
     dragStartDua(id) {
-      //
+      // pindah satu data tanpa terselect
+      this.formDua.id_user.push(id)
+      
     },
     allowDropSatu(event) {
       event.preventDefault();
@@ -89,7 +115,6 @@ export const useDragFrom = defineStore("form_drag", {
     async editDataRole(form) {
       try {
         await api.put(`user/roles`, form).then((resp) => {
-          console.log("success");
           const table = useDragTable();
           table.getData1();
           table.getData2();

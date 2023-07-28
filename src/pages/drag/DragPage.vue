@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-6">
       <!-- judul -->
-      <h3>Drag & Drop (1)</h3>
+      <h3 class="text-capitalize">Drag & Drop {{ table.params1.role }}</h3>
       <hr />
       <!-- menu filter -->
       <div class="filter-box mb-5 row">
@@ -12,8 +12,15 @@
             v-model="table.params1.role"
             @change="table.getData1"
           >
-            <option value="" selected>Semua Hak Akses</option>
-            <option v-for="r in table.roles1" :key="r" :value="r.key">
+            <option
+              value=""
+              selected
+            >Semua Hak Akses</option>
+            <option
+              v-for="r in table.roles1"
+              :key="r"
+              :value="r.key"
+            >
               {{ r.value }}
             </option>
           </select>
@@ -66,14 +73,12 @@
               :class="{ 'table-active': isActiveSatu(d.id) }"
             >
               <td>{{ i + 1 }}</td>
-              <td>{{ d.santri.raw.nama_lengkap }}</td>
+              <td>{{ d.santri.nama_lengkap }}</td>
               <td>{{ "@" + d.username }}</td>
               <td>{{ d.role }}</td>
               <td>
                 {{
-                  d.santri.raw.domisili_santri[
-                    d.santri.raw.domisili_santri.length - 1
-                  ].blok
+                  d.santri.blok
                 }}
               </td>
             </tr>
@@ -83,7 +88,7 @@
     </div>
     <div class="col-md-6">
       <!-- judul -->
-      <h3>Drag & Drop (2)</h3>
+      <h3 class="text-capitalize">Drag & Drop {{ table.params2.role }}</h3>
       <hr />
       <!-- menu filter -->
       <div class="filter-box mb-5 row">
@@ -93,8 +98,15 @@
             v-model="table.params2.role"
             @change="table.getData2"
           >
-            <option value="" selected>Semua Hak Akses</option>
-            <option v-for="r in table.roles2" :key="r" :value="r.key">
+            <option
+              value=""
+              selected
+            >Semua Hak Akses</option>
+            <option
+              v-for="r in table.roles2"
+              :key="r"
+              :value="r.key"
+            >
               {{ r.value }}
             </option>
           </select>
@@ -147,14 +159,12 @@
               :class="{ 'table-active': isActiveDua(d.id) }"
             >
               <td>{{ i + 1 }}</td>
-              <td>{{ d.santri.raw.nama_lengkap }}</td>
+              <td>{{ d.santri.nama_lengkap }}</td>
               <td>{{ "@" + d.username }}</td>
               <td>{{ d.role }}</td>
               <td>
                 {{
-                  d.santri.raw.domisili_santri[
-                    d.santri.raw.domisili_santri.length - 1
-                  ].blok
+                  d.santri.blok
                 }}
               </td>
             </tr>

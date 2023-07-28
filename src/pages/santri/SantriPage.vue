@@ -56,11 +56,9 @@
           @dblclick="table.handleDoubelClick(d.uuid)"
         >
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
-
           <td>{{ d.niup }}</td>
           <td>{{ d.nama_lengkap }}</td>
           <td>{{ d.jenis_kelamin }}</td>
-
           <td>
             {{ d.wilayah ? d.wilayah : "-" }}
           </td>

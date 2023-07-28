@@ -56,9 +56,9 @@
       </p>
       <i v-if="storeAuth.user.santri.nama_lengkap === 'Mutawakkil Alallah'">Stayprogress:v</i>
       <p>
-        {{ storeAuth.user.santri ? storeAuth.user.santri.raw.nama_lengkap:'' }}
+        {{ storeAuth.user.santri ? storeAuth.user.santri.nama_lengkap:'' }}
       </p>
-      <i v-if="storeAuth.user.santri ? storeAuth.user.santri.raw.nama_lengkap === 'Mutawakkil Alallah':''">Stayprogress:v</i>
+      <i v-if="storeAuth.user.santri ? storeAuth.user.santri.nama_lengkap === 'Mutawakkil Alallah':''">Stayprogress:v</i>
       <i v-else-if="storeAuth.user.role === 'daerah'">{{
         storeAuth.user.santri.wilayah + " - " + storeAuth.user.santri.blok
       }}</i>
