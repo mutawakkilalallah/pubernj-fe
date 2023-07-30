@@ -17,25 +17,25 @@ export const useDragFrom = defineStore("form_drag", {
   }),
   actions: {
     handleRowClickSatu(id) {
-      const idnya = id
+      const idnya = id;
       // kondisi mengambil event shift javascript
       if (event.shiftKey && this.lastSelectedIndexSatu !== null) {
         const minIndex = Math.min(id, this.lastSelectedIndexSatu);
         const maxIndex = Math.max(id, this.lastSelectedIndexSatu);
         // shift dari bawah
-        if (idnya === maxIndex) {          
-          for (let i = minIndex + 1; i <= maxIndex; i++) {     
+        if (idnya === maxIndex) {
+          for (let i = minIndex + 1; i <= maxIndex; i++) {
             this.addIdUserSatu(i);
           }
           // shift dari atas
-        } else if (idnya === minIndex) {          
-          for (let i = minIndex; i + 1 <= maxIndex; i++) {  
-           this.addIdUserSatu(i);
-         }
+        } else if (idnya === minIndex) {
+          for (let i = minIndex; i + 1 <= maxIndex; i++) {
+            this.addIdUserSatu(i);
+          }
         } else {
-           for (let i = minIndex; i <= maxIndex; i++) {  
-           this.addIdUserSatu(i);
-         }
+          for (let i = minIndex; i <= maxIndex; i++) {
+            this.addIdUserSatu(i);
+          }
         }
       } else {
         this.addIdUserSatu(id);
@@ -43,23 +43,23 @@ export const useDragFrom = defineStore("form_drag", {
       this.lastSelectedIndexSatu = id;
     },
     handleRowClickDua(id) {
-      const idnya = id
+      const idnya = id;
       // kondisi mengambil event shift javascript
       if (event.shiftKey && this.lastSelectedIndexDua !== null) {
         const minIndex = Math.min(id, this.lastSelectedIndexDua);
         const maxIndex = Math.max(id, this.lastSelectedIndexDua);
-        if (idnya === maxIndex) {          
-          for (let i = minIndex + 1; i <= maxIndex; i++) {     
+        if (idnya === maxIndex) {
+          for (let i = minIndex + 1; i <= maxIndex; i++) {
             this.addIdUserDua(i);
           }
-        } else if (idnya === minIndex) {          
-          for (let i = minIndex; i + 1 <= maxIndex; i++) {  
-           this.addIdUserDua(i);
-         }
+        } else if (idnya === minIndex) {
+          for (let i = minIndex; i + 1 <= maxIndex; i++) {
+            this.addIdUserDua(i);
+          }
         } else {
-           for (let i = minIndex; i <= maxIndex; i++) {  
-           this.addIdUserDua(i);
-         }
+          for (let i = minIndex; i <= maxIndex; i++) {
+            this.addIdUserDua(i);
+          }
         }
       } else {
         this.addIdUserDua(id);
@@ -75,7 +75,6 @@ export const useDragFrom = defineStore("form_drag", {
       }
     },
     addIdUserDua(id) {
-       console.log('addUserDua', id);
       const index = this.formDua.id_user.indexOf(id);
       if (index === -1) {
         this.formDua.id_user.push(id);
@@ -85,7 +84,7 @@ export const useDragFrom = defineStore("form_drag", {
     },
     dragStartSatu(id) {
       // pindah satu data tanpa terselect
-      this.formSatu.id_user.push(id)
+      this.formSatu.id_user.push(id);
     },
     allowDropDua(event) {
       event.preventDefault();
@@ -99,8 +98,7 @@ export const useDragFrom = defineStore("form_drag", {
     },
     dragStartDua(id) {
       // pindah satu data tanpa terselect
-      this.formDua.id_user.push(id)
-      
+      this.formDua.id_user.push(id);
     },
     allowDropSatu(event) {
       event.preventDefault();

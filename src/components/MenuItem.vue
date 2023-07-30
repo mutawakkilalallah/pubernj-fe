@@ -1,16 +1,10 @@
 <template>
-  <router-link
-    :to="{ name: path }"
-    style="text-decoration: none"
-  >
+  <router-link :to="{ name: path }" style="text-decoration: none">
     <div
       class="menu-atas-item text-center p-3 mx-3"
-      :class="routePath == props.path ? 'menu-active' : '' "
+      :class="routePath == props.path ? 'menu-active' : ''"
     >
-      <font-awesome-icon
-        :icon="icon"
-        class="icon text-secondary"
-      />
+      <font-awesome-icon :icon="icon" class="icon text-secondary" />
       <p class="text-secondary nama">{{ title }}</p>
     </div>
   </router-link>

@@ -12,15 +12,8 @@
             v-model="table.params1.role"
             @change="table.getData1"
           >
-            <option
-              value=""
-              selected
-            >Semua Hak Akses</option>
-            <option
-              v-for="r in table.roles1"
-              :key="r"
-              :value="r.key"
-            >
+            <option value="" selected>Semua Hak Akses</option>
+            <option v-for="r in table.roles1" :key="r" :value="r.key">
               {{ r.value }}
             </option>
           </select>
@@ -77,9 +70,7 @@
               <td>{{ "@" + d.username }}</td>
               <td>{{ d.role }}</td>
               <td>
-                {{
-                  d.santri.blok
-                }}
+                {{ d.santri.blok }}
               </td>
             </tr>
           </tbody>
@@ -98,15 +89,8 @@
             v-model="table.params2.role"
             @change="table.getData2"
           >
-            <option
-              value=""
-              selected
-            >Semua Hak Akses</option>
-            <option
-              v-for="r in table.roles2"
-              :key="r"
-              :value="r.key"
-            >
+            <option value="" selected>Semua Hak Akses</option>
+            <option v-for="r in table.roles2" :key="r" :value="r.key">
               {{ r.value }}
             </option>
           </select>
@@ -163,9 +147,7 @@
               <td>{{ "@" + d.username }}</td>
               <td>{{ d.role }}</td>
               <td>
-                {{
-                  d.santri.blok
-                }}
+                {{ d.santri.blok }}
               </td>
             </tr>
           </tbody>

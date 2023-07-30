@@ -33,7 +33,6 @@ const swalSuccess = (msg) => {
 };
 
 const swalSuccessDelete = () => {
-  console.log("deleted");
   Swal.fire({
     icon: "success",
     title: "Berhasil",

@@ -46,19 +46,12 @@
       >
         Aa
       </p>
-
-      <p
-        v-else
-        style="font-size: 20px; margin-bottom: 0"
-        class="fw-bold"
-      >
+      <p v-else style="font-size: 20px; margin-bottom: 0" class="fw-bold">
         {{ storeAuth.user.santri.nama_lengkap }}
       </p>
-      <i v-if="storeAuth.user.santri.nama_lengkap === 'Mutawakkil Alallah'">Stayprogress:v</i>
-      <p>
-        {{ storeAuth.user.santri ? storeAuth.user.santri.nama_lengkap:'' }}
-      </p>
-      <i v-if="storeAuth.user.santri ? storeAuth.user.santri.nama_lengkap === 'Mutawakkil Alallah':''">Stayprogress:v</i>
+      <i v-if="storeAuth.user.santri.nama_lengkap === 'Mutawakkil Alallah'"
+        >Stayprogress:v</i
+      >
       <i v-else-if="storeAuth.user.role === 'daerah'">{{
         storeAuth.user.santri.wilayah + " - " + storeAuth.user.santri.blok
       }}</i>

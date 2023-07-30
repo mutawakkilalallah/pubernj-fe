@@ -2,8 +2,8 @@ import axios from "axios";
 import { getLocalToken } from "../modules/storage";
 import { swalError, swalSuccess, swalSuccessDelete } from "../modules/untils";
 
-const SERVER = "https://puber-api.phii.xyz";
-// const SERVER = "http://localhost:4001";
+// const SERVER = "https://puber-api.phii.xyz";
+const SERVER = "http://localhost:4001";
 // const SERVER = "https://0e50-20-212-224-34.ngrok-free.app";
 const base = SERVER;
 
@@ -17,9 +17,7 @@ const interceptResErrors = (err) => {
       err.response.data ? err.response.data : null,
       err.response.status
     );
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
   return Promise.reject(err);
 };
 

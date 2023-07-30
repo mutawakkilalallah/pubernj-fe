@@ -52,9 +52,14 @@ const routes = [
         component: () => import("@/pages/sync/Index.vue"),
       },
       {
-        path: "/bus",
-        name: "bus",
+        path: "/armada",
+        name: "armada",
         component: () => import("@/pages/armada/Index.vue"),
+      },
+      {
+        path: "/armada/:id/penumpang",
+        name: "armada-detail",
+        component: () => import("@/pages/armada/DetailPage.vue"),
       },
     ],
   },

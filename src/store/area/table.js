@@ -22,9 +22,7 @@ export const useAreaTable = defineStore("table_area", {
             this.totaldata = resp.headers["x_total_data"];
           }
         });
-      } catch (error) {
-        console.log("error", error);
-      }
+      } catch (error) {}
     },
   },
 });

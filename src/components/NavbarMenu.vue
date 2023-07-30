@@ -1,25 +1,13 @@
 <template>
   <nav class="navbar navbar-dark navbar-expand bg-primary p-2 fixed-top">
     <div class="container-fluid">
-      <a
-        v-if="isMobile"
-        class="navbar-brand fs-6"
-        href="#"
-      >PUBER NJ</a>
-      <a
-        v-else
-        class="navbar-brand fs-6"
-        href="#"
-      >Pulang Bersama - PP. Nurul Jadid</a>
-      <div
-        class="collapse navbar-collapse"
-        id="navbarSupportedContent"
+      <a v-if="isMobile" class="navbar-brand fs-6" href="#">PUBER NJ</a>
+      <a v-else class="navbar-brand fs-6" href="#"
+        >Pulang Bersama - PP. Nurul Jadid</a
       >
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-        <button
-          class="btn-kecil btn btn-outline-info me-2"
-          type="submit"
-        >
+        <button class="btn-kecil btn btn-outline-info me-2" type="submit">
           <font-awesome-icon icon="brush" /> Clear Cache
         </button>
         <button
@@ -75,6 +63,11 @@ export default {
           path: "penumpang",
         },
         {
+          icon: "bus",
+          title: "Armada",
+          path: "armada",
+        },
+        {
           icon: "map",
           title: "Area",
           path: "area",
@@ -91,11 +84,6 @@ export default {
                 icon: "user-cog",
                 title: "User Account",
                 path: "user",
-              },
-              {
-                icon: "clone",
-                title: "Drag & Drop",
-                path: "drag",
               },
               {
                 icon: "rotate",

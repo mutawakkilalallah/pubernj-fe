@@ -1,152 +1,299 @@
 <template>
-  <div id="app">
-    <div class="column">
-      <h2>Kolom Kiri</h2>
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Nama</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class="active"
-            v-for="(it, i) in leftColumn"
-            :key="i"
-            @click="onKlik(i+1)"
-          >
-            <td>{{ it.id }}</td>
-            <td>{{ it.name }}</td>
-          </tr>
-          <tr>
-            <td>23</td>
-            <td>23</td>
-          </tr>
-        </tbody>
-      </table>
-      <ul>
-        <li
-          v-for="(item, index) in leftColumn"
-          :key="index"
-          draggable="true"
-          @dragstart="handleDragStart('leftColumn', index)"
-          @dragover="handleDragOver"
-          @drop="handleDrop('leftColumn', index)"
-        >
-          {{ item.name }}
-        </li>
-        <li
-          v-if="!leftColumn.length"
-          @dragover="handleDragOver"
-          @drop="handleDrop('leftColumn', 0)"
-        >
-          Drop disini untuk menambahkan item
-        </li>
-      </ul>
+  <!-- judul -->
+  <h3>Data Armada</h3>
+  <hr />
+  <!-- menu filter -->
+  <div class="filter-box mb-5 row">
+    <div class="col-md-2">
+      <select
+        class="form-select form-select-sm mb-2"
+        v-model="table.params.area"
+        @change="table.getDropspot"
+      >
+        <option value="" selected>Semua Area</option>
+        <option v-for="a in table.filter.area" :key="a" :value="a.id">
+          {{ a.nama }}
+        </option>
+      </select>
+      <select
+        class="form-select form-select-sm mb-2"
+        :disabled="table.params.area === ''"
+        v-model="table.params.dropspot"
+        @change="table.getData"
+      >
+        <option value="" selected>Semua Dropsot</option>
+        <option v-for="d in table.filter.dropspot" :key="d" :value="d.id">
+          {{ d.nama }}
+        </option>
+      </select>
     </div>
-    <div class="column">
-      <h2>Kolom Kanan</h2>
-      <ul>
-        <li
-          v-for="(item, index) in rightColumn"
-          :key="index"
-          draggable="true"
-          @dragstart="handleDragStart('rightColumn', index)"
-          @dragover="handleDragOver"
-          @drop="handleDrop('rightColumn', index)"
+    <div class="col-md-2">
+      <select
+        class="form-select form-select-sm mb-2"
+        v-model="table.params.type"
+        @change="table.getData"
+      >
+        <option value="" selected>Semua Type</option>
+        <option value="bus" selected>BUS</option>
+        <option value="mini_bus" selected>MINI BUS</option>
+        <option value="elf" selected>ELF</option>
+        <option value="hiace" selected>HIACE</option>
+        <option value="mpv" selected>MPV</option>
+      </select>
+    </div>
+  </div>
+  <!-- jumlah data dan pencarian -->
+  <div class="serach-box row">
+    <div class="col-md-10 d-flex align-items-center mb-2">
+      <small>Total data {{ table.meta["x_total_data"] }}</small>
+    </div>
+    <div class="col-md-2 d-flex align-items-center">
+      <input
+        type="text"
+        v-model="table.params.cari"
+        class="form-control form-control-sm mb-2"
+        placeholder="Cari Armada ..."
+        @keyup="table.getData"
+      />
+    </div>
+  </div>
+  <hr />
+  <!-- tombol tambah data -->
+  <button
+    v-if="table.user.role == 'sysadmin'"
+    class="btn btn-sm btn-primary"
+    @click="form.setOpenAdd"
+  >
+    Tambah Armada
+  </button>
+  <!-- table data utama -->
+  <div class="table-responsive">
+    <table class="table table-sm table-hover mt-3">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Nama Armada</th>
+          <th scope="col">Type</th>
+          <th scope="col">Penumpang</th>
+          <th scope="col">Dropspot</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="(d, i) in table.items"
+          :key="i"
+          @dblclick="table.user.role === 'sysadmin' && form.handleDoubleClik(d)"
         >
-          {{ item.name }}
-        </li>
-        <li
-          v-if="!rightColumn.length"
-          @dragover="handleDragOver"
-          @drop="handleDrop('rightColumn', 0)"
-        >
-          Drop disini untuk menambahkan item
-        </li>
-      </ul>
+          <td>{{ i + 1 }}</td>
+          <td>{{ d.nama }}</td>
+          <td>{{ d.type.toUpperCase() }}</td>
+          <td>
+            <router-link :to="{ name: 'armada-detail', params: { id: d.id } }">
+              <button class="btn btn-primary btn-sm">
+                <font-awesome-icon icon="clipboard" class="icon" /> Daftar
+                Penumpang
+              </button>
+            </router-link>
+          </td>
+          <td>{{ d.dropspot.nama }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- modal tambah -->
+  <div
+    class="modal fade"
+    v-if="form.isOpenAdd === true"
+    :class="{ show: form.isOpenAdd }"
+    style="display: block"
+    id="modalTambah"
+    tabindex="-1"
+    aria-labelledby="modalTambahLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalTambahLabel">Tambah Armada</h1>
+          <button
+            class="btn-close"
+            type="button"
+            @click="form.setOpenAdd"
+          ></button>
+        </div>
+        <form @submit.prevent="form.tambahData">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <small>Nama Armada</small>
+              <input
+                type="text"
+                v-model="form.form.nama"
+                placeholder="Masukkan nama armada .."
+                class="form-control mt-2"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <small>Type</small>
+              <select class="form-select" v-model="form.form.type">
+                <option value="" selected>Pilih Type</option>
+                <option value="bus" selected>bus</option>
+                <option value="mini_bus" selected>mini_bus</option>
+                <option value="elf" selected>elf</option>
+                <option value="hiace" selected>hiace</option>
+                <option value="mpv" selected>mpv</option>
+              </select>
+            </div>
+            <div class="form-group mb-3">
+              <small>Area</small>
+              <select
+                class="form-select"
+                v-model="form.idArea"
+                @change="form.getDropspot"
+              >
+                <option value="" selected>Pilih Area</option>
+                <option v-for="a in form.isArea" :key="a" :value="a.id">
+                  {{ a.nama }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group mb-3">
+              <small>Dropspot</small>
+              <select
+                class="form-select"
+                v-model="form.form.dropspot_id"
+                :disabled="form.idArea === ''"
+              >
+                <option value="" selected>Pilih Dropsot</option>
+                <option v-for="d in form.isDropspot" :key="d" :value="d.id">
+                  {{ d.nama }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="form.setOpenAdd"
+            >
+              Tutup
+            </button>
+            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- modal edit data -->
+  <div
+    class="modal fade"
+    v-if="form.isOpenEdit === true"
+    :class="{ show: form.isOpenEdit }"
+    style="display: block"
+    id="modalEdit"
+    tabindex="-1"
+    aria-labelledby="modalEditLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Armada</h1>
+          <button
+            class="btn-close"
+            type="button"
+            @click="form.setOpenEdit"
+          ></button>
+        </div>
+        <form @submit.prevent="form.editData">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <small>Nama Armada</small>
+              <input
+                type="text"
+                class="form-control mt-2"
+                v-model="form.form.nama"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <small>Type</small>
+              <select class="form-select" v-model="form.form.type">
+                <option value="bus" selected>bus</option>
+                <option value="mini_bus" selected>mini_bus</option>
+                <option value="elf" selected>elf</option>
+                <option value="hiace" selected>hiace</option>
+                <option value="mpv" selected>mpv</option>
+              </select>
+            </div>
+            <div class="form-group mb-3">
+              <small>Area</small>
+              <select
+                class="form-select"
+                v-model="form.idArea"
+                @change="form.getDropspot"
+              >
+                <option value="" selected>Pilih Area</option>
+                <option v-for="a in form.isArea" :key="a" :value="a.id">
+                  {{ a.nama }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group mb-3">
+              <small>Dropspot</small>
+              <select
+                class="form-select"
+                v-model="form.form.dropspot_id"
+                :disabled="form.idArea === ''"
+              >
+                <option v-if="form.form.dropspot_id === ''" value="" selected>
+                  Pilih Dropspot
+                </option>
+                <option value="" selected>{{ form.namaDropsot }}</option>
+                <option v-for="d in form.isDropspot" :key="d" :value="d.id">
+                  {{ d.nama }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="form.setOpenEdit"
+            >
+              Tutup
+            </button>
+            <button
+              v-if="table.user.role == 'sysadmin'"
+              type="button"
+              class="btn btn-sm btn-danger"
+              @click="form.deleteData"
+            >
+              Hapus
+            </button>
+            <button
+              v-if="table.user.role == 'sysadmin'"
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >
+              Simpan
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
-
 <script setup>
-import { ref } from "vue";
+import { onMounted } from "vue";
+import { useArmadaForm } from "../../store/armada/form";
+import { useArmadaTable } from "../../store/armada/table";
 
-const leftColumn = ref([
-  { id: 1, name: "Item 1" },
-  { id: 2, name: "Item 2" },
-  { id: 3, name: "Item 3" },
-]);
-const rightColumn = ref([]);
+const table = useArmadaTable();
+const form = useArmadaForm();
 
-const draggedItem = ref(null);
-const draggedFrom = ref(null);
-
-const handleDragStart = (source, index) => {
-  event.dataTransfer.effectAllowed = "move";
-  event.dataTransfer.setData("text/plain", source + "-" + index);
-  draggedItem.value =
-    source === "leftColumn"
-      ? leftColumn.value[index]
-      : rightColumn.value[index];
-  draggedFrom.value = source;
-};
-
-const handleDragOver = (event) => {
-  event.preventDefault();
-  event.dataTransfer.dropEffect = "move";
-};
-
-const handleDrop = (target, index) => {
-  const data = event.dataTransfer.getData("text/plain");
-  const [source, itemIndex] = data.split("-");
-
-  if (source === target) return;
-
-  const item =
-    source === "leftColumn"
-      ? leftColumn.value[itemIndex]
-      : rightColumn.value[itemIndex];
-
-  if (source === "leftColumn") {
-    leftColumn.value.splice(itemIndex, 1);
-  } else {
-    rightColumn.value.splice(itemIndex, 1);
-  }
-
-  if (target === "leftColumn" && draggedFrom.value === "rightColumn") {
-    leftColumn.value.splice(index, 0, draggedItem.value);
-  } else if (target === "rightColumn" && draggedFrom.value === "leftColumn") {
-    rightColumn.value.splice(index, 0, draggedItem.value);
-  }
-};
-
-function onKlik(a) {
-  console.log("klick", a);
-}
+onMounted(() => {
+  table.getData();
+  form.getArea();
+});
 </script>
-
-<style lang="scss" scoped>
-/* Tambahkan gaya CSS sesuai keinginan Anda */
-.column {
-  float: left;
-  width: 50%;
-  padding: 10px;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-  border: 1px solid #ccc;
-}
-li {
-  padding: 5px;
-  margin: 5px;
-  background-color: #f9f9f9;
-  cursor: grab;
-}
-/*table */
-.table tbody tr.active td {
-  background-color: #15449b;
-}
-</style>
