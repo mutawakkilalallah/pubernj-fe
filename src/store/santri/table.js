@@ -7,24 +7,40 @@ export const useSantriTable = defineStore("table_santri", {
     items: [],
     item: {},
     fotoDiri: "",
-    headers: {
-      totalData: 0,
-      totalPage: 0,
-    },
+    meta: {},
+    myPage: "",
     params: {
       cari: "",
       page: 1,
+      limit: 25,
     },
   }),
   actions: {
+    nexPage(a) {
+      this.params.page = parseInt(a) + 1;
+      this.getData();
+    },
+    prevPage(a) {
+      this.params.page = parseInt(a) - 1;
+      this.getData();
+    },
+    setPage(a) {
+      this.params.page = parseInt(a);
+      this.getData();
+    },
+    searchPage() {
+      this.params.page = 1;
+      this.getData();
+    },
+
     async getData() {
       const params = { params: this.params };
       try {
         await api.get("santri", params).then((resp) => {
+          // console.log("meta headers", resp.headers);
           if ((resp.data.code = 200)) {
             this.items = resp.data.data;
-            this.headers.totalData = resp.headers["x_total_data"];
-            this.headers.totalPage = resp.headers["x_total_page"];
+            this.meta = resp.headers;
           }
         });
       } catch (error) {}

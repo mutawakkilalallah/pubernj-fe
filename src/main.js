@@ -14,12 +14,17 @@ import VPagination from "@hennge/vue3-pagination";
 import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 
 import {
+  faBell,
   faBriefcase,
   faBrush,
+  faBus,
   faChartSimple,
+  faClipboard,
+  faClone,
   faLocationDot,
   faMap,
   faPenAlt,
+  faRotate,
   faSignOutAlt,
   faUser,
   faUserCog,
@@ -36,7 +41,12 @@ library.add(
   faUser,
   faUserCog,
   faBriefcase,
-  faPenAlt
+  faPenAlt,
+  faRotate,
+  faBell,
+  faClone,
+  faBus,
+  faClipboard
 );
 const pinia = createPinia();
 const app = createApp(App);

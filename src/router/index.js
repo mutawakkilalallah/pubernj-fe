@@ -22,6 +22,11 @@ const routes = [
         component: () => import("@/pages/santri/Index.vue"),
       },
       {
+        path: "/penumpang",
+        name: "penumpang",
+        component: () => import("@/pages/penumpang/Index.vue"),
+      },
+      {
         path: "/area",
         name: "area",
         component: () => import("@/pages/area/Index.vue"),
@@ -35,6 +40,26 @@ const routes = [
         path: "/user",
         name: "user",
         component: () => import("@/pages/user/Index.vue"),
+      },
+      {
+        path: "/drag",
+        name: "drag",
+        component: () => import("@/pages/drag/Index.vue"),
+      },
+      {
+        path: "/sync",
+        name: "sync",
+        component: () => import("@/pages/sync/Index.vue"),
+      },
+      {
+        path: "/armada",
+        name: "armada",
+        component: () => import("@/pages/armada/Index.vue"),
+      },
+      {
+        path: "/armada/:id/penumpang",
+        name: "armada-detail",
+        component: () => import("@/pages/armada/DetailPage.vue"),
       },
     ],
   },
