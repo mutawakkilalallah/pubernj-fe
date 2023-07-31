@@ -69,7 +69,6 @@
           <td>
             <i>{{ d.status_kepulangan }}</i>
           </td>
-
         </tr>
       </tbody>
     </table>
@@ -99,10 +98,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalDetailLabel"
-          >Detail Santri</h1>
+          <h1 class="modal-title fs-5" id="modalDetailLabel">Detail Santri</h1>
           <button
             class="btn-close"
             type="button"
@@ -110,16 +106,12 @@
           ></button>
         </div>
         <div class="modal-body">
-          <p
-            class="alert alert-secondary p-1 fs-6"
-            role="alert"
-          >
-            <i><font-awesome-icon
-                icon="bell"
-                class="icon"
-              /> Data santri hanya
+          <p class="alert alert-secondary p-1 fs-6" role="alert">
+            <i
+              ><font-awesome-icon icon="bell" class="icon" /> Data santri hanya
               bersifat temporary sebagai kebutuhan Pulang Bersama, untuk data
-              lebih detail silahkan lihat di Aplikasi PEDATREN</i>
+              lebih detail silahkan lihat di Aplikasi PEDATREN</i
+            >
           </p>
 
           <div class="row">
@@ -242,11 +234,15 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary">Lihat Data Rombongan</button>
-          <button
-            class="btn btn-secondary"
-            @click="table.isOpenDetail = false"
+          <router-link
+            :to="{
+              name: 'penumpang-detail',
+              params: { uuid: table.item.uuid },
+            }"
           >
+            <button class="btn btn-primary">Lihat Data Rombongan</button>
+          </router-link>
+          <button class="btn btn-secondary" @click="table.isOpenDetail = false">
             Tutup
           </button>
         </div>

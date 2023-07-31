@@ -27,6 +27,11 @@ const routes = [
         component: () => import("@/pages/penumpang/Index.vue"),
       },
       {
+        path: "/penumpang/:uuid/detail",
+        name: "penumpang-detail",
+        component: () => import("@/pages/penumpang/DetailPage.vue"),
+      },
+      {
         path: "/area",
         name: "area",
         component: () => import("@/pages/area/Index.vue"),

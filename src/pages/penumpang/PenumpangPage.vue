@@ -27,6 +27,19 @@
         </option>
       </select>
     </div>
+    <div class="col-md-2">
+      <select
+        class="form-select form-select-sm mb-2"
+        v-model="table.params.pembayaran"
+        @change="table.getData"
+      >
+        <option value="" selected>Semua Status Pembayaran</option>
+        <option value="belum-lunas">Belum Lunas</option>
+        <option value="lunas">Lunas</option>
+        <option value="kurang">Kurang</option>
+        <option value="lebih">Lebih</option>
+      </select>
+    </div>
   </div>
   <!-- jumlah data dan pencarian -->
   <div class="serach-box row">
@@ -56,33 +69,28 @@
           <th scope="col">No</th>
           <th scope="col">NIUP</th>
           <th scope="col">Nama Santri</th>
-          <th scope="col">Wilayah</th>
-          <th scope="col">Daerah</th>
-          <th scope="col">Kecamatan</th>
-          <th scope="col">Kabupaten</th>
-          <th scope="col">Provinsi</th>
           <th scope="col">Dropsot</th>
           <th scope="col">Area</th>
           <th scope="col">Tarif</th>
           <th scope="col">Jumlah Bayar</th>
           <th scope="col">Status Pembayaran</th>
+          <th scope="col">Wilayah</th>
+          <th scope="col">Daerah</th>
+          <th scope="col">Kecamatan</th>
+          <th scope="col">Kabupaten</th>
+          <th scope="col">Provinsi</th>
         </tr>
       </thead>
       <tbody>
         <!-- @dblclick="form.handleDoubleClik(d)" -->
-        <tr v-for="(d, i) in table.items" :key="i">
+        <tr
+          v-for="(d, i) in table.items"
+          :key="i"
+          @contextmenu.prevent="form.showContextMenu($event, d)"
+        >
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
           <td>{{ d.santri.niup }}</td>
           <td>{{ d.santri.nama_lengkap }}</td>
-          <td>
-            {{ d.santri.wilayah }}
-          </td>
-          <td>
-            {{ d.santri.blok }}
-          </td>
-          <td>{{ d.santri.kecamatan }}</td>
-          <td>{{ d.santri.kabupaten }}</td>
-          <td>{{ d.santri.provinsi }}</td>
           <td v-if="d.dropspot">{{ d.dropspot.nama }}</td>
           <td v-else class="text-danger"><i>belum-ditentukan</i></td>
           <td v-if="d.dropspot">
@@ -93,8 +101,30 @@
           <td v-else class="text-danger">Rp. 0</td>
           <td>{{ "Rp. " + d.jumlah_bayar }}</td>
           <td>
-            <i>{{ d.status_bayar }}</i>
+            <i
+              v-if="d.status_bayar === 'belum-lunas'"
+              class="badge bg-danger"
+              >{{ d.status_bayar }}</i
+            >
+            <i v-if="d.status_bayar === 'lunas'" class="badge bg-success">{{
+              d.status_bayar
+            }}</i>
+            <i v-if="d.status_bayar === 'kurang'" class="badge bg-warning">{{
+              d.status_bayar
+            }}</i>
+            <i v-if="d.status_bayar === 'lebih'" class="badge bg-info">{{
+              d.status_bayar
+            }}</i>
           </td>
+          <td>
+            {{ d.santri.wilayah }}
+          </td>
+          <td>
+            {{ d.santri.blok }}
+          </td>
+          <td>{{ d.santri.kecamatan }}</td>
+          <td>{{ d.santri.kabupaten }}</td>
+          <td>{{ d.santri.provinsi }}</td>
         </tr>
       </tbody>
     </table>
@@ -109,84 +139,31 @@
     @last="table.setPage"
     @first="table.setPage"
   />
-  <!-- modal tambah -->
-  <!-- <div
-    class="modal fade"
-    v-if="form.isOpenAdd === true"
-    :class="{ show: form.isOpenAdd }"
-    style="display: block"
-    id="modalTambah"
-    tabindex="-1"
-    aria-labelledby="modalTambahLabel"
-    aria-hidden="true"
+  <div
+    v-if="form.contextMenuVisible"
+    class="context-menu"
+    :style="{
+      top: `${form.contextMenuPosition.y}px`,
+      left: `${form.contextMenuPosition.x}px`,
+    }"
   >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalTambahLabel">Tambah Dropsot</h1>
-          <button
-            class="btn-close"
-            type="button"
-            @click="form.isOpenAdd = false"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group mb-3">
-            <small>Nama Dropspot</small>
-            <input
-              type="text"
-              v-model="form.form.nama"
-              placeholder="Masukkan nama dropspot .."
-              class="form-control mt-2"
-            />
-          </div>
-          <div class="form-group mb-3">
-            <small>Area</small>
-            <select class="form-select" v-model="form.form.area_id">
-              <option value="" selected>Pilih Area</option>
-              <option v-for="a in form.isArea" :key="a" :value="a.id">
-                {{ a.nama }}
-              </option>
-            </select>
-          </div>
-          <div class="form-group mb-3">
-            <small>Cakupan Daerah</small>
-            <input
-              type="text"
-              v-model="form.form.cakupan"
-              placeholder="Masukkan cakupan daerah .."
-              class="form-control mt-2"
-            />
-          </div>
-          <div class="form-group mb-3">
-            <small>Harga</small>
-            <input
-              type="text"
-              v-model="form.form.harga"
-              placeholder="Masukkan cakupan harga .."
-              class="form-control mt-2"
-            />
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            class="btn btn-sm btn-secondary"
-            @click="form.isOpenAdd = false"
-          >
-            Tutup
-          </button>
-          <button class="btn btn-sm btn-primary" @click="form.tambahData">
-            Simpan
-          </button>
-        </div>
-      </div>
-    </div>
-  </div> -->
-  <!-- modal edit data -->
-  <!-- <div
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item px-5" @click="form.handleOpenEditDropspot">
+        Ubah Dropsot
+      </li>
+      <li class="list-group-item px-5" @click="form.handleOpenEditPembayaran">
+        Ubah Status Pembayaran
+      </li>
+      <li class="list-group-item px-5" @click="form.goToDetail">
+        Lihat Detail Rombongan
+      </li>
+    </ul>
+  </div>
+  <!-- modal edit data dropspot -->
+  <div
     class="modal fade"
-    v-if="form.isOpenEdit === true"
-    :class="{ show: form.isOpenEdit }"
+    v-if="form.isOpenEditDropspot === true"
+    :class="{ show: form.isOpenEditDropspot }"
     style="display: block"
     id="modalEdit"
     tabindex="-1"
@@ -196,75 +173,145 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Dropspot</h1>
+          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Dropsot</h1>
           <button
             class="btn-close"
             type="button"
-            @click="form.isOpenEdit = false"
+            @click="form.setOpenEditDropspot"
           ></button>
         </div>
-        <div class="modal-body">
-          <div class="form-group mb-3">
-            <small>Nama Dropspot</small>
-            <input
-              type="text"
-              class="form-control mt-2"
-              v-model="form.form.nama"
-            />
+        <form @submit.prevent="form.editDropspot">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <small>Area</small>
+              <select
+                class="form-select"
+                v-model="form.idArea"
+                @change="form.getDropspot"
+              >
+                <option value="" selected>Pilih Area</option>
+                <option v-for="a in form.isArea" :key="a" :value="a.id">
+                  {{ a.nama }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group mb-3">
+              <small>Dropspot</small>
+              <select
+                class="form-select"
+                v-model="form.formEditDropspot.dropspot_id"
+                :disabled="form.idArea === ''"
+              >
+                <option
+                  v-if="form.formEditDropspot.dropspot_id === ''"
+                  value=""
+                  selected
+                >
+                  Pilih Dropspot
+                </option>
+                <option v-for="d in form.isDropspot" :key="d" :value="d.id">
+                  {{ d.nama }}
+                </option>
+              </select>
+            </div>
           </div>
-          <div class="form-group mb-3">
-            <small>Area</small>
-            <select class="form-select" v-model="form.form.area_id">
-              <option value="" selected>
-                {{ form.namaArea }}
-              </option>
-              <option v-for="a in form.isArea" :key="a" :value="a.id">
-                {{ a.nama }}
-              </option>
-            </select>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="form.setOpenEditDropspot"
+            >
+              Tutup
+            </button>
+            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
           </div>
-          <div class="form-group mb-3">
-            <small>Cakupan Daerah</small>
-            <input
-              type="text"
-              class="form-control mt-2"
-              v-model="form.form.cakupan"
-            />
-          </div>
-          <div class="form-group mb-3">
-            <small>Harga</small>
-            <input
-              type="text"
-              class="form-control mt-2"
-              v-model="form.form.harga"
-            />
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            class="btn btn-sm btn-secondary"
-            @click="form.isOpenEdit = false"
-          >
-            Tutup
-          </button>
-          <button class="btn btn-sm btn-danger" @click="form.deleteData">
-            Hapus
-          </button>
-          <button class="btn btn-sm btn-primary" @click="form.editData">
-            Simpan
-          </button>
-        </div>
+        </form>
       </div>
     </div>
-  </div> -->
+  </div>
+  <!-- modal edit data pembayaran -->
+  <div
+    class="modal fade"
+    v-if="form.isOpenEditPembayaran === true"
+    :class="{ show: form.isOpenEditPembayaran }"
+    style="display: block"
+    id="modalEdit"
+    tabindex="-1"
+    aria-labelledby="modalEditLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Pembayaran</h1>
+          <button
+            class="btn-close"
+            type="button"
+            @click="form.setOpenEditPembayaran"
+          ></button>
+        </div>
+        <form @submit.prevent="form.editPembayaran">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <small>Jumlah Pembayaran</small>
+              <input
+                type="number"
+                class="form-control mt-2"
+                v-model="form.formEditPembayaran.jumlah_bayar"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <small>Status Pembayaran</small>
+              <select
+                class="form-select"
+                v-model="form.formEditPembayaran.status_bayar"
+              >
+                <option value="" selected>Pilih Status</option>
+                <option value="lunas" selected>Lunas</option>
+                <option value="belum-lunas" selected>Belum Lunas</option>
+                <option value="lebih" selected>Lebih</option>
+                <option value="kurang" selected>Kurang</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="form.setOpenEditPembayaran"
+            >
+              Tutup
+            </button>
+            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </template>
 <script setup>
 import { onMounted } from "vue";
 import { usePenumpangTable } from "../../store/penumpang/table";
+import { usePenumpangForm } from "../../store/penumpang/form";
 
 const table = usePenumpangTable();
+const form = usePenumpangForm();
 
 onMounted(() => {
   table.getData();
 });
 </script>
+
+<style>
+.context-menu {
+  position: absolute;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+.context-menu li:hover {
+  cursor: pointer;
+  background-color: #003e1e;
+  color: white;
+}
+</style>

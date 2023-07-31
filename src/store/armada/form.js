@@ -40,13 +40,13 @@ export const useArmadaForm = defineStore("form_armada", {
         });
       } catch (error) {}
     },
-    getArea() {
-      try {
-        api.get("area").then((resp) => {
-          this.isArea = resp.data.data;
-        });
-      } catch (error) {}
-    },
+    // getArea() {
+    //   try {
+    //     api.get("area").then((resp) => {
+    //       this.isArea = resp.data.data;
+    //     });
+    //   } catch (error) {}
+    // },
     async getDropspot() {
       this.form.dropspot_id = "";
       const params = { params: { area: this.idArea } };
