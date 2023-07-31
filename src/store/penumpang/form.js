@@ -1,84 +1,109 @@
 import { defineStore } from "pinia";
 import { api } from "../../plugins/axios";
-import Swal from "sweetalert2";
-import { useDropsotTable } from "./table";
+import { usePenumpangTable } from "./table";
+import router from "../../router";
 
-export const useDropspotForm = defineStore("form_dropspot", {
+export const usePenumpangForm = defineStore("form_penumpang", {
   state: () => ({
-    isOpenAdd: false,
-    isOpenEdit: false,
+    contextMenuVisible: false,
+    contextMenuPosition: { x: 0, y: 0 },
+    isOpenEditDropspot: false,
+    isOpenEditPembayaran: false,
     isArea: [],
+    isDropspot: [],
     idEdit: "",
-    namaArea: "",
-    form: {
-      nama: "",
-      area_id: "",
-      cakupan: "",
-      harga: "",
+    idArea: "",
+    dataEdit: {},
+    formEditDropspot: {
+      dropspot_id: "",
+    },
+    formEditPembayaran: {
+      jumlah_bayar: "",
+      status_bayar: "",
     },
   }),
   actions: {
-    setOpenAdd() {
-      this.isOpenAdd = !this.isOpenAdd;
+    showContextMenu(event, d) {
+      event.preventDefault();
+      this.dataEdit = d;
+      this.idEdit = d.id;
+      this.contextMenuPosition = { x: event.clientX, y: event.clientY };
+      this.contextMenuVisible = true;
+      document.addEventListener("click", this.handleOutsideClick);
     },
-    setOpenEdit() {
-      this.isOpenEdit = !this.isOpenEdit;
+    handleOutsideClick(event) {
+      this.contextMenuVisible = false;
+      document.removeEventListener("click", this.handleOutsideClick);
+    },
+    resetFormEditDropspot() {
+      this.formEditDropspot.dropspot_id = "";
+    },
+    resetFormEditPembayaran() {
+      this.formEditPembayaran.jumlah_bayar = "";
+      this.formEditPembayaran.status_bayar = "";
+    },
+    setOpenEditDropspot() {
+      this.isOpenEditDropspot = !this.isOpenEditDropspot;
+      this.resetFormEditDropspot();
+    },
+    setOpenEditPembayaran() {
+      this.isOpenEditPembayaran = !this.isOpenEditPembayaran;
+      this.resetFormEditPembayaran();
+    },
+    handleOpenEditDropspot() {
+      this.idArea = this.dataEdit.dropspot.area_id;
+      this.getArea();
+      this.getDropspot();
+      this.formEditDropspot.dropspot_id = this.dataEdit.dropspot_id;
+      this.isOpenEditDropspot = true;
+    },
+    handleOpenEditPembayaran() {
+      this.formEditPembayaran.status_bayar = this.dataEdit.status_bayar;
+      this.formEditPembayaran.jumlah_bayar = this.dataEdit.jumlah_bayar;
+      this.isOpenEditPembayaran = true;
+    },
+    goToDetail() {
+      router.push(`penumpang/${this.dataEdit.santri_uuid}/detail`);
     },
     getArea() {
       try {
         api.get("area").then((resp) => {
-          //  console.log('areadrop', resp.data.data);
           this.isArea = resp.data.data;
         });
       } catch (error) {}
     },
-    async tambahData() {
+    async getDropspot() {
+      this.formEditDropspot.dropspot_id = "";
+      const params = { params: { area: this.idArea } };
       try {
-        const resp = await api.post("dropspot", this.form);
-        this.isOpenAdd = false;
-        const table = useDropsotTable();
-        table.getData();
-        this.form = {};
-      } catch (err) {}
-    },
-    handleDoubleClik(d) {
-      this.idEdit = d.id;
-      this.namaArea = d.area ? d.area.nama : "kosong";
-      this.form.nama = d.nama;
-      this.form.area_id = d.area_id;
-      this.form.cakupan = d.cakupan;
-      this.form.harga = d.harga;
-      this.isOpenEdit = true;
-    },
-    async editData() {
-      try {
-        await api.put(`dropspot/${this.idEdit}`, this.form).then((resp) => {
-          this.isOpenEdit = false;
-          this.form = {};
-          const table = useDropsotTable();
-          table.getData();
+        await api.get("dropspot", params).then((resp) => {
+          this.isDropspot = resp.data.data;
         });
-      } catch (err) {}
+      } catch (error) {}
     },
-    async deleteData() {
-      Swal.fire({
-        title: "Konfirmasi",
-        text: "Apakah anda yakin ingin menghapus data ?",
-        icon: "info",
-        showCancelButton: true,
-        confirmButtonText: "Hapus",
-        confirmButtonColor: "#DC3545",
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          api.delete(`dropspot/${this.idEdit}`).then((result) => {
-            this.isOpenEdit = false;
-            this.form = {};
-            const table = useDropsotTable();
+    async editDropspot() {
+      try {
+        await api
+          .put(`penumpang/dropspot/${this.idEdit}`, this.formEditDropspot)
+          .then((resp) => {
+            this.isOpenEditDropspot = false;
+            this.resetFormEditDropspot();
+            const table = usePenumpangTable();
             table.getData();
           });
-        }
-      });
+      } catch (err) {}
+    },
+    async editPembayaran() {
+      try {
+        await api
+          .put(`penumpang/pembayaran/${this.idEdit}`, this.formEditPembayaran)
+          .then((resp) => {
+            this.isOpenEditPembayaran = false;
+            this.resetFormEditPembayaran();
+            const table = usePenumpangTable();
+            table.getData();
+          });
+      } catch (err) {}
     },
   },
 });

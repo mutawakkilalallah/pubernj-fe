@@ -15,6 +15,7 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       cari: "",
       dropspot: "",
       area: "",
+      pembayaran: "",
       page: 1,
       limit: 25,
     },
@@ -36,7 +37,6 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       this.params.page = 1;
       this.getData();
     },
-
     async getData() {
       const params = { params: this.params };
       try {
