@@ -19,7 +19,8 @@ export const useArmadaDetailForm = defineStore("form_armada_detail", {
       // kondisi mengambil event shift javascript
       if (event.shiftKey && this.lastSelectedIndexAddArmada !== null) {
         const minIndex = Math.min(id, this.lastSelectedIndexAddArmada);
-        const maxIndex = Math.max(id, this.lastSelectedIndexAddArmada);
+        const maxIndex = Math.max(id, this.lastSelectedIndexAddArmada);       
+        // perulangan mengambil index table
         // shift dari bawah
         if (idnya === maxIndex) {
           for (let i = minIndex + 1; i <= maxIndex; i++) {
@@ -35,6 +36,7 @@ export const useArmadaDetailForm = defineStore("form_armada_detail", {
             this.addIdPenumpangAddArmada(i);
           }
         }
+      
       } else {
         this.addIdPenumpangAddArmada(id);
       }
@@ -65,37 +67,41 @@ export const useArmadaDetailForm = defineStore("form_armada_detail", {
       this.lastSelectedIndexDelArmada = id;
     },
     addIdPenumpangAddArmada(id) {
-      const index = this.formAddArmada.id_penumpang.indexOf(id);
-      if (index == -1) {
-        this.formAddArmada.id_penumpang.push(id);
+      const table = useArmadaDetailTable()
+      // mengambil id table
+      const index = this.formAddArmada.id_penumpang.indexOf(table.items[id].id);
+      if (index === -1) {
+        this.formAddArmada.id_penumpang.push(table.items[id].id);
       } else {
         this.formAddArmada.id_penumpang.splice(index, 1);
       }
     },
     addIdPenumpangDelArmada(id) {
-      const index = this.formDelArmada.id_penumpang.indexOf(id);
+      const table = useArmadaDetailTable()
+      const index = this.formDelArmada.id_penumpang.indexOf(table.armada.penumpang[id].id);
       if (index === -1) {
-        this.formDelArmada.id_penumpang.push(id);
+        this.formDelArmada.id_penumpang.push(table.armada.penumpang[id].id);
       } else {
         this.formDelArmada.id_penumpang.splice(index, 1);
       }
     },
     dragStartAddArmada(id) {
+      const table = useArmadaDetailTable()
       // pindah satu data tanpa terselect
-      this.formAddArmada.id_penumpang.push(id);
+      this.formAddArmada.id_penumpang.push(table.items[id].id);
     },
     allowDropAddArmada(event) {
       event.preventDefault();
     },
     dropAddArmada(event, id) {
-      console.log(id);
       event.preventDefault();
       this.hitAddArmada(this.formAddArmada, id);
       this.formAddArmada.id_penumpang = [];
     },
     dragStartDellArmada(id) {
+      const table = useArmadaDetailTable()
       // pindah satu data tanpa terselect
-      this.formDelArmada.id_penumpang.push(id);
+      this.formDelArmada.id_penumpang.push(table.armada.penumpang[id].id);
     },
     allowDropDelArmada(event) {
       event.preventDefault();

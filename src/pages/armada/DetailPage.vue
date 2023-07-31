@@ -6,21 +6,23 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-2">
-          <font-awesome-icon icon="bus" class="icon" style="font-size: 100px" />
+          <font-awesome-icon
+            icon="bus"
+            class="icon"
+            style="font-size: 100px"
+          />
         </div>
         <div class="col-md-8">
           <h3>{{ table.armada.nama }}</h3>
           <hr />
           <p class="mb-1">
-            <b>Dropspot : </b
-            >{{ table.armada.dropspot ? table.armada.dropspot.nama : "-" }}
+            <b>Dropspot : </b>{{ table.armada.dropspot ? table.armada.dropspot.nama : "-" }}
           </p>
           <p class="mb-1"><b>Pendamping : </b>-</p>
           <p class="mb-1"><b>No. HP : </b>-</p>
           <hr />
           <p class="mb-1">
-            <b>Jumlah Penumpang : </b
-            >{{ table.armada.penumpang ? table.armada.penumpang.length : 0 }}
+            <b>Jumlah Penumpang : </b>{{ table.armada.penumpang ? table.armada.penumpang.length : 0 }}
           </p>
         </div>
       </div>
@@ -49,9 +51,9 @@
               v-for="(d, i) in table.armada.penumpang"
               :key="i"
               draggable="true"
-              @dragstart="form.dragStartDellArmada(d.id)"
-              @click="form.handleRowDelArmada(d.id)"
-              :class="{ 'table-active': isActiveDelArmada(d.id) }"
+              @dragstart="form.dragStartDellArmada(i)"
+              @click="form.handleRowDelArmada(i)"
+              :class="{ 'table-active': isActiveDelArmada(i) }"
             >
               <td>{{ i + 1 }}</td>
               <td>{{ d.santri.nama_lengkap }}</td>
@@ -70,8 +72,15 @@
             v-model="table.params.area"
             @change="table.getDropspot"
           >
-            <option value="" selected>Semua Area</option>
-            <option v-for="a in table.filter.area" :key="a" :value="a.id">
+            <option
+              value=""
+              selected
+            >Semua Area</option>
+            <option
+              v-for="a in table.filter.area"
+              :key="a"
+              :value="a.id"
+            >
               {{ a.nama }}
             </option>
           </select>
@@ -81,8 +90,15 @@
             v-model="table.params.dropspot"
             @change="table.getData"
           >
-            <option value="" selected>Semua Dropsot</option>
-            <option v-for="d in table.filter.dropspot" :key="d" :value="d.id">
+            <option
+              value=""
+              selected
+            >Semua Dropsot</option>
+            <option
+              v-for="d in table.filter.dropspot"
+              :key="d"
+              :value="d.id"
+            >
               {{ d.nama }}
             </option>
           </select>
@@ -93,21 +109,48 @@
             v-model="table.params.jenis_kelamin"
             @change="table.getData"
           >
-            <option value="" selected>Semua Jenis Kelamin</option>
-            <option value="L" selected>Laki-laki</option>
-            <option value="P" selected>Perempuan</option>
+            <option
+              value=""
+              selected
+            >Semua Jenis Kelamin</option>
+            <option
+              value="L"
+              selected
+            >Laki-laki</option>
+            <option
+              value="P"
+              selected
+            >Perempuan</option>
           </select>
           <select
             class="form-select form-select-sm mb-2"
             v-model="table.params.limit"
             @change="table.getData"
           >
-            <option value="" selected>Limit by Kapasitas</option>
-            <option value="60" selected>BUS (60)</option>
-            <option value="34" selected>Mini Bus (34)</option>
-            <option value="18" selected>ELF (18)</option>
-            <option value="13" selected>HIACE (13)</option>
-            <option value="7" selected>MPV (8)</option>
+            <option
+              value=""
+              selected
+            >Limit by Kapasitas</option>
+            <option
+              value="60"
+              selected
+            >BUS (60)</option>
+            <option
+              value="34"
+              selected
+            >Mini Bus (34)</option>
+            <option
+              value="18"
+              selected
+            >ELF (18)</option>
+            <option
+              value="13"
+              selected
+            >HIACE (13)</option>
+            <option
+              value="7"
+              selected
+            >MPV (8)</option>
           </select>
         </div>
       </div>
@@ -151,9 +194,9 @@
               v-for="(d, i) in table.items"
               :key="i"
               draggable="true"
-              @dragstart="form.dragStartAddArmada(d.id)"
-              @click="form.handleRowClickAddArmada(d.id)"
-              :class="{ 'table-active': isActiveAddArmada(d.id) }"
+              @dragstart="form.dragStartAddArmada(i)"
+              @click="form.handleRowClickAddArmada(i)"
+              :class="{ 'table-active': isActiveAddArmada(i) }"
             >
               <td>{{ i + 1 }}</td>
               <td>{{ d.santri.nama_lengkap }}</td>
@@ -176,10 +219,15 @@ const form = useArmadaDetailForm();
 const route = useRoute();
 
 const isActiveAddArmada = (id) => {
-  return form.formAddArmada.id_penumpang.includes(id);
+  return form.formAddArmada.id_penumpang.includes(table.items[id].id);
 };
 const isActiveDelArmada = (id) => {
-  return form.formDelArmada.id_penumpang.includes(id);
+  return form.formDelArmada.id_penumpang.includes(
+    table.armada.penumpang[id].id
+  );
+  // return form.formDelArmada.id_penumpang.includes(
+  //   table.armada ? table.armada.penumpang[id].id : ""
+  // );
 };
 onMounted(() => {
   table.getData();
