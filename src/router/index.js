@@ -42,6 +42,11 @@ const routes = [
         component: () => import("@/pages/dropspot/Index.vue"),
       },
       {
+        path: "/keuangan",
+        name: "keuangan",
+        component: () => import("@/pages/keuangan/Index.vue"),
+      },
+      {
         path: "/user",
         name: "user",
         component: () => import("@/pages/user/Index.vue"),

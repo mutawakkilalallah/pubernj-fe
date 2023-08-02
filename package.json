@@ -16,6 +16,7 @@
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
     "chart.js": "^4.3.2",
+    "lodash": "^4.17.21",
     "node-sass": "^9.0.0",
     "pinia": "^2.1.4",
     "sass": "^1.63.6",
@@ -23,6 +24,7 @@
     "sweetalert2": "^11.7.12",
     "vue": "^3.2.47",
     "vue-google-charts": "^1.1.0",
+    "vue-money-format": "^1.2.4",
     "vue-router": "^4.2.2"
   },
   "devDependencies": {

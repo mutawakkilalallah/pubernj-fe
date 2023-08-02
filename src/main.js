@@ -21,6 +21,7 @@ import {
   faChartSimple,
   faClipboard,
   faClone,
+  faCreditCard,
   faLocationDot,
   faMap,
   faPenAlt,
@@ -46,7 +47,8 @@ library.add(
   faBell,
   faClone,
   faBus,
-  faClipboard
+  faClipboard,
+  faCreditCard
 );
 const pinia = createPinia();
 const app = createApp(App);
@@ -54,6 +56,22 @@ const app = createApp(App);
 app.component("font-awesome-icon", FontAwesomeIcon);
 app.component("pagination", VPagination);
 app.use(router);
+
+app.directive("rupiah", {
+  mounted(el, binding) {
+    const value = binding.value;
+    if (value === null || isNaN(value)) {
+      el.textContent = "";
+    } else {
+      const formattedValue = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        maximumSignificantDigits: 1,
+      }).format(value);
+      el.textContent = formattedValue;
+    }
+  },
+});
 
 app.use(pinia);
 registerComponents(app);

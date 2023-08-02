@@ -81,6 +81,11 @@ export default {
         ...(storeAuth.user.role == "sysadmin"
           ? [
               {
+                icon: "credit-card",
+                title: "Keuangan",
+                path: "keuangan",
+              },
+              {
                 icon: "user-cog",
                 title: "User Account",
                 path: "user",

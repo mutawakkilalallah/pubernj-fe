@@ -82,7 +82,6 @@
         </tr>
       </thead>
       <tbody>
-        <!-- @dblclick="form.handleDoubleClik(d)" -->
         <tr
           v-for="(d, i) in table.items"
           :key="i"
