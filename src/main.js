@@ -14,6 +14,8 @@ import VPagination from "@hennge/vue3-pagination";
 import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 
 import {
+  faArrowLeft,
+  faArrowRight,
   faBell,
   faBriefcase,
   faBrush,
@@ -48,7 +50,9 @@ library.add(
   faClone,
   faBus,
   faClipboard,
-  faCreditCard
+  faCreditCard,
+  faArrowRight,
+  faArrowLeft,
 );
 const pinia = createPinia();
 const app = createApp(App);
