@@ -12,20 +12,29 @@
         <h4>Pulang Bersama</h4>
         <h6>Pondok Pesantren Nurul Jadid</h6>
       </div>
-      <form @submit.prevent="prosesLogin">
+      <form
+        @submit.prevent="prosesLogin"
+        ref="myForm"
+      >
         <input
           v-model="form.username"
+          id="username"
           type="text"
           class="form-control mb-2"
+          :class="valid1 === true ? 'is-invalid':''"
           placeholder="Username"
+          @blur="validInput1(form.username)"
         />
         <input
           v-model="form.password"
+          :class="valid2 === true ? 'is-invalid':''"
+          id="password"
           type="password"
           class="form-control mb-3"
           placeholder="Password"
+          aria-describedby="password"
+          @blur="validInput2(form.password)"
         />
-
         <button
           v-if="storeAuth.loading === false"
           type="submit"
@@ -54,56 +63,35 @@ import { ref } from "vue";
 import { useAuthStore } from "../store/auth";
 
 const storeAuth = useAuthStore();
+const myForm = ref(null);
+const valid1 = ref(false);
+const valid2 = ref(false);
 const form = ref({
   username: "",
   password: "",
 });
 function prosesLogin() {
+  validInput1;
+  validInput2;
   storeAuth.login(form.value);
+  // console.log("my form", myForm);
+  // return "ok";
 }
 
-// import axios from "axios";
-// export default {
-//   data() {
-//     return {
-
-//       errorLogin: false,
-
-//       username: "",
-//       password: "",
-//     };
-//   },
-//   methods: {
-//     async prosesLogin() {
-//       if (this.username === "" && this.password === "") {
-//         Swal.fire(
-//           "Ops !",
-//           "harap isi username & password telebih dahulu",
-//           "error"
-//         );
-//       } else {
-//         const dataLogin = {
-//           username: this.username,
-//           password: this.password,
-//         };
-
-//         try {
-//           const result = await axios.post(
-//             "https://puber-api.kildev.my.id/login",
-//             dataLogin
-//           );
-
-//           localStorage.setItem("token", result.data.token);
-//           localStorage.setItem("nama", result.data.data.nama);
-//           localStorage.setItem("role", result.data.data.role);
-//           this.$router.replace("/");
-//         } catch (err) {
-//           this.errorLogin = true;
-//         }
-//       }
-//     },
-//   },
-// };
+function validInput1(msg) {
+  if (msg === "") {
+    valid1.value = true;
+  } else {
+    valid1.value = false;
+  }
+}
+function validInput2(msg) {
+  if (msg === "") {
+    valid2.value = true;
+  } else {
+    valid2.value = false;
+  }
+}
 </script>
 
 <style scoped>
