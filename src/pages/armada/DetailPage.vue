@@ -1,8 +1,11 @@
 <template>
   <!-- judul -->
-  <h3>Pengelolaan Data Penumpang</h3>
+  <h3 class="titlePage">Pengelolaan Data Penumpang</h3>
   <hr />
-  <div class="row">
+  <div
+    v-if="role === 'sysadmin' || role === 'admin'"
+    class="row"
+  >
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-2">
@@ -12,7 +15,7 @@
             style="font-size: 100px"
           />
         </div>
-        <div class="col-md-8">
+        <div class="col-md-10">
           <h3>{{ table.armada.nama }}</h3>
           <hr />
           <p class="mb-1">
@@ -237,16 +240,24 @@
       </div>
     </div>
   </div>
+  <div v-else>wilayah</div>
+
 </template>
 <script setup>
-import { onMounted } from "vue";
+import { computed, onMounted } from "vue";
 import { useArmadaDetailForm } from "../../store/armada/form-detail";
 import { useArmadaDetailTable } from "../../store/armada/table-detail";
 import { useRoute } from "vue-router";
+import { useAuthStore } from "../../store/auth";
 
+const storeAuth = useAuthStore();
 const table = useArmadaDetailTable();
 const form = useArmadaDetailForm();
 const route = useRoute();
+
+const role = computed(() => {
+  return storeAuth.user ? storeAuth.user.role : "wilayah";
+});
 
 const isActiveAddArmada = (id) => {
   return form.formAddArmada.id_penumpang.includes(table.items[id].id);

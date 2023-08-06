@@ -1,5 +1,5 @@
 <template>
-  <h3>Dashboard</h3>
+  <h3 class="titlePage">Dashboard</h3>
   <hr />
   <div class="user-card d-flex align-items-center bg-primary p-2 rounded">
     <div
@@ -46,12 +46,14 @@
       >
         Aa
       </p>
-      <p v-else style="font-size: 20px; margin-bottom: 0" class="fw-bold">
+      <p
+        v-else
+        style="font-size: 20px; margin-bottom: 0"
+        class="fw-bold"
+      >
         {{ storeAuth.user.santri.nama_lengkap }}
       </p>
-      <i v-if="storeAuth.user.santri.nama_lengkap === 'Mutawakkil Alallah'"
-        >Stayprogress:v</i
-      >
+      <i v-if="storeAuth.user.santri.nama_lengkap === 'Mutawakkil Alallah'">Stayprogress:v</i>
       <i v-else-if="storeAuth.user.role === 'daerah'">{{
         storeAuth.user.santri.wilayah + " - " + storeAuth.user.santri.blok
       }}</i>
@@ -60,14 +62,9 @@
       }}</i>
       <i v-else>{{ storeAuth.user.role }}</i>
     </div>
+
   </div>
-  <div style="margin-left: -120px">
-    <GChart
-      type="ColumnChart"
-      :data="storeAuth.chart"
-      :options="chartOptions"
-    />
-  </div>
+
   <div class="row mt-3">
     <widget-dashboard
       v-for="c in counter"
@@ -84,13 +81,6 @@ import WidgetDashboard from "../components/WidgetDashboard.vue";
 import { onMounted, ref } from "vue";
 import { useAuthStore } from "../store/auth";
 
-import { GChart } from "vue-google-charts";
-const chartOptions = {
-  chart: {
-    title: "Company Performance",
-    subtitle: "Sales, Expenses, and Profit: 2014-2017",
-  },
-};
 const storeAuth = useAuthStore();
 
 const totalSantri = ref(0);
@@ -100,9 +90,8 @@ const totalArea = ref(0);
 const totalDropspot = ref(0);
 const totalUser = ref(0);
 
-onMounted(async () => {
+onMounted(() => {
   storeAuth.getImage(storeAuth.user.santri_uuid, "small");
-  await storeAuth.getStats();
   totalSantri.value = storeAuth.stast.totalSantri;
   totalPenumpang.value = storeAuth.stast.totalPenumpang;
   totalTidakRombongan.value = storeAuth.stast.totalTidakRombongan;

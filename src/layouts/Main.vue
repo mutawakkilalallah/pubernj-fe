@@ -1,6 +1,9 @@
 <template>
   <navbar-menu />
-  <main class="px-3" style="margin-top: 150px">
+  <main
+    class="px-3"
+    style="margin-top: 150px;"
+  >
     <router-view />
   </main>
 </template>

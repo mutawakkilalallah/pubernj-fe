@@ -1,5 +1,4 @@
 import { createApp } from "vue";
-
 import { createPinia } from "pinia";
 
 import "@/assets/main.scss";
@@ -24,12 +23,17 @@ import {
   faClipboard,
   faClone,
   faCreditCard,
+  faLightbulb,
   faLocationDot,
   faMap,
+  faMoon,
   faPenAlt,
   faRotate,
   faSignOutAlt,
+  faSquarePollHorizontal,
+  faSun,
   faUser,
+  faUserCheck,
   faUserCog,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -53,6 +57,11 @@ library.add(
   faCreditCard,
   faArrowRight,
   faArrowLeft,
+  faLightbulb,
+  faSun,
+  faMoon,
+  faSquarePollHorizontal,
+  faUserCheck
 );
 const pinia = createPinia();
 const app = createApp(App);

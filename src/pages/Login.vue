@@ -94,7 +94,7 @@ function validInput2(msg) {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .appLogo {
   position: absolute;
   width: 170px;

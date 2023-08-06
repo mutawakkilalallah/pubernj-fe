@@ -1,6 +1,6 @@
 <template>
   <!-- judul -->
-  <h3>Data Penumpang</h3>
+  <h3 class="titlePage">Data Penumpang</h3>
   <hr />
   <!-- menu filter -->
   <div class="filter-box mb-5 row">
@@ -128,23 +128,23 @@
           <td>
             <i
               v-if="d.status_bayar === 'belum-lunas'"
-              class="badge bg-danger"
-            >{{ d.status_bayar }}</i>
+              class="badge bg-danger text-capitalize"
+            >{{ d.status_bayar === 'belum-lunas' ? 'belum lunas' : '' }}</i>
             <i
               v-if="d.status_bayar === 'lunas'"
-              class="badge bg-success"
+              class="badge bg-success text-capitalize"
             >{{
               d.status_bayar
             }}</i>
             <i
               v-if="d.status_bayar === 'kurang'"
-              class="badge bg-warning"
+              class="badge bg-warning text-capitalize"
             >{{
               d.status_bayar
             }}</i>
             <i
               v-if="d.status_bayar === 'lebih'"
-              class="badge bg-info"
+              class="badge bg-info text-capitalize"
             >{{
               d.status_bayar
             }}</i>

@@ -1,7 +1,7 @@
 <template>
   <Suspense>
     <!-- component with nested async dependencies  -->
-    <armada-page />
+    <statistik-page />
     <!-- loading state via #fallback slot -->
     <template #fallback>
       <app-loading />
@@ -11,7 +11,5 @@
 <script setup>
 import { defineAsyncComponent } from "vue";
 
-const ArmadaPage = defineAsyncComponent(() =>
-  import("./ArmadaPage.vue" /* webpackChunkName: "BeritaPage" */)
-);
+const StatistikPage = defineAsyncComponent(() => import("./StatistikPage.vue"));
 </script>
