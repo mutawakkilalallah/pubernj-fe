@@ -1,6 +1,12 @@
 <template>
-  <div class="loginPage d-flex justify-content-center align-items-center">
-    <div class="boxLogin shadow p-5">
+  <div
+    class="loginPage d-flex justify-content-center align-items-center"
+    :style="myTheme.themes == 'dark' ? 'color: var(--bs-body-color); background-color: #212529;' : 'background-color: #cacaca'"
+  >
+    <div
+      class="boxLogin shadow p-5"
+      :style=" myTheme.themes == 'dark' ? 'background-color: var(--bs-body-bg)' : 'background-color: #fff'"
+    >
       <div class="text-center">
         <img
           src="/logo.png"
@@ -48,7 +54,7 @@
       <div class="developer text-center mt-5">
         <small>Nurul Jadid &copy; 2023</small>
       </div>
-      <div class="developer text-center mt-3">
+      <div class="developer text-center mt-5">
         <i>developed by:</i>
         <br />
         <i>@mutawakkilalallah @farhandardiri</i>
@@ -59,9 +65,11 @@
 
 <script setup>
 import Swal from "sweetalert2";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useAuthStore } from "../store/auth";
+import { useThemeStore } from "../store/auth/theme";
 
+const myTheme = useThemeStore();
 const storeAuth = useAuthStore();
 const myForm = ref(null);
 const valid1 = ref(false);
@@ -70,6 +78,11 @@ const form = ref({
   username: "",
   password: "",
 });
+
+onMounted(() => {
+  myTheme;
+});
+
 function prosesLogin() {
   validInput1;
   validInput2;
@@ -104,15 +117,16 @@ function validInput2(msg) {
 
 .loginPage {
   height: 100vh;
-  background-color: #cacaca;
 }
 .boxLogin {
   width: 400px;
   height: 550px;
-  background-color: #fff;
   border-radius: 10px;
 }
-
+.dark-mode {
+  background-color: #212529;
+  color: white;
+}
 input {
   border: 0;
   border-bottom: 1px solid #cacaca;

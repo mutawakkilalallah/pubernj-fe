@@ -11,8 +11,22 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ["warna", "total", "nama"],
-};
+<script setup>
+const props = defineProps({
+  warna: {
+    type: String,
+    default: "primary",
+  },
+  total: {
+    type: Object,
+    default: [],
+  },
+  nama: {
+    type: String,
+    default: "nama",
+  },
+});
+// export default {
+//   props: ["warna", "total", "nama"],
+// };
 </script>

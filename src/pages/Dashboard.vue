@@ -66,7 +66,7 @@
   </div>
 
   <div class="row mt-3">
-    <widget-dashboard
+    <WidgetDashboard
       v-for="c in counter"
       :key="c.nama"
       :warna="c.warna"
@@ -77,28 +77,27 @@
 </template>
 
 <script setup>
-import WidgetDashboard from "../components/WidgetDashboard.vue";
+import WidgetDashboard from "../components/widgetdashboard.vue";
 import { onMounted, ref } from "vue";
 import { useAuthStore } from "../store/auth";
 
 const storeAuth = useAuthStore();
-
 const totalSantri = ref(0);
 const totalPenumpang = ref(0);
 const totalTidakRombongan = ref(0);
 const totalArea = ref(0);
 const totalDropspot = ref(0);
 const totalUser = ref(0);
-
 onMounted(() => {
+  storeAuth.stast;
   storeAuth.getImage(storeAuth.user.santri_uuid, "small");
-  totalSantri.value = storeAuth.stast.totalSantri;
-  totalPenumpang.value = storeAuth.stast.totalPenumpang;
-  totalTidakRombongan.value = storeAuth.stast.totalTidakRombongan;
-  totalArea.value = storeAuth.stast.totalArea;
-  totalDropspot.value = storeAuth.stast.totalDropspot;
-  totalUser.value = storeAuth.stast.totalUser;
 });
+totalSantri.value = storeAuth.stast.totalSantri;
+totalPenumpang.value = storeAuth.stast.totalPenumpang;
+totalTidakRombongan.value = storeAuth.stast.totalTidakRombongan;
+totalArea.value = storeAuth.stast.totalArea;
+totalDropspot.value = storeAuth.stast.totalDropspot;
+totalUser.value = storeAuth.stast.totalUser;
 
 const counter = [
   {

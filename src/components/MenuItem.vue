@@ -11,7 +11,7 @@
         <font-awesome-icon
           :icon="icon"
           :class="routePath == props.path && myTheme.themes == 'light' ? 'text-white' : routePath == props.path && myTheme.themes == 'dark' ? 'text-dark':'text-secondary'"
-          class="icon "
+          class="icon"
         />
         <p
           class="text-secondary nama"
@@ -67,6 +67,10 @@ onMounted(() => {
   border-radius: 0 0 10px 10px;
 }
 .icon {
+  :hover {
+    color: #01361b !important;
+    transition: 0.2s ease-in-out;
+  }
   font-size: 30px;
 }
 .nama {
