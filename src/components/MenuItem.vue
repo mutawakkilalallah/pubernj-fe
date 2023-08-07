@@ -67,10 +67,6 @@ onMounted(() => {
   border-radius: 0 0 10px 10px;
 }
 .icon {
-  :hover {
-    color: #01361b !important;
-    transition: 0.2s ease-in-out;
-  }
   font-size: 30px;
 }
 .nama {

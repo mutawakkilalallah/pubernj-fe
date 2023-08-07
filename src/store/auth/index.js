@@ -8,7 +8,14 @@ export const useAuthStore = defineStore("auth", {
     token: localStorage.getItem("token") ? storage.getLocalToken() : null,
     user: localStorage.getItem("user") ? storage.getUser() : null,
     foto: "",
-    stast: {},
+    stast: {
+        // totalSantri : 0,
+        // totalPenumpang :0,
+        // totalTidakRombongan:0, 
+        // totalArea :0,
+        // totalDropspot :0, 
+        // totalUser :0,
+    },
     chart: [],
     loading: false,
   }),
@@ -66,7 +73,7 @@ export const useAuthStore = defineStore("auth", {
         await api.get("dashboard").then((resp) => {
           this.stast = resp.data.data.counter;
           this.chart = resp.data.data.stat;
-          // console.log('chatr', this.chart);
+          // console.log('chatr', this.stast);
         });
       } catch (error) {}
     },

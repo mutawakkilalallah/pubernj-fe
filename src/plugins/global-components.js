@@ -17,4 +17,8 @@ export const registerComponents = (app) => {
     "app-loading",
     defineAsyncComponent(() => import("@/components/~global/AppLoading.vue"))
   );
+  app.component(
+    "widget-dashboard",
+    defineAsyncComponent(() => import("@/components/~global/WidgetDashboard.vue"))
+  );
 };
