@@ -66,9 +66,9 @@
   </div>
 
   <div class="row mt-3">
-    {{ storeAuth.stast }}
+    <!-- {{ storeAuth.stast }}
     <br />
-    {{ counter }}
+    {{ counter }} -->
     <widget-dashboard
       v-for="c in counter"
       :key="c.id"
