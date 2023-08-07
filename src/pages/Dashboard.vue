@@ -3,6 +3,7 @@
   <hr />
   <div class="user-card d-flex align-items-center bg-primary p-2 rounded">
     <div
+      v-if="storeAuth.user.role != 'p4nj'"
       v-show="storeAuth.loading === true"
       style="
         width: 80px;
@@ -23,15 +24,7 @@
       ></div>
     </div>
     <img
-      v-if="storeAuth.user.santri.nama_lengkap === 'Mutawakkil Alallah'"
-      v-show="storeAuth.loading === false"
-      src="/whoami.jpg"
-      alt="pohto-profile"
-      width="80"
-      class="rounded-circle me-3"
-    />
-    <img
-      v-else
+      v-if="storeAuth.user.role != 'p4nj'"
       v-show="storeAuth.loading === false"
       :src="storeAuth.foto"
       alt="pohto-profile"
@@ -39,30 +32,17 @@
       class="rounded-circle me-3"
     />
     <div class="user-info text-white">
-      <p
-        v-if="storeAuth.user.santri.nama_lengkap === 'Mutawakkil Alallah'"
-        style="font-size: 20px; margin-bottom: 0"
-        class="fw-bold"
-      >
-        Aa
+      <p style="font-size: 20px; margin-bottom: 0" class="fw-bold">
+        {{ storeAuth.user.nama_lengkap }}
       </p>
-      <p
-        v-else
-        style="font-size: 20px; margin-bottom: 0"
-        class="fw-bold"
-      >
-        {{ storeAuth.user.santri.nama_lengkap }}
-      </p>
-      <i v-if="storeAuth.user.santri.nama_lengkap === 'Mutawakkil Alallah'">Stayprogress:v</i>
-      <i v-else-if="storeAuth.user.role === 'daerah'">{{
-        storeAuth.user.santri.wilayah + " - " + storeAuth.user.santri.blok
+      <i v-if="storeAuth.user.role === 'daerah'">{{
+        `Daerah ${storeAuth.user.blok}`
       }}</i>
       <i v-else-if="storeAuth.user.role === 'wilayah'">{{
-        storeAuth.user.santri.wilayah
+        storeAuth.user.wilayah
       }}</i>
       <i v-else>{{ storeAuth.user.role }}</i>
     </div>
-
   </div>
 
   <div class="row mt-3">
@@ -90,14 +70,14 @@ const totalDropspot = ref(0);
 const totalUser = ref(0);
 onMounted(() => {
   storeAuth.stast;
-  storeAuth.getImage(storeAuth.user.santri_uuid, "small");
+  storeAuth.getImage(storeAuth.user.niup, "small");
+  totalSantri.value = storeAuth.stast.totalSantri;
+  totalPenumpang.value = storeAuth.stast.totalPenumpang;
+  totalTidakRombongan.value = storeAuth.stast.totalTidakRombongan;
+  totalArea.value = storeAuth.stast.totalArea;
+  totalDropspot.value = storeAuth.stast.totalDropspot;
+  totalUser.value = storeAuth.stast.totalUser;
 });
-totalSantri.value = storeAuth.stast.totalSantri;
-totalPenumpang.value = storeAuth.stast.totalPenumpang;
-totalTidakRombongan.value = storeAuth.stast.totalTidakRombongan;
-totalArea.value = storeAuth.stast.totalArea;
-totalDropspot.value = storeAuth.stast.totalDropspot;
-totalUser.value = storeAuth.stast.totalUser;
 
 const counter = [
   {
