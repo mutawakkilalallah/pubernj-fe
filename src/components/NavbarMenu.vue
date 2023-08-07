@@ -252,7 +252,7 @@ onMounted(() => {
   // get theme local storage
   const getTheme = JSON.parse(localStorage.getItem("pageTheme"));
   const myBody = document.body;
-  setDark;
+  setDark();
   if (getTheme === "dark") {
     cekak.value = true;
     myBody.dataset.bsTheme = "dark";

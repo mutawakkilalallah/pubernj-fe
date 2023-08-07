@@ -66,73 +66,61 @@
   </div>
 
   <div class="row mt-3">
-    <WidgetDashboard
+    {{ storeAuth.stast }}
+    <br />
+    {{ counter }}
+    <widget-dashboard
       v-for="c in counter"
-      :key="c.nama"
+      :key="c.id"
       :warna="c.warna"
-      :total="c.total"
+      :total="c ? c.total : c.total"
       :nama="c.nama"
     />
   </div>
 </template>
 
 <script setup>
-import WidgetDashboard from "../components/widgetdashboard.vue";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useAuthStore } from "../store/auth";
 
 const storeAuth = useAuthStore();
-const totalSantri = ref(0);
-const totalPenumpang = ref(0);
-const totalTidakRombongan = ref(0);
-const totalArea = ref(0);
-const totalDropspot = ref(0);
-const totalUser = ref(0);
-onMounted(() => {
-  storeAuth.stast;
-  storeAuth.getImage(storeAuth.user.santri_uuid, "small");
-});
-totalSantri.value = storeAuth.stast.totalSantri;
-totalPenumpang.value = storeAuth.stast.totalPenumpang;
-totalTidakRombongan.value = storeAuth.stast.totalTidakRombongan;
-totalArea.value = storeAuth.stast.totalArea;
-totalDropspot.value = storeAuth.stast.totalDropspot;
-totalUser.value = storeAuth.stast.totalUser;
 
-const counter = [
+const counter = ref([
   {
     warna: "#006c8a",
-    total: totalSantri,
+    total: storeAuth.stast.totalSantri,
     nama: "Total Santri",
   },
   {
     warna: "#8a5700",
-    total: totalPenumpang,
+    total: storeAuth.stast.totalPenumpang,
     nama: "Total Penumpang",
   },
   {
     warna: "#8a5700",
-    total: totalTidakRombongan,
+    total: storeAuth.stast.totalTidakRombongan,
     nama: "Total Santri Tidak Rombongan",
   },
   {
     warna: "#315200",
-    total: totalArea,
+    total: storeAuth.stast.totalArea,
     nama: "Total Area",
   },
   {
     warna: "#2d0063",
-    total: totalDropspot,
+    total: storeAuth.stast.totalDropspot,
     nama: "Total Dropspot",
   },
   ...(storeAuth.user.role == "sysadmin"
     ? [
         {
           warna: "#5e0600",
-          total: totalUser,
+          total: storeAuth.stast.totalUser,
           nama: "Total User",
         },
       ]
     : []),
-];
+]);
+storeAuth.getStats();
+storeAuth.getImage(storeAuth.user.santri_uuid, "small");
 </script>
