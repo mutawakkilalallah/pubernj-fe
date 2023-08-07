@@ -80,7 +80,7 @@ app.directive("rupiah", {
       const formattedValue = new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR",
-        maximumSignificantDigits: 9,
+        maximumSignificantDigits: 12,
       }).format(value);
       el.textContent = formattedValue;
     }

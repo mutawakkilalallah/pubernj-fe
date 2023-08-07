@@ -102,5 +102,5 @@ const counter = ref([
     : []),
 ]);
 storeAuth.getStats();
-storeAuth.getImage(storeAuth.user.santri_uuid, "small");
+storeAuth.getImage(storeAuth.user.niup, "small");
 </script>

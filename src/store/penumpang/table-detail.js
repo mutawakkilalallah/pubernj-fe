@@ -12,7 +12,7 @@ export const usePenumpangDetailTable = defineStore("table_penumpang_detail", {
         await api.get(`penumpang/${uuid}`).then((resp) => {
           if ((resp.data.code = 200)) {
             this.item = resp.data.data;
-            this.getImage(resp.data.data.santri_uuid, "medium");
+            this.getImage(resp.data.data.santri.niup, "medium");
           }
         });
       } catch (error) {}

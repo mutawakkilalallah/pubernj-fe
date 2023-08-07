@@ -9,8 +9,16 @@ export const useSantriTable = defineStore("table_santri", {
     fotoDiri: "",
     meta: {},
     myPage: "",
+    filter: {
+      wilayah: [],
+      blok: [],
+    },
     params: {
       cari: "",
+      wilayah: "",
+      blok: "",
+      status_kepulangan: "",
+      jenis_kelamin: "",
       page: 1,
       limit: 25,
     },
@@ -51,7 +59,7 @@ export const useSantriTable = defineStore("table_santri", {
         await api.get("santri/" + uuid).then((resp) => {
           if ((resp.data.code = 200)) {
             this.item = resp.data.data;
-            this.getImage(resp.data.data.uuid, "medium");
+            this.getImage(resp.data.data.niup, "medium");
           }
         });
       } catch (error) {}
@@ -64,9 +72,29 @@ export const useSantriTable = defineStore("table_santri", {
         await api.get("santri/image/" + uuid, params).then((resp) => {
           this.fotoDiri = URL.createObjectURL(resp.data);
         });
-      } catch (error) {
-        console.log("error", error);
-      }
+      } catch (error) {}
+    },
+    async getWilayah() {
+      try {
+        await api.get("santri/filter/wilayah").then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.filter.wilayah = resp.data;
+          }
+        });
+      } catch (error) {}
+    },
+    async getBlok() {
+      this.params.blok = "";
+      this.getData();
+      try {
+        await api
+          .get(`santri/filter/blok?alias_wilayah=${this.params.wilayah}`)
+          .then((resp) => {
+            if ((resp.data.code = 200)) {
+              this.filter.blok = resp.data;
+            }
+          });
+      } catch (error) {}
     },
   },
 });

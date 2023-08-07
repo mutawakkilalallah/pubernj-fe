@@ -9,22 +9,28 @@ export const useUserFrom = defineStore("form_user", {
     isOpenEdit: false,
     isOpenEditPassword: false,
     isOpenPilihUser: false,
+    fotoDiri: "",
+    mode: "internal",
+    editMode: "",
     isArea: [],
-    santriUser: [],
+    personUser: {},
     idEdit: "",
     roleValue: "",
-    namaSantri: "",
-    cariSantri: "",
-    form: {
-      santri_uuid: "",
+    namaPerson: "",
+    niup: "",
+    formInt: {
+      nama_lengkap: "",
+      niup: "",
       username: "",
       role: "",
       password: "",
+      area_id: "",
     },
     formEdit: {
       santri_uuid: "",
       username: "",
       role: "",
+      area_id: "",
     },
     formEditPassword: {
       password: "",
@@ -32,15 +38,18 @@ export const useUserFrom = defineStore("form_user", {
   }),
   actions: {
     resetForm() {
-      (this.form.santri_uuid = ""), (this.form.username = "");
-      this.form.role = "";
-      this.form.password = "";
+      (this.formInt.niup = ""), (this.formInt.username = "");
+      this.formInt.role = "";
+      this.formInt.password = "";
       // form edit
       this.formEdit.santri_uuid = "";
       this.formEdit.username = "";
       this.formEdit.role = "";
+      this.formEdit.area_id = "";
       // form edit password
       this.formEditPassword.password = "";
+      // mode
+      this.mode = "internal";
     },
     setOpenAdd() {
       this.isOpenAdd = !this.isOpenAdd;
@@ -53,52 +62,82 @@ export const useUserFrom = defineStore("form_user", {
       this.isOpenEditPassword = !this.isOpenEditPassword;
       this.resetForm();
     },
+    setInternalMode() {
+      this.mode = "internal";
+      this.formInt.role = "";
+    },
+    setExternalMode() {
+      this.mode = "external";
+      this.formInt.role = "p4nj";
+    },
     setOpenPilihUser() {
       this.isOpenPilihUser = !this.isOpenPilihUser;
     },
     async tambahData() {
       try {
-        const resp = await api.post("user", this.form);
+        const resp = await api.post(`user/${this.mode}`, this.formInt);
         this.isOpenAdd = false;
         const table = useUserTable();
         table.getData();
         this.resetForm();
         this.namaSantri = "";
-        this.santriUser = [];
+        this.santriUser = {};
       } catch (err) {}
     },
-    async getSantri() {
+    async getByNiup() {
       try {
-        const params = {
-          cari: this.cariSantri,
-        };
-        await api.get("santri", { params: params }).then((resp) => {
+        await api.get(`user/pilih/${this.niup}`).then((resp) => {
           if ((resp.data.code = 200)) {
-            this.santriUser = resp.data.data;
+            this.personUser = resp.data.data;
+            this.getImage(this.niup);
           }
         });
       } catch (error) {}
     },
+    async getArea() {
+      try {
+        await api.get("area").then((resp) => {
+          this.isArea = resp.data.data;
+        });
+      } catch (error) {}
+    },
+    async getImage(niup) {
+      try {
+        const params = {
+          responseType: "blob",
+        };
+        await api.get("santri/image/" + niup, params).then((resp) => {
+          this.fotoDiri = URL.createObjectURL(resp.data);
+        });
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
     handleDoubleClik(d) {
-      this.idEdit = d.id;
+      this.idEdit = d.uuid;
       this.roleValue = d.role ? d.role : "kosong";
       this.formEdit.santri_uuid = d.santri_uuid;
       this.formEdit.role = d.role;
       this.formEdit.username = d.username;
       this.isOpenEdit = true;
+      this.editMode = d.type;
+      if (d.role === "p4nj") {
+        this.formEdit.area_id = d.area_id;
+      }
     },
     handleChangePassword(d) {
-      this.idEdit = d.id;
+      this.idEdit = d.uuid;
       this.formEdit.password = null;
       this.isOpenEditPassword = true;
     },
     handleOpenPilihUser() {
       this.isOpenPilihUser = true;
     },
-    handleUserPilih(uuid, nama) {
-      this.form.santri_uuid = uuid;
-      this.namaSantri = nama;
-      this.cariSantri = "";
+    handleUserPilih(nama, niup) {
+      this.formInt.niup = niup;
+      this.namaPerson = nama;
+      this.niup = "";
+      this.personUser = {};
       this.isOpenPilihUser = false;
     },
     async editData() {

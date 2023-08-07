@@ -1,24 +1,57 @@
 <template>
-  <div class="z-2">
-    <!-- judul -->
-    <h3 class="titlePage">Data Santri</h3>
-    <!-- {{ paginate }} -->
-    <hr />
-    <!-- menu filter -->
-    <!-- <div class="filter-box mb-5 row">
+  <!-- judul -->
+  <h3 class="titlePage">Data Santri</h3>
+  <!-- {{ paginate }} -->
+  <hr />
+  <!-- menu filter -->
+  <div class="filter-box mb-5 row">
     <div class="col-md-2">
       <select
-        class="form-select form-select-sm"
-        v-model="table.params.area"
+        class="form-select form-select-sm mb-2"
+        v-model="table.params.wilayah"
+        @change="table.getBlok"
+      >
+        <option value="" selected>Semua Wilayah</option>
+        <option
+          v-for="w in table.filter.wilayah"
+          :key="w"
+          :value="w.alias_wilayah"
+        >
+          {{ w.wilayah }}
+        </option>
+      </select>
+      <select
+        class="form-select form-select-sm mb-2"
+        :disabled="table.params.wilayah === ''"
+        v-model="table.params.blok"
         @change="table.getData"
       >
-        <option value="" selected>Semua Area</option>
-        <option v-for="a in form.isArea" :key="a" :value="a.id">
-          {{ a.nama }}
+        <option value="" selected>Semua Daerah</option>
+        <option v-for="b in table.filter.blok" :key="b" :value="b.id_blok">
+          {{ b.blok }}
         </option>
       </select>
     </div>
-  </div> -->
+    <div class="col-md-2">
+      <select
+        class="form-select form-select-sm mb-2"
+        v-model="table.params.status_kepulangan"
+        @change="table.getData"
+      >
+        <option value="" selected>Semua Status Kepulangan</option>
+        <option value="rombongan">Rombongan</option>
+        <option value="non-rombongan">Non Rombongan</option>
+      </select>
+      <select
+        class="form-select form-select-sm mb-2"
+        v-model="table.params.jenis_kelamin"
+        @change="table.getData"
+      >
+        <option value="" selected>Semua Jenis Kelamin</option>
+        <option value="L">Laki-Laki</option>
+        <option value="P">Perempuan</option>
+      </select>
+    </div>
     <!-- jumlah data dan pencarian -->
     <div class="serach-box row">
       <div class="col-md-10 d-flex align-items-center mb-2">
@@ -99,10 +132,9 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1
-              class="modal-title fs-5"
-              id="modalDetailLabel"
-            >Detail Santri</h1>
+            <h1 class="modal-title fs-5" id="modalDetailLabel">
+              Detail Santri
+            </h1>
             <button
               class="btn-close"
               type="button"
@@ -110,16 +142,12 @@
             ></button>
           </div>
           <div class="modal-body">
-            <p
-              class="alert alert-secondary p-1 fs-6"
-              role="alert"
-            >
-              <i><font-awesome-icon
-                  icon="bell"
-                  class="icon"
-                /> Data santri hanya
-                bersifat temporary sebagai kebutuhan Pulang Bersama, untuk data
-                lebih detail silahkan lihat di Aplikasi PEDATREN</i>
+            <p class="alert alert-secondary p-1 fs-6" role="alert">
+              <i
+                ><font-awesome-icon icon="bell" class="icon" /> Data santri
+                hanya bersifat temporary sebagai kebutuhan Pulang Bersama, untuk
+                data lebih detail silahkan lihat di Aplikasi PEDATREN</i
+              >
             </p>
 
             <div class="row">
@@ -154,10 +182,10 @@
                       readonly
                       class="form-control-plaintext"
                       :value="
-                      table.item.raw.tempat_lahir +
-                      ', ' +
-                      table.item.raw.tanggal_lahir
-                    "
+                        table.item.raw.tempat_lahir +
+                        ', ' +
+                        table.item.raw.tanggal_lahir
+                      "
                     />
                   </div>
                 </div>
@@ -191,10 +219,10 @@
                       readonly
                       class="form-control-plaintext"
                       v-model="
-                      table.item.raw.domisili_santri[
-                        table.item.raw.domisili_santri.length - 1
-                      ].kamar
-                    "
+                        table.item.raw.domisili_santri[
+                          table.item.raw.domisili_santri.length - 1
+                        ].kamar
+                      "
                     />
                   </div>
                 </div>
@@ -242,10 +270,12 @@
             </div>
           </div>
           <div class="modal-footer">
-            <router-link :to="{
-              name: 'penumpang-detail',
-              params: { uuid: table.item.uuid },
-            }">
+            <router-link
+              :to="{
+                name: 'penumpang-detail',
+                params: { uuid: table.item.uuid },
+              }"
+            >
               <button class="btn btn-primary">Lihat Data Rombongan</button>
             </router-link>
             <button
@@ -261,11 +291,9 @@
   </div>
 </template>
 <script setup>
-import { onMounted } from "vue";
 import { useSantriTable } from "../../store/santri/table";
 const table = useSantriTable();
 
-onMounted(() => {
-  table.getData();
-});
+table.getData();
+table.getWilayah();
 </script>
