@@ -1,3 +1,33 @@
   $primary: #003E1E;
 
-@import "../../node_modules/bootstrap/scss/bootstrap.scss"
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@200;400;600;700;900&family=Poppins:wght@400;600&family=Roboto:wght@400;500;700&display=swap');
+:root {
+  --bs-body-font-family : 'Roboto', sans-serif !important;
+}
+
+@media (max-width: 575.98px) {
+  .titlePage {
+      padding-top: 20px;
+    }
+   }
+@media (max-width: 767.98px) {
+ .titlePage{
+  padding-top: 20px;
+ };
+}
+
+// `lg` applies to medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+ 
+}
+
+// `xl` applies to large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
+ 
+}
+
+// `xxl` applies to x-large devices (large desktops, less than 1400px)
+@media (max-width: 1399.98px) {
+  
+}

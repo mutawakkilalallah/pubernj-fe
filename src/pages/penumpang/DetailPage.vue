@@ -1,6 +1,6 @@
 <template>
   <!-- judul -->
-  <h3>Detail Data Penumpang</h3>
+  <h3 class="titlePage">Detail Data Penumpang</h3>
   <hr />
   <div class="row">
     <div class="col-md-3">
@@ -133,19 +133,19 @@
           <i
             v-if="table.item.status_bayar === 'belum-lunas'"
             class="badge bg-danger"
-            >{{ table.item.status_bayar }}</i
-          >
+          >{{ table.item.status_bayar }}</i>
           <i
             v-if="table.item.status_bayar === 'lunas'"
             class="badge bg-success"
-            >{{ table.item.status_bayar }}</i
-          >
+          >{{ table.item.status_bayar }}</i>
           <i
             v-if="table.item.status_bayar === 'kurang'"
             class="badge bg-warning"
-            >{{ table.item.status_bayar }}</i
-          >
-          <i v-if="table.item.status_bayar === 'lebih'" class="badge bg-info">{{
+          >{{ table.item.status_bayar }}</i>
+          <i
+            v-if="table.item.status_bayar === 'lebih'"
+            class="badge bg-info"
+          >{{
             table.item.status_bayar
           }}</i>
         </div>

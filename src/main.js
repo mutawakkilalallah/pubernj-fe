@@ -1,5 +1,4 @@
 import { createApp } from "vue";
-
 import { createPinia } from "pinia";
 
 import "@/assets/main.scss";
@@ -14,6 +13,8 @@ import VPagination from "@hennge/vue3-pagination";
 import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 
 import {
+  faArrowLeft,
+  faArrowRight,
   faBell,
   faBriefcase,
   faBrush,
@@ -22,12 +23,17 @@ import {
   faClipboard,
   faClone,
   faCreditCard,
+  faLightbulb,
   faLocationDot,
   faMap,
+  faMoon,
   faPenAlt,
   faRotate,
   faSignOutAlt,
+  faSquarePollHorizontal,
+  faSun,
   faUser,
+  faUserCheck,
   faUserCog,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -48,7 +54,14 @@ library.add(
   faClone,
   faBus,
   faClipboard,
-  faCreditCard
+  faCreditCard,
+  faArrowRight,
+  faArrowLeft,
+  faLightbulb,
+  faSun,
+  faMoon,
+  faSquarePollHorizontal,
+  faUserCheck
 );
 const pinia = createPinia();
 const app = createApp(App);

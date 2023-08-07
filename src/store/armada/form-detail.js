@@ -111,6 +111,18 @@ export const useArmadaDetailForm = defineStore("form_armada_detail", {
       this.hitDelArmada(this.formDelArmada, id);
       this.formDelArmada.id_penumpang = [];
     },
+    moveArmadaAdd(form, id) {
+      const data = Object.values(form)
+      this.formAddArmada.id_penumpang = data
+      this.hitAddArmada(this.formAddArmada, id)
+      this.formAddArmada.id_penumpang =[]
+    },
+    moveArmadaDell(form, id) {
+      const data = Object.values(form)
+      this.formDelArmada.id_penumpang = data
+      this.hitDelArmada(this.formDelArmada, id)
+      this.formDelArmada.id_penumpang =[]
+    },
     async hitAddArmada(form, id) {
       try {
         await api.put(`penumpang/armada/${id}`, form).then((resp) => {

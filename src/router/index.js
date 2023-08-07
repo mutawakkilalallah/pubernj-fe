@@ -17,6 +17,11 @@ const routes = [
         component: () => import("@/pages/Dashboard.vue"),
       },
       {
+        path: "/statistik",
+        name: "statistik",
+        component: () => import("@/pages/statistik/Index.vue"),
+      },
+      {
         path: "/santri",
         name: "santri",
         component: () => import("@/pages/santri/Index.vue"),
@@ -70,6 +75,11 @@ const routes = [
         path: "/armada/:id/penumpang",
         name: "armada-detail",
         component: () => import("@/pages/armada/DetailPage.vue"),
+      },
+      {
+        path: "/pendamping",
+        name: "pendamping",
+        component: () => import("@/pages/pendamping/Index.vue"),
       },
     ],
   },

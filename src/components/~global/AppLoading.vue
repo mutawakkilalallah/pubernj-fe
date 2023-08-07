@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-content-center">
+  <div class="z-3 d-flex justify-content-center ">
     <div class="lds-grid">
       <div></div>
       <div></div>
@@ -13,15 +13,16 @@
     </div>
   </div>
 </template>
-<style scoped lang="scss">
+<style scoped >
 .lds-grid {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
+  display: inline-block !important;
+  position: relative !important;
+  width: 100px;
+  height: 100px;
+  margin-top: 16%;
 }
 .lds-grid div {
-  position: absolute;
+  position: absolute !important;
   width: 16px;
   height: 16px;
   border-radius: 50%;

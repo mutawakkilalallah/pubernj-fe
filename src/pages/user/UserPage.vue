@@ -1,6 +1,6 @@
 <template>
   <!-- judul -->
-  <h3>Data User</h3>
+  <h3 class="titlePage">Data User</h3>
   <hr />
   <!-- menu filter -->
   <div class="filter-box mb-5 row">
@@ -10,8 +10,15 @@
         v-model="table.params.role"
         @change="table.getData"
       >
-        <option value="" selected>Semua Hak Akses</option>
-        <option v-for="r in table.roles" :key="r" :value="r.key">
+        <option
+          value=""
+          selected
+        >Semua Hak Akses</option>
+        <option
+          v-for="r in table.roles"
+          :key="r"
+          :value="r.key"
+        >
           {{ r.value }}
         </option>
       </select>
@@ -34,7 +41,10 @@
   </div>
   <hr />
   <!-- tombol tambah data -->
-  <button class="btn btn-sm btn-primary" @click="form.setOpenAdd">
+  <button
+    class="btn btn-sm btn-primary"
+    @click="form.setOpenAdd"
+  >
     Tambah User
   </button>
   <!-- table data utama -->
@@ -89,7 +99,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalTambahLabel">Tambah User</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalTambahLabel"
+          >Tambah User</h1>
           <button
             class="btn-close"
             type="button"
@@ -98,7 +111,10 @@
         </div>
         <form @submit.prevent="form.tambahData">
           <div class="modal-body">
-            <input type="hidden" v-model="form.form.santri_uuid" />
+            <input
+              type="hidden"
+              v-model="form.form.santri_uuid"
+            />
             <div class="form-group mb-3">
               <div class="input-group mb-3">
                 <input
@@ -123,9 +139,19 @@
             </div>
             <div class="form-group mb-3">
               <small>Hak Akses</small>
-              <select class="form-select" v-model="form.form.role">
-                <option value="" selected>Pilih Hak Akses</option>
-                <option v-for="r in table.roles" :key="r.key" :value="r.key">
+              <select
+                class="form-select"
+                v-model="form.form.role"
+              >
+                <option
+                  value=""
+                  selected
+                >Pilih Hak Akses</option>
+                <option
+                  v-for="r in table.roles"
+                  :key="r.key"
+                  :value="r.key"
+                >
                   {{ r.value }}
                 </option>
               </select>
@@ -157,7 +183,10 @@
             >
               Tutup
             </button>
-            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >Simpan</button>
           </div>
         </form>
       </div>
@@ -177,7 +206,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">Edit User</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >Edit User</h1>
           <button
             class="btn-close"
             type="button"
@@ -186,7 +218,10 @@
         </div>
         <form @submit.prevent="form.editData">
           <div class="modal-body">
-            <input type="hidden" v-model="form.formEdit.santri_uuid" />
+            <input
+              type="hidden"
+              v-model="form.formEdit.santri_uuid"
+            />
             <div class="form-group mb-3">
               <small>Username</small>
               <input
@@ -198,9 +233,16 @@
             </div>
             <div class="form-group mb-3">
               <small>Hak Akses</small>
-              <select class="form-select" v-model="form.formEdit.role">
+              <select
+                class="form-select"
+                v-model="form.formEdit.role"
+              >
                 <!-- <option value="" selected>{{ form.roleValue }}</option> -->
-                <option v-for="r in table.roles" :key="r.key" :value="r.key">
+                <option
+                  v-for="r in table.roles"
+                  :key="r.key"
+                  :value="r.key"
+                >
                   {{ r.value }}
                 </option>
               </select>
@@ -221,7 +263,10 @@
             >
               Hapus
             </button>
-            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >Simpan</button>
           </div>
         </form>
       </div>
@@ -241,7 +286,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">Update Password</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >Update Password</h1>
           <button
             class="btn-close"
             type="button"
@@ -268,7 +316,10 @@
             >
               Tutup
             </button>
-            <button type="submit" class="btn btn-sm btn-primary">
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >
               Update Password
             </button>
           </div>
@@ -290,7 +341,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">Pilih User</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >Pilih User</h1>
           <button
             class="btn-close"
             type="button"

@@ -1,6 +1,6 @@
 <template>
   <!-- judul -->
-  <h3>Data Keuangan</h3>
+  <h3 class="titlePage">Data Keuangan</h3>
   <hr />
   <div class="row">
     <div
@@ -8,17 +8,26 @@
       v-for="(value, key) in table.stats.keuanganTotal"
       :key="key"
     >
-      <div class="card-body bg-primary text-white rounded p-3">
-        <b class="card-text" v-if="value">
-          {{
+      <div class="row g-5">
+        <div class="col-lg-12 col-md-4">
+          <div class="p-1">
+            <div class="card-body bg-primary text-white rounded p-3">
+              <b
+                class="card-text"
+                v-if="value"
+              >
+                {{
             new Intl.NumberFormat("id-ID", {
               style: "currency",
               currency: "IDR",
               maximumSignificantDigits: 12,
             }).format(value)
           }}
-        </b>
-        <p>{{ startCase(key) }}</p>
+              </b>
+              <p>{{ startCase(key) }}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -42,7 +51,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(kd, i) in table.stats.keuanganByDropspot" :key="i">
+        <tr
+          v-for="(kd, i) in table.stats.keuanganByDropspot"
+          :key="i"
+        >
           <td>{{ i + 1 }}</td>
           <td>{{ kd.nama_dropspot.substring(0, 20) + ".." }}</td>
           <td>{{ kd.jumlah_penumpang_total }}</td>
