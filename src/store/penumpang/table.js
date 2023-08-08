@@ -9,13 +9,18 @@ export const usePenumpangTable = defineStore("table_penumpang", {
     filter: {
       area: [],
       dropspot: [],
+      wilayah: [],
+      blok: [],
     },
     // areaId: "",
     params: {
       cari: "",
       dropspot: "",
       area: "",
+      wilayah: "",
+      blok: "",
       pembayaran: "",
+      jenis_kelamin: "",
       page: 1,
       limit: 25,
     },
@@ -60,6 +65,28 @@ export const usePenumpangTable = defineStore("table_penumpang", {
             this.filter.dropspot = resp.data.data;
           }
         });
+      } catch (error) {}
+    },
+    async getWilayah() {
+      try {
+        await api.get("santri/filter/wilayah").then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.filter.wilayah = resp.data;
+          }
+        });
+      } catch (error) {}
+    },
+    async getBlok() {
+      this.params.blok = "";
+      this.getData();
+      try {
+        await api
+          .get(`santri/filter/blok?alias_wilayah=${this.params.wilayah}`)
+          .then((resp) => {
+            if ((resp.data.code = 200)) {
+              this.filter.blok = resp.data;
+            }
+          });
       } catch (error) {}
     },
   },

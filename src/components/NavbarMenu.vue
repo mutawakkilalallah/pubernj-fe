@@ -2,23 +2,20 @@
   <!-- <nav class="navbar navbar-dark navbar-expand bg-primary p-2 fixed-top"> -->
   <nav
     class="navbar navbar-dark navbar-expand p-2 fixed-top"
-    :style="myTheme.themes == 'light' ? 'background-color: #003E1E' : myTheme.themes == 'dark' ? 'background-color: var(--bs-body-bg)' : 'background-color: #003E1E'"
+    :style="
+      myTheme.themes == 'light'
+        ? 'background-color: #003E1E'
+        : myTheme.themes == 'dark'
+        ? 'background-color: var(--bs-body-bg)'
+        : 'background-color: #003E1E'
+    "
   >
     <div class="container-fluid">
-      <a
-        v-if="isMobile"
-        class="navbar-brand fs-6"
-        href="#"
-      >PUBER NJ</a>
-      <a
-        v-else
-        class="navbar-brand fs-6"
-        href="#"
-      >Pulang Bersama - PP. Nurul Jadid</a>
-      <div
-        class="collapse navbar-collapse"
-        id="navbarSupportedContent"
+      <a v-if="isMobile" class="navbar-brand fs-6" href="#">PUBER NJ</a>
+      <a v-else class="navbar-brand fs-6" href="#"
+        >Pulang Bersama - PP. Nurul Jadid</a
       >
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
 
         <div class="form-check form-switch">
@@ -30,12 +27,9 @@
             style="cursor: pointer; background-color: var(--bs-body-bg)"
             class="form-check-input"
             @click="setDark"
-          >
+          />
         </div>
-        <button
-          class="btn-kecil btn btn-outline-info me-2"
-          type="submit"
-        >
+        <button class="btn-kecil btn btn-outline-info me-2" type="submit">
           <font-awesome-icon icon="brush" /> Clear Cache
         </button>
         <button
@@ -53,7 +47,7 @@
     style="overflow-x: auto"
   >
     <MenuItem
-      v-for="m in filterMenu()"
+      v-for="m in menu"
       :key="m.title"
       :title="m.title"
       :icon="m.icon"
@@ -80,164 +74,164 @@ const menu = ref([
     icon: "chart-simple",
     title: "Dashboard",
     path: "dashboard",
-    rules: [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-      {
-        id: 2,
-        name: "admin",
-      },
-      {
-        id: 3,
-        name: "wilayah",
-      },
-    ],
+    // rules: [
+    //   {
+    //     id: 1,
+    //     name: "sysadmin",
+    //   },
+    //   {
+    //     id: 2,
+    //     name: "admin",
+    //   },
+    //   {
+    //     id: 3,
+    //     name: "wilayah",
+    //   },
+    // ],
   },
   {
     icon: "square-poll-horizontal",
     title: "Statistik",
     path: "statistik",
-    rules: [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-    ],
+    // rules: [
+    //   {
+    //     id: 1,
+    //     name: "sysadmin",
+    //   },
+    // ],
   },
   {
     icon: "user",
     title: "Santri",
     path: "santri",
-    rules: [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-    ],
+    // rules: [
+    //   {
+    //     id: 1,
+    //     name: "sysadmin",
+    //   },
+    // ],
   },
   {
     icon: "briefcase",
     title: "Penumpang",
     path: "penumpang",
-    rules: [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-      {
-        id: 2,
-        name: "admin",
-      },
-      {
-        id: 3,
-        name: "wilayah",
-      },
-    ],
+    // rules: [
+    //   {
+    //     id: 1,
+    //     name: "sysadmin",
+    //   },
+    //   {
+    //     id: 2,
+    //     name: "admin",
+    //   },
+    //   {
+    //     id: 3,
+    //     name: "wilayah",
+    //   },
+    // ],
   },
   {
     icon: "bus",
     title: "Armada",
     path: "armada",
-    rules: [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-      {
-        id: 2,
-        name: "admin",
-      },
-      {
-        id: 3,
-        name: "wilayah",
-      },
-    ],
+    // rules: [
+    //   {
+    //     id: 1,
+    //     name: "sysadmin",
+    //   },
+    //   {
+    //     id: 2,
+    //     name: "admin",
+    //   },
+    //   {
+    //     id: 3,
+    //     name: "wilayah",
+    //   },
+    // ],
   },
   {
     icon: "map",
     title: "Area",
     path: "area",
-    rules: [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-    ],
+    // rules: [
+    //   {
+    //     id: 1,
+    //     name: "sysadmin",
+    //   },
+    // ],
   },
   {
     icon: "location-dot",
     title: "Dropspot",
     path: "dropspot",
-    rules: [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-    ],
+    // rules: [
+    //   {
+    //     id: 1,
+    //     name: "sysadmin",
+    //   },
+    // ],
   },
   {
     icon: "credit-card",
     title: "Keuangan",
     path: "keuangan",
-    rules: [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-    ],
+    // rules: [
+    //   {
+    //     id: 1,
+    //     name: "sysadmin",
+    //   },
+    // ],
   },
   {
     icon: "user-cog",
     title: "User Account",
     path: "user",
-    rules: [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-    ],
+    // rules: [
+    //   {
+    //     id: 1,
+    //     name: "sysadmin",
+    //   },
+    // ],
   },
   {
     icon: "rotate",
     title: "Syncronize",
     path: "sync",
-    rules: [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-    ],
+    // rules: [
+    //   {
+    //     id: 1,
+    //     name: "sysadmin",
+    //   },
+    // ],
   },
   {
     icon: "user-check",
     title: "Pendamping",
     path: "pendamping",
-    rules: [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-    ],
+    // rules: [
+    //   {
+    //     id: 1,
+    //     name: "sysadmin",
+    //   },
+    // ],
   },
 ]);
 
-const role = computed(() => {
-  return storeAuth.user ? storeAuth.user.role : "wilayah";
-});
+// const role = computed(() => {
+//   return storeAuth.user ? storeAuth.user.role : "wilayah";
+// });
 
-function filterMenu() {
-  const arr = menu.value;
-  const a = arr.filter(function (item) {
-    return item.rules
-      ? item.rules.some(function (group) {
-          return group.name === role.value;
-        })
-      : null;
-  });
-  return a;
-}
+// function filterMenu() {
+//   const arr = menu.value;
+//   const a = arr.filter(function (item) {
+//     return item.rules
+//       ? item.rules.some(function (group) {
+//           return group.name === role.value;
+//         })
+//       : null;
+//   });
+//   return a;
+// }
 
 onMounted(() => {
   const mobileQuery = window.matchMedia("(max-width: 767px)");

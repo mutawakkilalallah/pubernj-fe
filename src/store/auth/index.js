@@ -52,14 +52,14 @@ export const useAuthStore = defineStore("auth", {
         this.loading = false;
       }
     },
-    async getImage(uuid, size) {
+    async getImage(niup, size) {
       this.loading = true;
       try {
         const params = {
           responseType: "blob",
         };
         await api
-          .get("santri/image/" + uuid + "?size=" + size, params)
+          .get("santri/image/" + niup + "?size=" + size, params)
           .then((resp) => {
             this.foto = URL.createObjectURL(resp.data);
             this.loading = false;
