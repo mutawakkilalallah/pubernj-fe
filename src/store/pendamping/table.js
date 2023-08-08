@@ -4,6 +4,7 @@ import { api } from "../../plugins/axios";
 
 export const usePendampingTable = defineStore("table_pendamping", {
   state: () => ({
+    user: localStorage.getItem("user") ? storage.getUser() : null,
     items: [],
     filter: {
       area: [],

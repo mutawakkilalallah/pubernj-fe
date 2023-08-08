@@ -43,7 +43,7 @@
           <p class="mb-1"><b>No. HP : </b>-</p>
           <hr />
           <p class="mb-1">
-            <b>Jumlah Penumpang : </b> {{ table.jumlahPenumpang.length }}
+            <b>Jumlah Penumpang : </b> {{ table.jumlahPenumpang ? table.jumlahPenumpang.length : '' }}
           </p>
         </div>
         <!-- table -->

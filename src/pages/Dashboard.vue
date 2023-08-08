@@ -48,15 +48,140 @@
     </div>
   </div>
 
-  <div class="row mt-3">
-    <!-- {{ storeAuth.stast }} -->
-    <widget-dashboard
-      v-for="ca in counter"
-      :key="ca.id"
-      :warna="ca.warna"
-      :total="ca.total"
-      :nama="ca.nama"
-    />
+  <div class="row mt-3 g-2">
+    <!-- card -->
+    <div class="col-sm-3 mb-3 mb-sm-0">
+      <div
+        class="card"
+        style="background-color:#006c8a ;"
+      >
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <font-awesome-icon
+                icon="user"
+                style="font-size: 90px; color: white;"
+              />
+            </div>
+            <div class="col">
+              <h2 class="card-title text-end text-light">{{ storeAuth.stast.totalSantri }}</h2>
+              <p class="card-text text-end h6 text-light">Total Santri</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3 mb-3 mb-sm-0">
+      <div class="card text-bg-primary">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <font-awesome-icon
+                icon="briefcase"
+                style="font-size: 90px;"
+              />
+            </div>
+            <div class="col">
+              <h2 class="card-title text-end">{{ storeAuth.stast.totalPenumpang }}</h2>
+              <p class="card-text text-end h6">Total Penumpang</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3 mb-3 mb-sm-0">
+      <div
+        class="card"
+        style="background-color:#8a5700 ;"
+      >
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <font-awesome-icon
+                icon="user-xmark"
+                style="font-size: 90px; color: white;"
+              />
+            </div>
+            <div class="col">
+              <h2 class="card-title text-end text-light">{{ storeAuth.stast.totalTidakRombongan }}</h2>
+              <p class="card-text text-end h6 text-light">Total Tidak Rombongan</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3 mb-3 mb-sm-0">
+      <div
+        class="card"
+        style="background-color:#315200 ;"
+      >
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <font-awesome-icon
+                icon="map"
+                style="font-size: 90px; color: white;"
+              />
+            </div>
+            <div class="col">
+              <h2 class="card-title text-end text-light">{{ storeAuth.stast.totalArea }}</h2>
+              <p class="card-text text-end h6 text-light">Total Area</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3 mb-3 mb-sm-0">
+      <div
+        class="card"
+        style="background-color:#2d0063 ;"
+      >
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <font-awesome-icon
+                icon="location-dot"
+                style="font-size: 90px; color: white;"
+              />
+            </div>
+            <div class="col">
+              <h2 class="card-title text-end text-light">{{ storeAuth.stast.totalDropspot }}</h2>
+              <p class="card-text text-end h6 text-light">Total Dropspot</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      v-if="storeAuth.user.role === 'sysadmin'"
+      class="col-sm-3 mb-3 mb-sm-0"
+    >
+      <div
+        class="card"
+        style="background-color:#5e0600 ;"
+      >
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <font-awesome-icon
+                icon="user-cog"
+                style="font-size: 90px; color: white;"
+              />
+            </div>
+            <div class="col">
+              <h2 class="card-title text-end text-light">{{ storeAuth.stast.totalUser }}</h2>
+              <p class="card-text text-end h6 text-light">Total User</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 

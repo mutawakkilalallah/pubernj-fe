@@ -37,6 +37,7 @@ import {
   faUser,
   faUserCheck,
   faUserCog,
+  faUserXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { registerComponents } from "./plugins/global-components";
@@ -64,7 +65,8 @@ library.add(
   faMoon,
   faSquarePollHorizontal,
   faUserCheck,
-  faTriangleExclamation
+  faTriangleExclamation,
+  faUserXmark
 );
 const pinia = createPinia();
 const app = createApp(App);
