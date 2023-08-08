@@ -66,61 +66,74 @@
   </div>
 
   <div class="row mt-3">
-    <!-- {{ storeAuth.stast }}
-    <br />
-    {{ counter }} -->
+    {{ storeAuth.stast }}
     <widget-dashboard
-      v-for="c in counter"
-      :key="c.id"
-      :warna="c.warna"
-      :total="c ? c.total : c.total"
-      :nama="c.nama"
+      v-for="ca in counter"
+      :key="ca.id"
+      :warna="ca.warna"
+      :total="ca.total"
+      :nama="ca.nama"
     />
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useAuthStore } from "../store/auth";
-
+import { useSantriTable } from "../store/santri/table";
+const santri = useSantriTable();
+santri.getData();
 const storeAuth = useAuthStore();
+storeAuth.getStats();
 
-const counter = ref([
+console.log("store", santri.meta);
+storeAuth.getImage(storeAuth.user.santri_uuid, "small");
+
+const ts = storeAuth.stast.totalSantri;
+
+const counter = [
   {
+    id: 1,
     warna: "#006c8a",
-    total: storeAuth.stast.totalSantri,
+    total: ts,
     nama: "Total Santri",
   },
   {
+    id: 2,
     warna: "#8a5700",
-    total: storeAuth.stast.totalPenumpang,
+    total: 0,
     nama: "Total Penumpang",
   },
   {
+    id: 3,
     warna: "#8a5700",
-    total: storeAuth.stast.totalTidakRombongan,
+    total: 0,
     nama: "Total Santri Tidak Rombongan",
   },
   {
+    id: 4,
     warna: "#315200",
-    total: storeAuth.stast.totalArea,
+    total: 0,
     nama: "Total Area",
   },
   {
+    id: 5,
     warna: "#2d0063",
-    total: storeAuth.stast.totalDropspot,
+    total: 0,
     nama: "Total Dropspot",
   },
   ...(storeAuth.user.role == "sysadmin"
     ? [
         {
+          id: 6,
           warna: "#5e0600",
-          total: storeAuth.stast.totalUser,
+          total: 0,
           nama: "Total User",
         },
       ]
     : []),
-]);
-storeAuth.getStats();
-storeAuth.getImage(storeAuth.user.santri_uuid, "small");
+];
+onMounted(() => {
+  storeAuth.getStats();
+});
 </script>
