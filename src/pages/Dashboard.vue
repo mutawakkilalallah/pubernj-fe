@@ -189,65 +189,15 @@
 import { onMounted, ref } from "vue";
 import { useAuthStore } from "../store/auth/index";
 import { useSantriTable } from "../store/santri/table";
-const santri = useSantriTable();
-santri.getData();
-const storeAuth = useAuthStore();
-storeAuth.getStats();
 
+const santri = useSantriTable();
+const storeAuth = useAuthStore();
+
+santri.getData();
+storeAuth.getStats();
 // storeAuth.getImage(storeAuth.user.santri_uuid, "small");
 
-const ts = storeAuth.stast.totalSantri;
-const tp = storeAuth.stast.totalPenumpang;
-const ttr = storeAuth.stast.totalTidakRombongan;
-const ta = storeAuth.stast.totalArea;
-const td = storeAuth.stast.totalDropspot;
-const tu = storeAuth.stast.totalUser;
-
 onMounted(() => {
-  storeAuth.getStats();
   storeAuth.getImage(storeAuth.user.santri_uuid, "small");
 });
-
-const counter = [
-  {
-    id: 1,
-    warna: "#006c8a",
-    total: ts,
-    nama: "Total Santri",
-  },
-  {
-    id: 2,
-    warna: "#8a5700",
-    total: tp,
-    nama: "Total Penumpang",
-  },
-  {
-    id: 3,
-    warna: "#8a5700",
-    total: ttr,
-    nama: "Total Santri Tidak Rombongan",
-  },
-  {
-    id: 4,
-    warna: "#315200",
-    total: ta,
-    nama: "Total Area",
-  },
-  {
-    id: 5,
-    warna: "#2d0063",
-    total: td,
-    nama: "Total Dropspot",
-  },
-  ...(storeAuth.user.role == "sysadmin"
-    ? [
-        {
-          id: 6,
-          warna: "#5e0600",
-          total: tu,
-          nama: "Total User",
-        },
-      ]
-    : []),
-];
 </script>
