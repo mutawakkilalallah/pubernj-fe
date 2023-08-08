@@ -33,6 +33,7 @@ import {
   faSignOutAlt,
   faSquarePollHorizontal,
   faSun,
+  faTriangleExclamation,
   faUser,
   faUserCheck,
   faUserCog,
@@ -62,7 +63,8 @@ library.add(
   faSun,
   faMoon,
   faSquarePollHorizontal,
-  faUserCheck
+  faUserCheck,
+  faTriangleExclamation
 );
 const pinia = createPinia();
 const app = createApp(App);

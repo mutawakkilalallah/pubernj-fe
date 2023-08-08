@@ -86,164 +86,228 @@ const menu = ref([
     icon: "chart-simple",
     title: "Dashboard",
     path: "dashboard",
-    // rules: [
-    //   {
-    //     id: 1,
-    //     name: "sysadmin",
-    //   },
-    //   {
-    //     id: 2,
-    //     name: "admin",
-    //   },
-    //   {
-    //     id: 3,
-    //     name: "wilayah",
-    //   },
-    // ],
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+      {
+        id: 2,
+        name: "supervisor",
+      },
+      {
+        id: 3,
+        name: "admin",
+      },
+      {
+        id: 4,
+        name: "wilayah",
+      },
+      {
+        id: 5,
+        name: "daerah",
+      },
+      {
+        id: 6,
+        name: "armada",
+      },
+    ],
   },
   {
     icon: "square-poll-horizontal",
     title: "Statistik",
     path: "statistik",
-    // rules: [
-    //   {
-    //     id: 1,
-    //     name: "sysadmin",
-    //   },
-    // ],
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+      {
+        id: 2,
+        name: "supervisor",
+      },
+      {
+        id: 3,
+        name: "admin",
+      },
+    ],
   },
   {
     icon: "user",
     title: "Santri",
     path: "santri",
-    // rules: [
-    //   {
-    //     id: 1,
-    //     name: "sysadmin",
-    //   },
-    // ],
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+      {
+        id: 2,
+        name: "supervisor",
+      },
+      {
+        id: 3,
+        name: "admin",
+      },
+    ],
   },
   {
     icon: "briefcase",
     title: "Penumpang",
     path: "penumpang",
-    // rules: [
-    //   {
-    //     id: 1,
-    //     name: "sysadmin",
-    //   },
-    //   {
-    //     id: 2,
-    //     name: "admin",
-    //   },
-    //   {
-    //     id: 3,
-    //     name: "wilayah",
-    //   },
-    // ],
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+      {
+        id: 2,
+        name: "supervisor",
+      },
+      {
+        id: 3,
+        name: "admin",
+      },
+      {
+        id: 4,
+        name: "wilayah",
+      },
+      {
+        id: 5,
+        name: "daerah",
+      },
+    ],
   },
   {
     icon: "bus",
     title: "Armada",
     path: "armada",
-    // rules: [
-    //   {
-    //     id: 1,
-    //     name: "sysadmin",
-    //   },
-    //   {
-    //     id: 2,
-    //     name: "admin",
-    //   },
-    //   {
-    //     id: 3,
-    //     name: "wilayah",
-    //   },
-    // ],
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+      {
+        id: 2,
+        name: "supervisor",
+      },
+      {
+        id: 3,
+        name: "admin",
+      },
+    ],
   },
   {
     icon: "map",
     title: "Area",
     path: "area",
-    // rules: [
-    //   {
-    //     id: 1,
-    //     name: "sysadmin",
-    //   },
-    // ],
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+      {
+        id: 2,
+        name: "supervisor",
+      },
+      {
+        id: 3,
+        name: "admin",
+      },
+    ],
   },
   {
     icon: "location-dot",
     title: "Dropspot",
     path: "dropspot",
-    // rules: [
-    //   {
-    //     id: 1,
-    //     name: "sysadmin",
-    //   },
-    // ],
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+      {
+        id: 2,
+        name: "supervisor",
+      },
+      {
+        id: 3,
+        name: "admin",
+      },
+    ],
   },
   {
     icon: "credit-card",
     title: "Keuangan",
     path: "keuangan",
-    // rules: [
-    //   {
-    //     id: 1,
-    //     name: "sysadmin",
-    //   },
-    // ],
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+      {
+        id: 2,
+        name: "bendahara",
+      },
+    ],
   },
   {
     icon: "user-cog",
     title: "User Account",
     path: "user",
-    // rules: [
-    //   {
-    //     id: 1,
-    //     name: "sysadmin",
-    //   },
-    // ],
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+    ],
   },
   {
     icon: "rotate",
     title: "Syncronize",
     path: "sync",
-    // rules: [
-    //   {
-    //     id: 1,
-    //     name: "sysadmin",
-    //   },
-    // ],
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+    ],
   },
   {
     icon: "user-check",
     title: "Pendamping",
     path: "pendamping",
-    // rules: [
-    //   {
-    //     id: 1,
-    //     name: "sysadmin",
-    //   },
-    // ],
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+      {
+        id: 2,
+        name: "supervisor",
+      },
+      {
+        id: 3,
+        name: "admin",
+      },
+    ],
   },
 ]);
 
-// const role = computed(() => {
-//   return storeAuth.user ? storeAuth.user.role : "wilayah";
-// });
+const role = computed(() => {
+  return storeAuth.user ? storeAuth.user.role : "wilayah";
+});
 
-// function filterMenu() {
-//   const arr = menu.value;
-//   const a = arr.filter(function (item) {
-//     return item.rules
-//       ? item.rules.some(function (group) {
-//           return group.name === role.value;
-//         })
-//       : null;
-//   });
-//   return a;
-// }
+function filterMenu() {
+  const arr = menu.value;
+  const a = arr.filter(function (item) {
+    return item.rules
+      ? item.rules.some(function (group) {
+          return group.name === role.value;
+        })
+      : null;
+  });
+  return a;
+}
 
 onMounted(() => {
   const mobileQuery = window.matchMedia("(max-width: 767px)");
@@ -302,134 +366,4 @@ function prosesLogout() {
     }
   });
 }
-// export default {
-//   components: {
-//     MenuItem,
-//   },
-//   data() {
-//     return {
-//       isMobile: false,
-//       cekak: false,
-//       menu: [
-//         {
-//           icon: "chart-simple",
-//           title: "Dashboard",
-//           path: "dashboard",
-//         },
-//         {
-//           icon: "square-poll-horizontal",
-//           title: "Statistik",
-//           path: "statistik",
-//         },
-//         {
-//           icon: "user",
-//           title: "Santri",
-//           path: "santri",
-//         },
-//         {
-//           icon: "briefcase",
-//           title: "Penumpang",
-//           path: "penumpang",
-//         },
-//         {
-//           icon: "bus",
-//           title: "Armada",
-//           path: "armada",
-//         },
-//         {
-//           icon: "map",
-//           title: "Area",
-//           path: "area",
-//         },
-//         {
-//           icon: "location-dot",
-//           title: "Dropspot",
-//           path: "dropspot",
-//         },
-
-//         ...(storeAuth.user.role == "sysadmin"
-//           ? [
-//               {
-//                 icon: "credit-card",
-//                 title: "Keuangan",
-//                 path: "keuangan",
-//               },
-//               {
-//                 icon: "user-cog",
-//                 title: "User Account",
-//                 path: "user",
-//               },
-//               {
-//                 icon: "rotate",
-//                 title: "Syncronize",
-//                 path: "sync",
-//               },
-//               {
-//                 icon: "user-check",
-//                 title: "Pendamping",
-//                 path: "pendamping",
-//               },
-//             ]
-//           : []),
-//       ],
-//     };
-//   },
-
-//   mounted() {
-//     const mobileQuery = window.matchMedia("(max-width: 767px)");
-
-//     this.isMobile = mobileQuery.matches;
-
-//     mobileQuery.addListener((query) => {
-//       this.isMobile = query.matches;
-//     });
-
-//     // get theme local storage
-//     const getTheme = JSON.parse(localStorage.getItem("pageTheme"));
-//     const myBody = document.body;
-//     this.setDark();
-//     if (getTheme === "dark") {
-//       this.cekak = true;
-//       myBody.dataset.bsTheme = "dark";
-//     } else {
-//       this.cekak = false;
-//       myBody.dataset.bsTheme = "light";
-//     }
-//   },
-//   methods: {
-//     setDark() {
-//       const setTheme = document.body;
-//       const constains = setTheme.dataset.bsTheme;
-//       if (constains === "light") {
-//         setTheme.dataset.bsTheme = "dark";
-//       } else {
-//         setTheme.dataset.bsTheme = "light";
-//       }
-//       // save local storage
-//       localStorage.setItem(
-//         "pageTheme",
-//         JSON.stringify(setTheme.dataset.bsTheme)
-//       );
-//     },
-//     prosesLogout() {
-//       Swal.fire({
-//         title: "Konfirmasi",
-//         text: "Apakah anda yakin ingin mengakhiri sesi ?",
-//         icon: "info",
-//         showCancelButton: true,
-//         cancelButtonText: "Batal",
-//         confirmButtonText: "Iya",
-//         cancelButtonColor: "#28A745",
-//         confirmButtonColor: "#DC3545",
-//       }).then((result) => {
-//         /* Read more about isConfirmed, isDenied below */
-//         if (result.isConfirmed) {
-//           localStorage.removeItem("token");
-//           localStorage.removeItem("user");
-//           this.$router.replace("/login");
-//         }
-//       });
-//     },
-//   },
-// };
 </script>

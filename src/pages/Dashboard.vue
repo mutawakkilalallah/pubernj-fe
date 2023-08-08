@@ -69,7 +69,7 @@ santri.getData();
 const storeAuth = useAuthStore();
 storeAuth.getStats();
 
-storeAuth.getImage(storeAuth.user.santri_uuid, "small");
+// storeAuth.getImage(storeAuth.user.santri_uuid, "small");
 
 const ts = storeAuth.stast.totalSantri;
 const tp = storeAuth.stast.totalPenumpang;
@@ -80,7 +80,7 @@ const tu = storeAuth.stast.totalUser;
 
 onMounted(() => {
   storeAuth.getStats();
-  // storeAuth.getImage(storeAuth.user.santri_uuid, "small");
+  storeAuth.getImage(storeAuth.user.santri_uuid, "small");
 });
 
 const counter = [
