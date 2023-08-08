@@ -11,11 +11,20 @@
     "
   >
     <div class="container-fluid">
-      <a v-if="isMobile" class="navbar-brand fs-6" href="#">PUBER NJ</a>
-      <a v-else class="navbar-brand fs-6" href="#"
-        >Pulang Bersama - PP. Nurul Jadid</a
+      <a
+        v-if="isMobile"
+        class="navbar-brand fs-6"
+        href="#"
+      >PUBER NJ</a>
+      <a
+        v-else
+        class="navbar-brand fs-6"
+        href="#"
+      >Pulang Bersama - PP. Nurul Jadid</a>
+      <div
+        class="collapse navbar-collapse"
+        id="navbarSupportedContent"
       >
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
 
         <div class="form-check form-switch">
@@ -29,7 +38,10 @@
             @click="setDark"
           />
         </div>
-        <button class="btn-kecil btn btn-outline-info me-2" type="submit">
+        <button
+          class="btn-kecil btn btn-outline-info me-2"
+          type="submit"
+        >
           <font-awesome-icon icon="brush" /> Clear Cache
         </button>
         <button
@@ -60,7 +72,7 @@
 import MenuItem from "./MenuItem.vue";
 import router from "../router";
 import Swal from "sweetalert2";
-import { useAuthStore } from "../store/auth";
+import { useAuthStore } from "../store/auth/index";
 import { useThemeStore } from "../store/auth/theme";
 import { computed, onMounted, ref } from "vue";
 

@@ -9,12 +9,12 @@ export const useAuthStore = defineStore("auth", {
     user: localStorage.getItem("user") ? storage.getUser() : null,
     foto: "",
     stast: {
-        totalSantri : 0,
-        totalPenumpang :0,
-        totalTidakRombongan:0, 
-        totalArea :0,
-        totalDropspot :0, 
-        totalUser :0,
+        // totalSantri : 0,
+        // totalPenumpang :0,
+        // totalTidakRombongan:0, 
+        // totalArea :0,
+        // totalDropspot :0, 
+        // totalUser :0,
     },
     chart: [],
     loading: false,
@@ -71,7 +71,8 @@ export const useAuthStore = defineStore("auth", {
     async getStats() {
       try {
         await api.get("dashboard").then((resp) => {
-          this.stast.totalSantri = resp.data.data.counter.totalSantri;
+          // this.stast.totalSantri = resp.data.data.counter.totalSantri;
+          this.stast = resp.data.data.counter;
           this.chart = resp.data.data.stat;
           // console.log('chatr', this.stast);
         });

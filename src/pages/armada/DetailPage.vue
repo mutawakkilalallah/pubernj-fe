@@ -248,7 +248,7 @@ import { computed, onMounted } from "vue";
 import { useArmadaDetailForm } from "../../store/armada/form-detail";
 import { useArmadaDetailTable } from "../../store/armada/table-detail";
 import { useRoute } from "vue-router";
-import { useAuthStore } from "../../store/auth";
+import { useAuthStore } from "../../store/auth/index";
 
 const storeAuth = useAuthStore();
 const table = useArmadaDetailTable();
