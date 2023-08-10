@@ -151,6 +151,10 @@
                 placeholder="Masukkan nama armada .."
                 class="form-control mt-2"
               />
+              <small class="fst-italic text-danger"
+                >*) saat membuat armada penamaan masukkan urutan saja contoh
+                1,2,3 dari setiap area</small
+              >
             </div>
             <div class="form-group mb-3">
               <small>Type</small>
@@ -196,6 +200,15 @@
                   {{ d.nama }}
                 </option>
               </select>
+            </div>
+            <div class="form-group mb-3">
+              <small>Harga Armada</small>
+              <input
+                type="text"
+                v-model="form.form.harga"
+                placeholder="Masukkan harga armada .."
+                class="form-control mt-2"
+              />
             </div>
           </div>
           <div class="modal-footer">
@@ -288,6 +301,15 @@
                   {{ d.nama }}
                 </option>
               </select>
+            </div>
+            <div class="form-group mb-3">
+              <small>Harga Armada</small>
+              <input
+                type="text"
+                v-model="form.form.harga"
+                placeholder="Masukkan harga armada .."
+                class="form-control mt-2"
+              />
             </div>
           </div>
           <div class="modal-footer">

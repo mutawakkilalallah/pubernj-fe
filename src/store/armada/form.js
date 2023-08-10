@@ -22,6 +22,7 @@ export const useArmadaForm = defineStore("form_armada", {
       nama: "",
       type: "",
       jenis: "",
+      harga: "",
       dropspot_id: "",
     },
   }),
@@ -31,6 +32,7 @@ export const useArmadaForm = defineStore("form_armada", {
       this.form.nama = "";
       this.form.type = "";
       this.form.jenis = "";
+      this.form.harga = "";
       this.form.dropspot_id = "";
     },
     setOpenAdd() {
@@ -109,6 +111,7 @@ export const useArmadaForm = defineStore("form_armada", {
       this.form.nama = d.nama;
       this.form.type = d.type;
       this.form.jenis = d.jenis;
+      this.form.harga = d.harga;
       this.getDropspot();
       this.form.dropspot_id = d.dropspot_id;
       this.isOpenEdit = true;

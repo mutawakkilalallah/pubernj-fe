@@ -10,10 +10,7 @@
         v-model="table.params.wilayah"
         @change="table.getBlok"
       >
-        <option
-          value=""
-          selected
-        >Semua Wilayah</option>
+        <option value="" selected>Semua Wilayah</option>
         <option
           v-for="w in table.filter.wilayah"
           :key="w"
@@ -28,15 +25,8 @@
         v-model="table.params.blok"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Daerah</option>
-        <option
-          v-for="b in table.filter.blok"
-          :key="b"
-          :value="b.id_blok"
-        >
+        <option value="" selected>Semua Daerah</option>
+        <option v-for="b in table.filter.blok" :key="b" :value="b.id_blok">
           {{ b.blok }}
         </option>
       </select>
@@ -47,15 +37,8 @@
         v-model="table.params.area"
         @change="table.getDropspot"
       >
-        <option
-          value=""
-          selected
-        >Semua Area</option>
-        <option
-          v-for="a in table.filter.area"
-          :key="a"
-          :value="a.id"
-        >
+        <option value="" selected>Semua Area</option>
+        <option v-for="a in table.filter.area" :key="a" :value="a.id">
           {{ a.nama }}
         </option>
       </select>
@@ -65,15 +48,8 @@
         v-model="table.params.dropspot"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Dropsot</option>
-        <option
-          v-for="d in table.filter.dropspot"
-          :key="d"
-          :value="d.id"
-        >
+        <option value="" selected>Semua Dropsot</option>
+        <option v-for="d in table.filter.dropspot" :key="d" :value="d.id">
           {{ d.nama }}
         </option>
       </select>
@@ -84,10 +60,7 @@
         v-model="table.params.pembayaran"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Status Pembayaran</option>
+        <option value="" selected>Semua Status Pembayaran</option>
         <option value="belum-lunas">Belum Lunas</option>
         <option value="lunas">Lunas</option>
         <option value="kurang">Kurang</option>
@@ -98,10 +71,7 @@
         v-model="table.params.jenis_kelamin"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Jenis Kelamin</option>
+        <option value="" selected>Semua Jenis Kelamin</option>
         <option value="L">Laki-Laki</option>
         <option value="P">Perempuan</option>
       </select>
@@ -149,7 +119,7 @@
       </thead>
       <tbody>
         <tr
-          style="cursor: pointer;"
+          style="cursor: pointer"
           v-for="(d, i) in table.items"
           :key="i"
           @dblclick.prevent="form.showContextMenu($event, d)"
@@ -159,40 +129,35 @@
           <td>{{ d.santri.niup }}</td>
           <td>{{ d.santri.nama_lengkap }}</td>
           <td v-if="d.dropspot">{{ d.dropspot.nama }}</td>
-          <td
-            v-else
-            class="text-danger"
-          ><i>belum-ditentukan</i></td>
+          <td v-else class="text-danger"><i>belum-ditentukan</i></td>
           <td v-if="d.dropspot">
             {{ d.dropspot.area.nama }}
           </td>
-          <td
-            v-else
-            class="text-danger"
-          ><i>belum-ditentukan</i></td>
+          <td v-else class="text-danger"><i>belum-ditentukan</i></td>
           <td v-if="d.dropspot">{{ "Rp. " + d.dropspot.harga }}</td>
-          <td
-            v-else
-            class="text-danger"
-          >Rp. 0</td>
+          <td v-else class="text-danger">Rp. 0</td>
           <td>{{ "Rp. " + d.jumlah_bayar }}</td>
           <td>
             <i
               v-if="d.status_bayar === 'belum-lunas'"
               class="badge bg-danger text-capitalize"
-            >{{ d.status_bayar === "belum-lunas" ? "belum lunas" : "" }}</i>
+              >{{ d.status_bayar === "belum-lunas" ? "belum lunas" : "" }}</i
+            >
             <i
               v-if="d.status_bayar === 'lunas'"
               class="badge bg-success text-capitalize"
-            >{{ d.status_bayar }}</i>
+              >{{ d.status_bayar }}</i
+            >
             <i
               v-if="d.status_bayar === 'kurang'"
               class="badge bg-warning text-capitalize"
-            >{{ d.status_bayar }}</i>
+              >{{ d.status_bayar }}</i
+            >
             <i
               v-if="d.status_bayar === 'lebih'"
               class="badge bg-info text-capitalize"
-            >{{ d.status_bayar }}</i>
+              >{{ d.status_bayar }}</i
+            >
           </td>
           <td>
             {{ d.santri.wilayah }}
@@ -228,23 +193,17 @@
     }"
   >
     <ul class="list-group list-group-flush">
-      <li
-        class="list-group-item px-5"
-        @click="form.handleOpenEditDropspot"
-      >
+      <li class="list-group-item px-5" @click="form.handleOpenEditDropspot">
         Ubah Dropsot
       </li>
-      <li
-        class="list-group-item px-5"
-        @click="form.handleOpenEditPembayaran"
-      >
+      <li class="list-group-item px-5" @click="form.handleOpenEditPembayaran">
         Ubah Status Pembayaran
       </li>
-      <li
-        class="list-group-item px-5"
-        @click="form.goToDetail"
-      >
+      <li class="list-group-item px-5" @click="form.goToDetail">
         Lihat Detail Rombongan
+      </li>
+      <li class="list-group-item px-5" @click="form.deleteRombongan">
+        Hapus Penumpang
       </li>
     </ul>
   </div>
@@ -262,10 +221,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalEditLabel"
-          >Edit Dropsot</h1>
+          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Dropsot</h1>
           <button
             class="btn-close"
             type="button"
@@ -281,15 +237,8 @@
                 v-model="form.idArea"
                 @change="form.getDropspot"
               >
-                <option
-                  value=""
-                  selected
-                >Pilih Area</option>
-                <option
-                  v-for="a in form.isArea"
-                  :key="a"
-                  :value="a.id"
-                >
+                <option value="" selected>Pilih Area</option>
+                <option v-for="a in form.isArea" :key="a" :value="a.id">
                   {{ a.nama }}
                 </option>
               </select>
@@ -308,11 +257,7 @@
                 >
                   Pilih Dropspot
                 </option>
-                <option
-                  v-for="d in form.isDropspot"
-                  :key="d"
-                  :value="d.id"
-                >
+                <option v-for="d in form.isDropspot" :key="d" :value="d.id">
                   {{ d.nama }}
                 </option>
               </select>
@@ -326,10 +271,7 @@
             >
               Tutup
             </button>
-            <button
-              type="submit"
-              class="btn btn-sm btn-primary"
-            >Simpan</button>
+            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
           </div>
         </form>
       </div>
@@ -349,10 +291,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalEditLabel"
-          >Edit Pembayaran</h1>
+          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Pembayaran</h1>
           <button
             class="btn-close"
             type="button"
@@ -375,26 +314,11 @@
                 class="form-select"
                 v-model="form.formEditPembayaran.status_bayar"
               >
-                <option
-                  value=""
-                  selected
-                >Pilih Status</option>
-                <option
-                  value="lunas"
-                  selected
-                >Lunas</option>
-                <option
-                  value="belum-lunas"
-                  selected
-                >Belum Lunas</option>
-                <option
-                  value="lebih"
-                  selected
-                >Lebih</option>
-                <option
-                  value="kurang"
-                  selected
-                >Kurang</option>
+                <option value="" selected>Pilih Status</option>
+                <option value="lunas" selected>Lunas</option>
+                <option value="belum-lunas" selected>Belum Lunas</option>
+                <option value="lebih" selected>Lebih</option>
+                <option value="kurang" selected>Kurang</option>
               </select>
             </div>
           </div>
@@ -406,16 +330,12 @@
             >
               Tutup
             </button>
-            <button
-              type="submit"
-              class="btn btn-sm btn-primary"
-            >Simpan</button>
+            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
           </div>
         </form>
       </div>
     </div>
   </div>
-
 </template>
 <script setup>
 import { usePenumpangTable } from "../../store/penumpang/table";

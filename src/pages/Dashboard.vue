@@ -110,6 +110,27 @@
     </div>
 
     <div class="col-sm-3 mb-3 mb-sm-0">
+      <div class="card" style="background-color: #cd0052">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <font-awesome-icon
+                icon="bus"
+                style="font-size: 90px; color: white"
+              />
+            </div>
+            <div class="col">
+              <h2 class="card-title text-end text-light">
+                {{ storeAuth.stast.totalArmada }}
+              </h2>
+              <p class="card-text text-end h6 text-light">Total Armada</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3 mb-3 mb-sm-0">
       <div class="card" style="background-color: #315200">
         <div class="card-body">
           <div class="row">

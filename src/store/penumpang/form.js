@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { api } from "../../plugins/axios";
 import { usePenumpangTable } from "./table";
 import router from "../../router";
+import Swal from "sweetalert2";
 
 export const usePenumpangForm = defineStore("form_penumpang", {
   state: () => ({
@@ -12,6 +13,7 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     isArea: [],
     isDropspot: [],
     idEdit: "",
+    idDelete: "",
     idArea: "",
     dataEdit: {},
     formEditDropspot: {
@@ -104,6 +106,27 @@ export const usePenumpangForm = defineStore("form_penumpang", {
             table.getData();
           });
       } catch (err) {}
+    },
+    async deleteRombongan() {
+      Swal.fire({
+        title: "Konfirmasi",
+        text: "Apakah anda yakin ingin mengeluarkan dari rombongan ?",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonText: "keluarkan",
+        confirmButtonColor: "#DC3545",
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          api
+            .delete(`penumpang/${this.dataEdit.santri_uuid}`)
+            .then((result) => {
+              this.isOpenEdit = false;
+              const table = usePenumpangTable();
+              table.getData();
+            });
+        }
+      });
     },
   },
 });

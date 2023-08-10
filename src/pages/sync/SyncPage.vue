@@ -304,16 +304,6 @@
       <button
         :disabled="isNotDeveloper"
         class="btn btn-warning w-100"
-        @click="table.updatePenumpang"
-      >
-        <font-awesome-icon icon="rotate" class="icon" /> Update - Sync Data
-        Penumpang
-      </button>
-    </div>
-    <div class="col-md-3">
-      <button
-        :disabled="isNotDeveloper"
-        class="btn btn-warning w-100"
         @click="table.updateUser"
       >
         <font-awesome-icon icon="rotate" class="icon" /> Update - Sync Data User

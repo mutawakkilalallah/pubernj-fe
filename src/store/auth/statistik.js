@@ -3,6 +3,7 @@ import { api } from "../../plugins/axios";
 
 export const useStatistikStore = defineStore("statistik", {
   state: () => ({
+    viewMode: "detail",
     stats: {
       namaDropspot: [],
       jumlahPutra: [],
@@ -10,6 +11,8 @@ export const useStatistikStore = defineStore("statistik", {
       totalSantri: [],
     },
     estArmada: [],
+    keuanganByDropspot: [],
+    keuanganAll: {},
   }),
   actions: {
     async getData() {
@@ -28,11 +31,21 @@ export const useStatistikStore = defineStore("statistik", {
         });
       } catch (error) {}
     },
-    async getData() {
+    async getStatArmada() {
       try {
         await api.get("statistik/estimasi-armada").then((resp) => {
           if ((resp.data.code = 200)) {
             this.estArmada = resp.data.data.estArmada;
+          }
+        });
+      } catch (error) {}
+    },
+    async getKeuangan() {
+      try {
+        await api.get("statistik/keuangan").then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.keuanganByDropspot = resp.data.data.keuanganByDp;
+            this.keuanganAll = resp.data.data.keuanganAll;
           }
         });
       } catch (error) {}

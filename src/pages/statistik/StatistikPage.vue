@@ -96,6 +96,7 @@ import apexCharts from "apexcharts";
 
 const store = useStatistikStore();
 store.getData();
+store.getStatArmada();
 
 const data = {
   series: [
