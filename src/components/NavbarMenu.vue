@@ -3,9 +3,9 @@
   <nav
     class="navbar navbar-dark navbar-expand p-2 fixed-top"
     :style="
-      myTheme.themes == 'light'
+      myTheme.themes === 'light'
         ? 'background-color: #003E1E'
-        : myTheme.themes == 'dark'
+        : myTheme.themes === 'dark'
         ? 'background-color: var(--bs-body-bg)'
         : 'background-color: #003E1E'
     "
@@ -322,7 +322,7 @@ onMounted(() => {
   // get theme local storage
   const getTheme = JSON.parse(localStorage.getItem("pageTheme"));
   const myBody = document.body;
-  setDark();
+
   if (getTheme === "dark") {
     cekak.value = true;
     myBody.dataset.bsTheme = "dark";
@@ -339,9 +339,11 @@ function setDark() {
   if (constains === "light") {
     setTheme.dataset.bsTheme = "dark";
     myTheme.themes = "dark";
+    cekak.value = true;
   } else {
     setTheme.dataset.bsTheme = "light";
     myTheme.themes = "light";
+    cekak.value = false;
   }
   // save local storage
   localStorage.setItem("pageTheme", JSON.stringify(setTheme.dataset.bsTheme));
