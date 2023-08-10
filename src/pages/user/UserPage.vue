@@ -174,6 +174,15 @@
               />
             </div>
             <div class="form-group mb-3">
+              <small>No HP (Optional)</small>
+              <input
+                type="text"
+                v-model="form.formInt.no_hp"
+                placeholder="Masukkan nomer hp .."
+                class="form-control mt-2"
+              />
+            </div>
+            <div class="form-group mb-3">
               <small>Password</small>
               <input
                 type="password"
@@ -227,6 +236,15 @@
                 type="text"
                 v-model="form.formEdit.username"
                 placeholder="Masukkan username .."
+                class="form-control mt-2"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <small>No HP (Optional)</small>
+              <input
+                type="text"
+                v-model="form.formEdit.no_hp"
+                placeholder="Masukkan nomer hp .."
                 class="form-control mt-2"
               />
             </div>

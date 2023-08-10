@@ -271,6 +271,7 @@
           </div>
           <div class="modal-footer">
             <router-link
+              v-if="table.item.status_kepulangan === 'rombongan'"
               :to="{
                 name: 'penumpang-detail',
                 params: { uuid: table.item.uuid },
@@ -278,6 +279,7 @@
             >
               <button class="btn btn-primary">Lihat Data Rombongan</button>
             </router-link>
+            <button v-else class="btn btn-primary">Daftarkan Rombongan</button>
             <button
               class="btn btn-secondary"
               @click="table.isOpenDetail = false"

@@ -22,13 +22,14 @@ export const useUserFrom = defineStore("form_user", {
       nama_lengkap: "",
       niup: "",
       username: "",
+      no_hp: "",
       role: "",
       password: "",
       area_id: "",
     },
     formEdit: {
       santri_uuid: "",
-      username: "",
+      no_hp: "",
       role: "",
       area_id: "",
     },
@@ -41,11 +42,13 @@ export const useUserFrom = defineStore("form_user", {
       (this.formInt.niup = ""), (this.formInt.username = "");
       this.formInt.role = "";
       this.formInt.password = "";
+      this.formInt.no_hp = "";
       // form edit
       this.formEdit.santri_uuid = "";
       this.formEdit.username = "";
       this.formEdit.role = "";
       this.formEdit.area_id = "";
+      this.formEdit.no_hp = "";
       // form edit password
       this.formEditPassword.password = "";
       // mode
@@ -118,6 +121,7 @@ export const useUserFrom = defineStore("form_user", {
       this.roleValue = d.role ? d.role : "kosong";
       this.formEdit.santri_uuid = d.santri_uuid;
       this.formEdit.role = d.role;
+      this.formEdit.no_hp = d.no_hp;
       this.formEdit.username = d.username;
       this.isOpenEdit = true;
       this.editMode = d.type;
