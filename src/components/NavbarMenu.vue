@@ -59,7 +59,7 @@
     style="overflow-x: auto"
   >
     <MenuItem
-      v-for="m in menu"
+      v-for="m in filterMenu()"
       :key="m.title"
       :title="m.title"
       :icon="m.icon"
@@ -111,6 +111,18 @@ const menu = ref([
         id: 6,
         name: "armada",
       },
+      {
+        id: 7,
+        name: "pendamping",
+      },
+      {
+        id: 8,
+        name: "p4nj",
+      },
+      {
+        id: 9,
+        name: "keuangan",
+      },
     ],
   },
   {
@@ -149,6 +161,10 @@ const menu = ref([
         id: 3,
         name: "admin",
       },
+      {
+        id: 4,
+        name: "wilayah",
+      },
     ],
   },
   {
@@ -176,6 +192,22 @@ const menu = ref([
         id: 5,
         name: "daerah",
       },
+      {
+        id: 6,
+        name: "armada",
+      },
+      {
+        id: 7,
+        name: "pendamping",
+      },
+      {
+        id: 8,
+        name: "p4nj",
+      },
+      {
+        id: 9,
+        name: "keuangan",
+      },
     ],
   },
   {
@@ -194,6 +226,18 @@ const menu = ref([
       {
         id: 3,
         name: "admin",
+      },
+      {
+        id: 4,
+        name: "armada",
+      },
+      {
+        id: 5,
+        name: "pendamping",
+      },
+      {
+        id: 6,
+        name: "p4nj",
       },
     ],
   },
@@ -214,6 +258,18 @@ const menu = ref([
         id: 3,
         name: "admin",
       },
+      {
+        id: 4,
+        name: "wilayah",
+      },
+      {
+        id: 5,
+        name: "daerah",
+      },
+      {
+        id: 6,
+        name: "keuangan",
+      },
     ],
   },
   {
@@ -233,6 +289,18 @@ const menu = ref([
         id: 3,
         name: "admin",
       },
+      {
+        id: 4,
+        name: "wilayah",
+      },
+      {
+        id: 5,
+        name: "daerah",
+      },
+      {
+        id: 6,
+        name: "keuangan",
+      },
     ],
   },
   {
@@ -244,10 +312,6 @@ const menu = ref([
         id: 1,
         name: "sysadmin",
       },
-      {
-        id: 2,
-        name: "bendahara",
-      },
     ],
   },
   {
@@ -258,6 +322,10 @@ const menu = ref([
       {
         id: 1,
         name: "sysadmin",
+      },
+      {
+        id: 2,
+        name: "admin",
       },
     ],
   },
