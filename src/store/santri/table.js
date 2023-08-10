@@ -13,6 +13,7 @@ export const useSantriTable = defineStore("table_santri", {
       wilayah: [],
       blok: [],
     },
+    uuid:'',
     params: {
       cari: "",
       wilayah: "",
@@ -45,7 +46,6 @@ export const useSantriTable = defineStore("table_santri", {
       const params = { params: this.params };
       try {
         await api.get("santri", params).then((resp) => {
-          // console.log("meta headers", resp.headers);
           if ((resp.data.code = 200)) {
             this.items = resp.data.data;
             this.meta = resp.headers;
@@ -54,6 +54,7 @@ export const useSantriTable = defineStore("table_santri", {
       } catch (error) {}
     },
     async handleDoubelClick(uuid) {
+      this.uuid = uuid
       try {
         this.isOpenDetail = true;
         await api.get("santri/" + uuid).then((resp) => {

@@ -6,16 +6,16 @@
     >
       <div
         class="text-center p-3 mx-3"
-        :class="routePath == props.path && myTheme.themes == 'light' ? 'menu-active' : routePath == props.path && myTheme.themes == 'dark' ? 'menu-dark':'menu-atas-item '"
+        :class="routePath === props.path && myTheme.themes === 'light' ? 'menu-active' : routePath === props.path && myTheme.themes === 'dark' ? 'menu-dark':'menu-atas-item '"
       >
         <font-awesome-icon
           :icon="icon"
-          :class="routePath == props.path && myTheme.themes == 'light' ? 'text-white' : routePath == props.path && myTheme.themes == 'dark' ? 'text-dark':'text-secondary'"
+          :class="routePath === props.path && myTheme.themes === 'light' ? 'text-white' : routePath === props.path && myTheme.themes === 'dark' ? 'text-dark':'text-secondary'"
           class="icon"
         />
         <p
           class="text-secondary nama"
-          :class="routePath == props.path ? 'text-white' : ''"
+          :class="routePath === props.path ? 'text-white' : ''"
         >{{ title }}</p>
       </div>
     </router-link>

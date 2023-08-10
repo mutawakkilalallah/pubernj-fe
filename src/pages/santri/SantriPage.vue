@@ -11,7 +11,10 @@
         v-model="table.params.wilayah"
         @change="table.getBlok"
       >
-        <option value="" selected>Semua Wilayah</option>
+        <option
+          value=""
+          selected
+        >Semua Wilayah</option>
         <option
           v-for="w in table.filter.wilayah"
           :key="w"
@@ -26,8 +29,15 @@
         v-model="table.params.blok"
         @change="table.getData"
       >
-        <option value="" selected>Semua Daerah</option>
-        <option v-for="b in table.filter.blok" :key="b" :value="b.id_blok">
+        <option
+          value=""
+          selected
+        >Semua Daerah</option>
+        <option
+          v-for="b in table.filter.blok"
+          :key="b"
+          :value="b.id_blok"
+        >
           {{ b.blok }}
         </option>
       </select>
@@ -38,7 +48,10 @@
         v-model="table.params.status_kepulangan"
         @change="table.getData"
       >
-        <option value="" selected>Semua Status Kepulangan</option>
+        <option
+          value=""
+          selected
+        >Semua Status Kepulangan</option>
         <option value="rombongan">Rombongan</option>
         <option value="non-rombongan">Non Rombongan</option>
       </select>
@@ -47,7 +60,10 @@
         v-model="table.params.jenis_kelamin"
         @change="table.getData"
       >
-        <option value="" selected>Semua Jenis Kelamin</option>
+        <option
+          value=""
+          selected
+        >Semua Jenis Kelamin</option>
         <option value="L">Laki-Laki</option>
         <option value="P">Perempuan</option>
       </select>
@@ -132,7 +148,10 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="modalDetailLabel">
+            <h1
+              class="modal-title fs-5"
+              id="modalDetailLabel"
+            >
               Detail Santri
             </h1>
             <button
@@ -142,12 +161,16 @@
             ></button>
           </div>
           <div class="modal-body">
-            <p class="alert alert-secondary p-1 fs-6" role="alert">
-              <i
-                ><font-awesome-icon icon="bell" class="icon" /> Data santri
+            <p
+              class="alert alert-secondary p-1 fs-6"
+              role="alert"
+            >
+              <i><font-awesome-icon
+                  icon="bell"
+                  class="icon"
+                /> Data santri
                 hanya bersifat temporary sebagai kebutuhan Pulang Bersama, untuk
-                data lebih detail silahkan lihat di Aplikasi PEDATREN</i
-              >
+                data lebih detail silahkan lihat di Aplikasi PEDATREN</i>
             </p>
 
             <div class="row">
@@ -182,9 +205,8 @@
                       readonly
                       class="form-control-plaintext"
                       :value="
-                        table.item.raw.tempat_lahir +
-                        ', ' +
-                        table.item.raw.tanggal_lahir
+                        table.item.raw ? table.item.raw.tempat_lahir +
+                        ', ' + table.item.raw.tanggal_lahir :'' 
                       "
                     />
                   </div>
@@ -219,9 +241,7 @@
                       readonly
                       class="form-control-plaintext"
                       v-model="
-                        table.item.raw.domisili_santri[
-                          table.item.raw.domisili_santri.length - 1
-                        ].kamar
+                        table.item.raw.domisili_santri[table.item.raw.domisili_santri.length - 1].kamar
                       "
                     />
                   </div>
@@ -277,10 +297,20 @@
                 params: { uuid: table.item.uuid },
               }"
             >
-              <button class="btn btn-primary">Lihat Data Rombongan</button>
+              <button
+                class="btn btn-primary"
+                type="button"
+                @click="table.isOpenDetail = false"
+              >Lihat Data Rombongan</button>
             </router-link>
-            <button v-else class="btn btn-primary">Daftarkan Rombongan</button>
             <button
+              v-else
+              class="btn btn-primary"
+              type="button"
+              @click="form.isOpenEdit = true"
+            >Daftarkan Rombongan</button>
+            <button
+              type="button"
               class="btn btn-secondary"
               @click="table.isOpenDetail = false"
             >
@@ -290,12 +320,103 @@
         </div>
       </div>
     </div>
+    <!-- edit data dropsot -->
+    <div
+      class="modal fade"
+      v-if="form.isOpenEdit === true"
+      :class="{ show: form.isOpenEdit }"
+      style="display: block"
+      id="modalEdit"
+      tabindex="-1"
+      aria-labelledby="modalEditLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1
+              class="modal-title fs-5"
+              id="modalEditLabel"
+            >Edit Dropsot</h1>
+            <button
+              class="btn-close"
+              type="button"
+              @click="form.setOpenEdit"
+            ></button>
+          </div>
+          <form @submit.prevent="form.editData()">
+            <div class="modal-body">
+              <div class="form-group mb-3">
+                <small>Area</small>
+                <select
+                  class="form-select"
+                  v-model="form.idArea"
+                  @change="form.getDropspot"
+                >
+                  <option
+                    value=""
+                    selected
+                  >Pilih Area</option>
+                  <option
+                    v-for="a in form.isArea"
+                    :key="a"
+                    :value="a.id"
+                  >
+                    {{ a.nama }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group mb-3">
+                <small>Dropspot</small>
+                <select
+                  class="form-select"
+                  v-model="form.formEditDropspot.dropspot_id"
+                  :disabled="form.idArea === ''"
+                >
+                  <option
+                    v-if="form.formEditDropspot.dropspot_id === ''"
+                    value=""
+                    selected
+                  >
+                    Pilih Dropspot
+                  </option>
+                  <option
+                    v-for="d in form.isDropspot"
+                    :key="d"
+                    :value="d.id"
+                  >
+                    {{ d.nama }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-sm btn-secondary"
+                @click="form.setOpenEdit"
+              >
+                Tutup
+              </button>
+              <button
+                type="submit"
+                class="btn btn-sm btn-primary"
+              >Simpan</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
 import { useSantriTable } from "../../store/santri/table";
-const table = useSantriTable();
+import { useSantriForm } from "../../store/santri/form";
 
+const table = useSantriTable();
+const form = useSantriForm();
+
+form.getArea();
 table.getData();
 table.getWilayah();
 </script>

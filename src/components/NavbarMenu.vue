@@ -3,9 +3,9 @@
   <nav
     class="navbar navbar-dark navbar-expand p-2 fixed-top"
     :style="
-      myTheme.themes == 'light'
+      myTheme.themes === 'light'
         ? 'background-color: #003E1E'
-        : myTheme.themes == 'dark'
+        : myTheme.themes === 'dark'
         ? 'background-color: var(--bs-body-bg)'
         : 'background-color: #003E1E'
     "
@@ -47,7 +47,7 @@
     style="overflow-x: auto"
   >
     <MenuItem
-      v-for="m in menu"
+      v-for="m in filterMenu()"
       :key="m.title"
       :title="m.title"
       :icon="m.icon"
@@ -99,6 +99,18 @@ const menu = ref([
         id: 6,
         name: "armada",
       },
+      {
+        id: 7,
+        name: "pendamping",
+      },
+      {
+        id: 8,
+        name: "p4nj",
+      },
+      {
+        id: 9,
+        name: "keuangan",
+      },
     ],
   },
   {
@@ -137,6 +149,10 @@ const menu = ref([
         id: 3,
         name: "admin",
       },
+      {
+        id: 4,
+        name: "wilayah",
+      },
     ],
   },
   {
@@ -164,6 +180,22 @@ const menu = ref([
         id: 5,
         name: "daerah",
       },
+      {
+        id: 6,
+        name: "armada",
+      },
+      {
+        id: 7,
+        name: "pendamping",
+      },
+      {
+        id: 8,
+        name: "p4nj",
+      },
+      {
+        id: 9,
+        name: "keuangan",
+      },
     ],
   },
   {
@@ -182,6 +214,18 @@ const menu = ref([
       {
         id: 3,
         name: "admin",
+      },
+      {
+        id: 4,
+        name: "armada",
+      },
+      {
+        id: 5,
+        name: "pendamping",
+      },
+      {
+        id: 6,
+        name: "p4nj",
       },
     ],
   },
@@ -202,6 +246,18 @@ const menu = ref([
         id: 3,
         name: "admin",
       },
+      {
+        id: 4,
+        name: "wilayah",
+      },
+      {
+        id: 5,
+        name: "daerah",
+      },
+      {
+        id: 6,
+        name: "keuangan",
+      },
     ],
   },
   {
@@ -221,6 +277,18 @@ const menu = ref([
         id: 3,
         name: "admin",
       },
+      {
+        id: 4,
+        name: "wilayah",
+      },
+      {
+        id: 5,
+        name: "daerah",
+      },
+      {
+        id: 6,
+        name: "keuangan",
+      },
     ],
   },
   {
@@ -232,10 +300,6 @@ const menu = ref([
         id: 1,
         name: "sysadmin",
       },
-      {
-        id: 2,
-        name: "bendahara",
-      },
     ],
   },
   {
@@ -246,6 +310,10 @@ const menu = ref([
       {
         id: 1,
         name: "sysadmin",
+      },
+      {
+        id: 2,
+        name: "admin",
       },
     ],
   },
@@ -291,7 +359,7 @@ onMounted(() => {
   // get theme local storage
   const getTheme = JSON.parse(localStorage.getItem("pageTheme"));
   const myBody = document.body;
-  setDark();
+
   if (getTheme === "dark") {
     cekak.value = true;
     myBody.dataset.bsTheme = "dark";
@@ -308,9 +376,11 @@ function setDark() {
   if (constains === "light") {
     setTheme.dataset.bsTheme = "dark";
     myTheme.themes = "dark";
+    cekak.value = true;
   } else {
     setTheme.dataset.bsTheme = "light";
     myTheme.themes = "light";
+    cekak.value = false;
   }
   // save local storage
   localStorage.setItem("pageTheme", JSON.stringify(setTheme.dataset.bsTheme));

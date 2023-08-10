@@ -37,6 +37,11 @@ const routes = [
         component: () => import("@/pages/penumpang/DetailPage.vue"),
       },
       {
+        path: "/santri/:uuid",
+        name: "edit-penumpang",
+        component: () => import("@/pages/penumpang/EditPenumpangPage.vue"),
+      },
+      {
         path: "/area",
         name: "area",
         component: () => import("@/pages/area/Index.vue"),
