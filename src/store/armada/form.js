@@ -7,15 +7,21 @@ export const useArmadaForm = defineStore("form_armada", {
   state: () => ({
     isOpenAdd: false,
     isOpenEdit: false,
+    isOpenPendamping: false,
     isArea: [],
     isDropspot: [],
     idEdit: "",
     idArea: "",
     namaArea: "",
     namaDropsot: "",
+    data_pendamping: {},
+    formPendamping: {
+      user_uuid: "",
+    },
     form: {
       nama: "",
       type: "",
+      jenis: "",
       dropspot_id: "",
     },
   }),
@@ -24,6 +30,7 @@ export const useArmadaForm = defineStore("form_armada", {
       this.idArea = "";
       this.form.nama = "";
       this.form.type = "";
+      this.form.jenis = "";
       this.form.dropspot_id = "";
     },
     setOpenAdd() {
@@ -33,6 +40,43 @@ export const useArmadaForm = defineStore("form_armada", {
       this.isOpenEdit = !this.isOpenEdit;
       this.resetForm();
     },
+    setOpenPendamping(d) {
+      this.idEdit = d.id;
+      (this.data_pendamping = d.user ? d.user : {}),
+        (this.isOpenPendamping = !this.isOpenPendamping);
+      this.formPendamping.user_uuid = "";
+    },
+    async setPendamping(uuid) {
+      this.formPendamping.user_uuid = uuid;
+      try {
+        await api
+          .put(`armada/pendamping/${this.idEdit}`, this.formPendamping)
+          .then((resp) => {
+            this.isOpenPendamping = false;
+            this.resetForm();
+            this.formPendamping.user_uuid = "";
+            const table = useArmadaTable();
+            table.paramsPendamping.cari = "";
+            table.itemsPendamping = [];
+            table.getData();
+          });
+      } catch (err) {}
+    },
+    async deletePendamping() {
+      try {
+        await api
+          .put(`armada/pendamping/delete/${this.idEdit}`)
+          .then((resp) => {
+            this.isOpenPendamping = false;
+            this.resetForm();
+            this.formPendamping.user_uuid = "";
+            const table = useArmadaTable();
+            table.paramsPendamping.cari = "";
+            table.itemsPendamping = [];
+            table.getData();
+          });
+      } catch (err) {}
+    },
     getArea() {
       try {
         api.get("area").then((resp) => {
@@ -40,13 +84,6 @@ export const useArmadaForm = defineStore("form_armada", {
         });
       } catch (error) {}
     },
-    // getArea() {
-    //   try {
-    //     api.get("area").then((resp) => {
-    //       this.isArea = resp.data.data;
-    //     });
-    //   } catch (error) {}
-    // },
     async getDropspot() {
       this.form.dropspot_id = "";
       const params = { params: { area: this.idArea } };
@@ -71,6 +108,7 @@ export const useArmadaForm = defineStore("form_armada", {
       this.namaDropsot = d.dropspot.nama;
       this.form.nama = d.nama;
       this.form.type = d.type;
+      this.form.jenis = d.jenis;
       this.getDropspot();
       this.form.dropspot_id = d.dropspot_id;
       this.isOpenEdit = true;

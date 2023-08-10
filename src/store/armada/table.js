@@ -6,16 +6,22 @@ export const useArmadaTable = defineStore("table_armada", {
   state: () => ({
     user: localStorage.getItem("user") ? storage.getUser() : null,
     items: [],
+    itemsPendamping: [],
     filter: {
       area: [],
       dropspot: [],
     },
     meta: {},
+    paramsPendamping: {
+      cari: "",
+      role: "pendamping",
+    },
     params: {
       cari: "",
       area: "",
       dropspot: "",
       type: "",
+      jenis: "",
     },
   }),
   actions: {
@@ -27,6 +33,16 @@ export const useArmadaTable = defineStore("table_armada", {
             this.items = resp.data.data;
             this.filter.area = resp.data.filter.area;
             this.meta = resp.headers;
+          }
+        });
+      } catch (error) {}
+    },
+    async getPendamping() {
+      const params = { params: this.paramsPendamping };
+      try {
+        await api.get("user", params).then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.itemsPendamping = resp.data.data;
           }
         });
       } catch (error) {}

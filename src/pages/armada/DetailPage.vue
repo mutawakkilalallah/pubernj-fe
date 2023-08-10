@@ -2,30 +2,31 @@
   <!-- judul -->
   <h3 class="titlePage">Pengelolaan Data Penumpang</h3>
   <hr />
-  <div
-    v-if="role === 'sysadmin' || role === 'admin'"
-    class="row"
-  >
+  <div v-if="role === 'sysadmin' || role === 'admin'" class="row">
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-2">
-          <font-awesome-icon
-            icon="bus"
-            class="icon"
-            style="font-size: 100px"
-          />
+          <font-awesome-icon icon="bus" class="icon" style="font-size: 100px" />
         </div>
         <div class="col-md-10">
           <h3>{{ table.armada.nama }}</h3>
           <hr />
           <p class="mb-1">
-            <b>Dropspot : </b>{{ table.armada.dropspot ? table.armada.dropspot.nama : "-" }}
+            <b>Dropspot : </b
+            >{{ table.armada.dropspot ? table.armada.dropspot.nama : "-" }}
           </p>
-          <p class="mb-1"><b>Pendamping : </b>-</p>
-          <p class="mb-1"><b>No. HP : </b>-</p>
+          <p class="mb-1">
+            <b>Pendamping : </b
+            >{{ table.armada.user ? table.armada.user.nama_lengkap : "-" }}
+          </p>
+          <p class="mb-1">
+            <b>No. HP : </b
+            >{{ table.armada.user ? table.armada.user.no_hp : "-" }}
+          </p>
           <hr />
           <p class="mb-1">
-            <b>Jumlah Penumpang : </b>{{ table.armada.penumpang ? table.armada.penumpang.length : 0 }}
+            <b>Jumlah Penumpang : </b
+            >{{ table.armada.penumpang ? table.armada.penumpang.length : 0 }}
           </p>
         </div>
       </div>
@@ -40,14 +41,23 @@
           item dipilih
         </div>
         <div
-          v-show="form.formDelArmada.id_penumpang ? form.formDelArmada.id_penumpang.length > 0:''"
+          v-show="
+            form.formDelArmada.id_penumpang
+              ? form.formDelArmada.id_penumpang.length > 0
+              : ''
+          "
           class="col text-center"
         >
           <font-awesome-icon
             icon="arrow-right"
             class="icon badge bg-primary p-2"
-            style="cursor: pointer; font-size: medium;"
-            @click="form.moveArmadaDell(form.formDelArmada.id_penumpang, route.params.id)"
+            style="cursor: pointer; font-size: medium"
+            @click="
+              form.moveArmadaDell(
+                form.formDelArmada.id_penumpang,
+                route.params.id
+              )
+            "
           />
         </div>
       </div>
@@ -90,15 +100,8 @@
             v-model="table.params.area"
             @change="table.getDropspot"
           >
-            <option
-              value=""
-              selected
-            >Semua Area</option>
-            <option
-              v-for="a in table.filter.area"
-              :key="a"
-              :value="a.id"
-            >
+            <option value="" selected>Semua Area</option>
+            <option v-for="a in table.filter.area" :key="a" :value="a.id">
               {{ a.nama }}
             </option>
           </select>
@@ -108,15 +111,8 @@
             v-model="table.params.dropspot"
             @change="table.getData"
           >
-            <option
-              value=""
-              selected
-            >Semua Dropsot</option>
-            <option
-              v-for="d in table.filter.dropspot"
-              :key="d"
-              :value="d.id"
-            >
+            <option value="" selected>Semua Dropsot</option>
+            <option v-for="d in table.filter.dropspot" :key="d" :value="d.id">
               {{ d.nama }}
             </option>
           </select>
@@ -127,48 +123,21 @@
             v-model="table.params.jenis_kelamin"
             @change="table.getData"
           >
-            <option
-              value=""
-              selected
-            >Semua Jenis Kelamin</option>
-            <option
-              value="L"
-              selected
-            >Laki-laki</option>
-            <option
-              value="P"
-              selected
-            >Perempuan</option>
+            <option value="" selected>Semua Jenis Kelamin</option>
+            <option value="L" selected>Laki-laki</option>
+            <option value="P" selected>Perempuan</option>
           </select>
           <select
             class="form-select form-select-sm mb-2"
             v-model="table.params.limit"
             @change="table.getData"
           >
-            <option
-              value=""
-              selected
-            >Limit by Kapasitas</option>
-            <option
-              value="60"
-              selected
-            >BUS (60)</option>
-            <option
-              value="34"
-              selected
-            >Mini Bus (34)</option>
-            <option
-              value="18"
-              selected
-            >ELF (18)</option>
-            <option
-              value="13"
-              selected
-            >HIACE (13)</option>
-            <option
-              value="7"
-              selected
-            >MPV (8)</option>
+            <option value="" selected>Limit by Kapasitas</option>
+            <option value="60" selected>BUS (60)</option>
+            <option value="34" selected>Mini Bus (34)</option>
+            <option value="18" selected>ELF (18)</option>
+            <option value="13" selected>HIACE (13)</option>
+            <option value="7" selected>MPV (8)</option>
           </select>
         </div>
       </div>
@@ -198,14 +167,23 @@
           item dipilih
         </div>
         <div
-          v-show="form.formAddArmada.id_penumpang ? form.formAddArmada.id_penumpang.length > 0:''"
+          v-show="
+            form.formAddArmada.id_penumpang
+              ? form.formAddArmada.id_penumpang.length > 0
+              : ''
+          "
           class="col text-center"
         >
           <font-awesome-icon
             icon="arrow-left"
             class="icon badge bg-primary p-2"
-            style="cursor: pointer; font-size: medium;"
-            @click="form.moveArmadaAdd(form.formAddArmada.id_penumpang, route.params.id)"
+            style="cursor: pointer; font-size: medium"
+            @click="
+              form.moveArmadaAdd(
+                form.formAddArmada.id_penumpang,
+                route.params.id
+              )
+            "
           />
         </div>
       </div>
@@ -241,7 +219,6 @@
     </div>
   </div>
   <div v-else>wilayah</div>
-
 </template>
 <script setup>
 import { computed, onMounted } from "vue";

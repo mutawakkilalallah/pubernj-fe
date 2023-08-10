@@ -133,19 +133,19 @@
           <i
             v-if="table.item.status_bayar === 'belum-lunas'"
             class="badge bg-danger"
-          >{{ table.item.status_bayar }}</i>
+            >{{ table.item.status_bayar }}</i
+          >
           <i
             v-if="table.item.status_bayar === 'lunas'"
             class="badge bg-success"
-          >{{ table.item.status_bayar }}</i>
+            >{{ table.item.status_bayar }}</i
+          >
           <i
             v-if="table.item.status_bayar === 'kurang'"
             class="badge bg-warning"
-          >{{ table.item.status_bayar }}</i>
-          <i
-            v-if="table.item.status_bayar === 'lebih'"
-            class="badge bg-info"
-          >{{
+            >{{ table.item.status_bayar }}</i
+          >
+          <i v-if="table.item.status_bayar === 'lebih'" class="badge bg-info">{{
             table.item.status_bayar
           }}</i>
         </div>
@@ -161,11 +161,23 @@
           </b>
           <p class="card-title mb-0 mt-3">Pendamping :</p>
           <b class="card-text">
-            {{ table.item.armada ? table.item.armada.pendamping.nama : "-" }}
+            {{
+              table.item.armada
+                ? table.item.armada.user
+                  ? table.item.armada.user.nama_lengkap
+                  : "-"
+                : "-"
+            }}
           </b>
           <p class="card-title mb-0 mt-3">No. HP :</p>
           <b class="card-text">
-            {{ table.item.armada ? table.item.armada.pendamping.no_hp : "-" }}
+            {{
+              table.item.armada
+                ? table.item.armada.user
+                  ? table.item.armada.user.no_hp
+                  : "-"
+                : "-"
+            }}
           </b>
         </div>
       </div>
