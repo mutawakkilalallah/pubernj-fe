@@ -35,7 +35,7 @@
       >
         <option value="" selected>Semua Type</option>
         <option value="bus" selected>BUS</option>
-        <option value="mini_bus" selected>MINI BUS</option>
+        <option value="minibus" selected>MINIBUS</option>
         <option value="elf" selected>ELF</option>
         <option value="hiace" selected>HIACE</option>
         <option value="mpv" selected>MPV</option>
@@ -157,7 +157,7 @@
               <select class="form-select" v-model="form.form.type">
                 <option value="" selected>Pilih Type</option>
                 <option value="bus" selected>bus</option>
-                <option value="mini_bus" selected>mini_bus</option>
+                <option value="minibus" selected>minibus</option>
                 <option value="elf" selected>elf</option>
                 <option value="hiace" selected>hiace</option>
                 <option value="mpv" selected>mpv</option>
@@ -247,7 +247,7 @@
               <small>Type</small>
               <select class="form-select" v-model="form.form.type">
                 <option value="bus" selected>bus</option>
-                <option value="mini_bus" selected>mini_bus</option>
+                <option value="minibus" selected>minibus</option>
                 <option value="elf" selected>elf</option>
                 <option value="hiace" selected>hiace</option>
                 <option value="mpv" selected>mpv</option>

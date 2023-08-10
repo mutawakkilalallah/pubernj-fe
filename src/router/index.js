@@ -71,11 +71,6 @@ const routes = [
         name: "armada-detail",
         component: () => import("@/pages/armada/DetailPage.vue"),
       },
-      {
-        path: "/pendamping",
-        name: "pendamping",
-        component: () => import("@/pages/pendamping/Index.vue"),
-      },
     ],
   },
 ];
