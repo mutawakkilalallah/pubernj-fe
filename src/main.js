@@ -21,6 +21,7 @@ import {
   faBrush,
   faBus,
   faChartSimple,
+  faCircleExclamation,
   faClipboard,
   faClone,
   faCreditCard,
@@ -37,6 +38,7 @@ import {
   faUser,
   faUserCheck,
   faUserCog,
+  faUserLock,
   faUserMd,
   faUserXmark,
 } from "@fortawesome/free-solid-svg-icons";
@@ -68,7 +70,9 @@ library.add(
   faUserCheck,
   faTriangleExclamation,
   faUserXmark,
-  faUserMd
+  faUserMd,
+  faUserLock,
+  faCircleExclamation
 );
 const pinia = createPinia();
 const app = createApp(App);

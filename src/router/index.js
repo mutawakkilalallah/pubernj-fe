@@ -62,6 +62,16 @@ const routes = [
         component: () => import("@/pages/sync/Index.vue"),
       },
       {
+        path: "/user-activity",
+        name: "user-activity",
+        component: () => import("@/pages/activity/Index.vue"),
+      },
+      {
+        path: "/error-report",
+        name: "error-report",
+        component: () => import("@/pages/error/Index.vue"),
+      },
+      {
         path: "/armada",
         name: "armada",
         component: () => import("@/pages/armada/Index.vue"),

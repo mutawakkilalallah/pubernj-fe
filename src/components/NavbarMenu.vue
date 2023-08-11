@@ -318,6 +318,28 @@ const menu = ref([
     ],
   },
   {
+    icon: "user-lock",
+    title: "User Activity",
+    path: "user-activity",
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+    ],
+  },
+  {
+    icon: "circle-exclamation",
+    title: "Error Report",
+    path: "error-report",
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+    ],
+  },
+  {
     icon: "rotate",
     title: "Syncronize",
     path: "sync",
