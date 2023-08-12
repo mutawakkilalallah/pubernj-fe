@@ -1,6 +1,19 @@
 <template>
   <div>
-    <h3 class="titlePage">Check List Penumpang</h3>
+    <div class="row">
+      <div class="col-md-8">
+        <h3 class="titlePage">Data Penumpang Armada</h3>
+      </div>
+      <div class="col-md-4 text-end">
+        <button
+          v-if="idBus > 0"
+          class="btn btn-outline-primary"
+          type="button"
+          v-print="'#printMe'"
+        >Print</button>
+
+      </div>
+    </div>
     <hr />
     <div class="row">
       <div class="col-md-3">
@@ -11,7 +24,7 @@
           <option
             value=""
             selected
-          >Semua Kendaraan</option>
+          >Pilih Kendaraan</option>
           <option
             v-for="a in table.items"
             :key="a"
@@ -26,13 +39,9 @@
     <div
       class="col-md-12"
       v-if="idBus > 0"
+      id="printMe"
     >
       <div class="row">
-        <div class="col-md-2 pt-5 px-5"> <font-awesome-icon
-            icon="bus"
-            class="icon"
-            style="font-size: 100px"
-          /></div>
         <div class="col-md-10">
           <h3>{{ table.namaArmada }}</h3>
           <hr />
@@ -48,7 +57,7 @@
         </div>
         <!-- table -->
         <div class="table-responsive">
-          <table class="table table-sm table-hover mt-3">
+          <table class="table table-sm table-bordered table-hover mt-3">
             <thead>
               <tr>
                 <th scope="col">No</th>
@@ -102,8 +111,9 @@
 
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { usePendampingTable } from "../../store/pendamping/table";
+import print from "vue3-print-nb";
 
 const table = usePendampingTable();
 table.getData();
@@ -116,4 +126,6 @@ function ambilId() {
   idBus.value = ambil;
   table.getDataDetail(ambil);
 }
+
+onMounted(() => {});
 </script>

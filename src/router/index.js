@@ -77,6 +77,11 @@ const routes = [
         component: () => import("@/pages/armada/Index.vue"),
       },
       {
+        path: "/armada-print",
+        name: "armada-print",
+        component: () => import("@/pages/printarmada/Index.vue"),
+      },
+      {
         path: "/armada/:id/penumpang",
         name: "armada-detail",
         component: () => import("@/pages/armada/DetailPage.vue"),

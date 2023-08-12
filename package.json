@@ -16,6 +16,7 @@
     "apexcharts": "^3.41.1",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
+    "bootstrap-print-css": "^1.0.1",
     "chart.js": "^4.3.2",
     "lodash": "^4.17.21",
     "node-sass": "^9.0.0",
@@ -29,7 +30,8 @@
     "vue-google-charts": "^1.1.0",
     "vue-money-format": "^1.2.4",
     "vue-router": "^4.2.2",
-    "vue3-apexcharts": "^1.4.4"
+    "vue3-apexcharts": "^1.4.4",
+    "vue3-print-nb": "^0.1.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",

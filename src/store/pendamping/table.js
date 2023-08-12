@@ -39,7 +39,6 @@ export const usePendampingTable = defineStore("table_pendamping", {
     async getDataDetail(id) {
         try {
             await api.get(`armada/${id}`).then((resp) => {
-            console.log('armada', resp.data.data);
           if ((resp.data.code = 200)) {
               this.armada = resp.data.data;
               this.jumlahPenumpang = resp.data.data.penumpang;

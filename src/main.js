@@ -12,6 +12,7 @@ import axios from "./plugins/axios";
 import VPagination from "@hennge/vue3-pagination";
 import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 import VueApexCharts from "vue3-apexcharts";
+import print from 'vue3-print-nb'
 
 import {
   faArrowLeft,
@@ -99,5 +100,6 @@ app.directive("rupiah", {
 
 app.use(pinia);
 app.use(VueApexCharts);
+app.use(print)
 registerComponents(app);
 app.mount("#app");

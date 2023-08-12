@@ -23,8 +23,17 @@ export const usePenumpangForm = defineStore("form_penumpang", {
       jumlah_bayar: "",
       status_bayar: "",
     },
+    isOpen: false
   }),
   actions: {
+    setOpen(a) {
+      this.dataEdit = a
+      this.isOpen = true
+    },
+    closeOpen() {
+      this.dataEdit={}
+      this.isOpen = false
+    },
     showContextMenu(event, d) {
       event.preventDefault();
       this.dataEdit = d;
@@ -53,6 +62,7 @@ export const usePenumpangForm = defineStore("form_penumpang", {
       this.resetFormEditPembayaran();
     },
     handleOpenEditDropspot() {
+       this.isOpen = false
       this.idArea = this.dataEdit.dropspot.area_id;
       this.getArea();
       this.getDropspot();
@@ -60,11 +70,13 @@ export const usePenumpangForm = defineStore("form_penumpang", {
       this.isOpenEditDropspot = true;
     },
     handleOpenEditPembayaran() {
+       this.isOpen = false
       this.formEditPembayaran.status_bayar = this.dataEdit.status_bayar;
       this.formEditPembayaran.jumlah_bayar = this.dataEdit.jumlah_bayar;
       this.isOpenEditPembayaran = true;
     },
     goToDetail() {
+       this.isOpen = false
       router.push(`penumpang/${this.dataEdit.santri_uuid}/detail`);
     },
     getArea() {
@@ -108,6 +120,7 @@ export const usePenumpangForm = defineStore("form_penumpang", {
       } catch (err) {}
     },
     async deleteRombongan() {
+       this.isOpen = false
       Swal.fire({
         title: "Konfirmasi",
         text: "Apakah anda yakin ingin mengeluarkan dari rombongan ?",
