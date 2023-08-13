@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import { api } from "../../plugins/axios";
+import { utils, writeFile, write } from "xlsx";
+import { saveAs } from "file-saver";
 
 export const usePenumpangTable = defineStore("table_penumpang", {
   state: () => ({
@@ -24,6 +26,11 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       page: 1,
       limit: 25,
     },
+    params2: {
+      limit:50
+    },
+    itemsExport: [],
+    btnDisable: true
   }),
   actions: {
     nexPage(a) {
@@ -42,6 +49,7 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       this.params.page = 1;
       this.getData();
     },
+  
     async getData() {
       const params = { params: this.params };
       try {
@@ -51,14 +59,95 @@ export const usePenumpangTable = defineStore("table_penumpang", {
             this.items = resp.data.data;
             this.meta = resp.headers;
             this.filter.area = resp.data.filter.area;
+            this.params2.limit = resp.headers.x_total_data
+            this.getDataExport()
           }
         });
       } catch (error) {}
     },
-    async getDropspot() {
-      this.params.dropspot = "";
-      this.getData();
-      const params = { params: { area: this.params.area } };
+
+  async getDataExport() {
+      const params = { params: this.params2 };   
+      try {
+        await api.get("penumpang", params).then(resp => {
+          if ((resp.data.code = 200)) { 
+            this.itemsExport = resp.data.data
+          }
+         })
+      } catch (error) {        
+      }    
+    },
+  
+exportExel() {
+  if (this.itemsExport.length > 0) {
+    const tanggal = this.tanggal()
+    const data = this.formatJson(this.itemsExport);
+    const worksheet = utils.json_to_sheet(data);
+    const workbook = utils.book_new();
+    utils.book_append_sheet(workbook, worksheet, "Data");
+    const excelBuffer = this.writeExcelBuffer(workbook);
+    this.saveExcelFile(excelBuffer, `datapenumpang ${tanggal}.xlsx`);
+  } else {   
+    this.btnDisable = false
+  }
+},
+    
+saveExcelFile(buffer, fileName) {
+  const blob = new Blob([buffer], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+  saveAs(blob, fileName);
+},
+writeExcelBuffer(workbook) {
+  const excelBuffer = write(workbook, { bookType: "xlsx", type: "array" });
+  return excelBuffer;
+},
+
+    // mengambil semua data yaang akan di export
+formatJson(data) {
+  const temp = [];
+  data.forEach((a) => {
+    const tampung = {
+      niup: "",
+      nama: "",
+      dropspot: "",
+      area: "",
+      tarif: "",
+      terbayar: "",
+      wilayah: "",
+      daerah: "",
+      kabupaten:"",
+      kecamatan:""
+      
+    };
+    tampung.niup = a.santri.niup;
+    tampung.nama = a.santri.nama_lengkap;
+    tampung.dropspot = a.dropspot.nama;    
+    tampung.area = a.dropspot.area.nama;    
+    tampung.tarif = a.dropspot.harga;
+    tampung.terbayar = a.dropspot.jumlah_bayar
+    tampung.wilayah = a.santri.wilayah
+    tampung.daerah = a.santri.blok
+    tampung.kabupaten = a.santri.kabupaten
+    tampung.kecamatan = a.santri.kecamatan
+
+    temp.push(tampung);
+  });
+  return temp;
+},
+
+tanggal() {
+  const date = new Date();
+  const d = date.getDate();
+  const m = date.getMonth() + 1;
+  const y = date.getFullYear();
+  return  (d <= 9 ? "0" + d : d) + "-" + (m <= 9 ? "0" + m : m) + "-" + y;
+},
+
+async getDropspot() {
+  this.params.dropspot = "";
+  this.getData();
+  const params = { params: { area: this.params.area } };
       try {
         await api.get("dropspot", params).then((resp) => {
           if ((resp.data.code = 200)) {

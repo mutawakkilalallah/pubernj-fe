@@ -1,6 +1,18 @@
 <template>
   <!-- judul -->
-  <h3 class="titlePage">Detail Data Penumpang</h3>
+  <div class="row">
+    <div class="col-md-8">
+      <h3 class="titlePage">Detail Data Penumpang</h3>
+    </div>
+    <div class="col-md-4 text-end">
+      <button
+        class="btn btn-sm btn-outline-secondary"
+        type="button"
+        @click="backPage"
+      >Kembali</button>
+
+    </div>
+  </div>
   <hr />
   <div class="row">
     <div class="col-md-3">
@@ -133,19 +145,19 @@
           <i
             v-if="table.item.status_bayar === 'belum-lunas'"
             class="badge bg-danger"
-            >{{ table.item.status_bayar }}</i
-          >
+          >{{ table.item.status_bayar }}</i>
           <i
             v-if="table.item.status_bayar === 'lunas'"
             class="badge bg-success"
-            >{{ table.item.status_bayar }}</i
-          >
+          >{{ table.item.status_bayar }}</i>
           <i
             v-if="table.item.status_bayar === 'kurang'"
             class="badge bg-warning"
-            >{{ table.item.status_bayar }}</i
-          >
-          <i v-if="table.item.status_bayar === 'lebih'" class="badge bg-info">{{
+          >{{ table.item.status_bayar }}</i>
+          <i
+            v-if="table.item.status_bayar === 'lebih'"
+            class="badge bg-info"
+          >{{
             table.item.status_bayar
           }}</i>
         </div>
@@ -188,6 +200,7 @@
 import { onMounted } from "vue";
 import { usePenumpangDetailTable } from "../../store/penumpang/table-detail";
 import { useRoute } from "vue-router";
+import router from "../../router";
 
 const table = usePenumpangDetailTable();
 const route = useRoute();
@@ -195,4 +208,8 @@ const route = useRoute();
 onMounted(() => {
   table.getDataDetail(route.params.uuid);
 });
+
+function backPage() {
+  router.push("/penumpang");
+}
 </script>

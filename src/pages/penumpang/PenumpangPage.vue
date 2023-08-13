@@ -1,6 +1,19 @@
 <template>
   <!-- judul -->
-  <h3 class="titlePage">Data Penumpang</h3>
+  <div class="row">
+    <div class="col-md-8">
+      <h3 class="titlePage">Data Penumpang</h3>
+    </div>
+    <div class="col-md-4 text-end">
+      <button
+        class="btn btn-sm btn-outline-primary"
+        type="button"
+        @click="expExel"
+      >Export</button>
+      <p v-show="table.btnDisable === false">Click Kembali</p>
+
+    </div>
+  </div>
   <hr />
   <!-- menu filter -->
   <div class="filter-box mb-5 row">
@@ -123,10 +136,7 @@
     </div>
   </div>
   <hr />
-  <!-- tombol tambah data -->
-  <!-- <button class="btn btn-sm btn-primary" @click="form.setOpenAdd">
-    Tambah Dropspot
-  </button> -->
+
   <!-- table data utama -->
   <div class="table-responsive">
     <table class="table table-sm table-hover mt-3">
@@ -454,21 +464,21 @@
             <div class="col">
               <button
                 type="button"
-                class="btn btn-sm btn-outline-primary"
+                class="btn btn-sm btn-outline-warning"
                 @click="form.handleOpenEditPembayaran"
               >Ubah Status Pembayaran</button>
             </div>
             <div class="col">
               <button
                 type="button"
-                class="btn btn-sm btn-outline-primary"
+                class="btn btn-sm btn-outline-info"
                 @click="form.goToDetail"
               >Detail Rombongan</button>
             </div>
             <div class="col">
               <button
                 type="button"
-                class="btn btn-sm btn-outline-primary"
+                class="btn btn-sm btn-outline-danger"
                 @click="form.deleteRombongan"
               >Hapus Penumpang</button>
             </div>
@@ -486,6 +496,10 @@ const table = usePenumpangTable();
 const form = usePenumpangForm();
 table.getData();
 table.getWilayah();
+
+function expExel() {
+  table.exportExel();
+}
 </script>
 
 <style>
