@@ -54,6 +54,7 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       const params = { params: this.params };
       try {
         await api.get("penumpang", params).then((resp) => {
+          console.log('data', resp.data.data);
           if ((resp.data.code = 200)) {
             this.totalData = resp.headers["x_total_data"];
             this.items = resp.data.data;
@@ -110,26 +111,34 @@ formatJson(data) {
     const tampung = {
       niup: "",
       nama: "",
+      kecamatan:"",
+      kabupaten:"",
+      provinsi:"",
+      daerah: "",
+      wilayah: "",
+      lembaga: "",
+      status_kepulangan:"",
       dropspot: "",
+      armada:"",
       area: "",
       tarif: "",
-      terbayar: "",
-      wilayah: "",
-      daerah: "",
-      kabupaten:"",
-      kecamatan:""
+      status_pembayaran: "",
       
     };
     tampung.niup = a.santri.niup;
     tampung.nama = a.santri.nama_lengkap;
-    tampung.dropspot = a.dropspot.nama;    
+    tampung.kecamatan = a.santri.kecamatan
+    tampung.kabupaten = a.santri.kabupaten
+    tampung.provinsi = a.santri.provinsi
+    tampung.daerah = a.santri.blok
+    tampung.wilayah = a.santri.wilayah
+    tampung.lembaga = ''
+    tampung.status_kepulangan = a.santri.status_kepulangan
+    tampung.dropspot = a.dropspot.nama;  
+    tampung.armada=''
     tampung.area = a.dropspot.area.nama;    
     tampung.tarif = a.dropspot.harga;
-    tampung.terbayar = a.dropspot.jumlah_bayar
-    tampung.wilayah = a.santri.wilayah
-    tampung.daerah = a.santri.blok
-    tampung.kabupaten = a.santri.kabupaten
-    tampung.kecamatan = a.santri.kecamatan
+    tampung.status_pembayaran = a.status_bayar
 
     temp.push(tampung);
   });
