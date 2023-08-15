@@ -122,7 +122,7 @@
   <hr />
   <!-- tombol tambah data -->
   <button
-    v-if="table.user.role == 'sysadmin'"
+    v-if="table.user.role == 'sysadmin' || table.user.role == 'armada'  "
     class="btn btn-sm btn-primary"
     @click="form.setOpenAdd"
   >
@@ -140,6 +140,7 @@
           <th scope="col">Penumpang</th>
           <th scope="col">Pendamping</th>
           <th scope="col">Dropspot</th>
+          <th scope="col">Harga</th>
         </tr>
       </thead>
       <tbody>
@@ -175,6 +176,7 @@
             </button>
           </td>
           <td>{{ d.dropspot.nama }}</td>
+          <td>{{ forMat(d.dropspot.harga) }}</td>
         </tr>
       </tbody>
     </table>
@@ -607,6 +609,9 @@ const form = useArmadaForm();
 function pagePrint() {
   router.replace("/armada-print");
 }
+const forMat = (i) => {
+  return "Rp. " + i.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.");
+};
 
 onMounted(() => {
   table.getData();

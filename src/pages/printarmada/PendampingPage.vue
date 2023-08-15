@@ -111,7 +111,7 @@
 
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { usePendampingTable } from "../../store/pendamping/table";
 import print from "vue3-print-nb";
 
@@ -126,6 +126,4 @@ function ambilId() {
   idBus.value = ambil;
   table.getDataDetail(ambil);
 }
-
-onMounted(() => {});
 </script>

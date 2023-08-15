@@ -162,7 +162,7 @@
           style="cursor: pointer"
           v-for="(d, i) in table.items"
           :key="i"
-          @dblclick.prevent="form.setOpen(d)"
+          @dblclick.prevent="form.goToDetailClick(d)"
           @contextmenu.prevent="form.showContextMenu($event, d)"
         >
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
@@ -431,62 +431,7 @@
       </div>
     </div>
   </div>
-  <!-- Modal buton -->
-  <div
-    class="modal fade"
-    id="modalTombolLabel"
-    v-if="form.isOpen === true"
-    :class="{ show: form.isOpen }"
-    style="display: block"
-    tabindex="-1"
-    aria-labelledby="modalTombolLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button
-            class="btn-close"
-            type="button"
-            @click="form.closeOpen"
-          ></button>
-        </div>
-        <div class="modal-body">
 
-          <div class="row gx-1">
-            <div class="col">
-              <button
-                type="button"
-                class="btn btn-sm btn-outline-primary"
-                @click="form.handleOpenEditDropspot"
-              >Ubah Dropspot</button>
-            </div>
-            <div class="col">
-              <button
-                type="button"
-                class="btn btn-sm btn-outline-warning"
-                @click="form.handleOpenEditPembayaran"
-              >Ubah Status Pembayaran</button>
-            </div>
-            <div class="col">
-              <button
-                type="button"
-                class="btn btn-sm btn-outline-info"
-                @click="form.goToDetail"
-              >Detail Rombongan</button>
-            </div>
-            <div class="col">
-              <button
-                type="button"
-                class="btn btn-sm btn-outline-danger"
-                @click="form.deleteRombongan"
-              >Hapus Penumpang</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 <script setup>
 import { usePenumpangTable } from "../../store/penumpang/table";

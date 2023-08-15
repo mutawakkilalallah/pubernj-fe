@@ -160,6 +160,7 @@ export const useUserFrom = defineStore("form_user", {
           .put(`user/password/${this.idEdit}`, this.formEditPassword)
           .then((resp) => {
             this.isOpenEditPassword = false;
+            this.idEdit=""
             this.resetForm();
             const table = useUserTable();
             table.getData();

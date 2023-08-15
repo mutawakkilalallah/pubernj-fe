@@ -15,7 +15,7 @@
         />
         <p
           class="text-secondary nama"
-          :class="routePath === props.path ? 'text-white' : ''"
+          :class="routePath === props.path ? 'text-white' : 'text-secondary'"
         >{{ title }}</p>
       </div>
     </router-link>

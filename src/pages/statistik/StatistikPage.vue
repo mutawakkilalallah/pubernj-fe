@@ -1,19 +1,54 @@
 <template>
   <div>
-    <h3 class="titlePage">Statistik</h3>
-    <div class="table-responsive">
+    <div class="row">
+      <div class="col-md-8">
+        <h3 class="titlePage">Statistik</h3>
+      </div>
+      <div class="col-md-4 text-end">
+        <button
+          class="btn btn-sm btn-outline-primary"
+          type="button"
+          v-print="'#printMe'"
+        >Print</button>
+
+      </div>
+    </div>
+    <div
+      id="printMe"
+      class="table-responsive"
+    >
       <table class="table table-sm mt-3">
         <thead>
           <tr class="table-primary">
-            <th rowspan="2" scope="col" class="text-center align-middle">No</th>
-            <th rowspan="2" scope="col" class="text-center align-middle">
+            <th
+              rowspan="2"
+              scope="col"
+              class="text-center align-middle"
+            >No</th>
+            <th
+              rowspan="2"
+              scope="col"
+              class="text-center align-middle"
+            >
               Nama Dropspot
             </th>
-            <th colspan="3" scope="colgroup" class="text-center">Penumpang</th>
-            <th colspan="5" scope="colgroup" class="text-center">
+            <th
+              colspan="3"
+              scope="colgroup"
+              class="text-center"
+            >Penumpang</th>
+            <th
+              colspan="5"
+              scope="colgroup"
+              class="text-center"
+            >
               Armada Putra
             </th>
-            <th colspan="5" scope="colgroup" class="text-center">
+            <th
+              colspan="5"
+              scope="colgroup"
+              class="text-center"
+            >
               Armada Putri
             </th>
           </tr>
@@ -34,7 +69,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(ea, i) in store.estArmada" :key="i">
+          <tr
+            v-for="(ea, i) in store.estArmada"
+            :key="i"
+          >
             <td>{{ i + 1 }}</td>
             <td>{{ ea.nama_dropspot }}</td>
             <td class="table-info">
@@ -93,6 +131,7 @@
 <script setup>
 import { useStatistikStore } from "../../store/auth/statistik";
 import apexCharts from "apexcharts";
+import print from "vue3-print-nb";
 
 const store = useStatistikStore();
 store.getData();

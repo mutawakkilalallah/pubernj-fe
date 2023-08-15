@@ -27,7 +27,7 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       limit: 25,
     },
     params2: {
-      limit:50
+      limit:""
     },
     itemsExport: [],
     btnDisable: true
@@ -54,7 +54,6 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       const params = { params: this.params };
       try {
         await api.get("penumpang", params).then((resp) => {
-          console.log('data', resp.data.data);
           if ((resp.data.code = 200)) {
             this.totalData = resp.headers["x_total_data"];
             this.items = resp.data.data;
@@ -87,7 +86,7 @@ exportExel() {
     const workbook = utils.book_new();
     utils.book_append_sheet(workbook, worksheet, "Data");
     const excelBuffer = this.writeExcelBuffer(workbook);
-    this.saveExcelFile(excelBuffer, `datapenumpang ${tanggal}.xlsx`);
+    this.saveExcelFile(excelBuffer, `Data Penumpang ${tanggal}.xlsx`);
   } else {   
     this.btnDisable = false
   }

@@ -1,6 +1,18 @@
 <template>
   <!-- judul -->
-  <h3 class="titlePage">Data Dropspot</h3>
+  <div class="row">
+    <div class="col-md-8">
+      <h3 class="titlePage">Data Dropspot</h3>
+    </div>
+    <div class="col-md-4 text-end">
+      <button
+        class="btn btn-outline-primary"
+        type="button"
+        @click="table.exportExel"
+      >Export</button>
+
+    </div>
+  </div>
   <hr />
   <!-- menu filter -->
   <div class="filter-box mb-5 row">

@@ -82,21 +82,6 @@ app.component("font-awesome-icon", FontAwesomeIcon);
 app.component("pagination", VPagination);
 app.use(router);
 
-app.directive("rupiah", {
-  mounted(el, binding) {
-    const value = binding.value;
-    if (value === null || isNaN(value)) {
-      el.textContent = "";
-    } else {
-      const formattedValue = new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-        maximumSignificantDigits: 12,
-      }).format(value);
-      el.textContent = formattedValue;
-    }
-  },
-});
 
 app.use(pinia);
 app.use(VueApexCharts);
