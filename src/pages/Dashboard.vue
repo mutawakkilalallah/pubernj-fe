@@ -47,7 +47,12 @@
 
   <div class="row mt-3 g-2">
     <!-- card -->
-    <div class="col-sm-3 mb-3 mb-sm-0">
+    <div
+      class="col-sm-3 mb-3 mb-sm-0"
+      v-if="
+        storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'
+      "
+    >
       <div class="card" style="background-color: #006c8a">
         <div class="card-body">
           <div class="row">
@@ -86,7 +91,12 @@
       </div>
     </div>
 
-    <div class="col-sm-3 mb-3 mb-sm-0">
+    <div
+      class="col-sm-3 mb-3 mb-sm-0"
+      v-if="
+        storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'
+      "
+    >
       <div class="card" style="background-color: #8a5700">
         <div class="card-body">
           <div class="row">
@@ -131,7 +141,13 @@
     </div>
 
     <div class="col-sm-3 mb-3 mb-sm-0">
-      <div class="card" style="background-color: #315200">
+      <div
+        class="card"
+        style="background-color: #315200"
+        v-if="
+          storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'
+        "
+      >
         <div class="card-body">
           <div class="row">
             <div class="col">
@@ -152,7 +168,13 @@
     </div>
 
     <div class="col-sm-3 mb-3 mb-sm-0">
-      <div class="card" style="background-color: #2d0063">
+      <div
+        class="card"
+        style="background-color: #2d0063"
+        v-if="
+          storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'
+        "
+      >
         <div class="card-body">
           <div class="row">
             <div class="col">
@@ -200,12 +222,14 @@
 
 <script setup>
 import { useAuthStore } from "../store/auth/index";
-import { useSantriTable } from "../store/santri/table";
+// import { useSantriTable } from "../store/santri/table";
 
-const santri = useSantriTable();
+// const santri = useSantriTable();
 const storeAuth = useAuthStore();
 
-santri.getData();
+// santri.getData();
 storeAuth.getStats();
-storeAuth.getImage(storeAuth.user.niup, "small");
+if (storeAuth.user.role != "p4nj") {
+  storeAuth.getImage(storeAuth.user.niup, "small");
+}
 </script>

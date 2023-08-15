@@ -13,6 +13,7 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       dropspot: [],
       wilayah: [],
       blok: [],
+      armada: [],
     },
     // areaId: "",
     params: {
@@ -23,14 +24,16 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       blok: "",
       pembayaran: "",
       jenis_kelamin: "",
+      armada: "",
       page: 1,
       limit: 25,
     },
     params2: {
       limit:""
+
     },
     itemsExport: [],
-    btnDisable: true
+    btnDisable: true,
   }),
   actions: {
     nexPage(a) {
@@ -49,29 +52,30 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       this.params.page = 1;
       this.getData();
     },
-  
+
     async getData() {
       const params = { params: this.params };
       try {
         await api.get("penumpang", params).then((resp) => {
+
           if ((resp.data.code = 200)) {
             this.totalData = resp.headers["x_total_data"];
             this.items = resp.data.data;
             this.meta = resp.headers;
             this.filter.area = resp.data.filter.area;
-            this.params2.limit = resp.headers.x_total_data
-            this.getDataExport()
+            this.params2.limit = resp.headers.x_total_data;
+            this.getDataExport();
           }
         });
       } catch (error) {}
     },
 
-  async getDataExport() {
-      const params = { params: this.params2 };   
+    async getDataExport() {
+      const params = { params: this.params2 };
       try {
-        await api.get("penumpang", params).then(resp => {
-          if ((resp.data.code = 200)) { 
-            this.itemsExport = resp.data.data
+        await api.get("penumpang", params).then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.itemsExport = resp.data.data;
           }
          })
       } catch (error) {        
@@ -104,58 +108,57 @@ writeExcelBuffer(workbook) {
 },
 
     // mengambil semua data yaang akan di export
-formatJson(data) {
-  const temp = [];
-  data.forEach((a) => {
-    const tampung = {
-      niup: "",
-      nama: "",
-      kecamatan:"",
-      kabupaten:"",
-      provinsi:"",
-      daerah: "",
-      wilayah: "",
-      lembaga: "",
-      status_kepulangan:"",
-      dropspot: "",
-      armada:"",
-      area: "",
-      tarif: "",
-      status_pembayaran: "",
-      
-    };
-    tampung.niup = a.santri.niup;
-    tampung.nama = a.santri.nama_lengkap;
-    tampung.kecamatan = a.santri.kecamatan
-    tampung.kabupaten = a.santri.kabupaten
-    tampung.provinsi = a.santri.provinsi
-    tampung.daerah = a.santri.blok
-    tampung.wilayah = a.santri.wilayah
-    tampung.lembaga = ''
-    tampung.status_kepulangan = a.santri.status_kepulangan
-    tampung.dropspot = a.dropspot.nama;  
-    tampung.armada=''
-    tampung.area = a.dropspot.area.nama;    
-    tampung.tarif = a.dropspot.harga;
-    tampung.status_pembayaran = a.status_bayar
+    formatJson(data) {
+      const temp = [];
+      data.forEach((a) => {
+        const tampung = {
+          niup: "",
+          nama: "",
+          kecamatan: "",
+          kabupaten: "",
+          provinsi: "",
+          daerah: "",
+          wilayah: "",
+          lembaga: "",
+          status_kepulangan: "",
+          dropspot: "",
+          armada: "",
+          area: "",
+          tarif: "",
+          status_pembayaran: "",
+        };
+        tampung.niup = a.santri.niup;
+        tampung.nama = a.santri.nama_lengkap;
+        tampung.kecamatan = a.santri.kecamatan;
+        tampung.kabupaten = a.santri.kabupaten;
+        tampung.provinsi = a.santri.provinsi;
+        tampung.daerah = a.santri.blok;
+        tampung.wilayah = a.santri.wilayah;
+        tampung.lembaga = "";
+        tampung.status_kepulangan = a.santri.status_kepulangan;
+        tampung.dropspot = a.dropspot.nama;
+        tampung.armada = "";
+        tampung.area = a.dropspot.area.nama;
+        tampung.tarif = a.dropspot.harga;
+        tampung.status_pembayaran = a.status_bayar;
 
-    temp.push(tampung);
-  });
-  return temp;
-},
+        temp.push(tampung);
+      });
+      return temp;
+    },
 
-tanggal() {
-  const date = new Date();
-  const d = date.getDate();
-  const m = date.getMonth() + 1;
-  const y = date.getFullYear();
-  return  (d <= 9 ? "0" + d : d) + "-" + (m <= 9 ? "0" + m : m) + "-" + y;
-},
+    tanggal() {
+      const date = new Date();
+      const d = date.getDate();
+      const m = date.getMonth() + 1;
+      const y = date.getFullYear();
+      return (d <= 9 ? "0" + d : d) + "-" + (m <= 9 ? "0" + m : m) + "-" + y;
+    },
 
-async getDropspot() {
-  this.params.dropspot = "";
-  this.getData();
-  const params = { params: { area: this.params.area } };
+    async getDropspot() {
+      this.params.dropspot = "";
+      this.getData();
+      const params = { params: { area: this.params.area } };
       try {
         await api.get("dropspot", params).then((resp) => {
           if ((resp.data.code = 200)) {
@@ -184,6 +187,15 @@ async getDropspot() {
               this.filter.blok = resp.data;
             }
           });
+      } catch (error) {}
+    },
+    async getArmada() {
+      try {
+        await api.get(`armada`).then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.filter.armada = resp.data.data;
+          }
+        });
       } catch (error) {}
     },
   },
