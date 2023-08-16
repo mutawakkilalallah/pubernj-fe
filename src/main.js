@@ -30,6 +30,7 @@ import {
   faLocationDot,
   faMap,
   faMoon,
+  faPen,
   faPenAlt,
   faRotate,
   faSignOutAlt,
@@ -73,7 +74,8 @@ library.add(
   faUserXmark,
   faUserMd,
   faUserLock,
-  faCircleExclamation
+  faCircleExclamation,
+  faPen
 );
 const pinia = createPinia();
 const app = createApp(App);

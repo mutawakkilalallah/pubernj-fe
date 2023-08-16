@@ -23,9 +23,16 @@ export const usePenumpangForm = defineStore("form_penumpang", {
       jumlah_bayar: "",
       status_bayar: "",
     },
+    isOpen: false,
+    edited:false,
+    editedDrop:false,
+    person: {},
+    fotoDiri:""
   }),
-  actions: {
- 
+  actions: { 
+    setOpen() {
+      this.isOpen = !this.isOpen
+    },
     showContextMenu(event, d) {
       event.preventDefault();
       this.dataEdit = d;
@@ -69,9 +76,23 @@ export const usePenumpangForm = defineStore("form_penumpang", {
       router.push(`penumpang/${this.dataEdit.santri_uuid}/detail`);
     },
     goToDetailClick(a) {
-      // console.log('DETAIL', a.santri_uuid);
+      this.idEdit = a.id
+      this.isOpen = true
       this.dataEdit = a
-      router.push(`penumpang/${this.dataEdit.santri_uuid}/detail`);
+      this.getDataDetail(a.santri_uuid)
+      this.getImage(a.santri.niup)
+    },
+    setClickEdirPembayaran() {      
+      this.edited = !this.edited
+       this.formEditPembayaran.status_bayar = this.dataEdit.status_bayar;
+      this.formEditPembayaran.jumlah_bayar = this.dataEdit.jumlah_bayar;
+    },
+    setClickEditDrop() {
+      this.editedDrop = !this.editedDrop
+      this.idArea = this.dataEdit.dropspot.area_id;
+      this.getArea();
+      this.getDropspot();
+      this.formEditDropspot.dropspot_id = this.dataEdit.dropspot_id;
     },
     getArea() {
       try {
@@ -89,6 +110,28 @@ export const usePenumpangForm = defineStore("form_penumpang", {
         });
       } catch (error) {}
     },
+     async getDataDetail(uuid) {
+      try {
+        await api.get(`penumpang/${uuid}`).then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.person = resp.data.data;
+            this.getImage(resp.data.data.santri.niup, "medium");
+          }
+        });
+      } catch (error) {}
+    },
+      async getImage(uuid) {
+      try {
+        const params = {
+          responseType: "blob",
+        };
+        await api.get("santri/image/" + uuid, params).then((resp) => {
+          this.fotoDiri = URL.createObjectURL(resp.data);
+        });
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
     async editDropspot() {
       try {
         await api
@@ -98,6 +141,8 @@ export const usePenumpangForm = defineStore("form_penumpang", {
             this.resetFormEditDropspot();
             const table = usePenumpangTable();
             table.getData();
+            this.editedDrop = false
+            this.isOpen = false
           });
       } catch (err) {}
     },
@@ -110,6 +155,9 @@ export const usePenumpangForm = defineStore("form_penumpang", {
             this.resetFormEditPembayaran();
             const table = usePenumpangTable();
             table.getData();
+            this.edited = false
+            this.isOpen = false
+            
           });
       } catch (err) {}
     },

@@ -135,11 +135,11 @@
         <div class="card-body">
           <p class="card-title mb-0">Tarif :</p>
           <b class="card-text">
-            {{ table.item.dropspot ? `Rp. ${table.item.dropspot.harga}` : "-" }}
+            {{ table.item.dropspot ? formatMinus(table.item.dropspot.harga) : "-" }}
           </b>
           <p class="card-title mb-0 mt-3">Jumlah Pembayaran :</p>
           <b class="card-text">
-            {{ table.item.dropspot ? `Rp. ${table.item.jumlah_bayar}` : "-" }}
+            {{ table.item.dropspot ? formatMinus(table.item.jumlah_bayar) : "-" }}
           </b>
           <p class="card-title mb-0 mt-3">Status Pembayaran :</p>
           <i
@@ -212,4 +212,14 @@ onMounted(() => {
 function backPage() {
   router.push("/penumpang");
 }
+const formatMinus = (i) => {
+  const formatter = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+
+  return formatter.format(i);
+};
 </script>

@@ -213,12 +213,12 @@
             v-else
             class="text-danger"
           ><i>belum-ditentukan</i></td>
-          <td v-if="d.dropspot">{{ "Rp. " + d.dropspot.harga }}</td>
+          <td v-if="d.dropspot">{{ formatMinus(d.dropspot.harga) }}</td>
           <td
             v-else
             class="text-danger"
           >Rp. 0</td>
-          <td>{{ "Rp. " + d.jumlah_bayar }}</td>
+          <td>{{ formatMinus(d.jumlah_bayar) }}</td>
           <td>
             <i
               v-if="d.status_bayar === 'belum-lunas'"
@@ -480,17 +480,387 @@
       </div>
     </div>
   </div>
+  <!-- modal detail -->
+  <div
+    class="modal fade"
+    v-if="form.isOpen === true"
+    :class="{ show: form.setOpen }"
+    style="display: block"
+    id="modalEdit"
+    tabindex="-1"
+    aria-labelledby="modalEditLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-fullscreen p-4">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >Detail Data Penumpang</h1>
+          <button
+            class="btn-close"
+            type="button"
+            @click="form.setOpen"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3">
+              <img
+                :src="form.fotoDiri"
+                alt="foto-diri"
+                class="img-thumbnail"
+                style="height: 300px; object-fit: cover"
+              />
+            </div>
+            <div class="col-md-2">
+              <b>NIUP</b>
+              <p>{{ form.person.santri ? form.person.santri.niup : "-" }}</p>
+              <b>Nama</b>
+              <p>{{ form.person.santri ? form.person.santri.nama_lengkap : "-" }}</p>
+              <b>Jenis Kelamin</b>
+              <p>{{ form.person.santri ? form.person.santri.jenis_kelamin : "-" }}</p>
+              <b>Tetala</b>
+              <p>
+                {{
+          form.person.santri
+            ? form.person.santri.raw.tempat_lahir +
+              ", " +
+              form.person.santri.raw.tanggal_lahir
+            : "-"
+        }}
+              </p>
+              <b>Umur</b>
+              <p>
+                {{ form.person.santri ? `${form.person.santri.raw.umur} Tahun` : "-" }}
+              </p>
+            </div>
+            <div class="col-md-2">
+              <b>Wilayah</b>
+              <p>{{ form.person.santri ? form.person.santri.wilayah : "-" }}</p>
+              <b>Daerah</b>
+              <p>{{ form.person.santri ? form.person.santri.blok : "-" }}</p>
+              <b>Kamar</b>
+              <p>
+                {{
+          form.person.santri
+            ? form.person.santri.raw.domisili_santri
+              ? form.person.santri.raw.domisili_santri[
+                  form.person.santri.raw.domisili_santri.length - 1
+                ].kamar
+              : "-"
+            : "-"
+        }}
+              </p>
+              <b>Lembaga</b>
+              <p>
+                {{
+          form.person.santri
+            ? form.person.santri.raw.pendidikan
+              ? form.person.santri.raw.pendidikan[
+                  form.person.santri.raw.pendidikan.length - 1
+                ].lembaga
+              : "-"
+            : "-"
+        }}
+              </p>
+              <b>Jurusan</b>
+              <p>
+                {{
+          form.person.santri
+            ? form.person.santri.raw.pendidikan
+              ? form.person.santri.raw.pendidikan[
+                  form.person.santri.raw.pendidikan.length - 1
+                ].jurusan
+              : "-"
+            : "-"
+        }}
+              </p>
+            </div>
+            <div class="col-md-5">
+              <b>Provinsi</b>
+              <p>{{ form.person.santri ? form.person.santri.provinsi : "-" }}</p>
+              <b>Kabupaten</b>
+              <p>{{ form.person.santri ? form.person.santri.kabupaten : "-" }}</p>
+              <b>Kecamatan</b>
+              <p>{{ form.person.santri ? form.person.santri.kecamatan : "-" }}</p>
+              <b>Kode Pos</b>
+              <p>
+                {{ form.person.santri ? form.person.santri.raw.kodepos : "-" }}
+              </p>
+              <b>Jalan</b>
+              <p>
+                {{ form.person.santri ? form.person.santri.raw.jalan : "-" }}
+              </p>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header bg-primary text-white">Tujuan</div>
+                <div class="card-body">
+                  <p class="card-title mb-0">Dropspot :</p>
+                  <b class="card-text">
+                    {{ form.person.dropspot ? form.person.dropspot.nama : "-" }}
+                  </b>
+                  <p class="card-title mb-0 mt-3">Daerah :</p>
+                  <b class="card-text">
+                    {{ form.person.dropspot ? form.person.dropspot.area.nama : "-" }}
+                  </b>
+                  <p class="card-title mb-0 mt-3">PIC :</p>
+                  <b class="card-text mb-0">
+                    {{ form.person.dropspot ? form.person.dropspot.area.pic : "-" }}
+                  </b>
+                  <br />
+                  <b class="card-text">
+                    {{ form.person.dropspot ? form.person.dropspot.area.no_hp : "-" }}
+                  </b>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header bg-primary text-white">
+                  <div class="float-start">Pembayaran</div>
+                  <div
+                    class="float-end"
+                    style="cursor: pointer;"
+                    @click="form.setClickEdirPembayaran"
+                  >
+                    <font-awesome-icon
+                      icon="pen"
+                      class="icon"
+                      style="font-size: 15px"
+                    />
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div v-if="form.edited === false">
+                    <div>
+                      <p class="card-title mb-0">Tarif :</p>
+                      <b class="card-text">
+                        {{ form.dataEdit ? formatMinus(form.dataEdit.dropspot.harga) : "-" }}
+                      </b>
 
+                      <p class="card-title mb-0 mt-3">Jumlah Pembayaran :</p>
+                      <b class="card-text">
+                        {{ form ? formatMinus(form.dataEdit.jumlah_bayar) : "-" }}
+                      </b>
+                      <p class="card-title mb-0 mt-3">Status Pembayaran :</p>
+                      <i
+                        v-if="form.person.status_bayar === 'belum-lunas'"
+                        class="badge bg-danger"
+                      >{{ form.person.status_bayar === 'belum-lunas' ? 'Belum Lunas' :'' }}</i>
+                      <i
+                        v-if="form.person.status_bayar === 'lunas'"
+                        class="badge bg-success text-capitalize"
+                      >{{ form.person.status_bayar }}</i>
+                      <i
+                        v-if="form.person.status_bayar === 'kurang'"
+                        class="badge bg-warning text-capitalize"
+                      >{{ form.person.status_bayar }}</i>
+                      <i
+                        v-if="form.person.status_bayar === 'lebih'"
+                        class="badge bg-info text-capitalize"
+                      >{{
+            form.person.status_bayar
+          }}</i>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <form @submit.prevent="form.editPembayaran">
+                      <div class="modal-body">
+                        <div class="form-group mb-3">
+                          <small>Jumlah Pembayaran</small>
+                          <input
+                            type="number"
+                            class="form-control mt-2"
+                            v-model="form.formEditPembayaran.jumlah_bayar"
+                          />
+                        </div>
+                        <div class="form-group mb-3">
+                          <small>Status Pembayaran</small>
+                          <select
+                            class="form-select"
+                            v-model="form.formEditPembayaran.status_bayar"
+                          >
+                            <option
+                              value=""
+                              selected
+                            >Pilih Status</option>
+                            <option
+                              value="lunas"
+                              selected
+                            >Lunas</option>
+                            <option
+                              value="belum-lunas"
+                              selected
+                            >Belum Lunas</option>
+                            <option
+                              value="lebih"
+                              selected
+                            >Lebih</option>
+                            <option
+                              value="kurang"
+                              selected
+                            >Kurang</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-secondary"
+                          @click="form.setClickEdirPembayaran"
+                        >
+                          Tutup
+                        </button>
+                        <button
+                          type="submit"
+                          class="btn btn-sm btn-primary"
+                        >Simpan</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header bg-primary text-white">
+                  <div class="float-start">Armada</div>
+                  <div
+                    class="float-end"
+                    style="cursor: pointer;"
+                    @click="form.setClickEditDrop"
+                  >
+                    <font-awesome-icon
+                      icon="pen"
+                      class="icon"
+                      style="font-size: 15px"
+                    />
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div v-if="form.editedDrop == false">
+                    <p class="card-title mb-0">BUS :</p>
+                    <b class="card-text">
+                      {{ form.person.armada ? form.person.armada.nama : "-" }}
+                    </b>
+                    <p class="card-title mb-0 mt-3">Pendamping :</p>
+                    <b class="card-text">
+                      {{
+              form.person.armada
+                ? form.person.armada.user
+                  ? form.person.armada.user.nama_lengkap
+                  : "-"
+                : "-"
+            }}
+                    </b>
+                    <p class="card-title mb-0 mt-3">No. HP :</p>
+                    <b class="card-text">
+                      {{
+              form.person.armada
+                ? form.person.armada.user
+                  ? form.person.armada.user.no_hp
+                  : "-"
+                : "-"
+            }}
+                    </b>
+                  </div>
+                  <div v-else>
+                    <form @submit.prevent="form.editDropspot">
+                      <div class="modal-body">
+                        <div class="form-group mb-3">
+                          <small>Area</small>
+                          <select
+                            class="form-select"
+                            v-model="form.idArea"
+                            @change="form.getDropspot"
+                          >
+                            <option
+                              value=""
+                              selected
+                            >Pilih Area</option>
+                            <option
+                              v-for="a in form.isArea"
+                              :key="a"
+                              :value="a.id"
+                            >
+                              {{ a.nama }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="form-group mb-3">
+                          <small>Dropspot</small>
+                          <select
+                            class="form-select"
+                            v-model="form.formEditDropspot.dropspot_id"
+                            :disabled="form.idArea === ''"
+                          >
+                            <option
+                              v-if="form.formEditDropspot.dropspot_id === ''"
+                              value=""
+                              selected
+                            >
+                              Pilih Dropspot
+                            </option>
+                            <option
+                              v-for="d in form.isDropspot"
+                              :key="d"
+                              :value="d.id"
+                            >
+                              {{ d.nama }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-secondary"
+                          @click="form.setClickEditDrop"
+                        >
+                          Tutup
+                        </button>
+                        <button
+                          type="submit"
+                          class="btn btn-sm btn-primary"
+                        >Simpan</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-sm btn-secondary"
+            @click="form.setOpen"
+          >
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script setup>
 import { usePenumpangTable } from "../../store/penumpang/table";
 import { usePenumpangForm } from "../../store/penumpang/form";
 import { useAuthStore } from "../../store/auth/index";
+import { onMounted } from "vue";
 
 const table = usePenumpangTable();
 const form = usePenumpangForm();
 const storeAuth = useAuthStore();
 table.getData();
+
 if (storeAuth.user.role != "p4nj") {
   table.getWilayah();
 }
@@ -499,6 +869,17 @@ table.getArmada();
 function expExel() {
   table.exportExel();
 }
+
+const formatMinus = (i) => {
+  const formatter = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+
+  return formatter.format(i);
+};
 </script>
 
 <style>
