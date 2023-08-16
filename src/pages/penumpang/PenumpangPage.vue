@@ -6,6 +6,26 @@
     </div>
     <div class="col-md-4 text-end">
       <button
+        class="btn btn-sm btn-outline-info me-2"
+        type="button"
+        @click="form.setOpenImportPembayaran()"
+      >
+        <font-awesome-icon
+          icon="file-import"
+          class="icon"
+        /> Import Pembayaran
+      </button>
+      <button
+        class="btn btn-sm btn-outline-warning me-2"
+        type="button"
+        @click="table.unduhTemplate"
+      >
+        <font-awesome-icon
+          icon="download"
+          class="icon"
+        /> Unduh Template
+      </button>
+      <button
         class="btn btn-sm btn-outline-primary"
         type="button"
         @click="expExel"
@@ -219,6 +239,7 @@
             class="text-danger"
           >Rp. 0</td>
           <td>{{ formatMinus(d.jumlah_bayar) }}</td>
+
           <td>
             <i
               v-if="d.status_bayar === 'belum-lunas'"
@@ -480,6 +501,62 @@
       </div>
     </div>
   </div>
+  <!-- modal import pembayaran -->
+  <div
+    class="modal fade"
+    v-if="form.isOpenImportPembayaran === true"
+    :class="{ show: form.isOpenImportPembayaran }"
+    style="display: block"
+    id="modalEdit"
+    tabindex="-1"
+    aria-labelledby="modalEditLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >
+            Import Pembayaran
+          </h1>
+          <button
+            class="btn-close"
+            type="button"
+            @click="form.setOpenImportPembayaran"
+          ></button>
+        </div>
+        <form @submit.prevent="form.importPembayaran">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <small>File Excel (.xlsx only)</small>
+              <input
+                type="file"
+                @change="form.handleFileChange"
+                accept=".xlsx"
+                class="form-control mt-2"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="form.setOpenImportPembayaran"
+            >
+              Tutup
+            </button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >Proses</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- modal detail -->
   <div
     class="modal fade"
@@ -855,6 +932,7 @@
       </div>
     </div>
   </div>
+
 </template>
 <script setup>
 import { usePenumpangTable } from "../../store/penumpang/table";

@@ -29,8 +29,7 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       limit: 25,
     },
     params2: {
-      limit:""
-
+      limit: "",
     },
     itemsExport: [],
     btnDisable: true,
@@ -57,7 +56,6 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       const params = { params: this.params };
       try {
         await api.get("penumpang", params).then((resp) => {
-
           if ((resp.data.code = 200)) {
             this.totalData = resp.headers["x_total_data"];
             this.items = resp.data.data;
@@ -70,6 +68,29 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       } catch (error) {}
     },
 
+    async unduhTemplate() {
+      try {
+        await api
+          .get("penumpang/unduh-template", {
+            responseType: "blob",
+          })
+          .then((resp) => {
+            const blob = new Blob([resp.data], {
+              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "template_puber.xlsx");
+            document.body.appendChild(link);
+
+            link.click();
+
+            link.remove();
+          });
+      } catch (error) {}
+    },
+
     async getDataExport() {
       const params = { params: this.params2 };
       try {
@@ -77,35 +98,34 @@ export const usePenumpangTable = defineStore("table_penumpang", {
           if ((resp.data.code = 200)) {
             this.itemsExport = resp.data.data;
           }
-         })
-      } catch (error) {        
-      }    
+        });
+      } catch (error) {}
     },
-  
-exportExel() {
-  if (this.itemsExport.length > 0) {
-    const tanggal = this.tanggal()
-    const data = this.formatJson(this.itemsExport);
-    const worksheet = utils.json_to_sheet(data);
-    const workbook = utils.book_new();
-    utils.book_append_sheet(workbook, worksheet, "Data");
-    const excelBuffer = this.writeExcelBuffer(workbook);
-    this.saveExcelFile(excelBuffer, `Data Penumpang ${tanggal}.xlsx`);
-  } else {   
-    this.btnDisable = false
-  }
-},
-    
-saveExcelFile(buffer, fileName) {
-  const blob = new Blob([buffer], {
-    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  });
-  saveAs(blob, fileName);
-},
-writeExcelBuffer(workbook) {
-  const excelBuffer = write(workbook, { bookType: "xlsx", type: "array" });
-  return excelBuffer;
-},
+
+    exportExel() {
+      if (this.itemsExport.length > 0) {
+        const tanggal = this.tanggal();
+        const data = this.formatJson(this.itemsExport);
+        const worksheet = utils.json_to_sheet(data);
+        const workbook = utils.book_new();
+        utils.book_append_sheet(workbook, worksheet, "Data");
+        const excelBuffer = this.writeExcelBuffer(workbook);
+        this.saveExcelFile(excelBuffer, `Data Penumpang ${tanggal}.xlsx`);
+      } else {
+        this.btnDisable = false;
+      }
+    },
+
+    saveExcelFile(buffer, fileName) {
+      const blob = new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      saveAs(blob, fileName);
+    },
+    writeExcelBuffer(workbook) {
+      const excelBuffer = write(workbook, { bookType: "xlsx", type: "array" });
+      return excelBuffer;
+    },
 
     // mengambil semua data yaang akan di export
     formatJson(data) {
