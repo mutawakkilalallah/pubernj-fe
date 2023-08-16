@@ -14,11 +14,11 @@ export const useArmadaDetailTable = defineStore("table_armada_detail", {
     meta: {},
     params: {
       cari: "",
-      armada: "n",
+      masuk_bus: "n",
       area: "",
       dropspot: "",
       jenis_kelamin: "",
-      limit: "",
+      limit: 100,
     },
   }),
   actions: {

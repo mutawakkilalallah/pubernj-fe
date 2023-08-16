@@ -10,12 +10,16 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     contextMenuPosition: { x: 0, y: 0 },
     isOpenEditDropspot: false,
     isOpenEditPembayaran: false,
+    isOpenImportPembayaran: false,
     isArea: [],
     isDropspot: [],
     idEdit: "",
     idDelete: "",
     idArea: "",
     dataEdit: {},
+    formImportPembayaran: {
+      excelFile: null,
+    },
     formEditDropspot: {
       dropspot_id: "",
     },
@@ -25,7 +29,6 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     },
   }),
   actions: {
- 
     showContextMenu(event, d) {
       event.preventDefault();
       this.dataEdit = d;
@@ -45,9 +48,16 @@ export const usePenumpangForm = defineStore("form_penumpang", {
       this.formEditPembayaran.jumlah_bayar = "";
       this.formEditPembayaran.status_bayar = "";
     },
+    resetFormImportPembayaran() {
+      this.formImportPembayaran.excelFile = null;
+    },
     setOpenEditDropspot() {
       this.isOpenEditDropspot = !this.isOpenEditDropspot;
       this.resetFormEditDropspot();
+    },
+    setOpenImportPembayaran() {
+      this.isOpenImportPembayaran = !this.isOpenImportPembayaran;
+      this.resetFormImportPembayaran();
     },
     setOpenEditPembayaran() {
       this.isOpenEditPembayaran = !this.isOpenEditPembayaran;
@@ -70,8 +80,11 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     },
     goToDetailClick(a) {
       // console.log('DETAIL', a.santri_uuid);
-      this.dataEdit = a
+      this.dataEdit = a;
       router.push(`penumpang/${this.dataEdit.santri_uuid}/detail`);
+    },
+    handleFileChange(event) {
+      this.formImportPembayaran.excelFile = event.target.files[0];
     },
     getArea() {
       try {
@@ -101,6 +114,18 @@ export const usePenumpangForm = defineStore("form_penumpang", {
           });
       } catch (err) {}
     },
+    async importPembayaran() {
+      try {
+        const formData = new FormData();
+        formData.append("excelFile", this.formImportPembayaran.excelFile);
+        await api.post(`penumpang/import-pembayaran`, formData).then((resp) => {
+          this.isOpenImportPembayaran = false;
+          this.resetFormImportPembayaran();
+          const table = usePenumpangTable();
+          table.getData();
+        });
+      } catch (err) {}
+    },
     async editPembayaran() {
       try {
         await api
@@ -114,7 +139,7 @@ export const usePenumpangForm = defineStore("form_penumpang", {
       } catch (err) {}
     },
     async deleteRombongan() {
-       this.isOpen = false
+      this.isOpen = false;
       Swal.fire({
         title: "Konfirmasi",
         text: "Apakah anda yakin ingin mengeluarkan dari rombongan ?",

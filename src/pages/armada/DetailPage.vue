@@ -159,7 +159,7 @@
             @change="table.getData"
           >
             <option
-              value=""
+              value="100"
               selected
             >Limit by Kapasitas</option>
             <option

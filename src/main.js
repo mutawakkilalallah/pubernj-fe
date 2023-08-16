@@ -12,7 +12,7 @@ import axios from "./plugins/axios";
 import VPagination from "@hennge/vue3-pagination";
 import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 import VueApexCharts from "vue3-apexcharts";
-import print from 'vue3-print-nb'
+import print from "vue3-print-nb";
 
 import {
   faArrowLeft,
@@ -42,6 +42,8 @@ import {
   faUserLock,
   faUserMd,
   faUserXmark,
+  faFileImport,
+  faDownload,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { registerComponents } from "./plugins/global-components";
@@ -73,7 +75,9 @@ library.add(
   faUserXmark,
   faUserMd,
   faUserLock,
-  faCircleExclamation
+  faCircleExclamation,
+  faFileImport,
+  faDownload
 );
 const pinia = createPinia();
 const app = createApp(App);
@@ -82,9 +86,8 @@ app.component("font-awesome-icon", FontAwesomeIcon);
 app.component("pagination", VPagination);
 app.use(router);
 
-
 app.use(pinia);
 app.use(VueApexCharts);
-app.use(print)
+app.use(print);
 registerComponents(app);
 app.mount("#app");
