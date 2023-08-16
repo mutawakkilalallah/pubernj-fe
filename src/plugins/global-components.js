@@ -21,4 +21,8 @@ export const registerComponents = (app) => {
     "widget-dashboard",
     defineAsyncComponent(() => import("@/components/~global/WidgetDashboard.vue"))
   );
+  app.component(
+    "set-time",
+    defineAsyncComponent(() => import("@/components/~global/SetTime.vue"))
+  );
 };

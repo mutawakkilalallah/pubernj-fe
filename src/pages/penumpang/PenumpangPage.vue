@@ -599,25 +599,103 @@
           <div class="row">
             <div class="col-md-4">
               <div class="card">
-                <div class="card-header bg-primary text-white">Tujuan</div>
-                <div class="card-body">
-                  <p class="card-title mb-0">Dropspot :</p>
-                  <b class="card-text">
-                    {{ form.person.dropspot ? form.person.dropspot.nama : "-" }}
-                  </b>
-                  <p class="card-title mb-0 mt-3">Daerah :</p>
-                  <b class="card-text">
-                    {{ form.person.dropspot ? form.person.dropspot.area.nama : "-" }}
-                  </b>
-                  <p class="card-title mb-0 mt-3">PIC :</p>
-                  <b class="card-text mb-0">
-                    {{ form.person.dropspot ? form.person.dropspot.area.pic : "-" }}
-                  </b>
-                  <br />
-                  <b class="card-text">
-                    {{ form.person.dropspot ? form.person.dropspot.area.no_hp : "-" }}
-                  </b>
+                <div class="card-header bg-primary text-white">
+                  <div class="float-start">Tujuan</div>
+                  <div
+                    class="float-end"
+                    style="cursor: pointer;"
+                    @click="form.setClickEditDrop"
+                  >
+                    <font-awesome-icon
+                      icon="pen"
+                      class="icon"
+                      style="font-size: 15px"
+                    />
+                  </div>
                 </div>
+                <div class="card-body">
+                  <div v-if="form.editedDrop == false">
+                    <p class="card-title mb-0">Dropspot :</p>
+                    <b class="card-text">
+                      {{ form.person.dropspot ? form.person.dropspot.nama : "-" }}
+                    </b>
+                    <p class="card-title mb-0 mt-3">Daerah :</p>
+                    <b class="card-text">
+                      {{ form.person.dropspot ? form.person.dropspot.area.nama : "-" }}
+                    </b>
+                    <p class="card-title mb-0 mt-3">PIC :</p>
+                    <b class="card-text mb-0">
+                      {{ form.person.dropspot ? form.person.dropspot.area.pic : "-" }}
+                    </b>
+                    <br />
+                    <b class="card-text">
+                      {{ form.person.dropspot ? form.person.dropspot.area.no_hp : "-" }}
+                    </b>
+                  </div>
+                  <div v-else>
+                    <form @submit.prevent="form.editDropspot">
+                      <div class="modal-body">
+                        <div class="form-group mb-3">
+                          <small>Area</small>
+                          <select
+                            class="form-select"
+                            v-model="form.idArea"
+                            @change="form.getDropspot"
+                          >
+                            <option
+                              value=""
+                              selected
+                            >Pilih Area</option>
+                            <option
+                              v-for="a in form.isArea"
+                              :key="a"
+                              :value="a.id"
+                            >
+                              {{ a.nama }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="form-group mb-3">
+                          <small>Dropspot</small>
+                          <select
+                            class="form-select"
+                            v-model="form.formEditDropspot.dropspot_id"
+                            :disabled="form.idArea === ''"
+                          >
+                            <option
+                              v-if="form.formEditDropspot.dropspot_id === ''"
+                              value=""
+                              selected
+                            >
+                              Pilih Dropspot
+                            </option>
+                            <option
+                              v-for="d in form.isDropspot"
+                              :key="d"
+                              :value="d.id"
+                            >
+                              {{ d.nama }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-secondary"
+                          @click="form.setClickEditDrop"
+                        >
+                          Tutup
+                        </button>
+                        <button
+                          type="submit"
+                          class="btn btn-sm btn-primary"
+                        >Simpan</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
               </div>
             </div>
             <div class="col-md-4">
@@ -730,21 +808,10 @@
             <div class="col-md-4">
               <div class="card">
                 <div class="card-header bg-primary text-white">
-                  <div class="float-start">Armada</div>
-                  <div
-                    class="float-end"
-                    style="cursor: pointer;"
-                    @click="form.setClickEditDrop"
-                  >
-                    <font-awesome-icon
-                      icon="pen"
-                      class="icon"
-                      style="font-size: 15px"
-                    />
-                  </div>
+                  Armada
                 </div>
                 <div class="card-body">
-                  <div v-if="form.editedDrop == false">
+                  <div>
                     <p class="card-title mb-0">BUS :</p>
                     <b class="card-text">
                       {{ form.person.armada ? form.person.armada.nama : "-" }}
@@ -770,68 +837,7 @@
             }}
                     </b>
                   </div>
-                  <div v-else>
-                    <form @submit.prevent="form.editDropspot">
-                      <div class="modal-body">
-                        <div class="form-group mb-3">
-                          <small>Area</small>
-                          <select
-                            class="form-select"
-                            v-model="form.idArea"
-                            @change="form.getDropspot"
-                          >
-                            <option
-                              value=""
-                              selected
-                            >Pilih Area</option>
-                            <option
-                              v-for="a in form.isArea"
-                              :key="a"
-                              :value="a.id"
-                            >
-                              {{ a.nama }}
-                            </option>
-                          </select>
-                        </div>
-                        <div class="form-group mb-3">
-                          <small>Dropspot</small>
-                          <select
-                            class="form-select"
-                            v-model="form.formEditDropspot.dropspot_id"
-                            :disabled="form.idArea === ''"
-                          >
-                            <option
-                              v-if="form.formEditDropspot.dropspot_id === ''"
-                              value=""
-                              selected
-                            >
-                              Pilih Dropspot
-                            </option>
-                            <option
-                              v-for="d in form.isDropspot"
-                              :key="d"
-                              :value="d.id"
-                            >
-                              {{ d.nama }}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-sm btn-secondary"
-                          @click="form.setClickEditDrop"
-                        >
-                          Tutup
-                        </button>
-                        <button
-                          type="submit"
-                          class="btn btn-sm btn-primary"
-                        >Simpan</button>
-                      </div>
-                    </form>
-                  </div>
+
                 </div>
               </div>
             </div>

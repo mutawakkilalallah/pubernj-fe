@@ -32,7 +32,10 @@
       class="rounded-circle me-3"
     />
     <div class="user-info text-white">
-      <p style="font-size: 20px; margin-bottom: 0" class="fw-bold">
+      <p
+        style="font-size: 20px; margin-bottom: 0"
+        class="fw-bold"
+      >
         {{ storeAuth.user.nama_lengkap }}
       </p>
       <i v-if="storeAuth.user.role === 'daerah'">{{
@@ -53,7 +56,10 @@
         storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'
       "
     >
-      <div class="card" style="background-color: #006c8a">
+      <div
+        class="card"
+        style="background-color: #006c8a"
+      >
         <div class="card-body">
           <div class="row">
             <div class="col">
@@ -78,7 +84,10 @@
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <font-awesome-icon icon="briefcase" style="font-size: 90px" />
+              <font-awesome-icon
+                icon="briefcase"
+                style="font-size: 90px"
+              />
             </div>
             <div class="col">
               <h2 class="card-title text-end">
@@ -97,7 +106,10 @@
         storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'
       "
     >
-      <div class="card" style="background-color: #8a5700">
+      <div
+        class="card"
+        style="background-color: #8a5700"
+      >
         <div class="card-body">
           <div class="row">
             <div class="col">
@@ -120,7 +132,10 @@
     </div>
 
     <div class="col-sm-3 mb-3 mb-sm-0">
-      <div class="card" style="background-color: #cd0052">
+      <div
+        class="card"
+        style="background-color: #cd0052"
+      >
         <div class="card-body">
           <div class="row">
             <div class="col">
@@ -198,7 +213,10 @@
       v-if="storeAuth.user.role === 'sysadmin'"
       class="col-sm-3 mb-3 mb-sm-0"
     >
-      <div class="card" style="background-color: #5e0600">
+      <div
+        class="card"
+        style="background-color: #5e0600"
+      >
         <div class="card-body">
           <div class="row">
             <div class="col">
@@ -217,6 +235,10 @@
         </div>
       </div>
     </div>
+  </div>
+  <div>
+    <set-time />
+    <p class="text-center text-uppercase">input terakhir</p>
   </div>
 </template>
 
