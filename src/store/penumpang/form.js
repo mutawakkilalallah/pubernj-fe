@@ -106,7 +106,6 @@ export const usePenumpangForm = defineStore("form_penumpang", {
       this.getArea();
       this.getDropspot();
       this.formEditDropspot.dropspot_id = this.dataEdit.dropspot_id;
-
     },
     handleFileChange(event) {
       this.formImportPembayaran.excelFile = event.target.files[0];
@@ -178,14 +177,15 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     async editPembayaran() {
       try {
         await api
-          .put(`penumpang/pembayaran/${this.idEdit}`, this.formEditPembayaran)
-          .then((resp) => {
-            this.isOpenEditPembayaran = false;
+        .put(`penumpang/pembayaran/${this.idEdit}`, this.formEditPembayaran)
+        .then((resp) => {
+          this.isOpenEditPembayaran = false;
+          this.dataEdit.jumlah_bayar = this.formEditPembayaran.jumlah_bayar
+          this.dataEdit.status_bayar = this.formEditPembayaran.status_bayar
             this.resetFormEditPembayaran();
             const table = usePenumpangTable();
             table.getData();
             this.edited = false
-            this.isOpen = false
             
           });
       } catch (err) {}

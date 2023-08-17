@@ -118,7 +118,10 @@
         </tbody>
       </table>
     </div>
-    <div id="chart">
+    <div
+      id="chart"
+      v-if="users.user.role === 'sysadmin' || users.user.role ==='admin'"
+    >
       <apexchart
         type="bar"
         height="5500"
@@ -132,9 +135,11 @@
 import { useStatistikStore } from "../../store/auth/statistik";
 import apexCharts from "apexcharts";
 import print from "vue3-print-nb";
+import { useAuthStore } from "../../store/auth";
+
+const users = useAuthStore();
 
 const store = useStatistikStore();
-store.getData();
 store.getStatArmada();
 
 const data = {

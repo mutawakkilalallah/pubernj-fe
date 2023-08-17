@@ -77,7 +77,7 @@ library.add(
   faUserMd,
   faUserLock,
   faCircleExclamation,
-  faPen
+  faPen,
   faFileImport,
   faDownload
 );

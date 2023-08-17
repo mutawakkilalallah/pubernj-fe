@@ -1,10 +1,10 @@
 <template>
   <!-- judul -->
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8 text-start">
       <h3 class="titlePage">Data Penumpang</h3>
     </div>
-    <div class="col-md-4 text-end">
+    <div class="col-md-4 text-end g-2">
       <button
         class="btn btn-sm btn-outline-info me-2"
         type="button"
@@ -694,7 +694,7 @@
                   <div v-if="form.editedDrop == false">
                     <p class="card-title mb-0">Dropspot :</p>
                     <b class="card-text">
-                      {{ form.person.dropspot ? form.person.dropspot.nama : "-" }}
+                      {{ form.dataEdit.dropspot ? form.dataEdit.dropspot.nama : "-" }}
                     </b>
                     <p class="card-title mb-0 mt-3">Daerah :</p>
                     <b class="card-text">
@@ -805,22 +805,22 @@
                       </b>
                       <p class="card-title mb-0 mt-3">Status Pembayaran :</p>
                       <i
-                        v-if="form.person.status_bayar === 'belum-lunas'"
+                        v-if="form.dataEdit.status_bayar === 'belum-lunas'"
                         class="badge bg-danger"
-                      >{{ form.person.status_bayar === 'belum-lunas' ? 'Belum Lunas' :'' }}</i>
+                      >{{ form.dataEdit.status_bayar === 'belum-lunas' ? 'Belum Lunas' :'' }}</i>
                       <i
-                        v-if="form.person.status_bayar === 'lunas'"
+                        v-if="form.dataEdit.status_bayar === 'lunas'"
                         class="badge bg-success text-capitalize"
-                      >{{ form.person.status_bayar }}</i>
+                      >{{ form.dataEdit.status_bayar }}</i>
                       <i
-                        v-if="form.person.status_bayar === 'kurang'"
+                        v-if="form.dataEdit.status_bayar === 'kurang'"
                         class="badge bg-warning text-capitalize"
-                      >{{ form.person.status_bayar }}</i>
+                      >{{ form.dataEdit.status_bayar }}</i>
                       <i
-                        v-if="form.person.status_bayar === 'lebih'"
+                        v-if="form.dataEdit.status_bayar === 'lebih'"
                         class="badge bg-info text-capitalize"
                       >{{
-            form.person.status_bayar
+            form.dataEdit.status_bayar
           }}</i>
                     </div>
                   </div>

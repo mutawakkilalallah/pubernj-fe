@@ -58,7 +58,8 @@
     >
       <div
         class="card"
-        style="background-color: #006c8a"
+        style="background-color: #006c8a; cursor: pointer;"
+        @click="toDataSantri"
       >
         <div class="card-body">
           <div class="row">
@@ -80,7 +81,11 @@
     </div>
 
     <div class="col-sm-3 mb-3 mb-sm-0">
-      <div class="card text-bg-primary">
+      <div
+        class="card text-bg-primary"
+        style="cursor: pointer;"
+        @click="toDataPenumpang"
+      >
         <div class="card-body">
           <div class="row">
             <div class="col">
@@ -108,7 +113,8 @@
     >
       <div
         class="card"
-        style="background-color: #8a5700"
+        style="background-color: #8a5700; cursor: pointer;"
+        @click="toDataSantri"
       >
         <div class="card-body">
           <div class="row">
@@ -134,7 +140,8 @@
     <div class="col-sm-3 mb-3 mb-sm-0">
       <div
         class="card"
-        style="background-color: #cd0052"
+        style="background-color: #cd0052; cursor: pointer;"
+        @click="toDataArmada"
       >
         <div class="card-body">
           <div class="row">
@@ -158,7 +165,8 @@
     <div class="col-sm-3 mb-3 mb-sm-0">
       <div
         class="card"
-        style="background-color: #315200"
+        style="background-color: #315200; cursor:pointer"
+        @click="toDataArea"
         v-if="
           storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'
         "
@@ -185,7 +193,8 @@
     <div class="col-sm-3 mb-3 mb-sm-0">
       <div
         class="card"
-        style="background-color: #2d0063"
+        style="background-color: #2d0063; cursor: pointer;"
+        @click="toDataDropspot"
         v-if="
           storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'
         "
@@ -215,7 +224,8 @@
     >
       <div
         class="card"
-        style="background-color: #5e0600"
+        style="background-color: #5e0600; cursor:pointer"
+        @click="toDataUser"
       >
         <div class="card-body">
           <div class="row">
@@ -243,6 +253,7 @@
 </template>
 
 <script setup>
+import router from "../router";
 import { useAuthStore } from "../store/auth/index";
 // import { useSantriTable } from "../store/santri/table";
 
@@ -253,5 +264,23 @@ const storeAuth = useAuthStore();
 storeAuth.getStats();
 if (storeAuth.user.role != "p4nj") {
   storeAuth.getImage(storeAuth.user.niup, "small");
+}
+function toDataSantri() {
+  router.push("/santri");
+}
+function toDataPenumpang() {
+  router.push("/penumpang");
+}
+function toDataArmada() {
+  router.push("/armada");
+}
+function toDataArea() {
+  router.push("/area");
+}
+function toDataDropspot() {
+  router.push("/dropspot");
+}
+function toDataUser() {
+  router.push("/user");
 }
 </script>

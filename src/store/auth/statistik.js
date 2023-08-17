@@ -15,27 +15,19 @@ export const useStatistikStore = defineStore("statistik", {
     keuanganAll: {},
   }),
   actions: {
-    async getData() {
-      try {
-        await api.get("keuangan").then((resp) => {
-          if ((resp.data.code = 200)) {
-            const data = resp.data.data.keuanganByDropspot;
-            for (let i = 0; i < data.length; i++) {
-              const respn = data[i];
-              this.dataArmada(respn.nama_dropspot);
-              this.jumlahSantriPutra(respn.jumlah_penumpang_putra);
-              this.jumlahSantriPutri(respn.jumlah_penumpang_putri);
-              this.totalSantri(respn.jumlah_penumpang_total);
-            }
-          }
-        });
-      } catch (error) {}
-    },
     async getStatArmada() {
       try {
         await api.get("statistik/estimasi-armada").then((resp) => {
           if ((resp.data.code = 200)) {
             this.estArmada = resp.data.data.estArmada;
+            const data = resp.data.data.estArmada
+               for (let i = 0; i < data.length; i++) {
+              const respn = data[i];
+              this.dataArmada(respn.nama_dropspot);
+              this.jumlahSantriPutra(respn.total_putra);
+              this.jumlahSantriPutri(respn.total_putri);
+              this.totalSantri(respn.total_penumpang);
+            }
           }
         });
       } catch (error) {}
