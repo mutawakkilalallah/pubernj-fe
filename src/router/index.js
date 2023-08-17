@@ -9,7 +9,7 @@ const routes = [
   {
     path: "/not-found",
     name: "not-found",
-    component: () => import("@/components/NotFound.vue"),
+    component: () => import("@/pages/NotFound.vue"),
   },
   {
     path: "/",
@@ -90,11 +90,6 @@ const routes = [
         path: "/armada/:id/penumpang",
         name: "armada-detail",
         component: () => import("@/pages/armada/DetailPage.vue"),
-      },
-      {
-        path: "/not-found",
-        name: "not-found",
-        component: () => import("@/components/NotFound.vue"),
       },
     ],
   },

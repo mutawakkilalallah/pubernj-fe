@@ -393,7 +393,6 @@ onMounted(() => {
     isMobile.value = query.matches;
   });
   //
-
   // get theme local storage
   const getTheme = JSON.parse(localStorage.getItem("pageTheme"));
   const myBody = document.body;
