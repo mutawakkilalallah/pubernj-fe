@@ -38,16 +38,16 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     setOpen() {
       this.isOpen = !this.isOpen
     },
-
     showContextMenu(event, d) {
       event.preventDefault();
       this.dataEdit = d;
       this.idEdit = d.id;
-      this.contextMenuPosition = { x: event.clientX, y: event.clientY };
+      this.contextMenuPosition = { x: event.pageX, y: event.pageY };
       this.contextMenuVisible = true;
       document.addEventListener("click", this.handleOutsideClick);
     },
     handleOutsideClick(event) {
+      // console.log('event', event);
       this.contextMenuVisible = false;
       document.removeEventListener("click", this.handleOutsideClick);
     },

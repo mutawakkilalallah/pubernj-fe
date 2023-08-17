@@ -217,6 +217,8 @@
           :key="i"
           @dblclick.prevent="form.goToDetailClick(d)"
           @contextmenu.prevent="form.showContextMenu($event, d)"
+          :class="{ 'table-active': isActiveRow(d.id) }"
+          @click.prevent="form.showContextMenu($event, d)"
         >
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
           <td>{{ d.santri.niup }}</td>
@@ -283,6 +285,7 @@
       @first="table.setPage"
     />
   </div>
+
   <div
     v-if="form.contextMenuVisible"
     class="context-menu"
@@ -938,7 +941,6 @@
 import { usePenumpangTable } from "../../store/penumpang/table";
 import { usePenumpangForm } from "../../store/penumpang/form";
 import { useAuthStore } from "../../store/auth/index";
-import { onMounted } from "vue";
 
 const table = usePenumpangTable();
 const form = usePenumpangForm();
@@ -963,6 +965,15 @@ const formatMinus = (i) => {
   });
 
   return formatter.format(i);
+};
+
+const isActiveRow = (id) => {
+  const dataid = [];
+  // kumpulkan data
+  dataid.push(id);
+  // pilih data id berdasarkan id yang akan di edits
+  const data = dataid.filter((a) => a === form.idEdit);
+  return data[0];
 };
 </script>
 
