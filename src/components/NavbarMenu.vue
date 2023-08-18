@@ -55,7 +55,8 @@
     </div>
   </nav>
   <div
-    class="menu-atas shadow d-flex justify-content-start mt-5 fixed-top bg-white"
+    class="menu-atas shadow d-flex justify-content-start bg-white"
+    :class="isMobile ? 'fixed-bottom' : 'fixed-top mt-5'"
     style="overflow-x: auto"
   >
     <MenuItem
@@ -69,7 +70,7 @@
 </template>
 
 <script setup>
-import MenuItem from "./MenuItem.vue";
+import MenuItem from "./~global/MenuItem.vue";
 import router from "../router";
 import Swal from "sweetalert2";
 import { useAuthStore } from "../store/auth/index";
@@ -392,7 +393,7 @@ onMounted(() => {
   mobileQuery.addListener((query) => {
     isMobile.value = query.matches;
   });
-  //
+
   // get theme local storage
   const getTheme = JSON.parse(localStorage.getItem("pageTheme"));
   const myBody = document.body;

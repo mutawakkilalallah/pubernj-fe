@@ -37,305 +37,307 @@
   </div>
   <hr />
   <!-- menu filter -->
-  <div class="filter-box mb-5 row">
-    <div
-      class="col-md-2"
-      v-if="
+  <div class="mb-5 pb-3">
+    <div class="filter-box mb-5 row">
+      <div
+        class="col-md-2"
+        v-if="
         storeAuth.user.role != 'pendamping' &&
         storeAuth.user.role != 'p4nj' &&
         storeAuth.user.role != 'armada'
       "
-    >
-      <select
-        class="form-select form-select-sm mb-2"
-        v-model="table.params.wilayah"
-        @change="table.getBlok"
       >
-        <option
-          value=""
-          selected
-        >Semua Wilayah</option>
-        <option
-          v-for="w in table.filter.wilayah"
-          :key="w"
-          :value="w.alias_wilayah"
+        <select
+          class="form-select form-select-sm mb-2"
+          v-model="table.params.wilayah"
+          @change="table.getBlok"
         >
-          {{ w.wilayah }}
-        </option>
-      </select>
-      <select
-        class="form-select form-select-sm mb-2"
-        :disabled="table.params.wilayah === ''"
-        v-model="table.params.blok"
-        @change="table.getData"
-      >
-        <option
-          value=""
-          selected
-        >Semua Daerah</option>
-        <option
-          v-for="b in table.filter.blok"
-          :key="b"
-          :value="b.id_blok"
+          <option
+            value=""
+            selected
+          >Semua Wilayah</option>
+          <option
+            v-for="w in table.filter.wilayah"
+            :key="w"
+            :value="w.alias_wilayah"
+          >
+            {{ w.wilayah }}
+          </option>
+        </select>
+        <select
+          class="form-select form-select-sm mb-2"
+          :disabled="table.params.wilayah === ''"
+          v-model="table.params.blok"
+          @change="table.getData"
         >
-          {{ b.blok }}
-        </option>
-      </select>
-    </div>
-    <div
-      class="col-md-2"
-      v-if="storeAuth.user.role != 'pendamping'"
-    >
-      <select
-        class="form-select form-select-sm mb-2"
-        v-model="table.params.area"
-        @change="table.getDropspot"
+          <option
+            value=""
+            selected
+          >Semua Daerah</option>
+          <option
+            v-for="b in table.filter.blok"
+            :key="b"
+            :value="b.id_blok"
+          >
+            {{ b.blok }}
+          </option>
+        </select>
+      </div>
+      <div
+        class="col-md-2"
+        v-if="storeAuth.user.role != 'pendamping'"
       >
-        <option
-          value=""
-          selected
-        >Semua Area</option>
-        <option
-          v-for="a in table.filter.area"
-          :key="a"
-          :value="a.id"
+        <select
+          class="form-select form-select-sm mb-2"
+          v-model="table.params.area"
+          @change="table.getDropspot"
         >
-          {{ a.nama }}
-        </option>
-      </select>
-      <select
-        class="form-select form-select-sm mb-2"
-        :disabled="table.params.area === ''"
-        v-model="table.params.dropspot"
-        @change="table.getData"
-      >
-        <option
-          value=""
-          selected
-        >Semua Dropsot</option>
-        <option
-          v-for="d in table.filter.dropspot"
-          :key="d"
-          :value="d.id"
+          <option
+            value=""
+            selected
+          >Semua Area</option>
+          <option
+            v-for="a in table.filter.area"
+            :key="a"
+            :value="a.id"
+          >
+            {{ a.nama }}
+          </option>
+        </select>
+        <select
+          class="form-select form-select-sm mb-2"
+          :disabled="table.params.area === ''"
+          v-model="table.params.dropspot"
+          @change="table.getData"
         >
-          {{ d.nama }}
-        </option>
-      </select>
-    </div>
-    <div class="col-md-2">
-      <select
-        class="form-select form-select-sm mb-2"
-        v-model="table.params.pembayaran"
-        @change="table.getData"
-      >
-        <option
-          value=""
-          selected
-        >Semua Status Pembayaran</option>
-        <option value="belum-lunas">Belum Lunas</option>
-        <option value="lunas">Lunas</option>
-        <option value="kurang">Kurang</option>
-        <option value="lebih">Lebih</option>
-      </select>
-      <select
-        class="form-select form-select-sm mb-2"
-        v-model="table.params.jenis_kelamin"
-        @change="table.getData"
-      >
-        <option
-          value=""
-          selected
-        >Semua Jenis Kelamin</option>
-        <option value="L">Laki-Laki</option>
-        <option value="P">Perempuan</option>
-      </select>
-    </div>
-    <div
-      class="col-md-2"
-      v-if="storeAuth.user.role === 'pendamping'"
-    >
-      <select
-        class="form-select form-select-sm mb-2"
-        v-model="table.params.armada"
-        @change="table.getData"
-      >
-        <option
-          value=""
-          selected
-        >Semua Armada</option>
-        <option
-          v-for="a in table.filter.armada"
-          :key="a.id"
-          :value="a.id"
+          <option
+            value=""
+            selected
+          >Semua Dropsot</option>
+          <option
+            v-for="d in table.filter.dropspot"
+            :key="d"
+            :value="d.id"
+          >
+            {{ d.nama }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <select
+          class="form-select form-select-sm mb-2"
+          v-model="table.params.pembayaran"
+          @change="table.getData"
         >
-          {{ a.nama }}
-        </option>
-      </select>
+          <option
+            value=""
+            selected
+          >Semua Status Pembayaran</option>
+          <option value="belum-lunas">Belum Lunas</option>
+          <option value="lunas">Lunas</option>
+          <option value="kurang">Kurang</option>
+          <option value="lebih">Lebih</option>
+        </select>
+        <select
+          class="form-select form-select-sm mb-2"
+          v-model="table.params.jenis_kelamin"
+          @change="table.getData"
+        >
+          <option
+            value=""
+            selected
+          >Semua Jenis Kelamin</option>
+          <option value="L">Laki-Laki</option>
+          <option value="P">Perempuan</option>
+        </select>
+      </div>
+      <div
+        class="col-md-2"
+        v-if="storeAuth.user.role === 'pendamping'"
+      >
+        <select
+          class="form-select form-select-sm mb-2"
+          v-model="table.params.armada"
+          @change="table.getData"
+        >
+          <option
+            value=""
+            selected
+          >Semua Armada</option>
+          <option
+            v-for="a in table.filter.armada"
+            :key="a.id"
+            :value="a.id"
+          >
+            {{ a.nama }}
+          </option>
+        </select>
+      </div>
     </div>
-  </div>
-  <!-- jumlah data dan pencarian -->
-  <div class="serach-box row">
-    <div class="col-md-10 d-flex align-items-center mb-2">
-      <small>Total data {{ table.totalData }}</small>
+    <!-- jumlah data dan pencarian -->
+    <div class="serach-box row">
+      <div class="col-md-10 d-flex align-items-center mb-2">
+        <small>Total data {{ table.totalData }}</small>
+      </div>
+      <div class="col-md-2 d-flex align-items-center">
+        <input
+          type="text"
+          v-model="table.params.cari"
+          class="form-control form-control-sm mb-2"
+          placeholder="Cari Penumpang ..."
+          @keyup="table.getData"
+        />
+      </div>
     </div>
-    <div class="col-md-2 d-flex align-items-center">
-      <input
-        type="text"
-        v-model="table.params.cari"
-        class="form-control form-control-sm mb-2"
-        placeholder="Cari Penumpang ..."
-        @keyup="table.getData"
+    <hr />
+
+    <!-- table data utama -->
+    <div class="table-responsive">
+      <table class="table table-sm table-hover mt-3">
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">NIUP</th>
+            <th scope="col">Nama Santri</th>
+            <th scope="col">Dropsot</th>
+            <th scope="col">Area</th>
+            <th scope="col">Tarif</th>
+            <th scope="col">Jumlah Bayar</th>
+            <th scope="col">Status Pembayaran</th>
+            <th scope="col">Wilayah</th>
+            <th scope="col">Daerah</th>
+            <th scope="col">Kecamatan</th>
+            <th scope="col">Kabupaten</th>
+            <th scope="col">Provinsi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            style="cursor: pointer"
+            v-for="(d, i) in table.items"
+            :key="i"
+            @dblclick.prevent="form.goToDetailClick(d)"
+            @contextmenu.prevent="form.showContextMenu($event, d)"
+            :class="{ 'table-active': isActiveRow(d.id) }"
+            @click.prevent="form.showContextMenu($event, d)"
+          >
+            <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
+            <td>{{ d.santri.niup }}</td>
+            <td>{{ d.santri.nama_lengkap }}</td>
+            <td v-if="d.dropspot">{{ d.dropspot.nama }}</td>
+            <td
+              v-else
+              class="text-danger"
+            ><i>belum-ditentukan</i></td>
+            <td v-if="d.dropspot">
+              {{ d.dropspot.area.nama }}
+            </td>
+            <td
+              v-else
+              class="text-danger"
+            ><i>belum-ditentukan</i></td>
+            <td v-if="d.dropspot">{{ formatMinus(d.dropspot.harga) }}</td>
+            <td
+              v-else
+              class="text-danger"
+            >Rp. 0</td>
+            <td>{{ formatMinus(d.jumlah_bayar) }}</td>
+
+            <td>
+              <i
+                v-if="d.status_bayar === 'belum-lunas'"
+                class="badge bg-danger text-capitalize"
+              >{{ d.status_bayar === "belum-lunas" ? "belum lunas" : "" }}</i>
+              <i
+                v-if="d.status_bayar === 'lunas'"
+                class="badge bg-success text-capitalize"
+              >{{ d.status_bayar }}</i>
+              <i
+                v-if="d.status_bayar === 'kurang'"
+                class="badge bg-warning text-capitalize"
+              >{{ d.status_bayar }}</i>
+              <i
+                v-if="d.status_bayar === 'lebih'"
+                class="badge bg-info text-capitalize"
+              >{{ d.status_bayar }}</i>
+            </td>
+            <td>
+              {{ d.santri.wilayah }}
+            </td>
+            <td>
+              {{ d.santri.blok }}
+            </td>
+            <td>{{ d.santri.kecamatan }}</td>
+            <td>{{ d.santri.kabupaten }}</td>
+            <td>{{ d.santri.provinsi }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div v-if="table.items.length > 0">
+      <app-paginate
+        v-if="table.meta['x_total_data']"
+        :meta="table.meta"
+        :per_page="table.params.limit"
+        @set-page="(val) => table.setPage(val)"
+        @next="table.nexPage"
+        @prev="table.prevPage"
+        @last="table.setPage"
+        @first="table.setPage"
       />
     </div>
-  </div>
-  <hr />
 
-  <!-- table data utama -->
-  <div class="table-responsive">
-    <table class="table table-sm table-hover mt-3">
-      <thead>
-        <tr>
-          <th scope="col">No</th>
-          <th scope="col">NIUP</th>
-          <th scope="col">Nama Santri</th>
-          <th scope="col">Dropsot</th>
-          <th scope="col">Area</th>
-          <th scope="col">Tarif</th>
-          <th scope="col">Jumlah Bayar</th>
-          <th scope="col">Status Pembayaran</th>
-          <th scope="col">Wilayah</th>
-          <th scope="col">Daerah</th>
-          <th scope="col">Kecamatan</th>
-          <th scope="col">Kabupaten</th>
-          <th scope="col">Provinsi</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          style="cursor: pointer"
-          v-for="(d, i) in table.items"
-          :key="i"
-          @dblclick.prevent="form.goToDetailClick(d)"
-          @contextmenu.prevent="form.showContextMenu($event, d)"
-          :class="{ 'table-active': isActiveRow(d.id) }"
-          @click.prevent="form.showContextMenu($event, d)"
-        >
-          <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
-          <td>{{ d.santri.niup }}</td>
-          <td>{{ d.santri.nama_lengkap }}</td>
-          <td v-if="d.dropspot">{{ d.dropspot.nama }}</td>
-          <td
-            v-else
-            class="text-danger"
-          ><i>belum-ditentukan</i></td>
-          <td v-if="d.dropspot">
-            {{ d.dropspot.area.nama }}
-          </td>
-          <td
-            v-else
-            class="text-danger"
-          ><i>belum-ditentukan</i></td>
-          <td v-if="d.dropspot">{{ formatMinus(d.dropspot.harga) }}</td>
-          <td
-            v-else
-            class="text-danger"
-          >Rp. 0</td>
-          <td>{{ formatMinus(d.jumlah_bayar) }}</td>
-
-          <td>
-            <i
-              v-if="d.status_bayar === 'belum-lunas'"
-              class="badge bg-danger text-capitalize"
-            >{{ d.status_bayar === "belum-lunas" ? "belum lunas" : "" }}</i>
-            <i
-              v-if="d.status_bayar === 'lunas'"
-              class="badge bg-success text-capitalize"
-            >{{ d.status_bayar }}</i>
-            <i
-              v-if="d.status_bayar === 'kurang'"
-              class="badge bg-warning text-capitalize"
-            >{{ d.status_bayar }}</i>
-            <i
-              v-if="d.status_bayar === 'lebih'"
-              class="badge bg-info text-capitalize"
-            >{{ d.status_bayar }}</i>
-          </td>
-          <td>
-            {{ d.santri.wilayah }}
-          </td>
-          <td>
-            {{ d.santri.blok }}
-          </td>
-          <td>{{ d.santri.kecamatan }}</td>
-          <td>{{ d.santri.kabupaten }}</td>
-          <td>{{ d.santri.provinsi }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div v-if="table.items.length > 0">
-    <app-paginate
-      v-if="table.meta['x_total_data']"
-      :meta="table.meta"
-      :per_page="table.params.limit"
-      @set-page="(val) => table.setPage(val)"
-      @next="table.nexPage"
-      @prev="table.prevPage"
-      @last="table.setPage"
-      @first="table.setPage"
-    />
-  </div>
-
-  <div
-    v-if="form.contextMenuVisible"
-    class="context-menu"
-    :style="{
+    <div
+      v-if="form.contextMenuVisible"
+      class="context-menu"
+      :style="{
       top: `${form.contextMenuPosition.y}px`,
       left: `${form.contextMenuPosition.x}px`,
     }"
-  >
-    <ul class="list-group list-group-flush">
-      <li
-        class="list-group-item px-5"
-        @click="form.handleOpenEditDropspot"
-        v-if="
+    >
+      <ul class="list-group list-group-flush">
+        <li
+          class="list-group-item px-5"
+          @click="form.handleOpenEditDropspot"
+          v-if="
           storeAuth.user.role === 'sysadmin' ||
           storeAuth.user.role === 'admin' ||
           storeAuth.user.role === 'daerah' ||
           storeAuth.user.role === 'wilayah'
         "
-      >
-        Ubah Dropsot
-      </li>
-      <li
-        class="list-group-item px-5"
-        @click="form.handleOpenEditPembayaran"
-        v-if="
+        >
+          Ubah Dropsot
+        </li>
+        <li
+          class="list-group-item px-5"
+          @click="form.handleOpenEditPembayaran"
+          v-if="
           storeAuth.user.role === 'sysadmin' ||
           storeAuth.user.role === 'keuangan'
         "
-      >
-        Ubah Status Pembayaran
-      </li>
-      <li
-        class="list-group-item px-5"
-        @click="form.goToDetail"
-      >
-        Lihat Detail Rombongan
-      </li>
-      <li
-        class="list-group-item px-5"
-        @click="form.deleteRombongan"
-        v-if="
+        >
+          Ubah Status Pembayaran
+        </li>
+        <li
+          class="list-group-item px-5"
+          @click="form.goToDetail"
+        >
+          Lihat Detail Rombongan
+        </li>
+        <li
+          class="list-group-item px-5"
+          @click="form.deleteRombongan"
+          v-if="
           storeAuth.user.role === 'sysadmin' ||
           storeAuth.user.role === 'admin' ||
           storeAuth.user.role === 'daerah' ||
           storeAuth.user.role === 'wilayah'
         "
-      >
-        Hapus Penumpang
-      </li>
-    </ul>
+        >
+          Hapus Penumpang
+        </li>
+      </ul>
+    </div>
   </div>
   <!-- modal edit data dropspot -->
   <div
@@ -685,6 +687,12 @@
                     class="float-end"
                     style="cursor: pointer;"
                     @click="form.setClickEditDrop"
+                    v-if="
+          storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'admin' ||
+          storeAuth.user.role === 'daerah' ||
+          storeAuth.user.role === 'wilayah'
+        "
                   >
                     <font-awesome-icon
                       icon="pen"
@@ -783,6 +791,12 @@
                 <div class="card-header bg-primary text-white">
                   <div class="float-start">Pembayaran</div>
                   <div
+                    v-if="
+          storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'admin' ||
+          storeAuth.user.role === 'daerah' ||
+          storeAuth.user.role === 'wilayah'
+        "
                     class="float-end"
                     style="cursor: pointer;"
                     @click="form.setClickEdirPembayaran"
