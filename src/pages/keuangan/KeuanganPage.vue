@@ -54,17 +54,17 @@
             class="align-middle"
           >TOTAL BAYAR</td>
           <td>PUTRA</td>
-          <td>{{ "Rp. " + store.keuanganAll.estimasi_bayar_putra }}</td>
+          <td>{{ formatMinus(store.keuanganAll.estimasi_bayar_putra) }}</td>
         </tr>
         <tr>
           <td>5</td>
           <td>PUTRI</td>
-          <td>{{ "Rp. " + store.keuanganAll.estimasi_bayar_putri }}</td>
+          <td>{{ formatMinus(store.keuanganAll.estimasi_bayar_putri) }}</td>
         </tr>
         <tr>
           <td>6</td>
           <td>PUTRA - PUTRI</td>
-          <td>{{ "Rp. " + store.keuanganAll.estimasi_bayar_putra_putri }}</td>
+          <td>{{ formatMinus(store.keuanganAll.estimasi_bayar_putra_putri) }}</td>
         </tr>
         <tr>
           <td>7</td>
@@ -73,17 +73,17 @@
             class="align-middle"
           >PENDAPATAN</td>
           <td>PUTRA</td>
-          <td>{{ "Rp. " + store.keuanganAll.pendapatan_putra }}</td>
+          <td>{{ formatMinus(store.keuanganAll.pendapatan_putra) }}</td>
         </tr>
         <tr>
           <td>8</td>
           <td>PUTRI</td>
-          <td>{{ "Rp. " + store.keuanganAll.pendapatan_putri }}</td>
+          <td>{{ formatMinus(store.keuanganAll.pendapatan_putri) }}</td>
         </tr>
         <tr>
           <td>9</td>
           <td>PUTRA - PUTRI</td>
-          <td>{{ "Rp. " + store.keuanganAll.pendapatan_putra_putri }}</td>
+          <td>{{ formatMinus(store.keuanganAll.pendapatan_putra_putri) }}</td>
         </tr>
         <tr>
           <td>10</td>
@@ -92,17 +92,17 @@
             class="align-middle"
           >ONGKOS ARMADA</td>
           <td>PUTRA</td>
-          <td>{{ "Rp. " + store.keuanganAll.ongkos_putra }}</td>
+          <td>{{ formatMinus(store.keuanganAll.ongkos_putra) }}</td>
         </tr>
         <tr>
           <td>11</td>
           <td>PUTRI</td>
-          <td>{{ "Rp. " + store.keuanganAll.ongkos_putri }}</td>
+          <td>{{ formatMinus(store.keuanganAll.ongkos_putri) }}</td>
         </tr>
         <tr>
           <td>12</td>
           <td>PUTRA - PUTRI</td>
-          <td>{{ "Rp. " + store.keuanganAll.ongkos_putra_putri }}</td>
+          <td>{{ formatMinus(store.keuanganAll.ongkos_putra_putri) }}</td>
         </tr>
         <tr>
           <td>13</td>
@@ -111,17 +111,17 @@
             class="align-middle"
           >PRA LABA</td>
           <td>PUTRA</td>
-          <td>{{ "Rp. " + store.keuanganAll.pra_laba_putra }}</td>
+          <td>{{ formatMinus(store.keuanganAll.pra_laba_putra) }}</td>
         </tr>
         <tr>
           <td>14</td>
           <td>PUTRI</td>
-          <td>{{ "Rp. " + store.keuanganAll.pra_laba_putri }}</td>
+          <td>{{ formatMinus(store.keuanganAll.pra_laba_putri) }}</td>
         </tr>
         <tr>
           <td>15</td>
           <td>PUTRA - PUTRI</td>
-          <td>{{ "Rp. " + store.keuanganAll.pra_laba_putra_putri }}</td>
+          <td>{{ formatMinus(store.keuanganAll.pra_laba_putra_putri) }}</td>
         </tr>
         <tr>
           <td>16</td>
@@ -130,17 +130,17 @@
             class="align-middle"
           >LABA</td>
           <td>PUTRA</td>
-          <td>{{ "Rp. " + store.keuanganAll.laba_putra }}</td>
+          <td>{{ formatMinus(store.keuanganAll.laba_putra) }}</td>
         </tr>
         <tr>
           <td>17</td>
           <td>PUTRI</td>
-          <td>{{ "Rp. " + store.keuanganAll.laba_putri }}</td>
+          <td>{{ formatMinus(store.keuanganAll.laba_putri) }}</td>
         </tr>
         <tr>
           <td>18</td>
           <td>PUTRA - PUTRI</td>
-          <td>{{ "Rp. " + store.keuanganAll.laba_putra_putri }}</td>
+          <td>{{ formatMinus(store.keuanganAll.laba_putra_putri) }}</td>
         </tr>
       </tbody>
     </table>

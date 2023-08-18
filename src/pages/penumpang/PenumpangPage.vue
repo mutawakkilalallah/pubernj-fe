@@ -6,6 +6,10 @@
     </div>
     <div class="col-md-4 text-end g-2">
       <button
+        v-if="
+          storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'keuangan' 
+        "
         class="btn btn-sm btn-outline-info me-2"
         type="button"
         @click="form.setOpenImportPembayaran()"
@@ -16,6 +20,10 @@
         /> Import Pembayaran
       </button>
       <button
+        v-if="
+          storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'keuangan'
+        "
         class="btn btn-sm btn-outline-warning me-2"
         type="button"
         @click="table.unduhTemplate"
@@ -201,9 +209,33 @@
             <th scope="col">Nama Santri</th>
             <th scope="col">Dropsot</th>
             <th scope="col">Area</th>
-            <th scope="col">Tarif</th>
-            <th scope="col">Jumlah Bayar</th>
-            <th scope="col">Status Pembayaran</th>
+            <th
+              scope="col"
+              v-if="
+          storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'admin' ||
+          storeAuth.user.role === 'daerah' ||
+          storeAuth.user.role === 'wilayah'
+        "
+            >Tarif</th>
+            <th
+              scope="col"
+              v-if="
+          storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'admin' ||
+          storeAuth.user.role === 'daerah' ||
+          storeAuth.user.role === 'wilayah'
+        "
+            >Jumlah Bayar</th>
+            <th
+              scope="col"
+              v-if="
+          storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'admin' ||
+          storeAuth.user.role === 'daerah' ||
+          storeAuth.user.role === 'wilayah'
+        "
+            >Status Pembayaran</th>
             <th scope="col">Wilayah</th>
             <th scope="col">Daerah</th>
             <th scope="col">Kecamatan</th>
@@ -236,14 +268,34 @@
               v-else
               class="text-danger"
             ><i>belum-ditentukan</i></td>
-            <td v-if="d.dropspot">{{ formatMinus(d.dropspot.harga) }}</td>
+            <td v-if=" d.dropspot &&
+          storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'admin' ||
+          storeAuth.user.role === 'daerah' ||
+          storeAuth.user.role === 'wilayah'
+        ">{{ formatMinus(d.dropspot.harga) }}</td>
             <td
-              v-else
+              v-else-if="
+          storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'admin' ||
+          storeAuth.user.role === 'daerah' ||
+          storeAuth.user.role === 'wilayah'
+        "
               class="text-danger"
             >Rp. 0</td>
-            <td>{{ formatMinus(d.jumlah_bayar) }}</td>
+            <td v-if="
+          storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'admin' ||
+          storeAuth.user.role === 'daerah' ||
+          storeAuth.user.role === 'wilayah'
+        ">{{ formatMinus(d.jumlah_bayar) }}</td>
 
-            <td>
+            <td v-if="
+          storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'admin' ||
+          storeAuth.user.role === 'daerah' ||
+          storeAuth.user.role === 'wilayah'
+        ">
               <i
                 v-if="d.status_bayar === 'belum-lunas'"
                 class="badge bg-danger text-capitalize"
@@ -679,7 +731,10 @@
           </div>
           <hr />
           <div class="row">
-            <div class="col-md-4">
+            <div :class=" storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'admin' ||
+          storeAuth.user.role === 'daerah' ||
+          storeAuth.user.role === 'wilayah' ? 'col-md-4' : 'col-md-6 mb-2'">
               <div class="card">
                 <div class="card-header bg-primary text-white">
                   <div class="float-start">Tujuan</div>
@@ -786,17 +841,19 @@
 
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-header bg-primary text-white">
-                  <div class="float-start">Pembayaran</div>
-                  <div
-                    v-if="
+            <div
+              class="col-md-4"
+              v-if="
           storeAuth.user.role === 'sysadmin' ||
           storeAuth.user.role === 'admin' ||
           storeAuth.user.role === 'daerah' ||
           storeAuth.user.role === 'wilayah'
         "
+            >
+              <div class="card">
+                <div class="card-header bg-primary text-white">
+                  <div class="float-start">Pembayaran</div>
+                  <div
                     class="float-end"
                     style="cursor: pointer;"
                     @click="form.setClickEdirPembayaran"
@@ -899,7 +956,10 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
+            <div :class=" storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'admin' ||
+          storeAuth.user.role === 'daerah' ||
+          storeAuth.user.role === 'wilayah' ? 'col-md-4' : 'col-md-6 mb-2'">
               <div class="card">
                 <div class="card-header bg-primary text-white">
                   Armada
@@ -956,9 +1016,9 @@ import { usePenumpangTable } from "../../store/penumpang/table";
 import { usePenumpangForm } from "../../store/penumpang/form";
 import { useAuthStore } from "../../store/auth/index";
 
+const storeAuth = useAuthStore();
 const table = usePenumpangTable();
 const form = usePenumpangForm();
-const storeAuth = useAuthStore();
 table.getData();
 
 if (storeAuth.user.role != "p4nj") {

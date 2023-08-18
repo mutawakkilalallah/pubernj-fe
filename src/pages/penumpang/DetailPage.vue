@@ -106,7 +106,10 @@
   </div>
   <hr />
   <div class="row">
-    <div class="col-md-4">
+    <div :class=" storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'admin' ||
+          storeAuth.user.role === 'daerah' ||
+          storeAuth.user.role === 'wilayah' ? 'col-md-4' : 'col-md-6 mb-2'">
       <div class="card">
         <div class="card-header bg-primary text-white">Tujuan</div>
         <div class="card-body">
@@ -129,7 +132,15 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <div
+      class="col-md-4"
+      v-if="
+          storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'admin' ||
+          storeAuth.user.role === 'daerah' ||
+          storeAuth.user.role === 'wilayah'
+        "
+    >
       <div class="card">
         <div class="card-header bg-primary text-white">Pembayaran</div>
         <div class="card-body">
@@ -163,8 +174,12 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4">
-      <div class="card">
+    <div :class=" storeAuth.user.role === 'sysadmin' ||
+          storeAuth.user.role === 'admin' ||
+          storeAuth.user.role === 'daerah' ||
+          storeAuth.user.role === 'wilayah' ? 'col-md-4' : 'col-md-6 mb-2'">
+      <div class="
+      card">
         <div class="card-header bg-primary text-white">Armada</div>
         <div class="card-body">
           <p class="card-title mb-0">BUS :</p>
@@ -201,7 +216,9 @@ import { onMounted } from "vue";
 import { usePenumpangDetailTable } from "../../store/penumpang/table-detail";
 import { useRoute } from "vue-router";
 import router from "../../router";
+import { useAuthStore } from "../../store/auth/index";
 
+const storeAuth = useAuthStore();
 const table = usePenumpangDetailTable();
 const route = useRoute();
 

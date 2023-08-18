@@ -6,6 +6,19 @@ export const useSantriTable = defineStore("table_santri", {
     isOpenDetail: false,
     items: [],
     item: {},
+    myDetail: {
+      niup: '',
+      nama_lengkap: '',
+      tempat_lahir: '',
+      tanggal_lahir: '',
+      wilayah: '',
+      blok: '',
+      kamar: '',
+      kecamatan: '',
+      kabupaten: '',
+      provinsi: '',
+      status_kepulangan:''
+   },
     fotoDiri: "",
     meta: {},
     myPage: "",
@@ -61,6 +74,17 @@ export const useSantriTable = defineStore("table_santri", {
           if ((resp.data.code = 200)) {
             this.item = resp.data.data;
             this.getImage(resp.data.data.niup, "medium");
+            this.myDetail.niup = this.item.niup
+            this.myDetail.nama_lengkap = this.item.nama_lengkap
+            this.myDetail.tempat_lahir = this.item.raw.tempat_lahir
+            this.myDetail.tanggal_lahir = this.item.raw.tanggal_lahir
+            this.myDetail.wilayah = this.item.wilayah
+            this.myDetail.blok = this.item.blok
+            this.myDetail.kamar = this.item.raw.domisili_santri[this.item.raw.domisili_santri.length - 1 ].kamar
+            this.myDetail.kecamatan = this.item.kecamatan
+            this.myDetail.kabupaten = this.item.kabupaten
+            this.myDetail.provinsi = this.item.provinsi
+            this.myDetail.status_kepulangan = this.item.status_kepulangan            
           }
         });
       } catch (error) {}

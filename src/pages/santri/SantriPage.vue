@@ -183,7 +183,7 @@
                         type="text"
                         readonly
                         class="form-control-plaintext"
-                        v-model="table.item.niup"
+                        v-model="table.myDetail.niup"
                       />
                     </div>
                   </div>
@@ -194,7 +194,7 @@
                         type="text"
                         readonly
                         class="form-control-plaintext"
-                        v-model="table.item.nama_lengkap"
+                        v-model="table.myDetail.nama_lengkap"
                       />
                     </div>
                   </div>
@@ -206,8 +206,8 @@
                         readonly
                         class="form-control-plaintext"
                         :value="
-                        table.item.raw ? table.item.raw.tempat_lahir +
-                        ', ' + table.item.raw.tanggal_lahir :'' 
+                        table.myDetail.raw ? table.myDetail.raw.tempat_lahir +
+                        ', ' + table.myDetail.raw.tanggal_lahir :'' 
                       "
                       />
                     </div>
@@ -219,7 +219,7 @@
                         type="text"
                         readonly
                         class="form-control-plaintext"
-                        v-model="table.item.wilayah"
+                        v-model="table.myDetail.wilayah"
                       />
                     </div>
                   </div>
@@ -230,7 +230,7 @@
                         type="text"
                         readonly
                         class="form-control-plaintext"
-                        v-model="table.item.blok"
+                        v-model="table.myDetail.blok"
                       />
                     </div>
                   </div>
@@ -242,7 +242,7 @@
                         readonly
                         class="form-control-plaintext"
                         v-model="
-                        table.item.raw.domisili_santri[table.item.raw.domisili_santri.length - 1].kamar
+                        table.myDetail.kamar
                       "
                       />
                     </div>
@@ -254,7 +254,7 @@
                         type="text"
                         readonly
                         class="form-control-plaintext"
-                        :value="table.item.kecamatan"
+                        :value="table.myDetail.kecamatan"
                       />
                     </div>
                   </div>
@@ -265,7 +265,7 @@
                         type="text"
                         readonly
                         class="form-control-plaintext"
-                        :value="table.item.kabupaten"
+                        :value="table.myDetail.kabupaten"
                       />
                     </div>
                   </div>
@@ -276,7 +276,7 @@
                         type="text"
                         readonly
                         class="form-control-plaintext"
-                        :value="table.item.provinsi"
+                        :value="table.myDetail.provinsi"
                       />
                     </div>
                   </div>
@@ -292,7 +292,7 @@
             </div>
             <div class="modal-footer">
               <router-link
-                v-if="table.item.status_kepulangan === 'rombongan'"
+                v-if="table.myDetail.status_kepulangan === 'rombongan'"
                 :to="{
                 name: 'penumpang-detail',
                 params: { uuid: table.item.uuid },
