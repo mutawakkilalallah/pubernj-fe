@@ -1,11 +1,17 @@
 <template>
-  <div class="text-center" v-if="table.isLoading === true">
-    <div class="spinner-border text-primary mt-2" role="status"></div>
+  <div
+    class="text-center"
+    v-if="table.isLoading === true"
+  >
+    <div
+      class="spinner-border text-primary mt-2"
+      role="status"
+    ></div>
     <h6 class="text-primary">Sinkornasi dengan server PEDATREN ...</h6>
     <hr />
   </div>
   <!-- judul -->
-  <h3>Generate Auto Dropspot</h3>
+  <h3 class="titlePage">Generate Auto Dropspot</h3>
   <div class="table-responsive mb-5">
     <table class="table table-sm table-hover mt-3">
       <thead>
@@ -28,7 +34,10 @@
               class="btn btn-primary"
               @click="table.generatePenumpangv1"
             >
-              <font-awesome-icon icon="rotate" class="icon" /> Generate
+              <font-awesome-icon
+                icon="rotate"
+                class="icon"
+              /> Generate
             </button>
           </td>
           <td>
@@ -46,7 +55,10 @@
               class="btn btn-primary"
               @click="table.generatePenumpangv2"
             >
-              <font-awesome-icon icon="rotate" class="icon" /> Generate
+              <font-awesome-icon
+                icon="rotate"
+                class="icon"
+              /> Generate
             </button>
           </td>
           <td>
@@ -68,7 +80,10 @@
               class="btn btn-primary"
               @click="table.generatePenumpangv3"
             >
-              <font-awesome-icon icon="rotate" class="icon" /> Generate
+              <font-awesome-icon
+                icon="rotate"
+                class="icon"
+              /> Generate
             </button>
           </td>
           <td>
@@ -89,7 +104,10 @@
               class="btn btn-primary"
               @click="table.generatePenumpangv4"
             >
-              <font-awesome-icon icon="rotate" class="icon" /> Generate
+              <font-awesome-icon
+                icon="rotate"
+                class="icon"
+              /> Generate
             </button>
           </td>
           <td>
@@ -108,7 +126,10 @@
               class="btn btn-primary"
               @click="table.generatePenumpangv5"
             >
-              <font-awesome-icon icon="rotate" class="icon" /> Generate
+              <font-awesome-icon
+                icon="rotate"
+                class="icon"
+              /> Generate
             </button>
           </td>
           <td>
@@ -127,7 +148,10 @@
               class="btn btn-primary"
               @click="table.generatePenumpangv6"
             >
-              <font-awesome-icon icon="rotate" class="icon" /> Generate
+              <font-awesome-icon
+                icon="rotate"
+                class="icon"
+              /> Generate
             </button>
           </td>
           <td>
@@ -148,7 +172,10 @@
               class="btn btn-primary"
               @click="table.generatePenumpangv7"
             >
-              <font-awesome-icon icon="rotate" class="icon" /> Generate
+              <font-awesome-icon
+                icon="rotate"
+                class="icon"
+              /> Generate
             </button>
           </td>
           <td>"Banten",</td>
@@ -163,7 +190,10 @@
               class="btn btn-primary"
               @click="table.generatePenumpangv8"
             >
-              <font-awesome-icon icon="rotate" class="icon" /> Generate
+              <font-awesome-icon
+                icon="rotate"
+                class="icon"
+              /> Generate
             </button>
           </td>
           <td>
@@ -184,7 +214,10 @@
               class="btn btn-primary"
               @click="table.generatePenumpangv9"
             >
-              <font-awesome-icon icon="rotate" class="icon" /> Generate
+              <font-awesome-icon
+                icon="rotate"
+                class="icon"
+              /> Generate
             </button>
           </td>
           <td>
@@ -207,7 +240,10 @@
               class="btn btn-primary"
               @click="table.generatePenumpangv10"
             >
-              <font-awesome-icon icon="rotate" class="icon" /> Generate
+              <font-awesome-icon
+                icon="rotate"
+                class="icon"
+              /> Generate
             </button>
           </td>
           <td>"Malaysia", "Thailand",</td>
@@ -222,7 +258,10 @@
               class="btn btn-primary"
               @click="table.generatePenumpangv11"
             >
-              <font-awesome-icon icon="rotate" class="icon" /> Generate
+              <font-awesome-icon
+                icon="rotate"
+                class="icon"
+              /> Generate
             </button>
           </td>
           <td>"Paiton",</td>
@@ -237,7 +276,10 @@
               class="btn btn-primary"
               @click="table.generatePenumpangv12"
             >
-              <font-awesome-icon icon="rotate" class="icon" /> Generate
+              <font-awesome-icon
+                icon="rotate"
+                class="icon"
+              /> Generate
             </button>
           </td>
           <td>
@@ -257,7 +299,10 @@
         class="btn btn-warning w-100"
         @click="table.generateSantri"
       >
-        <font-awesome-icon icon="rotate" class="icon" /> Generate - Sync Data
+        <font-awesome-icon
+          icon="rotate"
+          class="icon"
+        /> Generate - Sync Data
         Santri
       </button>
     </div>
@@ -267,12 +312,18 @@
         class="btn btn-danger w-100"
         @click="table.excludePenumpang"
       >
-        <font-awesome-icon icon="rotate" class="icon" /> Exclude - Putra Non
+        <font-awesome-icon
+          icon="rotate"
+          class="icon"
+        /> Exclude - Putra Non
         Siswa
       </button>
     </div>
   </div>
-  <div class="row" v-if="table.showSyncButtonPenumpang === true">
+  <div
+    class="row"
+    v-if="table.showSyncButtonPenumpang === true"
+  >
     <div
       class="col-md-1"
       v-for="index in parseInt(table.setupPenumpangItems)"
@@ -287,7 +338,10 @@
       </button>
     </div>
   </div>
-  <h3><font-awesome-icon icon="rotate" class="icon" /> Update Syncronize</h3>
+  <h3><font-awesome-icon
+      icon="rotate"
+      class="icon"
+    /> Update Syncronize</h3>
   <hr />
   <div class="row mb-5">
     <div class="col-md-3">
@@ -296,7 +350,10 @@
         class="btn btn-warning w-100"
         @click="table.updateSantri"
       >
-        <font-awesome-icon icon="rotate" class="icon" /> Update - Sync Data
+        <font-awesome-icon
+          icon="rotate"
+          class="icon"
+        /> Update - Sync Data
         Santri
       </button>
     </div>
@@ -306,7 +363,10 @@
         class="btn btn-warning w-100"
         @click="table.updateUser"
       >
-        <font-awesome-icon icon="rotate" class="icon" /> Update - Sync Data User
+        <font-awesome-icon
+          icon="rotate"
+          class="icon"
+        /> Update - Sync Data User
       </button>
     </div>
   </div>

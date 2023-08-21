@@ -4,10 +4,9 @@
       :to="{ name: path }"
       style="text-decoration: none"
     >
-
       <div
         v-if="isMobile"
-        class="text-center p-2 mx-2 menu-atas-item"
+        class="text-center p-2 mx-2 menu-atas-item rounded"
         :class="routePath === props.path && myTheme.themes === 'light' ? 'menu-active' : routePath === props.path && myTheme.themes === 'dark' ? 'menu-dark': routePath === props.path ?'menu-active':'menu-atas-item '"
       >
         <font-awesome-icon
@@ -93,7 +92,7 @@ onMounted(() => {
   border-radius: 0 0 10px 10px;
 }
 .icon {
-  font-size: 30px;
+  font-size: 25px;
 }
 .nama {
   font-size: 12px;

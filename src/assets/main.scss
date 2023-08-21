@@ -7,14 +7,14 @@
 }
 
 @media (max-width: 575.98px) {
-  // .titlePage {
-  //     padding-top: 20px;
-  //   }
+  .titlePage {
+      margin-top: -10px;
+    }
    }
 @media (max-width: 767.98px) {
-//  .titlePage{
-//   padding-top: 20px;
-//  };
+ .titlePage{
+  margin-top: -10px;
+ }
 }
 
 // `lg` applies to medium devices (tablets, less than 992px)
@@ -24,11 +24,106 @@
 
 // `xl` applies to large devices (desktops, less than 1200px)
 @media (max-width: 1199.98px) {
+.boxLogin{
+  margin-top: 15%;
+  width: 330px !important;
+    height: 400px !important;
+}
+.appLogo {
+  position: absolute;
+  width: 130px !important;
+  margin-left: -60px !important;
+  margin-top: -150px;
+}
+.title h4{ 
+  margin-top: -55px;
+}
+.boxLogin form {
+  margin-top: -10px ;
+  button{
+    height: 30px;
+    font-size: 12px;
+  }
+  input{
+    width: 115%;
+    margin-left: -20px;
+    font-size: 15px;
+  }
+}
+.developer{
+  margin-top: 30px !important;
+  font-size: small;
+}
+.developerName {
+  margin-top: 40px !important;
+  font-size: small;
+}
  
 }
 
 // `xxl` applies to x-large devices (large desktops, less than 1400px)
 @media (max-width: 1399.98px) {
+   .titlePage{
+      padding-top: 15px;
+     };
+.boxLogin {
+    margin-top: 15%;
+    width: 330px !important;
+    height: 410px !important;
+  }
+
+  .appLogo {
+    position: absolute;
+    width: 130px !important;
+    margin-left: -65px !important;
+    margin-top: -150px;
+  }
+
+  .title h4 {
+    margin-top: -55px;
+  }
+
+  .boxLogin form {
+    margin-top: -10px;
+
+    button {
+      height: 30px;
+      font-size: 12px;
+    }
+
+    input {
+      width: 115%;
+      margin-left: -20px;
+      font-size: 15px;
+    }
+  }
+
+  .developer {
+    margin-top: 30px !important;
+    font-size: small;
+  }
+
+  .developerName {
+    margin-top: 40px !important;
+    font-size: small;
+  }
   
+}
+
+@media print {
+  h3 {
+    color: green;
+    font-size: 40px;
+  }
+  .table tr{
+    text-align: center;
+  }
+    .table td {
+      text-align: center;
+      white-space: nowrap;
+      padding: 0.005rem !important;
+      vertical-align: top;
+      border-top: 1px solid #dee2e6;
+    }
 }
 

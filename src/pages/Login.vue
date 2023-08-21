@@ -1,63 +1,65 @@
 <template>
-  <div
-    class="loginPage d-flex justify-content-center align-items-center"
-    :style="myTheme.themes == 'dark' ? 'color: var(--bs-body-color); background-color: #212529;' : 'background-color: #cacaca'"
-  >
+  <div class="">
     <div
-      class="boxLogin shadow p-5"
-      :style=" myTheme.themes == 'dark' ? 'background-color: var(--bs-body-bg)' : 'background-color: #fff'"
+      class="loginPage d-flex justify-content-center align-items-center"
+      :style="myTheme.themes == 'dark' ? 'color: var(--bs-body-color); background-color: #212529;' : 'background-color: #cacaca'"
     >
-      <div class="text-center">
-        <img
-          src="/logo.png"
-          alt="logo-puber"
-          class="appLogo shadow rounded-circle"
-        />
-      </div>
-      <div class="title text-center mb-5 mt-5">
-        <h4>Pulang Bersama</h4>
-        <h6>Pondok Pesantren Nurul Jadid</h6>
-      </div>
-      <form
-        @submit.prevent="prosesLogin"
-        ref="myForm"
+      <div
+        class="boxLogin shadow p-5"
+        :style=" myTheme.themes == 'dark' ? 'background-color: var(--bs-body-bg)' : 'background-color: #fff'"
       >
-        <input
-          v-model="form.username"
-          id="username"
-          type="text"
-          class="form-control mb-2"
-          :class="valid1 === true ? 'is-invalid':''"
-          placeholder="Username"
-          @blur="validInput1(form.username)"
-        />
-        <input
-          v-model="form.password"
-          :class="valid2 === true ? 'is-invalid':''"
-          id="password"
-          type="password"
-          class="form-control mb-3"
-          placeholder="Password"
-          aria-describedby="password"
-          @blur="validInput2(form.password)"
-        />
-        <button
-          v-if="storeAuth.loading === false"
-          type="submit"
-          class="btn btn-primary btn-block"
-          style="width: 100%"
+        <div class="text-center">
+          <img
+            src="/logo.png"
+            alt="logo-puber"
+            class="appLogo shadow rounded-circle"
+          />
+        </div>
+        <div class="title text-center mb-5 mt-5">
+          <h4>Pulang Bersama</h4>
+          <h6>Pondok Pesantren Nurul Jadid</h6>
+        </div>
+        <form
+          @submit.prevent="prosesLogin"
+          ref="myForm"
         >
-          LOGIN
-        </button>
-        <app-btn-loading v-else />
-      </form>
-      <div class="developer text-center mt-5">
-        <small>Nurul Jadid &copy; 2023</small>
-      </div>
-      <div class="developer text-center mt-5">
-        <i>developed by:</i>
-        <br />
-        <i>@mutawakkilalallah @farhandardiri</i>
+          <input
+            v-model="form.username"
+            id="username"
+            type="text"
+            class="form-control mb-2"
+            :class="valid1 === true ? 'is-invalid':''"
+            placeholder="Username"
+            @blur="validInput1(form.username)"
+          />
+          <input
+            v-model="form.password"
+            :class="valid2 === true ? 'is-invalid':''"
+            id="password"
+            type="password"
+            class="form-control mb-3"
+            placeholder="Password"
+            aria-describedby="password"
+            @blur="validInput2(form.password)"
+          />
+          <button
+            v-if="storeAuth.loading === false"
+            type="submit"
+            class="btn btn-primary btn-block"
+            style="width: 100%"
+          >
+            LOGIN
+          </button>
+          <app-btn-loading v-else />
+        </form>
+        <div class="developer text-center mt-5">
+          <small>Nurul Jadid &copy; 2023</small>
+        </div>
+        <div class="developerName text-center mt-5">
+          <i>developed by:</i>
+          <br />
+          <i>@mutawakkilalallah @farhandardiri</i>
+        </div>
       </div>
     </div>
   </div>
@@ -117,6 +119,7 @@ function validInput2(msg) {
 
 .loginPage {
   height: 100vh;
+  padding-bottom: 8%;
 }
 .boxLogin {
   width: 400px;

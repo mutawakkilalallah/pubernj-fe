@@ -122,18 +122,18 @@
       id="chart"
       v-if="users.user.role === 'sysadmin' || users.user.role ==='admin'"
     >
-      <apexchart
+      <!-- <apexchart
         type="bar"
         height="5500"
         :options="data.chartOptions"
         :series="data.series"
-      ></apexchart>
+      ></apexchart> -->
     </div>
   </div>
 </template>
 <script setup>
 import { useStatistikStore } from "../../store/auth/statistik";
-import apexCharts from "apexcharts";
+// import apexCharts from "apexcharts";
 import print from "vue3-print-nb";
 import { useAuthStore } from "../../store/auth";
 
@@ -142,56 +142,56 @@ const users = useAuthStore();
 const store = useStatistikStore();
 store.getStatArmada();
 
-const data = {
-  series: [
-    {
-      name: "Santri Putra",
-      data: store.stats.jumlahPutra,
-    },
-    {
-      name: "Santri Putri",
-      data: store.stats.jumlahPutri,
-    },
-    {
-      name: "Total Santri",
-      data: store.stats.totalSantri,
-    },
-  ],
-  chartOptions: {
-    chart: {
-      type: "bar",
-      height: 5000,
-    },
+// const data = {
+//   series: [
+//     {
+//       name: "Santri Putra",
+//       data: store.stats.jumlahPutra,
+//     },
+//     {
+//       name: "Santri Putri",
+//       data: store.stats.jumlahPutri,
+//     },
+//     {
+//       name: "Total Santri",
+//       data: store.stats.totalSantri,
+//     },
+//   ],
+//   chartOptions: {
+//     chart: {
+//       type: "bar",
+//       height: 5000,
+//     },
 
-    plotOptions: {
-      bar: {
-        horizontal: true,
-        dataLabels: {
-          position: "top",
-        },
-      },
-    },
+//     plotOptions: {
+//       bar: {
+//         horizontal: true,
+//         dataLabels: {
+//           position: "top",
+//         },
+//       },
+//     },
 
-    dataLabels: {
-      enabled: true,
-      offsetX: -6,
-      style: {
-        fontSize: "12px",
-        colors: ["#fff"],
-      },
-    },
-    stroke: {
-      show: true,
-      width: 1,
-      colors: ["#fff"],
-    },
-    tooltip: {
-      shared: true,
-      intersect: false,
-    },
-    xaxis: {
-      categories: store.stats.namaDropspot,
-    },
-  },
-};
+//     dataLabels: {
+//       enabled: true,
+//       offsetX: -6,
+//       style: {
+//         fontSize: "12px",
+//         colors: ["#fff"],
+//       },
+//     },
+//     stroke: {
+//       show: true,
+//       width: 1,
+//       colors: ["#fff"],
+//     },
+//     tooltip: {
+//       shared: true,
+//       intersect: false,
+//     },
+//     xaxis: {
+//       categories: store.stats.namaDropspot,
+//     },
+//   },
+// };
 </script>

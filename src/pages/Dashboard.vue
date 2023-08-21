@@ -48,7 +48,179 @@
     </div>
   </div>
 
-  <div class="row mt-3 g-2">
+  <div
+    class="row mt-3 g-3 mx-2 text-center"
+    v-if="isMobile"
+  >
+    <div
+      class="col mb-3 mb-sm-0"
+      v-if="storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'"
+    >
+      <div>
+        <div
+          class="badge rounded-circle bg-primary bg-gradient position-relative"
+          style="height: 50px;"
+          @click="toDataSantri"
+        >
+          <font-awesome-icon
+            icon="user"
+            class="p-2"
+            style="font-size: 20px; color: white"
+          />
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ storeAuth.stast.totalSantri }}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </div>
+        <br />
+        <p class=""><small>Total Santri</small></p>
+      </div>
+    </div>
+    <div class="col mb-3 mb-sm-0">
+      <div>
+        <div
+          class="badge rounded-circle bg-success bg-gradient position-relative "
+          style="height: 50px;"
+          @click="toDataPenumpang"
+        >
+          <font-awesome-icon
+            icon="briefcase"
+            class="p-2"
+            style="font-size: 20px; color: white"
+          />
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ storeAuth.stast.totalPenumpang }}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </div>
+        <br />
+        <p class=""><small>Total Penumpang</small></p>
+      </div>
+    </div>
+    <div
+      class="col mb-3 mb-sm-0"
+      v-if="storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'"
+    >
+      <div>
+        <div
+          class="badge rounded-circle bg-secondary bg-gradient position-relative "
+          style="height: 50px;"
+          @click="toDataSantri"
+        >
+          <font-awesome-icon
+            icon="user-xmark"
+            class="p-2"
+            style="font-size: 17px; color: white"
+          />
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ storeAuth.stast.totalTidakRombongan }}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </div>
+        <br />
+        <p class=""><small>Total Tidak Rombongan</small></p>
+      </div>
+    </div>
+    <div class="col mb-3 mb-sm-0">
+      <div>
+        <div
+          class="badge rounded-circle bg-danger bg-gradient position-relative "
+          style="height: 50px;"
+          @click="toDataArmada"
+        >
+          <font-awesome-icon
+            icon="bus"
+            class="p-2"
+            style="font-size: 20px; color: white"
+          />
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ storeAuth.stast.totalArmada }}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </div>
+        <br />
+        <p class=""><small>Total Armada</small></p>
+      </div>
+    </div>
+    <div
+      class="col mb-3 mb-sm-0"
+      v-if="storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'"
+    >
+      <div>
+        <div
+          class="badge rounded-circle bg-warning bg-gradient position-relative "
+          style="height: 50px;"
+          @click="toDataArea"
+        >
+          <font-awesome-icon
+            icon="map"
+            class="p-2"
+            style="font-size: 17px; color: white"
+          />
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ storeAuth.stast.totalArea }}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </div>
+        <br />
+        <p class=""><small>Total Area</small></p>
+      </div>
+    </div>
+    <div
+      class="col mb-3 mb-sm-0"
+      v-if="storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'"
+    >
+      <div>
+        <div
+          class="badge rounded-circle bg-info bg-gradient position-relative "
+          style="height: 50px;"
+          @click="toDataDropspot"
+        >
+          <font-awesome-icon
+            icon="location-dot"
+            class="p-2"
+            style="font-size: 20px; color: white"
+          />
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ storeAuth.stast.totalDropspot }}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </div>
+        <br />
+        <p class=""><small>Total Dropspot</small></p>
+      </div>
+    </div>
+    <div
+      class="col mb-3 mb-sm-0"
+      v-if="storeAuth.user.role === 'sysadmin'"
+    >
+      <div>
+        <div
+          class="badge rounded-circle bg-dark bg-gradient position-relative "
+          style="height: 50px;"
+          @click="toDataUser"
+        >
+          <font-awesome-icon
+            icon="user-cog"
+            class="p-2"
+            style="font-size: 17px; color: white"
+          />
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ storeAuth.stast.totalUser }}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </div>
+        <br />
+        <p class=""><small>Total User</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- dekstop -->
+  <div
+    class="row mt-3 g-2"
+    v-else
+  >
     <!-- card -->
     <div
       class="col-sm-3 mb-3 mb-sm-0"
@@ -246,19 +418,21 @@
       </div>
     </div>
   </div>
-  <div>
+  <!-- <div>
     <set-time />
     <p class="text-center text-uppercase">input terakhir</p>
-  </div>
+  </div> -->
 </template>
 
 <script setup>
+import { onMounted, ref } from "vue";
 import router from "../router";
 import { useAuthStore } from "../store/auth/index";
 // import { useSantriTable } from "../store/santri/table";
 
 // const santri = useSantriTable();
 const storeAuth = useAuthStore();
+const isMobile = ref("");
 
 // santri.getData();
 storeAuth.getStats();
@@ -283,4 +457,13 @@ function toDataDropspot() {
 function toDataUser() {
   router.push("/user");
 }
+onMounted(() => {
+  const mobileQuery = window.matchMedia("(max-width: 767px)");
+
+  isMobile.value = mobileQuery.matches;
+
+  mobileQuery.addListener((query) => {
+    isMobile.value = query.matches;
+  });
+});
 </script>
