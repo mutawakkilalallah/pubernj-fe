@@ -25,18 +25,17 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     },
     formEditPembayaran: {
       jumlah_bayar: "",
-      status_bayar: "",
     },
     isOpen: false,
-    edited:false,
-    editedDrop:false,
+    edited: false,
+    editedDrop: false,
     person: {},
-    fotoDiri:""
+    fotoDiri: "",
   }),
 
-  actions: { 
+  actions: {
     setOpen() {
-      this.isOpen = !this.isOpen
+      this.isOpen = !this.isOpen;
     },
     showContextMenu(event, d) {
       event.preventDefault();
@@ -56,7 +55,6 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     },
     resetFormEditPembayaran() {
       this.formEditPembayaran.jumlah_bayar = "";
-      this.formEditPembayaran.status_bayar = "";
     },
     resetFormImportPembayaran() {
       this.formImportPembayaran.excelFile = null;
@@ -81,7 +79,6 @@ export const usePenumpangForm = defineStore("form_penumpang", {
       this.isOpenEditDropspot = true;
     },
     handleOpenEditPembayaran() {
-      this.formEditPembayaran.status_bayar = this.dataEdit.status_bayar;
       this.formEditPembayaran.jumlah_bayar = this.dataEdit.jumlah_bayar;
       this.isOpenEditPembayaran = true;
     },
@@ -89,19 +86,18 @@ export const usePenumpangForm = defineStore("form_penumpang", {
       router.push(`penumpang/${this.dataEdit.santri_uuid}/detail`);
     },
     goToDetailClick(a) {
-      this.idEdit = a.id
-      this.isOpen = true
-      this.dataEdit = a
-      this.getDataDetail(a.santri_uuid)
-      this.getImage(a.santri.niup)
+      this.idEdit = a.id;
+      this.isOpen = true;
+      this.dataEdit = a;
+      this.getDataDetail(a.santri_uuid);
+      this.getImage(a.santri.niup);
     },
-    setClickEdirPembayaran() {      
-      this.edited = !this.edited
-       this.formEditPembayaran.status_bayar = this.dataEdit.status_bayar;
+    setClickEdirPembayaran() {
+      this.edited = !this.edited;
       this.formEditPembayaran.jumlah_bayar = this.dataEdit.jumlah_bayar;
     },
     setClickEditDrop() {
-      this.editedDrop = !this.editedDrop
+      this.editedDrop = !this.editedDrop;
       this.idArea = this.dataEdit.dropspot.area_id;
       this.getArea();
       this.getDropspot();
@@ -126,7 +122,7 @@ export const usePenumpangForm = defineStore("form_penumpang", {
         });
       } catch (error) {}
     },
-     async getDataDetail(uuid) {
+    async getDataDetail(uuid) {
       try {
         await api.get(`penumpang/${uuid}`).then((resp) => {
           if ((resp.data.code = 200)) {
@@ -136,7 +132,7 @@ export const usePenumpangForm = defineStore("form_penumpang", {
         });
       } catch (error) {}
     },
-      async getImage(uuid) {
+    async getImage(uuid) {
       try {
         const params = {
           responseType: "blob",
@@ -157,8 +153,8 @@ export const usePenumpangForm = defineStore("form_penumpang", {
             this.resetFormEditDropspot();
             const table = usePenumpangTable();
             table.getData();
-            this.editedDrop = false
-            this.isOpen = false
+            this.editedDrop = false;
+            this.isOpen = false;
           });
       } catch (err) {}
     },
@@ -177,16 +173,14 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     async editPembayaran() {
       try {
         await api
-        .put(`penumpang/pembayaran/${this.idEdit}`, this.formEditPembayaran)
-        .then((resp) => {
-          this.isOpenEditPembayaran = false;
-          this.dataEdit.jumlah_bayar = this.formEditPembayaran.jumlah_bayar
-          this.dataEdit.status_bayar = this.formEditPembayaran.status_bayar
+          .put(`penumpang/pembayaran/${this.idEdit}`, this.formEditPembayaran)
+          .then((resp) => {
+            this.isOpenEditPembayaran = false;
+            this.dataEdit.jumlah_bayar = this.formEditPembayaran.jumlah_bayar;
             this.resetFormEditPembayaran();
             const table = usePenumpangTable();
             table.getData();
-            this.edited = false
-            
+            this.edited = false;
           });
       } catch (err) {}
     },

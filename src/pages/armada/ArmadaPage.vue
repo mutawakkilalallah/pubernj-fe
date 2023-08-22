@@ -83,7 +83,7 @@
   <hr />
   <!-- tombol tambah data -->
   <button
-    v-if="table.user.role == 'sysadmin' || table.user.role == 'armada'  "
+    v-if="table.user.role == 'sysadmin' || table.user.role == 'armada'"
     class="btn btn-sm btn-primary"
     @click="form.setOpenAdd"
   >
@@ -124,7 +124,11 @@
         <tr
           v-for="(d, i) in table.items"
           :key="i"
-          @dblclick="table.user.role === 'sysadmin' && form.handleDoubleClik(d)"
+          @dblclick="
+            table.user.role === 'sysadmin' ||
+              table.user.role === 'admin' ||
+              (table.user.role === 'armada' && form.handleDoubleClik(d))
+          "
         >
           <td>{{ i + 1 }}</td>
           <td>{{ d.nama }}</td>
@@ -186,16 +190,16 @@
         <form @submit.prevent="form.tambahData">
           <div class="modal-body">
             <div class="form-group mb-3">
-              <small>Nama Armada</small>
+              <small>Urutan Armada</small>
               <input
                 type="text"
                 v-model="form.form.nama"
-                placeholder="Masukkan nama armada .."
+                placeholder="Masukkan urutan armada .."
                 class="form-control mt-2"
               />
-              <small class="fst-italic text-danger"
+              <small class="text-danger"
                 >*) saat membuat armada penamaan masukkan urutan saja contoh
-                1,2,3 dari setiap area</small
+                1,2,3 dari setiap dropspot</small
               >
             </div>
             <div class="form-group mb-3">
@@ -338,7 +342,7 @@
                 <option v-if="form.form.dropspot_id === ''" value="" selected>
                   Pilih Dropspot
                 </option>
-                <option value="" selected>{{ form.namaDropsot }}</option>
+                <!-- <option value="" selected>{{ form.namaDropsot }}</option> -->
                 <option v-for="d in form.isDropspot" :key="d" :value="d.id">
                   {{ d.nama }}
                 </option>

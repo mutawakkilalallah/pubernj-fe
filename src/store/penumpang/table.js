@@ -127,6 +127,22 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       return excelBuffer;
     },
 
+    async handleReset() {
+      this.params = {
+        cari: "",
+        dropspot: "",
+        area: "",
+        wilayah: "",
+        blok: "",
+        pembayaran: "",
+        jenis_kelamin: "",
+        armada: "",
+        page: 1,
+        limit: 25,
+      };
+      this.getData();
+    },
+
     // mengambil semua data yaang akan di export
     formatJson(data) {
       const temp = [];

@@ -32,10 +32,7 @@
       class="rounded-circle me-3"
     />
     <div class="user-info text-white">
-      <p
-        style="font-size: 20px; margin-bottom: 0"
-        class="fw-bold"
-      >
+      <p style="font-size: 20px; margin-bottom: 0" class="fw-bold">
         {{ storeAuth.user.nama_lengkap }}
       </p>
       <i v-if="storeAuth.user.role === 'daerah'">{{
@@ -48,18 +45,12 @@
     </div>
   </div>
 
-  <div
-    class="row mt-3 g-3 mx-2 text-center"
-    v-if="isMobile"
-  >
-    <div
-      class="col mb-3 mb-sm-0"
-      v-if="storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'"
-    >
+  <div class="row mt-3 g-3 mx-2 text-center" v-if="isMobile">
+    <div class="col mb-3 mb-sm-0">
       <div>
         <div
           class="badge rounded-circle bg-primary bg-gradient position-relative"
-          style="height: 50px;"
+          style="height: 50px"
           @click="toDataSantri"
         >
           <font-awesome-icon
@@ -67,7 +58,9 @@
             class="p-2"
             style="font-size: 20px; color: white"
           />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          >
             {{ storeAuth.stast.totalSantri }}
             <span class="visually-hidden">unread messages</span>
           </span>
@@ -79,8 +72,8 @@
     <div class="col mb-3 mb-sm-0">
       <div>
         <div
-          class="badge rounded-circle bg-success bg-gradient position-relative "
-          style="height: 50px;"
+          class="badge rounded-circle bg-success bg-gradient position-relative"
+          style="height: 50px"
           @click="toDataPenumpang"
         >
           <font-awesome-icon
@@ -88,7 +81,9 @@
             class="p-2"
             style="font-size: 20px; color: white"
           />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          >
             {{ storeAuth.stast.totalPenumpang }}
             <span class="visually-hidden">unread messages</span>
           </span>
@@ -97,14 +92,11 @@
         <p class=""><small>Total Penumpang</small></p>
       </div>
     </div>
-    <div
-      class="col mb-3 mb-sm-0"
-      v-if="storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'"
-    >
+    <div class="col mb-3 mb-sm-0">
       <div>
         <div
-          class="badge rounded-circle bg-secondary bg-gradient position-relative "
-          style="height: 50px;"
+          class="badge rounded-circle bg-secondary bg-gradient position-relative"
+          style="height: 50px"
           @click="toDataSantri"
         >
           <font-awesome-icon
@@ -112,7 +104,9 @@
             class="p-2"
             style="font-size: 17px; color: white"
           />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          >
             {{ storeAuth.stast.totalTidakRombongan }}
             <span class="visually-hidden">unread messages</span>
           </span>
@@ -124,8 +118,8 @@
     <div class="col mb-3 mb-sm-0">
       <div>
         <div
-          class="badge rounded-circle bg-danger bg-gradient position-relative "
-          style="height: 50px;"
+          class="badge rounded-circle bg-danger bg-gradient position-relative"
+          style="height: 50px"
           @click="toDataArmada"
         >
           <font-awesome-icon
@@ -133,7 +127,9 @@
             class="p-2"
             style="font-size: 20px; color: white"
           />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          >
             {{ storeAuth.stast.totalArmada }}
             <span class="visually-hidden">unread messages</span>
           </span>
@@ -142,14 +138,11 @@
         <p class=""><small>Total Armada</small></p>
       </div>
     </div>
-    <div
-      class="col mb-3 mb-sm-0"
-      v-if="storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'"
-    >
+    <div class="col mb-3 mb-sm-0">
       <div>
         <div
-          class="badge rounded-circle bg-warning bg-gradient position-relative "
-          style="height: 50px;"
+          class="badge rounded-circle bg-warning bg-gradient position-relative"
+          style="height: 50px"
           @click="toDataArea"
         >
           <font-awesome-icon
@@ -157,7 +150,9 @@
             class="p-2"
             style="font-size: 17px; color: white"
           />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          >
             {{ storeAuth.stast.totalArea }}
             <span class="visually-hidden">unread messages</span>
           </span>
@@ -166,14 +161,11 @@
         <p class=""><small>Total Area</small></p>
       </div>
     </div>
-    <div
-      class="col mb-3 mb-sm-0"
-      v-if="storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'"
-    >
+    <div class="col mb-3 mb-sm-0">
       <div>
         <div
-          class="badge rounded-circle bg-info bg-gradient position-relative "
-          style="height: 50px;"
+          class="badge rounded-circle bg-info bg-gradient position-relative"
+          style="height: 50px"
           @click="toDataDropspot"
         >
           <font-awesome-icon
@@ -181,7 +173,9 @@
             class="p-2"
             style="font-size: 20px; color: white"
           />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          >
             {{ storeAuth.stast.totalDropspot }}
             <span class="visually-hidden">unread messages</span>
           </span>
@@ -190,14 +184,11 @@
         <p class=""><small>Total Dropspot</small></p>
       </div>
     </div>
-    <div
-      class="col mb-3 mb-sm-0"
-      v-if="storeAuth.user.role === 'sysadmin'"
-    >
+    <div class="col mb-3 mb-sm-0">
       <div>
         <div
-          class="badge rounded-circle bg-dark bg-gradient position-relative "
-          style="height: 50px;"
+          class="badge rounded-circle bg-dark bg-gradient position-relative"
+          style="height: 50px"
           @click="toDataUser"
         >
           <font-awesome-icon
@@ -205,7 +196,9 @@
             class="p-2"
             style="font-size: 17px; color: white"
           />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          >
             {{ storeAuth.stast.totalUser }}
             <span class="visually-hidden">unread messages</span>
           </span>
@@ -217,20 +210,20 @@
   </div>
 
   <!-- dekstop -->
-  <div
-    class="row mt-3 g-2"
-    v-else
-  >
+  <div class="row mt-3 g-2" v-else>
     <!-- card -->
     <div
       class="col-sm-3 mb-3 mb-sm-0"
       v-if="
-        storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'
+        storeAuth.user.role !== 'armada' &&
+        storeAuth.user.role !== 'keuangan' &&
+        storeAuth.user.role !== 'pendamping' &&
+        storeAuth.user.role !== 'p4nj'
       "
     >
       <div
         class="card"
-        style="background-color: #006c8a; cursor: pointer;"
+        style="background-color: #006c8a; cursor: pointer"
         @click="toDataSantri"
       >
         <div class="card-body">
@@ -255,16 +248,13 @@
     <div class="col-sm-3 mb-3 mb-sm-0">
       <div
         class="card text-bg-primary"
-        style="cursor: pointer;"
+        style="cursor: pointer"
         @click="toDataPenumpang"
       >
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <font-awesome-icon
-                icon="briefcase"
-                style="font-size: 90px"
-              />
+              <font-awesome-icon icon="briefcase" style="font-size: 90px" />
             </div>
             <div class="col">
               <h2 class="card-title text-end">
@@ -280,12 +270,15 @@
     <div
       class="col-sm-3 mb-3 mb-sm-0"
       v-if="
-        storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'
+        storeAuth.user.role !== 'armada' &&
+        storeAuth.user.role !== 'keuangan' &&
+        storeAuth.user.role !== 'pendamping' &&
+        storeAuth.user.role !== 'p4nj'
       "
     >
       <div
         class="card"
-        style="background-color: #8a5700; cursor: pointer;"
+        style="background-color: #8a5700; cursor: pointer"
         @click="toDataSantri"
       >
         <div class="card-body">
@@ -309,10 +302,17 @@
       </div>
     </div>
 
-    <div class="col-sm-3 mb-3 mb-sm-0">
+    <div
+      class="col-sm-3 mb-3 mb-sm-0"
+      v-if="
+        storeAuth.user.role !== 'wilayah' &&
+        storeAuth.user.role !== 'daerah' &&
+        storeAuth.user.role !== 'keuangan'
+      "
+    >
       <div
         class="card"
-        style="background-color: #cd0052; cursor: pointer;"
+        style="background-color: #cd0052; cursor: pointer"
         @click="toDataArmada"
       >
         <div class="card-body">
@@ -337,7 +337,7 @@
     <div class="col-sm-3 mb-3 mb-sm-0">
       <div
         class="card"
-        style="background-color: #315200; cursor:pointer"
+        style="background-color: #315200; cursor: pointer"
         @click="toDataArea"
         v-if="
           storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'
@@ -365,7 +365,7 @@
     <div class="col-sm-3 mb-3 mb-sm-0">
       <div
         class="card"
-        style="background-color: #2d0063; cursor: pointer;"
+        style="background-color: #2d0063; cursor: pointer"
         @click="toDataDropspot"
         v-if="
           storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'
@@ -391,12 +391,14 @@
     </div>
 
     <div
-      v-if="storeAuth.user.role === 'sysadmin'"
+      v-if="
+        storeAuth.user.role === 'sysadmin' || storeAuth.user.role === 'admin'
+      "
       class="col-sm-3 mb-3 mb-sm-0"
     >
       <div
         class="card"
-        style="background-color: #5e0600; cursor:pointer"
+        style="background-color: #5e0600; cursor: pointer"
         @click="toDataUser"
       >
         <div class="card-body">

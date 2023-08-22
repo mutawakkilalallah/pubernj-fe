@@ -176,7 +176,7 @@
             <div class="form-group mb-3">
               <small>No HP (Optional)</small>
               <input
-                type="text"
+                type="number"
                 v-model="form.formInt.no_hp"
                 placeholder="Masukkan nomer hp .."
                 class="form-control mt-2"

@@ -1,65 +1,71 @@
 <template>
-  <div class="">
+  <div
+    class="loginPage d-flex justify-content-center align-items-center"
+    :style="
+      myTheme.themes == 'dark'
+        ? 'color: var(--bs-body-color); background-color: #212529;'
+        : 'background-color: #cacaca'
+    "
+  >
     <div
-      class="loginPage d-flex justify-content-center align-items-center"
-      :style="myTheme.themes == 'dark' ? 'color: var(--bs-body-color); background-color: #212529;' : 'background-color: #cacaca'"
+      class="rounded shadow boxForm p-3"
+      :style="
+        myTheme.themes == 'dark'
+          ? 'background-color: var(--bs-body-bg)'
+          : 'background-color: #fff'
+      "
     >
-      <div
-        class="boxLogin shadow p-5"
-        :style=" myTheme.themes == 'dark' ? 'background-color: var(--bs-body-bg)' : 'background-color: #fff'"
-      >
-        <div class="text-center">
-          <img
-            src="/logo.png"
-            alt="logo-puber"
-            class="appLogo shadow rounded-circle"
-          />
-        </div>
-        <div class="title text-center mb-5 mt-5">
-          <h4>Pulang Bersama</h4>
-          <h6>Pondok Pesantren Nurul Jadid</h6>
-        </div>
-        <form
-          @submit.prevent="prosesLogin"
-          ref="myForm"
+      <div class="text-center mb-5">
+        <img
+          src="/logo-puber.png"
+          alt="logo-puber"
+          class="mb-3"
+          width="200"
+          height="100"
+        />
+        <br />
+        <h4 style="color: #01351b" class="mb-0">PULANG BERSAMA</h4>
+        <small style="color: #a47c24" class="mt-0"
+          >Pondok Pesantren Nurul Jadid</small
         >
-          <input
-            v-model="form.username"
-            id="username"
-            type="text"
-            class="form-control mb-2"
-            :class="valid1 === true ? 'is-invalid':''"
-            placeholder="Username"
-            @blur="validInput1(form.username)"
-          />
-          <input
-            v-model="form.password"
-            :class="valid2 === true ? 'is-invalid':''"
-            id="password"
-            type="password"
-            class="form-control mb-3"
-            placeholder="Password"
-            aria-describedby="password"
-            @blur="validInput2(form.password)"
-          />
-          <button
-            v-if="storeAuth.loading === false"
-            type="submit"
-            class="btn btn-primary btn-block"
-            style="width: 100%"
-          >
-            LOGIN
-          </button>
-          <app-btn-loading v-else />
-        </form>
-        <div class="developer text-center mt-5">
-          <small>Nurul Jadid &copy; 2023</small>
-        </div>
-        <div class="developerName text-center mt-5">
-          <i>developed by:</i>
-          <br />
-          <i>@mutawakkilalallah @farhandardiri</i>
-        </div>
+      </div>
+      <form @submit.prevent="prosesLogin" ref="myForm">
+        <input
+          v-model="form.username"
+          id="username"
+          type="text"
+          class="form-control form-control-sm mb-2"
+          :class="valid1 === true ? 'is-invalid' : ''"
+          placeholder="Username"
+          @blur="validInput1(form.username)"
+        />
+        <input
+          v-model="form.password"
+          :class="valid2 === true ? 'is-invalid' : ''"
+          id="password"
+          type="password"
+          class="form-control form-control-sm mb-3"
+          placeholder="Password"
+          aria-describedby="password"
+          @blur="validInput2(form.password)"
+        />
+        <button
+          v-if="storeAuth.loading === false"
+          type="submit"
+          class="btn btn-primary btn-sm btn-block"
+          style="width: 100%"
+        >
+          LOGIN
+        </button>
+        <app-btn-loading v-else />
+      </form>
+      <div class="developer text-center mt-5">
+        <small>Nurul Jadid &copy; 2023</small>
+      </div>
+      <div class="developerName text-center text-muted mt-3">
+        <small>developed by:</small>
+        <br />
+        <small>@mutawakkilalallah @farhandardiri</small>
       </div>
     </div>
   </div>
@@ -110,21 +116,13 @@ function validInput2(msg) {
 </script>
 
 <style lang="scss" scoped>
-.appLogo {
-  position: absolute;
-  width: 170px;
-  margin-left: -85px;
-  margin-top: -150px;
-}
-
 .loginPage {
   height: 100vh;
   padding-bottom: 8%;
 }
-.boxLogin {
-  width: 400px;
-  height: 550px;
-  border-radius: 10px;
+
+.boxForm {
+  width: 350px;
 }
 .dark-mode {
   background-color: #212529;

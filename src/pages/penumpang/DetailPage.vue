@@ -9,8 +9,9 @@
         class="btn btn-sm btn-outline-secondary"
         type="button"
         @click="backPage"
-      >Kembali</button>
-
+      >
+        Kembali
+      </button>
     </div>
   </div>
   <hr />
@@ -106,10 +107,7 @@
   </div>
   <hr />
   <div class="row">
-    <div :class=" storeAuth.user.role === 'sysadmin' ||
-          storeAuth.user.role === 'admin' ||
-          storeAuth.user.role === 'daerah' ||
-          storeAuth.user.role === 'wilayah' ? 'col-md-4' : 'col-md-6 mb-2'">
+    <div class="col-md-4">
       <div class="card">
         <div class="card-header bg-primary text-white">Tujuan</div>
         <div class="card-body">
@@ -132,54 +130,46 @@
         </div>
       </div>
     </div>
-    <div
-      class="col-md-4"
-      v-if="
-          storeAuth.user.role === 'sysadmin' ||
-          storeAuth.user.role === 'admin' ||
-          storeAuth.user.role === 'daerah' ||
-          storeAuth.user.role === 'wilayah'
-        "
-    >
+    <div class="col-md-4">
       <div class="card">
         <div class="card-header bg-primary text-white">Pembayaran</div>
         <div class="card-body">
           <p class="card-title mb-0">Tarif :</p>
           <b class="card-text">
-            {{ table.item.dropspot ? formatMinus(table.item.dropspot.harga) : "-" }}
+            {{
+              table.item.dropspot ? formatMinus(table.item.dropspot.harga) : "-"
+            }}
           </b>
           <p class="card-title mb-0 mt-3">Jumlah Pembayaran :</p>
           <b class="card-text">
-            {{ table.item.dropspot ? formatMinus(table.item.jumlah_bayar) : "-" }}
+            {{
+              table.item.dropspot ? formatMinus(table.item.jumlah_bayar) : "-"
+            }}
           </b>
           <p class="card-title mb-0 mt-3">Status Pembayaran :</p>
           <i
             v-if="table.item.status_bayar === 'belum-lunas'"
             class="badge bg-danger"
-          >{{ table.item.status_bayar }}</i>
+            >{{ table.item.status_bayar }}</i
+          >
           <i
             v-if="table.item.status_bayar === 'lunas'"
             class="badge bg-success"
-          >{{ table.item.status_bayar }}</i>
+            >{{ table.item.status_bayar }}</i
+          >
           <i
             v-if="table.item.status_bayar === 'kurang'"
             class="badge bg-warning"
-          >{{ table.item.status_bayar }}</i>
-          <i
-            v-if="table.item.status_bayar === 'lebih'"
-            class="badge bg-info"
-          >{{
+            >{{ table.item.status_bayar }}</i
+          >
+          <i v-if="table.item.status_bayar === 'lebih'" class="badge bg-info">{{
             table.item.status_bayar
           }}</i>
         </div>
       </div>
     </div>
-    <div :class=" storeAuth.user.role === 'sysadmin' ||
-          storeAuth.user.role === 'admin' ||
-          storeAuth.user.role === 'daerah' ||
-          storeAuth.user.role === 'wilayah' ? 'col-md-4' : 'col-md-6 mb-2'">
-      <div class="
-      card">
+    <div class="col-md-4">
+      <div class="card">
         <div class="card-header bg-primary text-white">Armada</div>
         <div class="card-body">
           <p class="card-title mb-0">BUS :</p>

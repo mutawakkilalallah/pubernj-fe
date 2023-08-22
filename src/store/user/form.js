@@ -22,14 +22,15 @@ export const useUserFrom = defineStore("form_user", {
       nama_lengkap: "",
       niup: "",
       username: "",
-      no_hp: "",
+      no_hp: null,
       role: "",
       password: "",
       area_id: "",
     },
     formEdit: {
       santri_uuid: "",
-      no_hp: "",
+      username: "",
+      no_hp: null,
       role: "",
       area_id: "",
     },
@@ -39,7 +40,8 @@ export const useUserFrom = defineStore("form_user", {
   }),
   actions: {
     resetForm() {
-      (this.formInt.niup = ""), (this.formInt.username = "");
+      this.formInt.niup = "";
+      this.formInt.username = "";
       this.formInt.role = "";
       this.formInt.password = "";
       this.formInt.no_hp = "";
@@ -49,8 +51,6 @@ export const useUserFrom = defineStore("form_user", {
       this.formEdit.role = "";
       this.formEdit.area_id = "";
       this.formEdit.no_hp = "";
-      // form edit password
-      this.formEditPassword.password = "";
       // mode
       this.mode = "internal";
     },
@@ -131,7 +131,7 @@ export const useUserFrom = defineStore("form_user", {
     },
     handleChangePassword(d) {
       this.idEdit = d.uuid;
-      this.formEdit.password = null;
+      this.formEditPassword.password = "";
       this.isOpenEditPassword = true;
     },
     handleOpenPilihUser() {
@@ -160,8 +160,8 @@ export const useUserFrom = defineStore("form_user", {
           .put(`user/password/${this.idEdit}`, this.formEditPassword)
           .then((resp) => {
             this.isOpenEditPassword = false;
-            this.idEdit=""
-            this.resetForm();
+            this.idEdit = "";
+            this.formEditPassword.password = "";
             const table = useUserTable();
             table.getData();
           });
