@@ -91,6 +91,11 @@ const routes = [
         name: "armada-detail",
         component: () => import("@/pages/armada/DetailPage.vue"),
       },
+      {
+        path: "/cetak",
+        name: "cetak",
+        component: () => import("@/pages/cetak/CetakPage.vue"),
+      },
     ],
   },
 ];
@@ -101,211 +106,197 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const rules = JSON.parse(localStorage.getItem("user"))
-//  data role setiap url
+  const rules = JSON.parse(localStorage.getItem("user"));
+  //  data role setiap url
   const ruleSantri = [
     {
-        id: 1,
-        name: "sysadmin",
-      },
-      {
-        id: 2,
-        name: "supervisor",
-      },
-      {
-        id: 3,
-        name: "admin",
-      },
-      {
-        id: 4,
-        name: "wilayah",
-      },
-
-  ]
+      id: 1,
+      name: "sysadmin",
+    },
+    {
+      id: 2,
+      name: "supervisor",
+    },
+    {
+      id: 3,
+      name: "admin",
+    },
+    {
+      id: 4,
+      name: "wilayah",
+    },
+  ];
   const ruleStatistik = [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-      {
-        id: 2,
-        name: "supervisor",
-      },
-      {
-        id: 3,
-        name: "admin",
-      },
-      {
-        id: 4,
-        name: "armada",
-      },
-  ]
+    {
+      id: 1,
+      name: "sysadmin",
+    },
+    {
+      id: 2,
+      name: "supervisor",
+    },
+    {
+      id: 3,
+      name: "admin",
+    },
+    {
+      id: 4,
+      name: "armada",
+    },
+  ];
   const ruleAmrada = [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-      {
-        id: 2,
-        name: "supervisor",
-      },
-      {
-        id: 3,
-        name: "admin",
-      },
-      {
-        id: 4,
-        name: "armada",
-      },
-      {
-        id: 5,
-        name: "pendamping",
-      },
-      {
-        id: 6,
-        name: "p4nj",
-      },
-  ]
+    {
+      id: 1,
+      name: "sysadmin",
+    },
+    {
+      id: 2,
+      name: "supervisor",
+    },
+    {
+      id: 3,
+      name: "admin",
+    },
+    {
+      id: 4,
+      name: "armada",
+    },
+    {
+      id: 5,
+      name: "pendamping",
+    },
+    {
+      id: 6,
+      name: "p4nj",
+    },
+  ];
   const ruleArea = [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-      {
-        id: 2,
-        name: "supervisor",
-      },
-      {
-        id: 3,
-        name: "admin",
-      },
-      {
-        id: 4,
-        name: "wilayah",
-      },
-      {
-        id: 5,
-        name: "daerah",
-      },
-      {
-        id: 6,
-        name: "keuangan",
-      },
-  ]
+    {
+      id: 1,
+      name: "sysadmin",
+    },
+    {
+      id: 2,
+      name: "supervisor",
+    },
+    {
+      id: 3,
+      name: "admin",
+    },
+    {
+      id: 4,
+      name: "wilayah",
+    },
+    {
+      id: 5,
+      name: "daerah",
+    },
+    {
+      id: 6,
+      name: "keuangan",
+    },
+  ];
   const ruleDropspot = [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-      {
-        id: 2,
-        name: "supervisor",
-      },
-      {
-        id: 3,
-        name: "admin",
-      },
-      {
-        id: 4,
-        name: "wilayah",
-      },
-      {
-        id: 5,
-        name: "daerah",
-      },
-      {
-        id: 6,
-        name: "keuangan",
-      },
-  ]
-  // set permission 
-  if (to.name !== "login" && !localStorage.getItem("token")){
+    {
+      id: 1,
+      name: "sysadmin",
+    },
+    {
+      id: 2,
+      name: "supervisor",
+    },
+    {
+      id: 3,
+      name: "admin",
+    },
+    {
+      id: 4,
+      name: "wilayah",
+    },
+    {
+      id: 5,
+      name: "daerah",
+    },
+    {
+      id: 6,
+      name: "keuangan",
+    },
+  ];
+  // set permission
+  if (to.name !== "login" && !localStorage.getItem("token")) {
     next({ name: "login" });
-  }
-  else if (to.name === "login" && localStorage.getItem("token")){
+  } else if (to.name === "login" && localStorage.getItem("token")) {
     next({ name: "dashboard" });
   }
-    // set permission role
-  else if (to.name === 'santri') {
-    const temp = ruleSantri.filter(a => a.name === rules.role)
+  // set permission role
+  else if (to.name === "santri") {
+    const temp = ruleSantri.filter((a) => a.name === rules.role);
     if (temp.length) {
-      next()
+      next();
     } else {
-    next({name:'not-found'})
+      next({ name: "not-found" });
     }
-  }
-  else if (to.name === 'statistik') {
-    const temp = ruleStatistik.filter(a => a.name === rules.role)
+  } else if (to.name === "statistik") {
+    const temp = ruleStatistik.filter((a) => a.name === rules.role);
     if (temp.length) {
-      next()
+      next();
     } else {
-    next({name:'not-found'})
+      next({ name: "not-found" });
     }
-  }
-  else if (to.name === 'armada') {
-    const temp = ruleAmrada.filter(a => a.name === rules.role)
+  } else if (to.name === "armada") {
+    const temp = ruleAmrada.filter((a) => a.name === rules.role);
     if (temp.length) {
-      next()
+      next();
     } else {
-    next({name:'not-found'})
+      next({ name: "not-found" });
     }
-  }
-  else if (to.name === 'area') {
-     const temp = ruleArea.filter(a => a.name === rules.role)
+  } else if (to.name === "area") {
+    const temp = ruleArea.filter((a) => a.name === rules.role);
     if (temp.length) {
-      next()
+      next();
     } else {
-    next({name:'not-found'})
+      next({ name: "not-found" });
     }
-  } else if (to.name === 'dropspot') {
-      const temp = ruleDropspot.filter(a => a.name === rules.role)
+  } else if (to.name === "dropspot") {
+    const temp = ruleDropspot.filter((a) => a.name === rules.role);
     if (temp.length) {
-      next()
+      next();
     } else {
-    next({name:'not-found'})
+      next({ name: "not-found" });
     }
-  }
-  else if (to.name === 'keuangan') {
-    if (rules.role !== 'sysadmin') {
-      next({name:'not-found'})
+  } else if (to.name === "keuangan") {
+    if (rules.role !== "sysadmin") {
+      next({ name: "not-found" });
     } else {
-      next()
-    }    
-  }
-  else if (to.name === 'user') {
-     if (rules.role !== 'sysadmin' && rules.role !== 'admin') {
-      next({name:'not-found'})
+      next();
+    }
+  } else if (to.name === "user") {
+    if (rules.role !== "sysadmin" && rules.role !== "admin") {
+      next({ name: "not-found" });
     } else {
-      next()
-    } 
-  }
-  else if (to.name === 'user-activity') {
-    if (rules.role !== 'sysadmin') {
-      next({name:'not-found'})
+      next();
+    }
+  } else if (to.name === "user-activity") {
+    if (rules.role !== "sysadmin") {
+      next({ name: "not-found" });
     } else {
-      next()
-    }    
-  }
-  else if (to.name === 'error-report') {
-    if (rules.role !== 'sysadmin') {
-      next({name:'not-found'})
+      next();
+    }
+  } else if (to.name === "error-report") {
+    if (rules.role !== "sysadmin") {
+      next({ name: "not-found" });
     } else {
-      next()
-    }    
-  }
-  else if (to.name === 'sync') {
-    if (rules.role !== 'sysadmin') {
-      next({name:'not-found'})
+      next();
+    }
+  } else if (to.name === "sync") {
+    if (rules.role !== "sysadmin") {
+      next({ name: "not-found" });
     } else {
-      next()
-    }    
+      next();
+    }
+  } else {
+    next();
   }
-  else {
-    next()
-  }
-  
-  
-
 });
 
 export default router;

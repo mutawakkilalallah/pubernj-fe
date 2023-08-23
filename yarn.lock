@@ -1581,7 +1581,7 @@ postcss@^8.1.10, postcss@^8.4.14, postcss@^8.4.23:
 
 print-js@^1.6.0:
   version "1.6.0"
-  resolved "https://registry.npmjs.org/print-js/-/print-js-1.6.0.tgz"
+  resolved "https://registry.yarnpkg.com/print-js/-/print-js-1.6.0.tgz#692b046cf31992b46afa6c6d8a9db1c69d431d1f"
   integrity sha512-BfnOIzSKbqGRtO4o0rnj/K3681BSd2QUrsIZy/+WdCIugjIswjmx3lDEZpXB2ruGf9d4b3YNINri81+J0FsBWg==
 
 process-nextick-args@~2.0.0:

@@ -107,7 +107,7 @@
   </div>
   <hr />
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="card">
         <div class="card-header bg-primary text-white">Tujuan</div>
         <div class="card-body">
@@ -130,7 +130,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="card">
         <div class="card-header bg-primary text-white">Pembayaran</div>
         <div class="card-body">
@@ -168,7 +168,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="card">
         <div class="card-header bg-primary text-white">Armada</div>
         <div class="card-body">
@@ -196,6 +196,81 @@
                 : "-"
             }}
           </b>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-header bg-primary text-white">Persyaratan</div>
+        <div class="card-body">
+          <div>
+            <p class="card-title mb-0">Biaya Pendidikan Santri (BPS) :</p>
+            <small
+              class="badge bg-success"
+              v-if="table?.item?.persyaratan?.lunas_bps"
+              >Lunas
+            </small>
+            <small class="badge bg-danger" v-else>Belum Lunas </small>
+          </div>
+          <div>
+            <p class="card-title mb-0">Kos Makan Santri (KOSMARA) :</p>
+            <small
+              class="badge bg-success"
+              v-if="table?.item?.persyaratan?.lunas_kosmara"
+              >Lunas
+            </small>
+            <small class="badge bg-danger" v-else>Belum Lunas </small>
+          </div>
+          <div>
+            <p class="card-title mb-0">Furudhul Ainiyah (FA) :</p>
+            <small
+              class="badge bg-success"
+              v-if="table?.item?.persyaratan?.tuntas_fa"
+              >Tuntas
+            </small>
+            <small class="badge bg-danger" v-else>Belum Tuntas </small>
+          </div>
+          <div>
+            <p class="card-title mb-0">Bebas Pelanggaran (KAMTIB)</p>
+            <small
+              class="badge bg-success"
+              v-if="table?.item?.persyaratan?.bebas_kamtib"
+              >Bebas
+            </small>
+            <small class="badge bg-danger" v-else>Belum Bebas</small>
+          </div>
+          <hr
+            v-if="
+              table?.item?.persyaratan?.lunas_bps &&
+              table?.item?.persyaratan?.lunas_kosmara &&
+              table?.item?.persyaratan?.tuntas_fa &&
+              table?.item?.persyaratan?.bebas_kamtib
+            "
+          />
+          <button
+            class="btn btn-sm btn-info me-2"
+            v-if="
+              table?.item?.persyaratan?.lunas_bps &&
+              table?.item?.persyaratan?.lunas_kosmara &&
+              table?.item?.persyaratan?.tuntas_fa &&
+              table?.item?.persyaratan?.bebas_kamtib
+            "
+          >
+            <font-awesome-icon icon="file-alt" class="icon" /> Buat Izin
+            PEDATREN
+          </button>
+          <button
+            class="btn btn-sm btn-warning"
+            v-if="
+              table?.item?.persyaratan?.lunas_bps &&
+              table?.item?.persyaratan?.lunas_kosmara &&
+              table?.item?.persyaratan?.tuntas_fa &&
+              table?.item?.persyaratan?.bebas_kamtib
+            "
+            disabled
+          >
+            <font-awesome-icon icon="print" class="icon" /> Cetak Surat Jalan
+          </button>
         </div>
       </div>
     </div>

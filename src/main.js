@@ -45,6 +45,8 @@ import {
   faUserXmark,
   faFileImport,
   faDownload,
+  faPrint,
+  faFileAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { registerComponents } from "./plugins/global-components";
@@ -79,7 +81,9 @@ library.add(
   faCircleExclamation,
   faPen,
   faFileImport,
-  faDownload
+  faDownload,
+  faPrint,
+  faFileAlt
 );
 const pinia = createPinia();
 const app = createApp(App);
