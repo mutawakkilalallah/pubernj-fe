@@ -87,6 +87,11 @@ const routes = [
         component: () => import("@/pages/penumpang/PersyaratanPage.vue"),
       },
       {
+        path: "/profil/:uuid",
+        name: "profil",
+        component: () => import("@/pages/profil/ProfilPage.vue"),
+      },
+      {
         path: "/armada-print",
         name: "armada-print",
         component: () => import("@/pages/printarmada/Index.vue"),

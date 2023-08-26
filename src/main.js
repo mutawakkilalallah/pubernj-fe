@@ -56,6 +56,7 @@ import {
   faTimesRectangle,
   faFilePen,
   faFileCircleQuestion,
+  faCog,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { registerComponents } from "./plugins/global-components";
@@ -95,7 +96,8 @@ library.add(
   faFileAlt,
   faCheckCircle,
   faTimesSquare,
-  faFilePen
+  faFilePen,
+  faCog
 );
 const pinia = createPinia();
 const app = createApp(App);
