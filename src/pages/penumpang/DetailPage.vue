@@ -239,38 +239,42 @@
             </small>
             <small class="badge bg-danger" v-else>Belum Bebas</small>
           </div>
-          <hr
+          <div
             v-if="
-              table?.item?.persyaratan?.lunas_bps &&
-              table?.item?.persyaratan?.lunas_kosmara &&
-              table?.item?.persyaratan?.tuntas_fa &&
-              table?.item?.persyaratan?.bebas_kamtib
-            "
-          />
-          <button
-            class="btn btn-sm btn-info me-2"
-            v-if="
+              (storeAuth.user.role === 'admin' ||
+                storeAuth.user.role === 'sysadmin' ||
+                storeAuth.user.role === 'wilayah' ||
+                storeAuth.user.role === 'daerah') &&
+              (table?.item?.status_bayar === 'lunas' ||
+                table?.item?.status_bayar === 'lebih') &&
               table?.item?.persyaratan?.lunas_bps &&
               table?.item?.persyaratan?.lunas_kosmara &&
               table?.item?.persyaratan?.tuntas_fa &&
               table?.item?.persyaratan?.bebas_kamtib
             "
           >
-            <font-awesome-icon icon="file-alt" class="icon" /> Buat Izin
-            PEDATREN
-          </button>
-          <button
-            class="btn btn-sm btn-warning"
-            v-if="
-              table?.item?.persyaratan?.lunas_bps &&
-              table?.item?.persyaratan?.lunas_kosmara &&
-              table?.item?.persyaratan?.tuntas_fa &&
-              table?.item?.persyaratan?.bebas_kamtib
-            "
-            disabled
-          >
-            <font-awesome-icon icon="print" class="icon" /> Cetak Surat Jalan
-          </button>
+            <hr />
+            <button
+              class="btn btn-sm btn-info me-2"
+              :disabled="table?.item?.persyaratan?.izin_pedatren"
+              @click="
+                table.izinPedatren(
+                  table.item.santri.niup,
+                  table.item.santri_uuid
+                )
+              "
+            >
+              <font-awesome-icon icon="file-alt" class="icon" /> Buat Izin
+              PEDATREN
+            </button>
+            <button
+              :disabled="!table?.item?.persyaratan?.izin_pedatren"
+              class="btn btn-sm btn-warning"
+              @click="table.goToSuratJalan(table.item.santri.niup)"
+            >
+              <font-awesome-icon icon="print" class="icon" /> Cetak Surat Jalan
+            </button>
+          </div>
         </div>
       </div>
     </div>

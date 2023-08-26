@@ -317,7 +317,7 @@
           </router-link>
           <button
             v-else-if="
-              table.item.status_kepulangan === 'rombongan' &&
+              table.item.status_kepulangan === 'non-rombongan' &&
               storeAuth.user.role != 'keuangan' &&
               storeAuth.user.role != 'armada' &&
               storeAuth.user.role != 'p4nj' &&

@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { api } from "../../plugins/axios";
+import router from "../../router";
 
 export const usePenumpangDetailTable = defineStore("table_penumpang_detail", {
   state: () => ({
@@ -28,6 +29,18 @@ export const usePenumpangDetailTable = defineStore("table_penumpang_detail", {
       } catch (error) {
         console.log("error", error);
       }
+    },
+    async izinPedatren(niup, uuid) {
+      try {
+        await api.post(`/penumpang/qrcode/${niup}`).then((resp) => {
+          this.getDataDetail(uuid);
+        });
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
+    goToSuratJalan(niup) {
+      router.push(`/penumpang/surat-jalan/${niup}`);
     },
   },
 });

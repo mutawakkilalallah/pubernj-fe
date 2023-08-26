@@ -8,6 +8,7 @@ export const useUserTable = defineStore("table_user", {
     params: {
       cari: "",
       role: "",
+      limit: 200,
     },
   }),
   actions: {

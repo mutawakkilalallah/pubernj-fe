@@ -11,20 +11,11 @@
     "
   >
     <div class="container-fluid">
-      <a
-        v-if="isMobile"
-        class="navbar-brand fs-6"
-        href="#"
-      >PUBER NJ</a>
-      <a
-        v-else
-        class="navbar-brand fs-6"
-        href="#"
-      >Pulang Bersama - PP. Nurul Jadid</a>
-      <div
-        class="collapse navbar-collapse"
-        id="navbarSupportedContent"
+      <a v-if="isMobile" class="navbar-brand fs-6" href="#">PUBER NJ</a>
+      <a v-else class="navbar-brand fs-6" href="#"
+        >Pulang Bersama - PP. Nurul Jadid</a
       >
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
 
         <div class="form-check form-switch">
@@ -38,10 +29,7 @@
             @click="setDark"
           />
         </div>
-        <button
-          class="btn-kecil btn btn-outline-info me-2"
-          type="submit"
-        >
+        <button class="btn-kecil btn btn-outline-info me-2" type="submit">
           <font-awesome-icon icon="brush" /> Clear Cache
         </button>
         <button
@@ -243,6 +231,33 @@ const menu = ref([
       {
         id: 6,
         name: "p4nj",
+      },
+    ],
+  },
+  {
+    icon: "file-pen",
+    title: "Persyaratan",
+    path: "persyaratan",
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+      {
+        id: 2,
+        name: "admin",
+      },
+      {
+        id: 3,
+        name: "supervisor",
+      },
+      {
+        id: 4,
+        name: "wilayah",
+      },
+      {
+        id: 5,
+        name: "daerah",
       },
     ],
   },

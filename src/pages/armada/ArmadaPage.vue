@@ -125,9 +125,9 @@
           v-for="(d, i) in table.items"
           :key="i"
           @dblclick="
-            table.user.role === 'sysadmin' ||
-              table.user.role === 'admin' ||
-              (table.user.role === 'armada' && form.handleDoubleClik(d))
+            (storeAuth.user.role === 'sysadmin' ||
+              storeAuth.user.role === 'admin') &&
+              form.handleDoubleClik(d)
           "
         >
           <td>{{ i + 1 }}</td>

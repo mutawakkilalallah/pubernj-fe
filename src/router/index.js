@@ -82,6 +82,11 @@ const routes = [
         component: () => import("@/pages/armada/Index.vue"),
       },
       {
+        path: "/persyaratan",
+        name: "persyaratan",
+        component: () => import("@/pages/penumpang/PersyaratanPage.vue"),
+      },
+      {
         path: "/armada-print",
         name: "armada-print",
         component: () => import("@/pages/printarmada/Index.vue"),
@@ -92,8 +97,8 @@ const routes = [
         component: () => import("@/pages/armada/DetailPage.vue"),
       },
       {
-        path: "/cetak",
-        name: "cetak",
+        path: "penumpang/surat-jalan/:niup",
+        name: "surat-jalan",
         component: () => import("@/pages/cetak/CetakPage.vue"),
       },
     ],
