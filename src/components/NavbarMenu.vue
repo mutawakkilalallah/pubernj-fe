@@ -160,6 +160,10 @@ const menu = ref([
         id: 4,
         name: "wilayah",
       },
+      {
+        id: 5,
+        name: "daerah",
+      },
     ],
   },
   {
