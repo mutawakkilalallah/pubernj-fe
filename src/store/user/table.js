@@ -5,6 +5,7 @@ export const useUserTable = defineStore("table_user", {
   state: () => ({
     roles: [],
     items: [],
+    meta: {},
     params: {
       cari: "",
       role: "",
@@ -19,6 +20,7 @@ export const useUserTable = defineStore("table_user", {
           if ((resp.data.code = 200)) {
             this.items = resp.data.data;
             this.roles = resp.data.filter.role;
+            this.meta = resp.headers;
           }
         });
       } catch (error) {}

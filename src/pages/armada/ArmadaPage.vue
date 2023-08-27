@@ -10,14 +10,18 @@
         storeAuth.user.role != 'pendamping' && storeAuth.user.role != 'p4nj'
       "
     >
-      <button class="btn btn-outline-primary" type="button" @click="pagePrint">
+      <button
+        class="btn btn-sm btn-outline-primary"
+        type="button"
+        @click="pagePrint"
+      >
         Page Print
       </button>
     </div>
   </div>
   <hr />
   <!-- menu filter -->
-  <div class="filter-box mb-5 row">
+  <div class="filter-box row">
     <div class="col-md-2" v-if="storeAuth.user.role != 'pendamping'">
       <select
         class="form-select form-select-sm mb-2"
@@ -66,9 +70,11 @@
     </div>
   </div>
   <!-- jumlah data dan pencarian -->
-  <div class="serach-box row">
+  <div class="serach-box mt-2 row">
     <div class="col-md-10 d-flex align-items-center mb-2">
-      <small>Total data {{ table.meta["x_total_data"] }}</small>
+      <div class="form-control-plaintext form-control-sm">
+        Total data {{ table.meta["x_total_data"] }}
+      </div>
     </div>
     <div class="col-md-2 d-flex align-items-center">
       <input
@@ -80,7 +86,6 @@
       />
     </div>
   </div>
-  <hr />
   <!-- tombol tambah data -->
   <button
     v-if="table.user.role == 'sysadmin' || table.user.role == 'armada'"

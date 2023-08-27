@@ -3,7 +3,7 @@
   <h3 class="titlePage">Data User</h3>
   <hr />
   <!-- menu filter -->
-  <div class="filter-box mb-5 row">
+  <div class="filter-box row">
     <div class="col-md-2">
       <select
         class="form-select form-select-sm"
@@ -18,9 +18,11 @@
     </div>
   </div>
   <!-- jumlah data dan pencarian -->
-  <div class="serach-box row">
+  <div class="serach-box mt-2 row">
     <div class="col-md-10 d-flex align-items-center mb-2">
-      <small>Total data {{ table.items.length }}</small>
+      <div class="form-control-plaintext form-control-sm">
+        Total data {{ table.meta["x_total_data"] }}
+      </div>
     </div>
     <div class="col-md-2 d-flex align-items-center">
       <input
@@ -32,7 +34,6 @@
       />
     </div>
   </div>
-  <hr />
   <!-- tombol tambah data -->
   <button class="btn btn-sm btn-primary" @click="form.setOpenAdd">
     Tambah User

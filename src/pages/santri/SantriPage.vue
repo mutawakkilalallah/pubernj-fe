@@ -56,7 +56,7 @@
   <!-- jumlah data dan pencarian -->
   <div class="serach-box row mt-2">
     <div class="col-md-6 mb-2 d-flex">
-      <div class="col-sm-3 col-md-1 me-3">
+      <div class="col-auto me-2">
         <select
           class="form-select form-select-sm mb-2"
           v-model="table.params.limit"
@@ -70,8 +70,10 @@
           <option value="1000">1000</option>
         </select>
       </div>
-      <div class="col-sm-9 col-md-11">
-        <small>Total data {{ table.meta["x_total_data"] }}</small>
+      <div class="col-auto">
+        <div class="form-control-plaintext form-control-sm">
+          Total data {{ table.meta["x_total_data"] }}
+        </div>
       </div>
     </div>
     <div class="col-md-6 mb-2">
@@ -172,7 +174,7 @@
           ></button>
         </div>
         <div class="modal-body">
-          <p class="alert alert-secondary p-1 fs-6" role="alert">
+          <p class="alert alert-secondary p-1" role="alert">
             <i
               ><font-awesome-icon icon="bell" class="icon" /> Data santri hanya
               bersifat temporary sebagai kebutuhan Pulang Bersama, untuk data
@@ -424,3 +426,18 @@ form.getArea();
 table.getData();
 table.getWilayah();
 </script>
+
+<style scoped>
+input {
+  font-size: 12px;
+}
+.form-control-plaintext {
+  font-size: 12px;
+}
+.form-select {
+  font-size: 12px;
+}
+.btn {
+  font-size: 12px;
+}
+</style>

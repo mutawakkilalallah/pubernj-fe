@@ -2,7 +2,7 @@
   <!-- judul -->
   <div class="row">
     <div class="col-md-8">
-      <h3 class="titlePage">Data Persyaratan Santri</h3>
+      <h3 class="titlePage">Data Persyaratan</h3>
     </div>
     <div class="col-md-4 text-end g-2">
       <button class="btn btn-sm btn-outline-primary" type="button">
@@ -115,7 +115,9 @@
         </select>
       </div>
       <div class="col-sm-9 col-md-11">
-        <small>Total data {{ table.meta["x_total_data"] }}</small>
+        <div class="form-control-plaintext form-control-sm">
+          Total data {{ table.meta["x_total_data"] }}
+        </div>
       </div>
     </div>
     <div class="col-md-6 mb-2">

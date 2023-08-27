@@ -3,14 +3,15 @@
   <hr />
   <div
     class="user-card row align-items-center justify-content- bg-primary p-2 rounded"
+    style="margin: 0 0 0 0"
   >
     <div class="d-flex align-items-center col-md-10">
       <div
         v-if="storeAuth.user.role != 'p4nj'"
         v-show="storeAuth.loading === true"
         style="
-          width: 80px;
-          height: 80px;
+          width: 48px;
+          height: 48px;
           background-color: rgba(255, 255, 255, 0.363);
           border-radius: 50%;
           display: flex;
@@ -31,11 +32,11 @@
         v-show="storeAuth.loading === false"
         :src="storeAuth.foto"
         alt="pohto-profile"
-        width="80"
+        width="48"
         class="rounded-circle me-3"
       />
       <div class="user-info text-white">
-        <p style="font-size: 20px; margin-bottom: 0" class="fw-bold">
+        <p style="font-size: 14px; margin-bottom: 0" class="fw-bold">
           {{ storeAuth.user.nama_lengkap }}
         </p>
         <i v-if="storeAuth.user.role === 'daerah'">{{
@@ -52,7 +53,7 @@
         :to="{ name: 'profil', params: { uuid: storeAuth.user.uuid } }"
         style="text-decoration: none"
       >
-        <font-awesome-icon icon="cog" class="icon text-white fs-1 sm-fs-6" />
+        <font-awesome-icon icon="cog" class="icon text-white fs-3 sm-fs-6" />
       </router-link>
     </div>
   </div>
@@ -127,7 +128,10 @@
         <p class=""><small>Total Tidak Rombongan</small></p>
       </div>
     </div>
-    <div class="col mb-3 mb-sm-0">
+    <div
+      class="col mb-3 mb-sm-0"
+      v-if="storeAuth.user.role != 'wilayah' && storeAuth.user.role != 'daerah'"
+    >
       <div>
         <div
           class="badge rounded-circle bg-danger bg-gradient position-relative"
@@ -196,7 +200,10 @@
         <p class=""><small>Total Dropspot</small></p>
       </div>
     </div>
-    <div class="col mb-3 mb-sm-0">
+    <div
+      class="col mb-3 mb-sm-0"
+      v-if="storeAuth.user.role != 'wilayah' && storeAuth.user.role != 'daerah'"
+    >
       <div>
         <div
           class="badge rounded-circle bg-dark bg-gradient position-relative"
@@ -243,14 +250,14 @@
             <div class="col">
               <font-awesome-icon
                 icon="user"
-                style="font-size: 90px; color: white"
+                style="font-size: 60px; color: white"
               />
             </div>
             <div class="col">
-              <h2 class="card-title text-end text-light">
+              <h3 class="card-title text-end text-light">
                 {{ storeAuth.stast.totalSantri }}
-              </h2>
-              <p class="card-text text-end h6 text-light">Total Santri</p>
+              </h3>
+              <p class="card-text text-end fw-bold text-light">Total Santri</p>
             </div>
           </div>
         </div>
@@ -266,13 +273,13 @@
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <font-awesome-icon icon="briefcase" style="font-size: 90px" />
+              <font-awesome-icon icon="briefcase" style="font-size: 60px" />
             </div>
             <div class="col">
-              <h2 class="card-title text-end">
+              <h3 class="card-title text-end">
                 {{ storeAuth.stast.totalPenumpang }}
-              </h2>
-              <p class="card-text text-end h6">Total Penumpang</p>
+              </h3>
+              <p class="card-text text-end fw-bold">Total Penumpang</p>
             </div>
           </div>
         </div>
@@ -298,14 +305,14 @@
             <div class="col">
               <font-awesome-icon
                 icon="user-xmark"
-                style="font-size: 90px; color: white"
+                style="font-size: 60px; color: white"
               />
             </div>
             <div class="col">
-              <h2 class="card-title text-end text-light">
+              <h3 class="card-title text-end text-light">
                 {{ storeAuth.stast.totalTidakRombongan }}
-              </h2>
-              <p class="card-text text-end h6 text-light">
+              </h3>
+              <p class="card-text text-end fw-bold text-light">
                 Total Tidak Rombongan
               </p>
             </div>
@@ -332,14 +339,14 @@
             <div class="col">
               <font-awesome-icon
                 icon="bus"
-                style="font-size: 90px; color: white"
+                style="font-size: 60px; color: white"
               />
             </div>
             <div class="col">
-              <h2 class="card-title text-end text-light">
+              <h3 class="card-title text-end text-light">
                 {{ storeAuth.stast.totalArmada }}
-              </h2>
-              <p class="card-text text-end h6 text-light">Total Armada</p>
+              </h3>
+              <p class="card-text text-end fw-bold text-light">Total Armada</p>
             </div>
           </div>
         </div>
@@ -360,14 +367,14 @@
             <div class="col">
               <font-awesome-icon
                 icon="map"
-                style="font-size: 90px; color: white"
+                style="font-size: 60px; color: white"
               />
             </div>
             <div class="col">
-              <h2 class="card-title text-end text-light">
+              <h3 class="card-title text-end text-light">
                 {{ storeAuth.stast.totalArea }}
-              </h2>
-              <p class="card-text text-end h6 text-light">Total Area</p>
+              </h3>
+              <p class="card-text text-end fw-bold text-light">Total Area</p>
             </div>
           </div>
         </div>
@@ -388,14 +395,16 @@
             <div class="col">
               <font-awesome-icon
                 icon="location-dot"
-                style="font-size: 90px; color: white"
+                style="font-size: 60px; color: white"
               />
             </div>
             <div class="col">
-              <h2 class="card-title text-end text-light">
+              <h3 class="card-title text-end text-light">
                 {{ storeAuth.stast.totalDropspot }}
-              </h2>
-              <p class="card-text text-end h6 text-light">Total Dropspot</p>
+              </h3>
+              <p class="card-text text-end fw-bold text-light">
+                Total Dropspot
+              </p>
             </div>
           </div>
         </div>
@@ -418,14 +427,14 @@
             <div class="col">
               <font-awesome-icon
                 icon="user-cog"
-                style="font-size: 90px; color: white"
+                style="font-size: 60px; color: white"
               />
             </div>
             <div class="col">
-              <h2 class="card-title text-end text-light">
+              <h3 class="card-title text-end text-light">
                 {{ storeAuth.stast.totalUser }}
-              </h2>
-              <p class="card-text text-end h6 text-light">Total User</p>
+              </h3>
+              <p class="card-text text-end fw-bold text-light">Total User</p>
             </div>
           </div>
         </div>

@@ -26,7 +26,6 @@ export const useCetakPenumpang = defineStore("cetak_penumpang", {
         };
         await api.get(`penumpang/qrcode/${niup}`, params).then((resp) => {
           this.qr = URL.createObjectURL(resp.data);
-          console.log(this.qr);
         });
       } catch (error) {}
     },
@@ -35,15 +34,14 @@ export const useCetakPenumpang = defineStore("cetak_penumpang", {
         printable: "kertas",
         type: "html",
         css: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css",
-        font_size: "11px",
-        targetStyle: "background-color: black",
+        font_size: "12px",
         style: `
           @media print {
             @page {
-              size: F4 landscape;
-              width: 50%;
+              // size: F4 landscape;
+              width: 15.5cm;
               height: auto;
-              margin: 0 0 0 2cm;
+              margin: 0 0 0 4cm;
             }
             body {
               font-family: 'Arial', sans-serif;

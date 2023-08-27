@@ -20,27 +20,27 @@
       </p>
       <table class="mx-3">
         <tr>
-          <td class="w-3">Nama</td>
+          <td class="col-5">Nama</td>
           <td>:</td>
           <td>{{ store.item.nama_lengkap }}</td>
         </tr>
         <tr>
-          <td class="w-3">NIUP</td>
+          <td class="col-5">NIUP</td>
           <td>:</td>
           <td>{{ store.item.niup }}</td>
         </tr>
         <tr>
-          <td class="w-3">Wilayah</td>
+          <td class="col-5">Wilayah</td>
           <td>:</td>
           <td>{{ store.item.wilayah }}</td>
         </tr>
         <tr>
-          <td class="w-3">Daerah</td>
+          <td class="col-5">Daerah</td>
           <td>:</td>
           <td>{{ store.item.blok }}</td>
         </tr>
         <tr>
-          <td class="w-3">Alamat</td>
+          <td class="col-5">Alamat</td>
           <td>:</td>
           <td>{{ store.item.alamat }}</td>
         </tr>
@@ -76,7 +76,7 @@
       </div>
       <p class="mx-3 mt-0 mb-0 fw-bold">K H. ABD. HAMID WAHID, M.Ag.</p>
       <p class="mx-3 mt-0">NIUP. 31820500002</p>
-      <p class="mx-3 mt-5 mb-0 fst-italic text-end">Tanggal Cetak</p>
+      <p class="mx-3 mt-0 mb-0 fst-italic text-end">Tanggal Cetak</p>
       <p class="mx-3 mt-0 mb-0 fst-italic text-end">{{ tglCetak }} WIB</p>
     </div>
   </div>

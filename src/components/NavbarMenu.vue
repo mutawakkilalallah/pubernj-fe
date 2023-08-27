@@ -11,8 +11,10 @@
     "
   >
     <div class="container-fluid">
-      <a v-if="isMobile" class="navbar-brand fs-6" href="#">PUBER NJ</a>
-      <a v-else class="navbar-brand fs-6" href="#"
+      <a v-if="isMobile" class="navbar-brand" style="font-size: 14px" href="#"
+        >PUBER NJ</a
+      >
+      <a v-else class="navbar-brand" style="font-size: 14px" href="#"
         >Pulang Bersama - PP. Nurul Jadid</a
       >
       <div class="collapse navbar-collapse" id="navbarSupportedContent">

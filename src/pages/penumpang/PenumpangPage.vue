@@ -135,7 +135,7 @@
   <!-- jumlah data dan pencarian -->
   <div class="serach-box row mt-2">
     <div class="col-md-6 mb-2 d-flex">
-      <div class="col-sm-3 col-md-1 me-3">
+      <div class="col-auto me-3">
         <select
           class="form-select form-select-sm mb-2"
           v-model="table.params.limit"
@@ -149,8 +149,10 @@
           <option value="1000">1000</option>
         </select>
       </div>
-      <div class="col-sm-9 col-md-11">
-        <small>Total data {{ table.meta["x_total_data"] }}</small>
+      <div class="col-auto">
+        <div class="form-control-plaintext form-control-sm">
+          Total data {{ table.meta["x_total_data"] }}
+        </div>
       </div>
     </div>
     <div class="col-md-6 mb-2">
@@ -227,7 +229,7 @@
           style="cursor: pointer"
           v-for="(d, i) in table.items"
           :key="i"
-          @dblclick.prevent="form.goToDetailClick(d)"
+          @dblclick.prevent="form.goToDetail"
           @contextmenu.prevent="form.showContextMenu($event, d)"
           :class="{ 'table-active': isActiveRow(d.id) }"
           @click.prevent="form.showContextMenu($event, d)"

@@ -6,6 +6,7 @@ export const useAreaTable = defineStore("table_area", {
   state: () => ({
     user: localStorage.getItem("user") ? storage.getUser() : null,
     items: [],
+    meta: {},
     totaldata: 0,
     params: {
       cari: "",
@@ -19,7 +20,7 @@ export const useAreaTable = defineStore("table_area", {
           // console.log('response area', resp)
           if ((resp.data.code = 200)) {
             this.items = resp.data.data;
-            this.totaldata = resp.headers["x_total_data"];
+            this.meta = resp.headers;
           }
         });
       } catch (error) {}

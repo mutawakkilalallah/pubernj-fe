@@ -3,9 +3,11 @@
   <h3 class="titlePage">Data Area</h3>
   <hr />
   <!-- jumlah data dan pencarian -->
-  <div class="search-box row">
+  <div class="search-box mt-2 row">
     <div class="col-md-10 d-flex align-items-center mb-2">
-      <small>Total data {{ table.items.length }}</small>
+      <div class="form-control-plaintext form-control-sm">
+        Total data {{ table.meta["x_total_data"] }}
+      </div>
     </div>
     <div class="col-md-2 d-flex align-items-center">
       <input
@@ -17,10 +19,9 @@
       />
     </div>
   </div>
-  <hr />
   <!-- tombol tambah data -->
   <button
-    v-if="table.user.role == 'sysadmin'"
+    v-if="table.user.role === 'sysadmin'"
     type="button"
     class="btn btn-sm btn-primary"
     @click="form.setOpenAdd()"
@@ -42,12 +43,14 @@
         <tr
           v-for="(a, i) in table.items"
           :key="i"
-          @dblclick="table.user.role == 'sysadmin' && form.handleDoubleClick(a)"
+          @dblclick="
+            table.user.role === 'sysadmin' && form.handleDoubleClick(a)
+          "
         >
           <td>{{ i + 1 }}</td>
           <td>{{ a.nama }}</td>
           <td>{{ a.pic }}</td>
-          <td>{{  a.no_hp }}</td>
+          <td>{{ a.no_hp }}</td>
         </tr>
       </tbody>
     </table>
@@ -66,10 +69,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalTambahLabel"
-          >Tambah Area</h1>
+          <h1 class="modal-title fs-5" id="modalTambahLabel">Tambah Area</h1>
           <button
             type="button"
             class="btn-close"
@@ -114,10 +114,7 @@
             >
               Tutup
             </button>
-            <button
-              type="submit"
-              class="btn btn-sm btn-primary"
-            >Simpan</button>
+            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
           </div>
         </form>
       </div>
@@ -137,10 +134,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalEditLabel"
-          >Edit Area</h1>
+          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Area</h1>
           <button
             type="button"
             class="btn-close"

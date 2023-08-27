@@ -15,8 +15,14 @@ const swalError = (err, status) => {
   } else {
     Swal.fire({
       icon: "error",
-      title: err.message,
-      text: err.error.charAt(0).toUpperCase() + err.error.slice(1),
+      title: "Terjadi Kesalahan",
+      html: `<div style="white-space: pre-line;">
+      <small style="font-size: 14px;">Error : ${err.message}</small>
+      <small style="font-size: 14px;">Kode : ${err.code}</small>
+      <small style="font-size: 14px;">Pesan : ${
+        err.error.charAt(0).toUpperCase() + err.error.slice(1)
+      }</small>
+  </div>`,
       showConfirmButton: true,
     });
   }

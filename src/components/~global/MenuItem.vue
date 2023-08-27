@@ -1,38 +1,71 @@
 <template>
   <div>
-    <router-link
-      :to="{ name: path }"
-      style="text-decoration: none"
-    >
+    <router-link :to="{ name: path }" style="text-decoration: none">
       <div
         v-if="isMobile"
         class="text-center p-2 mx-2 menu-atas-item rounded"
-        :class="routePath === props.path && myTheme.themes === 'light' ? 'menu-active' : routePath === props.path && myTheme.themes === 'dark' ? 'menu-dark': routePath === props.path ?'menu-active':'menu-atas-item '"
+        :class="
+          routePath === props.path && myTheme.themes === 'light'
+            ? 'menu-active'
+            : routePath === props.path && myTheme.themes === 'dark'
+            ? 'menu-dark'
+            : routePath === props.path
+            ? 'menu-active'
+            : 'menu-atas-item '
+        "
       >
         <font-awesome-icon
           :icon="icon"
-          :class="routePath === props.path && myTheme.themes === 'light' ? 'text-white' : routePath === props.path && myTheme.themes === 'dark' ? 'text-dark':routePath === props.path ?'text-white':'text-secondary'"
+          :class="
+            routePath === props.path && myTheme.themes === 'light'
+              ? 'text-white'
+              : routePath === props.path && myTheme.themes === 'dark'
+              ? 'text-dark'
+              : routePath === props.path
+              ? 'text-white'
+              : 'text-secondary'
+          "
           class="iconMobile text-secondary"
         />
         <p
           class="text-secondary namaMobile"
           :class="routePath === props.path ? 'text-white' : 'text-secondary'"
-        >{{ title }}</p>
+        >
+          {{ title }}
+        </p>
       </div>
       <div
         v-else
         class="text-center p-3 mx-3 menu-atas-item"
-        :class="routePath === props.path && myTheme.themes === 'light' ? 'menu-active' : routePath === props.path && myTheme.themes === 'dark' ? 'menu-dark': routePath === props.path ?'menu-active':'menu-atas-item '"
+        :class="
+          routePath === props.path && myTheme.themes === 'light'
+            ? 'menu-active'
+            : routePath === props.path && myTheme.themes === 'dark'
+            ? 'menu-dark'
+            : routePath === props.path
+            ? 'menu-active'
+            : 'menu-atas-item '
+        "
       >
         <font-awesome-icon
           :icon="icon"
-          :class="routePath === props.path && myTheme.themes === 'light' ? 'text-white' : routePath === props.path && myTheme.themes === 'dark' ? 'text-dark':routePath === props.path ?'text-white':'text-secondary'"
+          :class="
+            routePath === props.path && myTheme.themes === 'light'
+              ? 'text-white'
+              : routePath === props.path && myTheme.themes === 'dark'
+              ? 'text-dark'
+              : routePath === props.path
+              ? 'text-white'
+              : 'text-secondary'
+          "
           class="icon text-secondary"
         />
         <p
           class="text-secondary nama"
           :class="routePath === props.path ? 'text-white' : 'text-secondary'"
-        >{{ title }}</p>
+        >
+          {{ title }}
+        </p>
       </div>
     </router-link>
   </div>
@@ -92,7 +125,7 @@ onMounted(() => {
   border-radius: 0 0 10px 10px;
 }
 .icon {
-  font-size: 25px;
+  font-size: 18px;
 }
 .nama {
   font-size: 12px;
