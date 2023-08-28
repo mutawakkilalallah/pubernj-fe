@@ -12,26 +12,30 @@ export const useDropspotForm = defineStore("form_dropspot", {
     namaArea: "",
     form: {
       nama: "",
-      type: "",
+      grup: "",
       area_id: "",
       cakupan: "",
       harga: "",
+      jam_berangkat_pa: "",
+      jam_berangkat_pi: "",
     },
   }),
   actions: {
     resetForm() {
-      this.form.nama = ''
-      this.form.type = ''
-      this.form.area_id = ''
-      this.form.cakupan = ''
-      this.form.harga=''
+      this.form.nama = "";
+      this.form.grup = "";
+      this.form.area_id = "";
+      this.form.cakupan = "";
+      this.form.harga = "";
+      this.jam_berangkat_pa = "";
+      this.jam_berangkat_pi = "";
     },
     setOpenAdd() {
       this.isOpenAdd = !this.isOpenAdd;
     },
     setOpenEdit() {
       this.isOpenEdit = !this.isOpenEdit;
-      this.resetForm()
+      this.resetForm();
     },
     getArea() {
       try {
@@ -47,24 +51,26 @@ export const useDropspotForm = defineStore("form_dropspot", {
         this.isOpenAdd = false;
         const table = useDropsotTable();
         table.getData();
-       this.resetForm()
+        this.resetForm();
       } catch (err) {}
     },
     handleDoubleClik(d) {
       this.idEdit = d.id;
       this.namaArea = d.area ? d.area.nama : "kosong";
       this.form.nama = d.nama;
-      this.form.type = d.type;
+      this.form.grup = d.grup;
       this.form.area_id = d.area_id;
       this.form.cakupan = d.cakupan;
       this.form.harga = d.harga;
+      this.form.jam_berangkat_pa = d.jam_berangkat_pa;
+      this.form.jam_berangkat_pi = d.jam_berangkat_pi;
       this.isOpenEdit = true;
     },
     async editData() {
       try {
         await api.put(`dropspot/${this.idEdit}`, this.form).then((resp) => {
           this.isOpenEdit = false;
-         this.resetForm()
+          this.resetForm();
           const table = useDropsotTable();
           table.getData();
         });
@@ -83,7 +89,7 @@ export const useDropspotForm = defineStore("form_dropspot", {
         if (result.isConfirmed) {
           api.delete(`dropspot/${this.idEdit}`).then((result) => {
             this.isOpenEdit = false;
-          this.resetForm()
+            this.resetForm();
             const table = useDropsotTable();
             table.getData();
           });

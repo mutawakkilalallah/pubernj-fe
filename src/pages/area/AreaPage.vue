@@ -37,6 +37,8 @@
           <th scope="col">Nama Area</th>
           <th scope="col">PIC</th>
           <th scope="col">No. HP</th>
+          <th scope="col">PIC External</th>
+          <th scope="col">No. HP PIC External</th>
         </tr>
       </thead>
       <tbody>
@@ -50,7 +52,9 @@
           <td>{{ i + 1 }}</td>
           <td>{{ a.nama }}</td>
           <td>{{ a.pic }}</td>
-          <td>{{ a.no_hp }}</td>
+          <td>+62{{ a.no_hp }}</td>
+          <td>{{ a.pic_ext ?? "-" }}</td>
+          <td>{{ a.no_hp_ext ? `+62${a.no_hp_ext}` : "-" }}</td>
         </tr>
       </tbody>
     </table>
@@ -98,12 +102,38 @@
             </div>
             <div class="form-group mb-3">
               <small>NO HP</small>
+              <div class="input-group mt-2">
+                <span class="input-group-text" id="basic-addon1">+62</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  v-model="form.form.no_hp"
+                  placeholder="Masukkan no hp .."
+                  aria-describedby="basic-addon1"
+                />
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <small>PIC External</small>
               <input
-                type="number"
+                type="text"
+                v-model="form.form.pic_ext"
                 class="form-control mt-2"
-                v-model="form.form.no_hp"
-                placeholder="Masukkan nama no hp .."
+                placeholder="Masukkan nama pic external .."
               />
+            </div>
+            <div class="form-group mb-3">
+              <small>NO HP PIC External</small>
+              <div class="input-group mt-2">
+                <span class="input-group-text" id="basic-addon1">+62</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  v-model="form.form.no_hp_ext"
+                  placeholder="Masukkan no hp pic external .."
+                  aria-describedby="basic-addon1"
+                />
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -163,12 +193,38 @@
             </div>
             <div class="form-group mb-3">
               <small>No. HP</small>
+              <div class="input-group mt-2">
+                <span class="input-group-text" id="basic-addon1">+62</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  v-model="form.form.no_hp"
+                  placeholder="Masukkan no hp .."
+                  aria-describedby="basic-addon1"
+                />
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <small>PIC External</small>
               <input
                 type="text"
-                v-model="form.form.no_hp"
+                v-model="form.form.pic_ext"
                 class="form-control mt-2"
-                placeholder="Masukkan nomor handphone pic .."
+                placeholder="Masukkan nama pic external .."
               />
+            </div>
+            <div class="form-group mb-3">
+              <small>NO HP PIC External</small>
+              <div class="input-group mt-2">
+                <span class="input-group-text" id="basic-addon1">+62</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  v-model="form.form.no_hp_ext"
+                  placeholder="Masukkan no hp pic external .."
+                  aria-describedby="basic-addon1"
+                />
+              </div>
             </div>
           </div>
           <div class="modal-footer">

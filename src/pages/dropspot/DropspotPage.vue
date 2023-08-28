@@ -29,6 +29,18 @@
         </option>
       </select>
     </div>
+    <div class="col-md-2">
+      <select
+        class="form-select form-select-sm"
+        v-model="table.params.grup"
+        @change="table.getData"
+      >
+        <option value="" selected>Semua Grup</option>
+        <option value="jatim">JATIM</option>
+        <option value="luar-pulau">LUAR PULAU</option>
+        <option value="luar-jawa">LUAR JAWA</option>
+      </select>
+    </div>
   </div>
   <!-- jumlah data dan pencarian -->
   <div class="serach-box mt-2 row">
@@ -62,9 +74,11 @@
         <tr>
           <th scope="col">No</th>
           <th scope="col">Nama Dropspot</th>
-          <!-- <th scope="col">Type</th> -->
-          <th scope="col">Area</th>
+          <th scope="col">Grup</th>
           <th scope="col">Harga</th>
+          <th scope="col">Area</th>
+          <th scope="col">Keberangkatan Putri</th>
+          <th scope="col">Keberangkatan Putra</th>
           <th scope="col">Cakupan</th>
         </tr>
       </thead>
@@ -76,9 +90,19 @@
         >
           <td>{{ i + 1 }}</td>
           <td>{{ d.nama }}</td>
-          <!-- <td>{{ d.type }}</td> -->
-          <td>{{ d.area.nama }}</td>
+          <td>{{ d.grup.toUpperCase() }}</td>
           <td>{{ "Rp. " + d.harga }}</td>
+          <td>{{ d.area.nama }}</td>
+          <td>
+            {{
+              moment(d.jam_berangkat_pi).tz("UTC").format("D MMMM YYYY hh:mm")
+            }}
+          </td>
+          <td>
+            {{
+              moment(d.jam_berangkat_pa).tz("UTC").format("D MMMM YYYY hh:mm")
+            }}
+          </td>
           <td>{{ d.cakupan }}</td>
         </tr>
       </tbody>
@@ -117,19 +141,17 @@
               />
             </div>
             <div class="form-group mb-3">
-              <small>Type</small>
-              <select class="form-select" v-model="form.form.type">
-                <option value="" selected>Pilih Type</option>
-                <option value="by_negara" selected>by_negara</option>
-                <option value="by_provinsi" selected>by_provinsi</option>
-                <option value="by_kabupaten" selected>by_kabupaten</option>
-                <option value="by_kecamatan" selected>by_kecamatan</option>
-                <option value="by_desa" selected>by_desa</option>
+              <small>Grup</small>
+              <select class="form-select mt-2" v-model="form.form.grup">
+                <option value="" selected>Semua Grup</option>
+                <option value="jatim">JATIM</option>
+                <option value="luar-pulau">LUAR PULAU</option>
+                <option value="luar-jawa">LUAR JAWA</option>
               </select>
             </div>
             <div class="form-group mb-3">
               <small>Area</small>
-              <select class="form-select" v-model="form.form.area_id">
+              <select class="form-select mt-2" v-model="form.form.area_id">
                 <option value="" selected>Pilih Area</option>
                 <option v-for="a in form.isArea" :key="a" :value="a.id">
                   {{ a.nama }}
@@ -201,18 +223,16 @@
               />
             </div>
             <div class="form-group mb-3">
-              <small>Type</small>
-              <select class="form-select" v-model="form.form.type">
-                <option value="by_negara" selected>by_negara</option>
-                <option value="by_provinsi" selected>by_provinsi</option>
-                <option value="by_kabupaten" selected>by_kabupaten</option>
-                <option value="by_kecamatan" selected>by_kecamatan</option>
-                <option value="by_desa" selected>by_desa</option>
+              <small>Grup</small>
+              <select class="form-select mt-2" v-model="form.form.grup">
+                <option value="jatim">JATIM</option>
+                <option value="luar-pulau">LUAR PULAU</option>
+                <option value="luar-jawa">LUAR JAWA</option>
               </select>
             </div>
             <div class="form-group mb-3">
               <small>Area</small>
-              <select class="form-select" v-model="form.form.area_id">
+              <select class="form-select mt-2" v-model="form.form.area_id">
                 <option value="" selected>
                   {{ form.namaArea }}
                 </option>
@@ -271,6 +291,8 @@
 import { onMounted } from "vue";
 import { useDropspotForm } from "../../store/dropsot/form";
 import { useDropsotTable } from "../../store/dropsot/table";
+import moment from "moment";
+import "moment-timezone";
 
 const table = useDropsotTable();
 const form = useDropspotForm();

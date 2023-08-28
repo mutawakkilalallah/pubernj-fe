@@ -12,6 +12,7 @@ export const useDropsotTable = defineStore("table_dropspot", {
     params: {
       cari: "",
       area: "",
+      grup: "",
     },
   }),
   actions: {
