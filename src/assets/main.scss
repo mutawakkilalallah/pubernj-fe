@@ -3,7 +3,7 @@
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@200;400;600;700;900&family=Poppins:wght@400;600&family=Roboto:wght@400;500;700&display=swap');
 :root {
-  --bs-body-font-family : 'Roboto' !important;
+  --bs-body-font-family : 'Roboto', sans-serif !important;
 }
 
 @media (max-width: 575.98px) {
