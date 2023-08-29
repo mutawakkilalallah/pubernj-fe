@@ -24,32 +24,7 @@
 
 // `xl` applies to large devices (desktops, less than 1200px)
 @media (max-width: 1199.98px) {
-.boxLogin{
-  margin-top: 15%;
-  width: 330px !important;
-    height: 400px !important;
-}
-.appLogo {
-  position: absolute;
-  width: 130px !important;
-  margin-left: -60px !important;
-  margin-top: -150px;
-}
-.title h4{ 
-  margin-top: -55px;
-}
-.boxLogin form {
-  margin-top: -10px ;
-  button{
-    height: 30px;
-    font-size: 12px;
-  }
-  input{
-    width: 115%;
-    margin-left: -20px;
-    font-size: 15px;
-  }
-}
+
 .developer{
   margin-top: 30px !important;
   font-size: small;
@@ -66,11 +41,7 @@
    .titlePage{
       padding-top: 15px;
      };
-.boxLogin {
-    margin-top: 15%;
-    width: 330px !important;
-    height: 410px !important;
-  }
+
 
   .appLogo {
     position: absolute;
@@ -81,22 +52,7 @@
 
   .title h4 {
     margin-top: -55px;
-  }
-
-  .boxLogin form {
-    margin-top: -10px;
-
-    button {
-      height: 30px;
-      font-size: 12px;
-    }
-
-    input {
-      width: 115%;
-      margin-left: -20px;
-      font-size: 15px;
-    }
-  }
+  }  
 
   .developer {
     margin-top: 30px !important;

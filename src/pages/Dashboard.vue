@@ -5,7 +5,7 @@
     class="user-card row align-items-center justify-content- bg-primary p-2 rounded"
     style="margin: 0 0 0 0"
   >
-    <div class="d-flex align-items-center col-md-10">
+    <div class="d-flex align-items-center col-md-10 text-start">
       <div
         v-if="storeAuth.user.role != 'p4nj'"
         v-show="storeAuth.loading === true"
@@ -36,7 +36,10 @@
         class="rounded-circle me-3"
       />
       <div class="user-info text-white">
-        <p style="font-size: 14px; margin-bottom: 0" class="fw-bold">
+        <p
+          style="font-size: 14px; margin-bottom: 0"
+          class="fw-bold"
+        >
           {{ storeAuth.user.nama_lengkap }}
         </p>
         <i v-if="storeAuth.user.role === 'daerah'">{{
@@ -53,17 +56,23 @@
         :to="{ name: 'profil', params: { uuid: storeAuth.user.uuid } }"
         style="text-decoration: none"
       >
-        <font-awesome-icon icon="cog" class="icon text-white fs-3 sm-fs-6" />
+        <font-awesome-icon
+          icon="cog"
+          class="icon text-white fs-3 sm-fs-6"
+        />
       </router-link>
     </div>
   </div>
 
-  <div class="row mt-3 g-3 mx-2 text-center" v-if="isMobile">
+  <!-- mobile -->
+  <div
+    class="row mt-3 g-3 mx-2 text-center"
+    v-if="isMobile"
+  >
     <div class="col mb-3 mb-sm-0">
       <div>
         <div
-          class="badge rounded-circle bg-primary bg-gradient position-relative"
-          style="height: 50px"
+          class="badge bg-primary bg-gradient position-relative"
           @click="toDataSantri"
         >
           <font-awesome-icon
@@ -71,10 +80,8 @@
             class="p-2"
             style="font-size: 20px; color: white"
           />
-          <span
-            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-          >
-            {{ storeAuth.stast.totalSantri }}
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ forMat(storeAuth.stast.totalSantri) }}
             <span class="visually-hidden">unread messages</span>
           </span>
         </div>
@@ -85,19 +92,16 @@
     <div class="col mb-3 mb-sm-0">
       <div>
         <div
-          class="badge rounded-circle bg-success bg-gradient position-relative"
-          style="height: 50px"
+          class="badge  bg-success bg-gradient position-relative"
           @click="toDataPenumpang"
         >
           <font-awesome-icon
             icon="briefcase"
             class="p-2"
-            style="font-size: 20px; color: white"
+            style="font-size: 20px; color: white; "
           />
-          <span
-            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-          >
-            {{ storeAuth.stast.totalPenumpang }}
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{forMat( storeAuth.stast.totalPenumpang) }}
             <span class="visually-hidden">unread messages</span>
           </span>
         </div>
@@ -108,19 +112,16 @@
     <div class="col mb-3 mb-sm-0">
       <div>
         <div
-          class="badge rounded-circle bg-secondary bg-gradient position-relative"
-          style="height: 50px"
+          class="badge bg-secondary bg-gradient position-relative"
           @click="toDataSantri"
         >
           <font-awesome-icon
             icon="user-xmark"
             class="p-2"
-            style="font-size: 17px; color: white"
+            style="font-size: 20px; color: white"
           />
-          <span
-            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-          >
-            {{ storeAuth.stast.totalTidakRombongan }}
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ forMat(storeAuth.stast.totalTidakRombongan) }}
             <span class="visually-hidden">unread messages</span>
           </span>
         </div>
@@ -134,8 +135,7 @@
     >
       <div>
         <div
-          class="badge rounded-circle bg-danger bg-gradient position-relative"
-          style="height: 50px"
+          class="badge bg-danger bg-gradient position-relative"
           @click="toDataArmada"
         >
           <font-awesome-icon
@@ -143,9 +143,7 @@
             class="p-2"
             style="font-size: 20px; color: white"
           />
-          <span
-            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-          >
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             {{ storeAuth.stast.totalArmada }}
             <span class="visually-hidden">unread messages</span>
           </span>
@@ -157,18 +155,15 @@
     <div class="col mb-3 mb-sm-0">
       <div>
         <div
-          class="badge rounded-circle bg-warning bg-gradient position-relative"
-          style="height: 50px"
+          class="badge bg-warning bg-gradient position-relative"
           @click="toDataArea"
         >
           <font-awesome-icon
             icon="map"
             class="p-2"
-            style="font-size: 17px; color: white"
+            style="font-size: 20px; color: white"
           />
-          <span
-            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-          >
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             {{ storeAuth.stast.totalArea }}
             <span class="visually-hidden">unread messages</span>
           </span>
@@ -180,8 +175,7 @@
     <div class="col mb-3 mb-sm-0">
       <div>
         <div
-          class="badge rounded-circle bg-info bg-gradient position-relative"
-          style="height: 50px"
+          class="badge bg-info bg-gradient position-relative"
           @click="toDataDropspot"
         >
           <font-awesome-icon
@@ -189,9 +183,7 @@
             class="p-2"
             style="font-size: 20px; color: white"
           />
-          <span
-            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-          >
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             {{ storeAuth.stast.totalDropspot }}
             <span class="visually-hidden">unread messages</span>
           </span>
@@ -206,18 +198,15 @@
     >
       <div>
         <div
-          class="badge rounded-circle bg-dark bg-gradient position-relative"
-          style="height: 50px"
+          class="badge bg-dark bg-gradient position-relative"
           @click="toDataUser"
         >
           <font-awesome-icon
             icon="user-cog"
             class="p-2"
-            style="font-size: 17px; color: white"
+            style="font-size: 20px; color: white"
           />
-          <span
-            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-          >
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             {{ storeAuth.stast.totalUser }}
             <span class="visually-hidden">unread messages</span>
           </span>
@@ -229,7 +218,10 @@
   </div>
 
   <!-- dekstop -->
-  <div class="row mt-3 g-2" v-else>
+  <div
+    class="row mt-3 g-2"
+    v-else
+  >
     <!-- card -->
     <div
       class="col-sm-3 mb-3 mb-sm-0"
@@ -273,7 +265,10 @@
         <div class="card-body">
           <div class="row">
             <div class="col">
-              <font-awesome-icon icon="briefcase" style="font-size: 60px" />
+              <font-awesome-icon
+                icon="briefcase"
+                style="font-size: 60px"
+              />
             </div>
             <div class="col">
               <h3 class="card-title text-end">
@@ -480,6 +475,9 @@ function toDataDropspot() {
 function toDataUser() {
   router.push("/user");
 }
+const forMat = (i) => {
+  return i ? i.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.") : "";
+};
 onMounted(() => {
   const mobileQuery = window.matchMedia("(max-width: 767px)");
 
