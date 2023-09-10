@@ -231,15 +231,7 @@
   <!-- dekstop -->
   <div class="row mt-3 g-2" v-else>
     <!-- card -->
-    <div
-      class="col-sm-3 mb-3 mb-sm-0"
-      v-if="
-        storeAuth.user.role !== 'armada' &&
-        storeAuth.user.role !== 'keuangan' &&
-        storeAuth.user.role !== 'pendamping' &&
-        storeAuth.user.role !== 'p4nj'
-      "
-    >
+    <div class="col-sm-3 mb-3 mb-sm-0" v-if="access.internal()">
       <div
         class="card"
         style="background-color: #006c8a; cursor: pointer"
@@ -264,7 +256,7 @@
       </div>
     </div>
 
-    <div class="col-sm-3 mb-3 mb-sm-0">
+    <div class="col-sm-3 mb-3 mb-sm-0" v-if="storeAuth.user.role != 'bps'">
       <div
         class="card text-bg-primary"
         style="cursor: pointer"
@@ -286,15 +278,7 @@
       </div>
     </div>
 
-    <div
-      class="col-sm-3 mb-3 mb-sm-0"
-      v-if="
-        storeAuth.user.role !== 'armada' &&
-        storeAuth.user.role !== 'keuangan' &&
-        storeAuth.user.role !== 'pendamping' &&
-        storeAuth.user.role !== 'p4nj'
-      "
-    >
+    <div class="col-sm-3 mb-3 mb-sm-0" v-if="access.internal()">
       <div
         class="card"
         style="background-color: #8a5700; cursor: pointer"
@@ -321,14 +305,7 @@
       </div>
     </div>
 
-    <div
-      class="col-sm-3 mb-3 mb-sm-0"
-      v-if="
-        storeAuth.user.role !== 'wilayah' &&
-        storeAuth.user.role !== 'daerah' &&
-        storeAuth.user.role !== 'keuangan'
-      "
-    >
+    <div class="col-sm-3 mb-3 mb-sm-0" v-if="access.notWilayahKeuangan()">
       <div
         class="card"
         style="background-color: #cd0052; cursor: pointer"
@@ -358,9 +335,7 @@
         class="card"
         style="background-color: #315200; cursor: pointer"
         @click="toDataArea"
-        v-if="
-          storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'
-        "
+        v-if="access.notInternal()"
       >
         <div class="card-body">
           <div class="row">
@@ -386,9 +361,7 @@
         class="card"
         style="background-color: #2d0063; cursor: pointer"
         @click="toDataDropspot"
-        v-if="
-          storeAuth.user.role !== 'pendamping' && storeAuth.user.role !== 'p4nj'
-        "
+        v-if="access.notInternal()"
       >
         <div class="card-body">
           <div class="row">
@@ -411,12 +384,7 @@
       </div>
     </div>
 
-    <div
-      v-if="
-        storeAuth.user.role === 'sysadmin' || storeAuth.user.role === 'admin'
-      "
-      class="col-sm-3 mb-3 mb-sm-0"
-    >
+    <div v-if="access.admin()" class="col-sm-3 mb-3 mb-sm-0">
       <div
         class="card"
         style="background-color: #5e0600; cursor: pointer"
@@ -440,6 +408,28 @@
         </div>
       </div>
     </div>
+    <div v-if="access.sysadmin()" class="col-sm-3 mb-3 mb-sm-0">
+      <div class="card" style="background-color: #2a2700; cursor: pointer">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <font-awesome-icon
+                icon="stopwatch"
+                style="font-size: 60px; color: white"
+              />
+            </div>
+            <div class="col">
+              <h3 class="card-title text-end text-light">
+                {{ storeAuth.stast.totalLogin }}
+              </h3>
+              <p class="card-text text-end fw-bold text-light">
+                Active Session
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- <div>
     <set-time />
@@ -452,6 +442,7 @@ import { onMounted, ref } from "vue";
 import router from "../router";
 import { useAuthStore } from "../store/auth/index";
 // import { useSantriTable } from "../store/santri/table";
+import * as access from "../plugins/access";
 
 // const santri = useSantriTable();
 const storeAuth = useAuthStore();
@@ -481,7 +472,7 @@ function toDataUser() {
   router.push("/user");
 }
 onMounted(() => {
-  const mobileQuery = window.matchMedia("(max-width: 767px)");
+  const mobileQuery = window.matchMedia("(max-width: 128px)");
 
   isMobile.value = mobileQuery.matches;
 

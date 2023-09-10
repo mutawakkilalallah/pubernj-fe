@@ -5,6 +5,7 @@ import { swalError, swalSuccess, swalSuccessDelete } from "../modules/untils";
 // const SERVER = "https://api.puber.phii.xyz";
 // const SERVER = "http://localhost:3004";
 const SERVER = "https://api-puber.nuruljadid.io";
+// const SERVER = "https://api-puber.nuruljadid.dev";
 
 const base = SERVER;
 

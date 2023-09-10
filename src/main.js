@@ -8,6 +8,12 @@ import App from "@/App.vue";
 import router from "@/router/index.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import axios from "./plugins/axios";
+import {
+  Datepicker,
+  Timepicker,
+  DatetimePicker,
+  DateRangePicker,
+} from "@livelybone/vue-datepicker";
 
 import VPagination from "@hennge/vue3-pagination";
 import "@hennge/vue3-pagination/dist/vue3-pagination.css";
@@ -57,6 +63,10 @@ import {
   faFilePen,
   faFileCircleQuestion,
   faCog,
+  faStopwatch,
+  faEye,
+  faTrash,
+  faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { registerComponents } from "./plugins/global-components";
@@ -97,13 +107,19 @@ library.add(
   faCheckCircle,
   faTimesSquare,
   faFilePen,
-  faCog
+  faCog,
+  faStopwatch,
+  faDownload,
+  faEye,
+  faTrash,
+  faUpload
 );
 const pinia = createPinia();
 const app = createApp(App);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 app.component("pagination", VPagination);
+app.component("datetime-picker", DatetimePicker);
 app.use(router);
 
 app.use(pinia);

@@ -239,43 +239,143 @@
             </small>
             <small class="badge bg-danger" v-else>Belum Bebas</small>
           </div>
-          <div
-            v-if="
-              (storeAuth.user.role === 'admin' ||
-                storeAuth.user.role === 'sysadmin' ||
-                storeAuth.user.role === 'wilayah' ||
-                storeAuth.user.role === 'daerah') &&
-              (table?.item?.status_bayar === 'lunas' ||
-                table?.item?.status_bayar === 'lebih') &&
-              table?.item?.persyaratan?.lunas_bps &&
-              table?.item?.persyaratan?.lunas_kosmara &&
-              table?.item?.persyaratan?.tuntas_fa &&
-              table?.item?.persyaratan?.bebas_kamtib
-            "
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row my-3">
+    <div class="col-md-12">
+      <div class="card">
+        <div
+          class="card-header bg-primary d-flex justify-content-between align-items-center text-white"
+        >
+          <p class="mb-0">Berkas</p>
+          <button
+            class="btn btn-sm btn-outline-light btn-sm"
+            @click="table.setOpenUpload"
+            v-if="access.wilayah()"
           >
-            <hr />
-            <button
-              class="btn btn-sm btn-info me-2"
-              :disabled="table?.item?.persyaratan?.izin_pedatren"
-              @click="
-                table.izinPedatren(
-                  table.item.santri.niup,
-                  table.item.santri_uuid
-                )
-              "
-            >
-              <font-awesome-icon icon="file-alt" class="icon" /> Buat Izin
-              PEDATREN
-            </button>
-            <button
-              :disabled="!table?.item?.persyaratan?.izin_pedatren"
-              class="btn btn-sm btn-warning"
-              @click="table.goToSuratJalan(table.item.santri.niup)"
-            >
-              <font-awesome-icon icon="print" class="icon" /> Cetak Surat Jalan
-            </button>
+            <font-awesome-icon icon="upload" /> Upload
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div v-for="doc in table.berkas" :key="doc.id" class="col-md-3">
+              <div class="card">
+                <div class="card-body text-center">
+                  <div class="row g-1 justify-content-end">
+                    <div class="col-auto">
+                      <button
+                        class="btn btn-sm btn-secondary"
+                        @click="table.openInNewTab(doc.blobUrl)"
+                      >
+                        <font-awesome-icon icon="eye" class="text-white" />
+                      </button>
+                    </div>
+                    <div class="col-auto">
+                      <button
+                        class="btn btn-sm btn-secondary"
+                        @click="table.downloadFile(doc)"
+                      >
+                        <font-awesome-icon icon="download" class="text-white" />
+                      </button>
+                    </div>
+                    <div class="col-auto">
+                      <button
+                        class="btn btn-sm btn-danger"
+                        @click="table.deleteBerkas(doc.id, route.params.uuid)"
+                      >
+                        <font-awesome-icon icon="trash" class="text-white" />
+                      </button>
+                    </div>
+                  </div>
+                  <img :src="doc.blobUrl" class="p-2 img-fluid" alt="berkas" />
+                  <hr />
+                  <small class="badge bg-primary">{{
+                    doc.type
+                      .split("-")
+                      .map(
+                        (word) => word.charAt(0).toUpperCase() + word.slice(1)
+                      )
+                      .join(" ")
+                  }}</small>
+                  <br />
+                  <small class="fst-italic text-muted">{{
+                    doc.description
+                      ? doc.description
+                      : "*)Tidak ada deskripsi berkas"
+                  }}</small>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal upload -->
+  <div
+    class="modal fade"
+    v-if="table.isOpenUpload === true"
+    :class="{ show: table.isOpenUpload }"
+    style="display: block"
+    id="modalUpload"
+    tabindex="-1"
+    aria-labelledby="modalUploadLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalUploadLabel">Upload Berkas</h1>
+          <button
+            class="btn-close"
+            type="button"
+            @click="table.setOpenUpload"
+          ></button>
+        </div>
+        <form @submit.prevent="table.uploadBerkas(route.params.uuid)">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <small>File</small>
+              <input
+                type="file"
+                @change="table.handleFileChange"
+                accept=".jpg, .jpeg, .png"
+                class="form-control mt-2"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <small>Jenis Berkas</small>
+              <select class="form-select mt-2" v-model="table.form.type">
+                <option value="" selected>Pilih Jenis Berkas</option>
+                <option value="keterangan-pindah-dropspot">
+                  Keterangan Pindah Dropspot
+                </option>
+                <option value="surat-pernyataan">Surat Pernyataan</option>
+                <option value="surat-kuasa">Surat Kuasa</option>
+                <option value="berkas-pendukung">Berkas Pendukung</option>
+              </select>
+            </div>
+            <div class="form-group mb-3">
+              <small>Keterangan (Opsional)</small>
+              <textarea
+                v-model="table.form.description"
+                class="form-control mt-2"
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="table.setOpenUpload"
+            >
+              Tutup
+            </button>
+            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -286,6 +386,7 @@ import { usePenumpangDetailTable } from "../../store/penumpang/table-detail";
 import { useRoute } from "vue-router";
 import router from "../../router";
 import { useAuthStore } from "../../store/auth/index";
+import * as access from "../../plugins/access";
 
 const storeAuth = useAuthStore();
 const table = usePenumpangDetailTable();

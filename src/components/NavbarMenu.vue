@@ -46,7 +46,7 @@
   </nav>
   <div
     class="menu-atas shadow d-flex justify-content-start bg-white"
-    :class="isMobile ? 'fixed-bottom' : 'fixed-top mt-5'"
+    :class="isMobile ? 'fixed-top mt-5' : 'fixed-top mt-5'"
     style="overflow-x: auto"
   >
     <MenuItem
@@ -113,6 +113,10 @@ const menu = ref([
       {
         id: 9,
         name: "keuangan",
+      },
+      {
+        id: 10,
+        name: "bps",
       },
     ],
   },
@@ -265,6 +269,33 @@ const menu = ref([
         id: 5,
         name: "daerah",
       },
+      {
+        id: 6,
+        name: "keuangan",
+      },
+      {
+        id: 7,
+        name: "bps",
+      },
+    ],
+  },
+  {
+    icon: "print",
+    title: "Cetak Surat",
+    path: "cetak-surat",
+    rules: [
+      {
+        id: 1,
+        name: "sysadmin",
+      },
+      {
+        id: 2,
+        name: "admin",
+      },
+      {
+        id: 3,
+        name: "wilayah",
+      },
     ],
   },
   {
@@ -342,7 +373,7 @@ const menu = ref([
   },
   {
     icon: "user-cog",
-    title: "User Account",
+    title: "Users",
     path: "user",
     rules: [
       {
@@ -356,8 +387,8 @@ const menu = ref([
     ],
   },
   {
-    icon: "user-lock",
-    title: "User Activity",
+    icon: "stopwatch",
+    title: "Activity",
     path: "user-activity",
     rules: [
       {
@@ -368,7 +399,7 @@ const menu = ref([
   },
   {
     icon: "circle-exclamation",
-    title: "Error Report",
+    title: "Errors",
     path: "error-report",
     rules: [
       {

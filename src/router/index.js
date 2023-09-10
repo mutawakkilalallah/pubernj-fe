@@ -106,6 +106,11 @@ const routes = [
         name: "surat-jalan",
         component: () => import("@/pages/cetak/CetakPage.vue"),
       },
+      {
+        path: "penumpang/cetak-surat",
+        name: "cetak-surat",
+        component: () => import("@/pages/surat-jalan/Index.vue"),
+      },
     ],
   },
 ];

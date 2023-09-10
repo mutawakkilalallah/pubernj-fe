@@ -49,21 +49,18 @@
             </tr>
           </table>
         </div>
-        <div class="col-md-3 text-center">
-          <Img :src="store.qr" width="80" />
-        </div>
       </div>
       <p class="fw-bold mt-2 mb-0 text-center text-decoration-underline">
-        23 September s.d 03 Oktober 2023 M (Santri Puteri)
+        25 September s.d 04 Oktober 2023 M (Santri Puteri)
       </p>
       <p class="fw-bold mt-0 mb-0 text-center">
-        08 Rabiul Awal s.d 18 Rabiul Awal 1445 H
+        9 Rabiul Awal s.d 18 Rabiul Awal 1445 H
       </p>
       <p class="fw-bold mb-0 text-center text-decoration-underline">
-        24 September s.d 04 Oktober 2023 M (Santri Putera)
+        26 September s.d 05 Oktober 2023 M (Santri Putera)
       </p>
       <p class="fw-bold mt-0 text-center">
-        09 Rabiul Awal s.d 19 Rabiul Awal 1445 H
+        10 Rabiul Awal s.d 19 Rabiul Awal 1445 H
       </p>
       <p class="mt-2 mb-2 mx-3">
         Demikian surat izin ini dibuat dengan sebenarnya dan untuk digunakan
@@ -72,9 +69,9 @@
       <table class="mx-3">
         <tr>
           <td>Paiton,</td>
-          <td>{{ tglTtd }}</td>
-          <td>{{ blnTtd }}</td>
-          <td>{{ thnTtd }}</td>
+          <td>10</td>
+          <td>September</td>
+          <td>2023</td>
           <td>M</td>
         </tr>
       </table>
@@ -150,13 +147,12 @@
 <script setup>
 import { useCetakPenumpang } from "../../store/penumpang/cetak-penumpang";
 import { useRoute } from "vue-router";
-import moment from "moment";
 
-const currentDate = moment().locale("id");
-const tglCetak = currentDate.format("DD MMM YYYY HH:mm:ss");
-const tglTtd = currentDate.format("DD");
-const blnTtd = currentDate.format("MMM");
-const thnTtd = currentDate.format("YYYY");
+// const currentDate = moment().locale("id");
+// const tglCetak = currentDate.format("DD MMM YYYY HH:mm:ss");
+// const tglTtd = currentDate.format("DD");
+// const blnTtd = currentDate.format("MMM");
+// const thnTtd = currentDate.format("YYYY");
 
 const store = useCetakPenumpang();
 const route = useRoute();

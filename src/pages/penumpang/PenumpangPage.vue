@@ -1,15 +1,12 @@
 <template>
   <!-- judul -->
-  <div class="row">
+  <div class="row align-items-center">
     <div class="col-md-8">
       <h3 class="titlePage">Data Penumpang</h3>
     </div>
     <div class="col-md-4 text-end g-2">
       <button
-        v-if="
-          storeAuth.user.role === 'sysadmin' ||
-          storeAuth.user.role === 'keuangan'
-        "
+        v-if="access.keuangan()"
         class="btn btn-sm btn-outline-info me-2"
         type="button"
         @click="form.setOpenImportPembayaran()"
@@ -17,10 +14,7 @@
         <font-awesome-icon icon="file-import" class="icon" /> Import Pembayaran
       </button>
       <button
-        v-if="
-          storeAuth.user.role === 'sysadmin' ||
-          storeAuth.user.role === 'keuangan'
-        "
+        v-if="access.keuangan()"
         class="btn btn-sm btn-outline-warning me-2"
         type="button"
         @click="table.unduhTemplate"
@@ -30,24 +24,32 @@
       <button
         class="btn btn-sm btn-outline-primary"
         type="button"
-        @click="expExel"
+        @click="table.setOpenExport"
       >
         Export
       </button>
-      <p v-show="table.btnDisable === false">Click Kembali</p>
     </div>
   </div>
   <hr />
+  <h6 class="text-primary">NOTE :</h6>
+  <ul>
+    <li class="text-primary" v-if="access.keuangan">
+      Untuk fitur <b>"Unduh Template"</b> berlaku filter (Wilayah, Daerah, Jenis
+      Kelamin dan Status Pembayaran)
+    </li>
+    <li class="text-primary">
+      Filter <b>"Status Persyaratan"</b> hanya aktif ketika filter
+      <b>"Status Pembayaran"</b> bernilai (Lunas / Lebih)
+    </li>
+    <li class="text-primary">
+      Ketika Status Pembayaran (Lunas / Lebih) dan Persyaratan (Selesai) maka
+      santri berhak pulang dan dapat di buatkan surat jalan
+    </li>
+  </ul>
+  <hr />
   <!-- menu filter -->
   <div class="filter-box row">
-    <div
-      class="col-md-2"
-      v-if="
-        storeAuth.user.role != 'pendamping' &&
-        storeAuth.user.role != 'p4nj' &&
-        storeAuth.user.role != 'armada'
-      "
-    >
+    <div class="col-md-2" v-if="access.notInternal()">
       <select
         class="form-select form-select-sm mb-2"
         v-model="table.params.wilayah"
@@ -74,7 +76,7 @@
         </option>
       </select>
     </div>
-    <div class="col-md-2" v-if="storeAuth.user.role != 'pendamping'">
+    <div class="col-md-2" v-if="access.notPendamping()">
       <select
         class="form-select form-select-sm mb-2"
         v-model="table.params.area"
@@ -111,6 +113,21 @@
       </select>
       <select
         class="form-select form-select-sm mb-2"
+        v-model="table.params.hak_pulang"
+        @change="table.getData"
+        :disabled="
+          table.params.pembayaran != 'lunas' &&
+          table.params.pembayaran != 'lebih'
+        "
+      >
+        <option value="" selected>Semua Status Persyaratan</option>
+        <option :value="1">Selesai</option>
+        <option :value="0">Belum Selesai</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <select
+        class="form-select form-select-sm mb-2"
         v-model="table.params.jenis_kelamin"
         @change="table.getData"
       >
@@ -118,8 +135,6 @@
         <option value="L">Laki-Laki</option>
         <option value="P">Perempuan</option>
       </select>
-    </div>
-    <div class="col-md-2" v-if="storeAuth.user.role === 'pendamping'">
       <select
         class="form-select form-select-sm mb-2"
         v-model="table.params.armada"
@@ -542,6 +557,131 @@
       </div>
     </div>
   </div>
+  <!-- modal export -->
+  <div
+    class="modal fade modal-md"
+    v-if="table.openExport === true"
+    :class="{ show: table.openExport }"
+    style="display: block"
+    id="modalEdit"
+    tabindex="-1"
+    aria-labelledby="modalEditLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalEditLabel">Export Data</h1>
+          <button
+            class="btn-close"
+            type="button"
+            @click="table.setOpenExport"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="table.paramsExp.in_alamat"
+              id="flexCheckDefault"
+            />
+            <label class="form-check-label" for="flexCheckDefault"
+              >Alamat
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="table.paramsExp.in_dropspot"
+              id="flexCheckDefault"
+            />
+            <label class="form-check-label" for="flexCheckDefault"
+              >Dropspot
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="table.paramsExp.in_domisili"
+              id="flexCheckDefault"
+            />
+            <label class="form-check-label" for="flexCheckDefault"
+              >Domisili Santri
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="table.paramsExp.in_pembayaran"
+              id="flexCheckDefault"
+            />
+            <label class="form-check-label" for="flexCheckDefault"
+              >Pembayaran (Ongkos Rombongan)
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="table.paramsExp.in_persyaratan"
+              id="flexCheckDefault"
+            />
+            <label class="form-check-label" for="flexCheckDefault"
+              >Persyaratan
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="table.paramsExp.in_armada"
+              id="flexCheckDefault"
+            />
+            <label class="form-check-label" for="flexCheckDefault"
+              >Armada
+            </label>
+          </div>
+          <hr />
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="table.paramsExp.in_limit"
+              id="flexCheckDefault"
+            />
+            <label class="form-check-label" for="flexCheckDefault"
+              >Semua data tanpa dibatasi per halaman
+            </label>
+            <br />
+            <label class="form-check-label" for="flexCheckDefault"
+              >(Bisa membutuhkan waktu yang lama)
+            </label>
+          </div>
+          <hr />
+          <b class="text-danger"
+            >Note: Jagalah privasi data. Haram disebar & dipergunakan untuk
+            selain kepentingan pesantren.</b
+          >
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" @click="table.export">
+            Export Excel
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            @click="table.setOpenExport"
+          >
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- modal detail -->
   <div
     class="modal fade modal-xl"
@@ -822,6 +962,7 @@
 import { usePenumpangTable } from "../../store/penumpang/table";
 import { usePenumpangForm } from "../../store/penumpang/form";
 import { useAuthStore } from "../../store/auth/index";
+import * as access from "../../plugins/access";
 
 const storeAuth = useAuthStore();
 const table = usePenumpangTable();
@@ -832,10 +973,6 @@ if (storeAuth.user.role != "p4nj") {
   table.getWilayah();
 }
 table.getArmada();
-
-function expExel() {
-  table.exportExel();
-}
 
 const formatMinus = (i) => {
   const formatter = new Intl.NumberFormat("id-ID", {

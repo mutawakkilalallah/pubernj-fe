@@ -1,15 +1,61 @@
 <template>
   <!-- judul -->
-  <div class="row">
-    <div class="col-md-8">
+  <div class="row align-items-center">
+    <div class="col-md-4">
       <h3 class="titlePage">Data Persyaratan</h3>
     </div>
-    <div class="col-md-4 text-end g-2">
-      <button class="btn btn-sm btn-outline-primary" type="button">
-        Export
+    <div class="col-md-8 text-end g-2">
+      <button
+        v-if="access.keuangan()"
+        class="btn btn-sm btn-outline-info me-2"
+        type="button"
+        @click="table.setOpenKosmara"
+      >
+        <font-awesome-icon icon="file-import" class="icon" /> Import KOSMARA
+      </button>
+      <!-- <button
+        v-if="access.keuangan()"
+        class="btn btn-sm btn-outline-warning me-2"
+        type="button"
+        @click="table.export('kosmara')"
+      >
+        <font-awesome-icon icon="download" class="icon" /> Unduh Template
+        KOSMARA
+      </button> -->
+      <button
+        v-if="access.sysadmin()"
+        class="btn btn-sm btn-outline-info me-2"
+        type="button"
+        @click="table.setOpenBps"
+      >
+        <font-awesome-icon icon="file-import" class="icon" /> Import BPS
+      </button>
+      <button
+        v-if="access.sysadmin()"
+        class="btn btn-sm btn-outline-warning me-2"
+        type="button"
+        @click="table.export('bps')"
+      >
+        <font-awesome-icon icon="download" class="icon" /> Unduh Template BPS
       </button>
     </div>
   </div>
+  <hr />
+  <h6 class="text-primary">NOTE :</h6>
+  <ul>
+    <li class="text-primary" v-if="access.keuangan()">
+      Untuk fitur <b>"Unduh Template"</b> berlaku filter (Wilayah, Daerah dan
+      Jenis Kelamin)
+    </li>
+    <!-- <li class="text-primary" v-if="access.bps">
+      Penulisan status untuk import BPS ada dua, yaitu
+      <b class="text-danger">(lunas & belum lunas)</b> dengan huruf kecil semua
+      untuk memudahkan penulisan
+    </li> -->
+    <li class="text-primary" v-if="access.keuangan()">
+      Untuk KOSMARA otomatis menyesuaikan template aplikasi Admin PSP
+    </li>
+  </ul>
   <hr />
   <!-- menu filter -->
   <div class="filter-box row">
@@ -61,6 +107,7 @@
         class="form-select form-select-sm mb-2"
         v-model="table.params.lunas_kosmara"
         @change="table.getData"
+        v-if="storeAuth.user.role != 'bps'"
       >
         <option value="" selected>Semua Status KOSMARA</option>
         <option :value="1">Lunas</option>
@@ -70,6 +117,7 @@
         class="form-select form-select-sm mb-2"
         v-model="table.params.tuntas_fa"
         @change="table.getData"
+        v-if="storeAuth.user.role != 'bps'"
       >
         <option value="" selected>Semua Status FA</option>
         <option :value="1">Tuntas</option>
@@ -79,6 +127,7 @@
         class="form-select form-select-sm mb-2"
         v-model="table.params.bebas_kamtib"
         @change="table.getData"
+        v-if="storeAuth.user.role != 'bps'"
       >
         <option value="" selected>Semua Status KAMTIB</option>
         <option :value="1">Bebas</option>
@@ -165,26 +214,79 @@
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
           <td>{{ d.santri.niup }}</td>
           <td>{{ d.santri.nama_lengkap }}</td>
-          <td v-if="d.persyaratan.lunas_bps" class="text-center bg-success">
+          <td
+            v-if="d.persyaratan.lunas_bps"
+            class="text-center bg-success"
+            @click="
+              access.bps() &&
+                table.ubahPersyaratan(
+                  'bps',
+                  d.id,
+                  'error',
+                  'membatalkan',
+                  'LUNAS BPS',
+                  d.santri.nama_lengkap
+                )
+            "
+          >
             <font-awesome-icon icon="check-circle" class="icon text-white" />
           </td>
-          <td v-else class="text-center bg-danger">
+          <td
+            v-else
+            class="text-center bg-danger"
+            @click="
+              access.bps() &&
+                table.ubahPersyaratan(
+                  'bps',
+                  d.id,
+                  'error',
+                  'memberikan',
+                  'LUNAS BPS',
+                  d.santri.nama_lengkap
+                )
+            "
+          >
             <font-awesome-icon icon="times-square" class="icon text-white" />
           </td>
-          <td v-if="d.persyaratan.lunas_kosmara" class="text-center bg-success">
+          <td
+            v-if="d.persyaratan.lunas_kosmara"
+            class="text-center bg-success"
+            @click="
+              access.keuangan() &&
+                table.ubahPersyaratan(
+                  'kosmara',
+                  d.id,
+                  'error',
+                  'membatalkan',
+                  'LUNAS KOSMARA',
+                  d.santri.nama_lengkap
+                )
+            "
+          >
             <font-awesome-icon icon="check-circle" class="icon text-white" />
           </td>
-          <td v-else class="text-center bg-danger">
+          <td
+            v-else
+            class="text-center bg-danger"
+            @click="
+              access.keuangan() &&
+                table.ubahPersyaratan(
+                  'kosmara',
+                  d.id,
+                  'error',
+                  'memberikan',
+                  'LUNAS KOSMARA',
+                  d.santri.nama_lengkap
+                )
+            "
+          >
             <font-awesome-icon icon="times-square" class="icon text-white" />
           </td>
           <td
             v-if="d.persyaratan.tuntas_fa"
             class="text-center bg-success"
             @click="
-              (storeAuth.user.role === 'sysadmin' ||
-                storeAuth.user.role === 'admin' ||
-                storeAuth.user.role === 'wilayah' ||
-                storeAuth.user.role === 'daerah') &&
+              access.wilayah() &&
                 table.ubahPersyaratan(
                   'fa',
                   d.id,
@@ -201,10 +303,7 @@
             v-else
             class="text-center bg-danger"
             @click="
-              (storeAuth.user.role === 'sysadmin' ||
-                storeAuth.user.role === 'admin' ||
-                storeAuth.user.role === 'wilayah' ||
-                storeAuth.user.role === 'daerah') &&
+              access.wilayah() &&
                 table.ubahPersyaratan(
                   'fa',
                   d.id,
@@ -221,10 +320,7 @@
             v-if="d.persyaratan.bebas_kamtib"
             class="text-center bg-success"
             @click="
-              (storeAuth.user.role === 'sysadmin' ||
-                storeAuth.user.role === 'admin' ||
-                storeAuth.user.role === 'wilayah' ||
-                storeAuth.user.role === 'daerah') &&
+              access.internalNonDaerah() &&
                 table.ubahPersyaratan(
                   'kamtib',
                   d.id,
@@ -241,10 +337,7 @@
             v-else
             class="text-center bg-danger"
             @click="
-              (storeAuth.user.role === 'sysadmin' ||
-                storeAuth.user.role === 'admin' ||
-                storeAuth.user.role === 'wilayah' ||
-                storeAuth.user.role === 'daerah') &&
+              access.internalNonDaerah() &&
                 table.ubahPersyaratan(
                   'kamtib',
                   d.id,
@@ -279,24 +372,105 @@
       @first="table.setPage"
     />
   </div>
-  <!-- <div
-    v-if="form.contextMenuVisible"
-    class="context-menu"
-    :style="{
-      top: `${form.contextMenuPosition.y}px`,
-      left: `${form.contextMenuPosition.x}px`,
-    }"
+  <!-- modal import BPS -->
+  <div
+    class="modal fade"
+    v-if="table.openBps === true"
+    :class="{ show: table.openBps }"
+    style="display: block"
+    id="modalEdit"
+    tabindex="-1"
+    aria-labelledby="modalEditLabel"
+    aria-hidden="true"
   >
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item px-5" @click="form.goToDetail">
-        Lihat Detail Rombongan
-      </li>
-    </ul>
-  </div> -->
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalEditLabel">Import BPS</h1>
+          <button
+            class="btn-close"
+            type="button"
+            @click="table.setOpenBps"
+          ></button>
+        </div>
+        <form @submit.prevent="table.import('bps')">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <small>File Excel (.xlsx only)</small>
+              <input
+                type="file"
+                @change="table.handleFileBPS"
+                accept=".xlsx"
+                class="form-control mt-2"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="table.setOpenBps"
+            >
+              Tutup
+            </button>
+            <button type="submit" class="btn btn-sm btn-primary">Proses</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- modal import Kosmara -->
+  <div
+    class="modal fade"
+    v-if="table.openKosmara === true"
+    :class="{ show: table.openKosmara }"
+    style="display: block"
+    id="modalEdit"
+    tabindex="-1"
+    aria-labelledby="modalEditLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalEditLabel">Import KOSMARA</h1>
+          <button
+            class="btn-close"
+            type="button"
+            @click="table.setOpenKosmara"
+          ></button>
+        </div>
+        <form @submit.prevent="table.import('kosmara')">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <small>File Excel (.xlsx only)</small>
+              <input
+                type="file"
+                @change="table.handleFileKosmara"
+                accept=".xlsx"
+                class="form-control mt-2"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="table.setOpenKosmara"
+            >
+              Tutup
+            </button>
+            <button type="submit" class="btn btn-sm btn-primary">Proses</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </template>
 <script setup>
 import { usePersyaratanTable } from "../../store/penumpang/persyaratan";
 import { useAuthStore } from "../../store/auth/index";
+import * as access from "../../plugins/access";
 
 const storeAuth = useAuthStore();
 const table = usePersyaratanTable();
