@@ -89,3 +89,9 @@ function bilangan(n) {
   //     : n;
 }
 </script>
+
+<style scoped>
+nav ul li a {
+  font-size: 12px;
+}
+</style>

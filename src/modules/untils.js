@@ -22,7 +22,7 @@ const swalError = (err, status) => {
       <small style="font-size: 14px;">Pesan : ${
         err.error.charAt(0).toUpperCase() + err.error.slice(1)
       }</small>
-  </div>`,
+      </div>`,
       showConfirmButton: true,
     });
   }

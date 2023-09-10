@@ -37,6 +37,7 @@
       >
         <option value="" selected>Semua Grup</option>
         <option value="jatim">JATIM</option>
+        <option value="jawa-non-jatim">JAWA NON JATIM</option>
         <option value="luar-pulau">LUAR PULAU</option>
         <option value="luar-jawa">LUAR JAWA</option>
       </select>
@@ -75,7 +76,7 @@
           <th scope="col">No</th>
           <th scope="col">Nama Dropspot</th>
           <th scope="col">Grup</th>
-          <th scope="col">Harga</th>
+          <th scope="col">Tarif</th>
           <th scope="col">Area</th>
           <th scope="col">Keberangkatan Putri</th>
           <th scope="col">Keberangkatan Putra</th>
@@ -94,14 +95,10 @@
           <td>{{ "Rp. " + d.harga }}</td>
           <td>{{ d.area.nama }}</td>
           <td>
-            {{
-              moment(d.jam_berangkat_pi).tz("UTC").format("D MMMM YYYY hh:mm")
-            }}
+            {{ toTglIndo(d.jam_berangkat_pa) }}
           </td>
           <td>
-            {{
-              moment(d.jam_berangkat_pa).tz("UTC").format("D MMMM YYYY hh:mm")
-            }}
+            {{ toTglIndo(d.jam_berangkat_pi) }}
           </td>
           <td>{{ d.cakupan }}</td>
         </tr>
@@ -145,6 +142,7 @@
               <select class="form-select mt-2" v-model="form.form.grup">
                 <option value="" selected>Semua Grup</option>
                 <option value="jatim">JATIM</option>
+                <option value="jawa-non-jatim">JAWA NON JATIM</option>
                 <option value="luar-pulau">LUAR PULAU</option>
                 <option value="luar-jawa">LUAR JAWA</option>
               </select>
@@ -226,6 +224,7 @@
               <small>Grup</small>
               <select class="form-select mt-2" v-model="form.form.grup">
                 <option value="jatim">JATIM</option>
+                <option value="jawa-non-jatim">JAWA NON JATIM</option>
                 <option value="luar-pulau">LUAR PULAU</option>
                 <option value="luar-jawa">LUAR JAWA</option>
               </select>
@@ -291,13 +290,16 @@
 import { onMounted } from "vue";
 import { useDropspotForm } from "../../store/dropsot/form";
 import { useDropsotTable } from "../../store/dropsot/table";
-import moment from "moment";
-import "moment-timezone";
+import { DateTime } from "luxon";
 
 const table = useDropsotTable();
 const form = useDropspotForm();
 table.getData();
 form.getArea();
+const toTglIndo = (tgl) => {
+  const dateTimeWIB = DateTime.fromISO(tgl, { zone: "UTC" });
+  return dateTimeWIB.toFormat("dd LLLL yyyy HH:mm");
+};
 
 onMounted(() => {
   form.getArea();

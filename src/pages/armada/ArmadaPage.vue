@@ -117,7 +117,7 @@
   <div class="serach-box mt-2 row">
     <div class="col-md-10 d-flex align-items-center mb-2">
       <div class="form-control-plaintext form-control-sm">
-        Total data {{ table.meta["x_total_data"] }}
+        Total data {{ table.items.length }}
       </div>
     </div>
     <div class="col-md-2 d-flex align-items-center">
@@ -145,26 +145,20 @@
         <tr>
           <th scope="col">No</th>
           <th scope="col">Nama Armada</th>
+          <th
+            scope="col"
+            v-if="access.armada()"
+          >Harga Sewa</th>
           <th scope="col">Type</th>
           <th scope="col">Jenis</th>
           <th
             scope="col"
-            v-if="
-              storeAuth.user.role === 'sysadmin' ||
-              storeAuth.user.role === 'admin'
-            "
-          >
-            Penumpang
-          </th>
+            v-if="access.admin()"
+          >Penumpang</th>
           <th
             scope="col"
-            v-if="
-              storeAuth.user.role === 'sysadmin' ||
-              storeAuth.user.role === 'admin'
-            "
-          >
-            Pendamping
-          </th>
+            v-if="access.admin()"
+          >Pendamping</th>
           <th scope="col">Dropspot</th>
           <th scope="col">Harga</th>
         </tr>
@@ -173,20 +167,15 @@
         <tr
           v-for="(d, i) in table.items"
           :key="i"
-          @dblclick="
-            (storeAuth.user.role === 'sysadmin' ||
-              storeAuth.user.role === 'admin') &&
-              form.handleDoubleClik(d)
-          "
+          @dblclick="access.armada() && form.handleDoubleClik(d)"
         >
           <td>{{ i + 1 }}</td>
           <td>{{ d.nama }}</td>
+          <td v-if="access.armada()">{{ toRupiah(d.harga) }}</td>
           <td>{{ d.type.toUpperCase() }}</td>
           <td>{{ d.jenis.toUpperCase() }}</td>
-          <td v-if="
-              storeAuth.user.role === 'sysadmin' ||
-              storeAuth.user.role === 'admin'
-            ">
+
+          <td v-if="access.admin()">
             <router-link :to="{ name: 'armada-detail', params: { id: d.id } }">
               <button class="btn btn-primary btn-sm">
                 {{ d.penumpang ? d.penumpang.length :'' }}
@@ -198,10 +187,8 @@
               </button>
             </router-link>
           </td>
-          <td v-if="
-              storeAuth.user.role === 'sysadmin' ||
-              storeAuth.user.role === 'admin'
-            ">
+
+          <td v-if="access.admin()">
             <button
               class="btn btn-primary btn-sm"
               @click="form.setOpenPendamping(d)"
@@ -213,7 +200,7 @@
             </button>
           </td>
           <td>{{ d.dropspot.nama }}</td>
-          <td>{{ forMat(d.dropspot.harga) }}</td>
+          <td>{{ toRupiah(d.dropspot.harga) }}</td>
         </tr>
       </tbody>
     </table>
@@ -637,6 +624,7 @@ import { useArmadaForm } from "../../store/armada/form";
 import { useArmadaTable } from "../../store/armada/table";
 import router from "../../router";
 import { useAuthStore } from "../../store/auth/index";
+import * as access from "../../plugins/access";
 
 const table = useArmadaTable();
 const form = useArmadaForm();
@@ -645,8 +633,13 @@ const storeAuth = useAuthStore();
 function pagePrint() {
   router.replace("/armada-print");
 }
-const forMat = (i) => {
-  return "Rp. " + i.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.");
+
+const toRupiah = (harga) => {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+  }).format(harga);
 };
 
 onMounted(() => {

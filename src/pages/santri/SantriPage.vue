@@ -1,6 +1,19 @@
 <template>
   <!-- judul -->
   <h3 class="titlePage">Data Santri</h3>
+  <hr />
+  <h6 class="text-danger">NOTE :</h6>
+  <ul>
+    <li class="text-danger">
+      Bagi Santri kecuali
+      <b class="text-danger">(Non Siswa - Laki-laki)</b> apabila tidak ikut
+      rombongan harus di sertai keterangan
+    </li>
+    <li class="text-danger">
+      Apabila berpindah dropspot di luar Area sebelumnya, harus disertai berkas
+      pendukung (Surat Keterangan, Dll) kecuali alamat asal
+    </li>
+  </ul>
   <!-- {{ paginate }} -->
   <hr />
   <!-- menu filter -->
@@ -16,6 +29,7 @@
           v-for="w in table.filter.wilayah"
           :key="w"
           :value="w.alias_wilayah"
+          @change=""
         >
           {{ w.wilayah }}
         </option>
@@ -191,7 +205,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    v-model="table.item.niup"
+                    :value="table?.item?.niup"
                   />
                 </div>
               </div>
@@ -202,7 +216,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    v-model="table.item.nama_lengkap"
+                    :value="table?.item?.nama_lengkap"
                   />
                 </div>
               </div>
@@ -214,9 +228,9 @@
                     readonly
                     class="form-control-plaintext"
                     :value="
-                      table.item.raw.tempat_lahir +
+                      table?.item?.raw?.tempat_lahir +
                       ', ' +
-                      table.item.raw.tanggal_lahir
+                      table?.item?.raw?.tanggal_lahir
                     "
                   />
                 </div>
@@ -228,7 +242,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    v-model="table.item.wilayah"
+                    :value="table?.item?.wilayah"
                   />
                 </div>
               </div>
@@ -239,7 +253,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    v-model="table.item.blok"
+                    :value="table?.item?.blok"
                   />
                 </div>
               </div>
@@ -250,10 +264,10 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    v-model="
-                      table.item.raw.domisili_santri[
-                        table.item.raw.domisili_santri.length - 1
-                      ].kamar
+                    :value="
+                      table?.item?.raw?.domisili_santri[
+                        table?.item?.raw?.domisili_santri?.length - 1
+                      ]?.kamar
                     "
                   />
                 </div>
@@ -265,7 +279,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    :value="table.item.raw.kecamatan"
+                    :value="table?.item?.raw?.kecamatan"
                   />
                 </div>
               </div>
@@ -276,7 +290,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    :value="table.item.raw.kabupaten"
+                    :value="table?.item?.raw?.kabupaten"
                   />
                 </div>
               </div>
@@ -287,7 +301,7 @@
                     type="text"
                     readonly
                     class="form-control-plaintext"
-                    :value="table.item.raw.provinsi"
+                    :value="table?.item?.raw?.provinsi"
                   />
                 </div>
               </div>
@@ -320,10 +334,7 @@
           <button
             v-else-if="
               table.item.status_kepulangan === 'non-rombongan' &&
-              storeAuth.user.role != 'keuangan' &&
-              storeAuth.user.role != 'armada' &&
-              storeAuth.user.role != 'p4nj' &&
-              storeAuth.user.role != 'supervisor'
+              access.wilayah()
             "
             class="btn btn-primary"
             type="button"
@@ -417,6 +428,7 @@
 import { useSantriTable } from "../../store/santri/table";
 import { useSantriForm } from "../../store/santri/form";
 import { useAuthStore } from "../../store/auth/index";
+import * as access from "../../plugins/access";
 
 const table = useSantriTable();
 const form = useSantriForm();

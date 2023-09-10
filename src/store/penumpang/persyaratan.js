@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 
 export const usePersyaratanTable = defineStore("table_persyaratan", {
   state: () => ({
+    openBps: false,
+    openKosmara: false,
     items: [],
     meta: {},
     myPage: "",
@@ -26,6 +28,12 @@ export const usePersyaratanTable = defineStore("table_persyaratan", {
     params2: {
       limit: "",
     },
+    formBps: {
+      excelFile: null,
+    },
+    formKosmara: {
+      excelFile: null,
+    },
   }),
   actions: {
     nexPage(a) {
@@ -44,6 +52,28 @@ export const usePersyaratanTable = defineStore("table_persyaratan", {
       this.params.page = 1;
       this.getData();
     },
+
+    resetFormBps() {
+      this.formBps.excelFile = null;
+    },
+    resetFormKosmara() {
+      this.formKosmara.excelFile = null;
+    },
+    setOpenBps() {
+      this.openBps = !this.openBps;
+      this.resetFormBps();
+    },
+    setOpenKosmara() {
+      this.openKosmara = !this.openKosmara;
+      this.resetFormKosmara();
+    },
+    handleFileBPS(event) {
+      this.formBps.excelFile = event.target.files[0];
+    },
+    handleFileKosmara(event) {
+      this.formKosmara.excelFile = event.target.files[0];
+    },
+
     async getData() {
       const params = { params: this.params };
       try {
@@ -111,6 +141,57 @@ export const usePersyaratanTable = defineStore("table_persyaratan", {
           });
         }
       });
+    },
+    async export(jenis) {
+      const params = {
+        jenis: jenis,
+        wilayah: this.params.wilayah,
+        blok: this.params.blok,
+        jenis_kelamin: this.params.jenis_kelamin,
+      };
+      try {
+        await api
+          .get("penumpang/export-persyaratan", {
+            params: params,
+            responseType: "blob",
+          })
+          .then((resp) => {
+            const blob = new Blob([resp.data], {
+              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", `template-${jenis}.xlsx`);
+            document.body.appendChild(link);
+
+            link.click();
+
+            link.remove();
+          });
+      } catch (error) {}
+    },
+    async import(jenis) {
+      try {
+        const formData = new FormData();
+        if (jenis === "bps") {
+          formData.append("excelFile", this.formBps.excelFile);
+        } else if (jenis === "kosmara") {
+          formData.append("excelFile", this.formKosmara.excelFile);
+        }
+        await api
+          .post(`penumpang/import-persyaratan?jenis=${jenis}`, formData)
+          .then((resp) => {
+            if (jenis === "bps") {
+              this.openBps = false;
+              this.resetFormBps();
+            } else if (jenis === "kosmara") {
+              this.openKosmara = false;
+              this.resetFormKosmara();
+            }
+            this.getData();
+          });
+      } catch (err) {}
     },
   },
 });

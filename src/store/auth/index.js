@@ -9,12 +9,12 @@ export const useAuthStore = defineStore("auth", {
     user: localStorage.getItem("user") ? storage.getUser() : null,
     foto: "",
     stast: {
-        // totalSantri : 0,
-        // totalPenumpang :0,
-        // totalTidakRombongan:0, 
-        // totalArea :0,
-        // totalDropspot :0, 
-        // totalUser :0,
+      // totalSantri : 0,
+      // totalPenumpang :0,
+      // totalTidakRombongan:0,
+      // totalArea :0,
+      // totalDropspot :0,
+      // totalUser :0,
     },
     chart: [],
     loading: false,
@@ -83,6 +83,11 @@ export const useAuthStore = defineStore("auth", {
       this.token = token;
       this.user = user;
       router.push("/");
+    },
+    async logout(uuid) {
+      try {
+        await api.put(`user/logout/${uuid}`);
+      } catch (err) {}
     },
   },
 });

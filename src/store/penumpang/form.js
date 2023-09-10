@@ -67,9 +67,9 @@ export const usePenumpangForm = defineStore("form_penumpang", {
       this.isOpenImportPembayaran = !this.isOpenImportPembayaran;
       this.resetFormImportPembayaran();
     },
-    setOpenEditPembayaran() {
-      this.isOpenEditPembayaran = !this.isOpenEditPembayaran;
-      this.resetFormEditPembayaran();
+    setOpenImportPembayaran() {
+      this.isOpenImportPembayaran = !this.isOpenImportPembayaran;
+      this.resetFormImportPembayaran();
     },
     handleOpenEditDropspot() {
       this.idArea = this.dataEdit.dropspot.area_id;

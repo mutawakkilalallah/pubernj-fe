@@ -1,10 +1,9 @@
 import { defineStore } from "pinia";
 import { api } from "../../plugins/axios";
-import { utils, writeFile, write } from "xlsx";
-import { saveAs } from "file-saver";
 
 export const usePenumpangTable = defineStore("table_penumpang", {
   state: () => ({
+    openExport: false,
     items: [],
     meta: {},
     myPage: "",
@@ -25,13 +24,19 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       pembayaran: "",
       jenis_kelamin: "",
       armada: "",
+      hak_pulang: "",
       page: 1,
       limit: 25,
     },
-    params2: {
-      limit: "",
+    paramsExp: {
+      in_dropspot: false,
+      in_domisili: false,
+      in_alamat: false,
+      in_pembayaran: false,
+      in_persyaratan: false,
+      in_armada: false,
+      in_limit: false,
     },
-    itemsExport: [],
     btnDisable: true,
   }),
   actions: {
@@ -52,8 +57,20 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       this.getData();
     },
 
+    setOpenExport() {
+      this.openExport = !this.openExport;
+      this.paramsExp.in_dropspot = false;
+      this.paramsExp.in_domisili = false;
+      this.paramsExp.in_pembayaran = false;
+      this.paramsExp.in_alamat = false;
+      this.paramsExp.in_armada = false;
+      this.paramsExp.in_persyaratan = false;
+      this.paramsExp.in_limit = false;
+    },
+
     async getData() {
       const params = { params: this.params };
+      this.getArmada();
       try {
         await api.get("penumpang", params).then((resp) => {
           if ((resp.data.code = 200)) {
@@ -62,7 +79,6 @@ export const usePenumpangTable = defineStore("table_penumpang", {
             this.meta = resp.headers;
             this.filter.area = resp.data.filter.area;
             this.params2.limit = resp.headers.x_total_data;
-            this.getDataExport();
           }
         });
       } catch (error) {}
@@ -71,9 +87,12 @@ export const usePenumpangTable = defineStore("table_penumpang", {
     async unduhTemplate() {
       try {
         await api
-          .get("penumpang/unduh-template", {
-            responseType: "blob",
-          })
+          .get(
+            `penumpang/unduh-template?wilayah=${this.params.wilayah}&blok=${this.params.blok}&pembayaran=${this.params.pembayaran}&jenis_kelamin=${this.params.jenis_kelamin}`,
+            {
+              responseType: "blob",
+            }
+          )
           .then((resp) => {
             const blob = new Blob([resp.data], {
               type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -91,40 +110,44 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       } catch (error) {}
     },
 
-    async getDataExport() {
-      const params = { params: this.params2 };
+    async export() {
+      const cekLimit = !this.paramsExp.in_limit ? this.params.limit : 10000;
+      const params = {
+        in_dropspot: this.paramsExp.in_dropspot,
+        in_domisili: this.paramsExp.in_domisili,
+        in_alamat: this.paramsExp.in_alamat,
+        in_persyaratan: this.paramsExp.in_persyaratan,
+        in_armada: this.paramsExp.in_armada,
+        in_pembayaran: this.paramsExp.in_pembayaran,
+        limit: cekLimit,
+        dropspot: this.params.dropspot,
+        area: this.params.area,
+        wilayah: this.params.wilayah,
+        blok: this.params.blok,
+        pembayaran: this.params.pembayaran,
+        jenis_kelamin: this.params.jenis_kelamin,
+      };
       try {
-        await api.get("penumpang", params).then((resp) => {
-          if ((resp.data.code = 200)) {
-            this.itemsExport = resp.data.data;
-          }
-        });
+        await api
+          .get("penumpang/export-excel", {
+            params: params,
+            responseType: "blob",
+          })
+          .then((resp) => {
+            const blob = new Blob([resp.data], {
+              type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "data-penumpang.xlsx");
+            document.body.appendChild(link);
+
+            link.click();
+
+            link.remove();
+          });
       } catch (error) {}
-    },
-
-    exportExel() {
-      if (this.itemsExport.length > 0) {
-        const tanggal = this.tanggal();
-        const data = this.formatJson(this.itemsExport);
-        const worksheet = utils.json_to_sheet(data);
-        const workbook = utils.book_new();
-        utils.book_append_sheet(workbook, worksheet, "Data");
-        const excelBuffer = this.writeExcelBuffer(workbook);
-        this.saveExcelFile(excelBuffer, `Data Penumpang ${tanggal}.xlsx`);
-      } else {
-        this.btnDisable = false;
-      }
-    },
-
-    saveExcelFile(buffer, fileName) {
-      const blob = new Blob([buffer], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      });
-      saveAs(blob, fileName);
-    },
-    writeExcelBuffer(workbook) {
-      const excelBuffer = write(workbook, { bookType: "xlsx", type: "array" });
-      return excelBuffer;
     },
 
     async handleReset() {
@@ -137,58 +160,11 @@ export const usePenumpangTable = defineStore("table_penumpang", {
         pembayaran: "",
         jenis_kelamin: "",
         armada: "",
+        hak_pulang: "",
         page: 1,
         limit: 25,
       };
       this.getData();
-    },
-
-    // mengambil semua data yaang akan di export
-    formatJson(data) {
-      const temp = [];
-      data.forEach((a) => {
-        const tampung = {
-          niup: "",
-          nama: "",
-          kecamatan: "",
-          kabupaten: "",
-          provinsi: "",
-          daerah: "",
-          wilayah: "",
-          lembaga: "",
-          status_kepulangan: "",
-          dropspot: "",
-          armada: "",
-          area: "",
-          tarif: "",
-          status_pembayaran: "",
-        };
-        tampung.niup = a.santri.niup;
-        tampung.nama = a.santri.nama_lengkap;
-        tampung.kecamatan = a.santri.kecamatan;
-        tampung.kabupaten = a.santri.kabupaten;
-        tampung.provinsi = a.santri.provinsi;
-        tampung.daerah = a.santri.blok;
-        tampung.wilayah = a.santri.wilayah;
-        tampung.lembaga = "";
-        tampung.status_kepulangan = a.santri.status_kepulangan;
-        tampung.dropspot = a.dropspot.nama;
-        tampung.armada = "";
-        tampung.area = a.dropspot.area.nama;
-        tampung.tarif = a.dropspot.harga;
-        tampung.status_pembayaran = a.status_bayar;
-
-        temp.push(tampung);
-      });
-      return temp;
-    },
-
-    tanggal() {
-      const date = new Date();
-      const d = date.getDate();
-      const m = date.getMonth() + 1;
-      const y = date.getFullYear();
-      return (d <= 9 ? "0" + d : d) + "-" + (m <= 9 ? "0" + m : m) + "-" + y;
     },
 
     async getDropspot() {
@@ -226,8 +202,9 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       } catch (error) {}
     },
     async getArmada() {
+      const params = { params: { area: this.params.area } };
       try {
-        await api.get(`armada`).then((resp) => {
+        await api.get(`armada`, params).then((resp) => {
           if ((resp.data.code = 200)) {
             this.filter.armada = resp.data.data;
           }
