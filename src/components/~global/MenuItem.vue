@@ -1,6 +1,9 @@
 <template>
   <div>
-    <router-link :to="{ name: path }" style="text-decoration: none">
+    <router-link
+      :to="{ name: path }"
+      style="text-decoration: none"
+    >
       <div
         v-if="isMobile"
         class="text-center p-2 mx-2 menu-atas-item rounded"

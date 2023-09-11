@@ -1,158 +1,229 @@
 <template>
   <div
-    class="row mt-3 g-3 mx-2 text-center"
+    class="text-center "
     v-if="isMobile"
   >
-    <div class="col mb-3 mb-sm-0">
-      <div>
-        <div
-          class="badge bg-primary bg-gradient position-relative"
-          @click="toDataSantri"
-        >
-          <font-awesome-icon
-            icon="user"
-            class="p-2"
-            style="font-size: 20px; color: white"
-          />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            {{ forMat(storeAuth.stast.totalSantri) }}
-            <span class="visually-hidden">unread messages</span>
-          </span>
+    <div class="titlePageMo ">
+      <div class="user-card row d-block d-flex align-items-center justify-content-center p-2 rounded">
+        <div class="col-md-6 text-center">
+          <div class="d-flex justify-content-center">
+            <div
+              v-if="storeAuth.user.role != 'p4nj'"
+              v-show="storeAuth.loading === true"
+              style="
+          width: 48px;
+          height: 48px;
+          background-color: rgba(255, 255, 255, 0.363);
+          border-radius: 50%;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+        "
+            >
+              <div
+                class="spinner-border text-primary text-center"
+                style="width: 3rem; height: 3rem"
+                role="status"
+              ></div>
+            </div>
+            <img
+              v-if="storeAuth.user.role != 'p4nj'"
+              v-show="storeAuth.loading === false"
+              :src="storeAuth.foto"
+              alt="pohto-profile"
+              width="78"
+              class="rounded-circle "
+            />
+          </div>
+          <div class="user-info ">
+            <p
+              style="font-size: 14px; margin-bottom: 0"
+              class="fw-bold text-primary"
+            >
+              {{ storeAuth.user.nama_lengkap }}
+            </p>
+            <i v-if="storeAuth.user.role === 'daerah'">{{
+          `Daerah ${storeAuth.user.blok}`
+        }}</i>
+            <i v-else-if="storeAuth.user.role === 'wilayah'">{{
+          storeAuth.user.wilayah
+        }}</i>
+            <i v-else>{{ storeAuth.user.role }}</i>
+          </div>
         </div>
-        <br />
-        <p class=""><small>Total Santri</small></p>
+        <div class="col-md-6 text-center mt-2">
+          <router-link
+            :to="{ name: 'profil', params: { uuid: storeAuth.user.uuid } }"
+            style="text-decoration: none"
+          >
+            <font-awesome-icon
+              icon="cog"
+              class="icon text-primary"
+            />
+          </router-link>
+        </div>
+      </div>
+
+    </div>
+    <hr />
+    <div class="row g-4 mx-2 my-1">
+      <div class="col mb-3 mb-sm-0">
+        <div>
+          <div
+            class="badge position-relative"
+            style="background-color: #006c8a;"
+            @click="toDataSantri"
+          >
+            <font-awesome-icon
+              icon="user"
+              class="p-2 fs-3 sm-fs-6"
+            />
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ forMat(storeAuth.stast.totalSantri) }}
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </div>
+          <br />
+          <p><small>Total Santri</small></p>
+        </div>
+      </div>
+      <div class="col mb-3 mb-sm-0">
+        <div>
+          <div
+            class="badge bg-primary position-relative"
+            @click="toDataPenumpang"
+          >
+            <font-awesome-icon
+              icon="briefcase"
+              class="p-2 fs-3 sm-fs-6"
+            />
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{forMat( storeAuth.stast.totalPenumpang) }}
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </div>
+          <br />
+          <p><small>Total Penumpang</small></p>
+        </div>
+      </div>
+      <div class="col mb-3 mb-sm-0">
+        <div>
+          <div
+            class="badge position-relative"
+            style="background-color: #8a5700;"
+            @click="toDataSantri"
+          >
+            <font-awesome-icon
+              icon="user-xmark"
+              class="p-2 fs-3 sm-fs-6"
+            />
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ forMat(storeAuth.stast.totalTidakRombongan) }}
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </div>
+          <br />
+          <p><small>Total Tidak Rombongan</small></p>
+        </div>
+      </div>
+      <div
+        class="col mb-3 mb-sm-0"
+        v-if="storeAuth.user.role != 'wilayah' && storeAuth.user.role != 'daerah'"
+      >
+        <div>
+          <div
+            class="badge position-relative"
+            style="background-color: #cd0052;"
+            @click="toDataArmada"
+          >
+            <font-awesome-icon
+              icon="bus"
+              class="p-2 fs-3 sm-fs-6"
+            />
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ storeAuth.stast.totalArmada }}
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </div>
+          <br />
+          <p><small>Total Armada</small></p>
+        </div>
+      </div>
+      <div class="col mb-3 mb-sm-0">
+        <div>
+          <div
+            class="badge position-relative"
+            style="background-color: #315200;"
+            @click="toDataArea"
+          >
+            <font-awesome-icon
+              icon="map"
+              class="p-2 fs-3 sm-fs-6"
+            />
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ storeAuth.stast.totalArea }}
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </div>
+          <br />
+          <p><small>Total Area</small></p>
+        </div>
+      </div>
+      <div class="col mb-3 mb-sm-0">
+        <div>
+          <div
+            class="badge position-relative"
+            style="background-color: #2d0063;"
+            @click="toDataDropspot"
+          >
+            <font-awesome-icon
+              icon="location-dot"
+              class="p-2 fs-3 sm-fs-6"
+            />
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ storeAuth.stast.totalDropspot }}
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </div>
+          <br />
+          <p><small>Total Dropspot</small></p>
+        </div>
+      </div>
+      <div
+        class="col mb-3 mb-sm-0"
+        v-if="storeAuth.user.role != 'wilayah' && storeAuth.user.role != 'daerah'"
+      >
+        <div>
+          <div
+            class="badge position-relative"
+            style="background-color: #5e0600;"
+            @click="toDataUser"
+          >
+            <font-awesome-icon
+              icon="user-cog"
+              class="p-2 fs-3 sm-fs-6"
+            />
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ storeAuth.stast.totalUser }}
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </div>
+          <br />
+          <p><small>Total User</small></p>
+        </div>
       </div>
     </div>
-    <div class="col mb-3 mb-sm-0">
-      <div>
-        <div
-          class="badge  bg-success bg-gradient position-relative"
-          @click="toDataPenumpang"
-        >
-          <font-awesome-icon
-            icon="briefcase"
-            class="p-2"
-            style="font-size: 20px; color: white; "
-          />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            {{forMat( storeAuth.stast.totalPenumpang) }}
-            <span class="visually-hidden">unread messages</span>
-          </span>
-        </div>
-        <br />
-        <p class=""><small>Total Penumpang</small></p>
-      </div>
-    </div>
-    <div class="col mb-3 mb-sm-0">
-      <div>
-        <div
-          class="badge bg-secondary bg-gradient position-relative"
-          @click="toDataSantri"
-        >
-          <font-awesome-icon
-            icon="user-xmark"
-            class="p-2"
-            style="font-size: 20px; color: white"
-          />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            {{ forMat(storeAuth.stast.totalTidakRombongan) }}
-            <span class="visually-hidden">unread messages</span>
-          </span>
-        </div>
-        <br />
-        <p class=""><small>Total Tidak Rombongan</small></p>
-      </div>
-    </div>
-    <div
-      class="col mb-3 mb-sm-0"
-      v-if="storeAuth.user.role != 'wilayah' && storeAuth.user.role != 'daerah'"
-    >
-      <div>
-        <div
-          class="badge bg-danger bg-gradient position-relative"
-          @click="toDataArmada"
-        >
-          <font-awesome-icon
-            icon="bus"
-            class="p-2"
-            style="font-size: 20px; color: white"
-          />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            {{ storeAuth.stast.totalArmada }}
-            <span class="visually-hidden">unread messages</span>
-          </span>
-        </div>
-        <br />
-        <p class=""><small>Total Armada</small></p>
-      </div>
-    </div>
-    <div class="col mb-3 mb-sm-0">
-      <div>
-        <div
-          class="badge bg-warning bg-gradient position-relative"
-          @click="toDataArea"
-        >
-          <font-awesome-icon
-            icon="map"
-            class="p-2"
-            style="font-size: 20px; color: white"
-          />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            {{ storeAuth.stast.totalArea }}
-            <span class="visually-hidden">unread messages</span>
-          </span>
-        </div>
-        <br />
-        <p class=""><small>Total Area</small></p>
-      </div>
-    </div>
-    <div class="col mb-3 mb-sm-0">
-      <div>
-        <div
-          class="badge bg-info bg-gradient position-relative"
-          @click="toDataDropspot"
-        >
-          <font-awesome-icon
-            icon="location-dot"
-            class="p-2"
-            style="font-size: 20px; color: white"
-          />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            {{ storeAuth.stast.totalDropspot }}
-            <span class="visually-hidden">unread messages</span>
-          </span>
-        </div>
-        <br />
-        <p class=""><small>Total Dropspot</small></p>
-      </div>
-    </div>
-    <div
-      class="col mb-3 mb-sm-0"
-      v-if="storeAuth.user.role != 'wilayah' && storeAuth.user.role != 'daerah'"
-    >
-      <div>
-        <div
-          class="badge bg-dark bg-gradient position-relative"
-          @click="toDataUser"
-        >
-          <font-awesome-icon
-            icon="user-cog"
-            class="p-2"
-            style="font-size: 20px; color: white"
-          />
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            {{ storeAuth.stast.totalUser }}
-            <span class="visually-hidden">unread messages</span>
-          </span>
-        </div>
-        <br />
-        <p class=""><small>Total User</small></p>
-      </div>
+    <div class="pt-5">
+      <img
+        src="logo-puber.png"
+        class="img-thumbnail"
+        alt=""
+      >
     </div>
   </div>
 
   <div v-else>
-
     <h3 class="titlePage">Dashboard</h3>
     <hr />
 
@@ -491,7 +562,7 @@ const forMat = (i) => {
   return i ? i.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1.") : "";
 };
 onMounted(() => {
-  const mobileQuery = window.matchMedia("(max-width: 128px)");
+  const mobileQuery = window.matchMedia("(max-width: 767px)");
 
   isMobile.value = mobileQuery.matches;
 
