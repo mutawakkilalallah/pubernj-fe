@@ -1079,14 +1079,14 @@ const table = usePenumpangTable();
 const form = usePenumpangForm();
 const isMobile = ref("");
 
-table.getData();
-
-if (storeAuth.user.role != "p4nj") {
-  table.getWilayah();
-}
-table.getArmada();
-
 onMounted(() => {
+  table.getData();
+
+  if (storeAuth.user.role != "p4nj") {
+    table.getWilayah();
+  }
+  table.getArmada();
+
   const mobileQuery = window.matchMedia("(max-width: 767px)");
 
   isMobile.value = mobileQuery.matches;

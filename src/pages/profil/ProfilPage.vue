@@ -1,6 +1,19 @@
 <template>
   <!-- judul -->
-  <h3 class="titlePage">Profil</h3>
+  <div class="row">
+    <div class="col-md-8">
+      <h3 class="titlePage">Profil</h3>
+    </div>
+    <div class="col-md-4 text-end">
+      <button
+        class="btn btn-sm btn-outline-secondary"
+        type="button"
+        @click="backPage"
+      >
+        Kembali
+      </button>
+    </div>
+  </div>
   <hr />
   <div class="my-3 text-center">
     <img
@@ -37,7 +50,10 @@
               >
                 Password dan Konfirmasi Password tidak sama
               </p>
-              <p class="text-danger" v-if="store.form.password.length < 5">
+              <p
+                class="text-danger"
+                v-if="store.form.password.length < 5"
+              >
                 Password minimal 5 karakter
               </p>
               <button
@@ -60,7 +76,16 @@
 <script setup>
 import { useProfilStore } from "../../store/profil";
 import { useRoute } from "vue-router";
+import { onMounted } from "vue";
+import router from "../../router";
 const route = useRoute();
 const store = useProfilStore();
-store.getDataDetail(route.params.uuid);
+
+function backPage() {
+  router.back();
+}
+
+onMounted(() => {
+  store.getDataDetail(route.params.uuid);
+});
 </script>

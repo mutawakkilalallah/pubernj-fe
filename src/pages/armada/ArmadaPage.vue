@@ -1,17 +1,17 @@
 <template>
   <!-- judul -->
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-4">
       <h3 class="titlePage">Data Armada</h3>
     </div>
     <div
-      class="col-md-4 text-end"
+      class="col-md-8 text-end"
       v-if="
         storeAuth.user.role != 'pendamping' && storeAuth.user.role != 'p4nj'
       "
     >
       <button
-        class="btn btn-sm btn-outline-primary"
+        class="btn btn-sm btn-outline-success"
         type="button"
         @click="pagePrint"
       >

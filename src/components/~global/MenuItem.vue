@@ -6,15 +6,15 @@
     >
       <div
         v-if="isMobile"
-        class="text-center p-2 mx-2 menu-atas-item rounded"
+        class="text-center p-2 mx-2 rounded"
         :class="
           routePath === props.path && myTheme.themes === 'light'
-            ? 'menu-active'
+            ? 'menu-active-mobile'
             : routePath === props.path && myTheme.themes === 'dark'
             ? 'menu-dark'
             : routePath === props.path
-            ? 'menu-active'
-            : 'menu-atas-item '
+            ? 'menu-active-mobile'
+            : 'menu-atas-item-m'
         "
       >
         <font-awesome-icon
@@ -122,6 +122,18 @@ onMounted(() => {
   // background-color: #61616137;
   // border-bottom: 5px solid #02582c;
 }
+.menu-active-mobile {
+  background-color: #02582c;
+  border-bottom: 3px solid #189c07;
+  border-radius: 0 0 10px 10px;
+  transform: translateY(-3px);
+
+  // background-color: #61616137;
+  // border-bottom: 5px solid #02582c;
+}
+.menu-atas-item-m {
+  transform: translateY(10px);
+}
 .menu-dark {
   background-color: #7b7b7b;
   border-bottom: 5px solid #353434;
@@ -135,7 +147,7 @@ onMounted(() => {
   margin-bottom: 0;
 }
 .iconMobile {
-  font-size: 20px;
+  font-size: 15px;
 }
 .namaMobile {
   font-size: 10px;

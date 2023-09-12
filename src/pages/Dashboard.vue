@@ -213,11 +213,33 @@
           <p><small>Total User</small></p>
         </div>
       </div>
+      <div
+        class="col mb-3 mb-sm-0"
+        v-if="access.sysadmin()"
+      >
+        <div>
+          <div
+            class="badge position-relative"
+            style="background-color: #2a2700;"
+          >
+            <font-awesome-icon
+              icon="stopwatch"
+              class="p-2 fs-3 sm-fs-6"
+            />
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ storeAuth.stast.totalLogin  }}
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </div>
+          <br />
+          <p><small> Active Session</small></p>
+        </div>
+      </div>
     </div>
-    <div class="pt-5">
+    <div class=" my-3">
       <img
         src="logo-puber.png"
-        class="img-thumbnail"
+        class="img-fluid"
         alt=""
       >
     </div>
@@ -311,7 +333,7 @@
               </div>
               <div class="col">
                 <h3 class="card-title text-end text-light">
-                  {{ storeAuth.stast.totalSantri }}
+                  {{ forMat(storeAuth.stast.totalSantri) }}
                 </h3>
                 <p class="card-text text-end fw-bold text-light">Total Santri</p>
               </div>
@@ -339,7 +361,7 @@
               </div>
               <div class="col">
                 <h3 class="card-title text-end">
-                  {{ storeAuth.stast.totalPenumpang }}
+                  {{ forMat(storeAuth.stast.totalPenumpang) }}
                 </h3>
                 <p class="card-text text-end fw-bold">Total Penumpang</p>
               </div>
@@ -367,7 +389,7 @@
               </div>
               <div class="col">
                 <h3 class="card-title text-end text-light">
-                  {{ storeAuth.stast.totalTidakRombongan }}
+                  {{ forMat(storeAuth.stast.totalTidakRombongan) }}
                 </h3>
                 <p class="card-text text-end fw-bold text-light">
                   Total Tidak Rombongan
@@ -493,7 +515,7 @@
       >
         <div
           class="card"
-          style="background-color: #2a2700; cursor: pointer"
+          style="background-color: #2a2700"
         >
           <div class="card-body">
             <div class="row">

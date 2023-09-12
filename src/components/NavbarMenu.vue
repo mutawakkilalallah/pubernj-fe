@@ -36,7 +36,7 @@
             role="switch"
             :checked="cekak"
             style="cursor: pointer; background-color: var(--bs-body-bg)"
-            class="form-check-input"
+            class="form-check-input mt-2"
             @click="setDark"
           />
         </div>
@@ -58,7 +58,7 @@
   </nav>
 
   <div
-    class="menu-atas shadow d-flex justify-content-start bg-white fixed-bottom mt-5"
+    class="menu-atas shadow d-flex justify-content-start bg-white fixed-bottom"
     style="overflow-x: auto"
     v-if="isMobile"
   >

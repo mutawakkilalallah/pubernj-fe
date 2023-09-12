@@ -484,11 +484,11 @@ const form = useSantriForm();
 const storeAuth = useAuthStore();
 const isMobile = ref("");
 
-form.getArea();
-table.getData();
-table.getWilayah();
-
 onMounted(() => {
+  form.getArea();
+  table.getData();
+  table.getWilayah();
+
   const mobileQuery = window.matchMedia("(max-width: 767px)");
 
   isMobile.value = mobileQuery.matches;

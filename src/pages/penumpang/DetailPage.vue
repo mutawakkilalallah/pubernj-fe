@@ -432,12 +432,8 @@ const table = usePenumpangDetailTable();
 const route = useRoute();
 const isMobile = ref("");
 
-onMounted(() => {
-  table.getDataDetail(route.params.uuid);
-});
-
 function backPage() {
-  router.push("/penumpang");
+  router.back();
 }
 const formatMinus = (i) => {
   const formatter = new Intl.NumberFormat("id-ID", {
@@ -451,6 +447,8 @@ const formatMinus = (i) => {
 };
 
 onMounted(() => {
+  table.getDataDetail(route.params.uuid);
+
   const mobileQuery = window.matchMedia("(max-width: 767px)");
 
   isMobile.value = mobileQuery.matches;

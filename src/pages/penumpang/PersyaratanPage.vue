@@ -571,13 +571,13 @@ const storeAuth = useAuthStore();
 const table = usePersyaratanTable();
 const isMobile = ref("");
 
-table.getData();
-
-if (storeAuth.user.role != "p4nj") {
-  table.getWilayah();
-}
-
 onMounted(() => {
+  table.getData();
+
+  if (storeAuth.user.role != "p4nj") {
+    table.getWilayah();
+  }
+
   const mobileQuery = window.matchMedia("(max-width: 767px)");
 
   isMobile.value = mobileQuery.matches;
