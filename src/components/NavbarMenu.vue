@@ -491,6 +491,7 @@ function prosesLogout() {
     if (result.isConfirmed) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      localStorage.removeItem("x-token");
       router.replace("/login");
     }
   });

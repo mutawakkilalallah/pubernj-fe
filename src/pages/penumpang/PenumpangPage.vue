@@ -538,7 +538,7 @@
               <input
                 type="file"
                 @change="form.handleFileChange"
-                accept=".xlsx"
+                accept=".xls, .xlsx"
                 class="form-control mt-2"
               />
             </div>
