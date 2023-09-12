@@ -11,13 +11,22 @@
     "
   >
     <div class="container-fluid">
-      <a v-if="isMobile" class="navbar-brand" style="font-size: 14px" href="#"
-        >PUBER NJ</a
+      <a
+        v-if="isMobile"
+        class="navbar-brand"
+        style="font-size: 14px"
+        href="#"
+      >PUBER NJ</a>
+      <a
+        v-else
+        class="navbar-brand"
+        style="font-size: 14px"
+        href="#"
+      >Pulang Bersama - PP. Nurul Jadid</a>
+      <div
+        class="collapse navbar-collapse"
+        id="navbarSupportedContent"
       >
-      <a v-else class="navbar-brand" style="font-size: 14px" href="#"
-        >Pulang Bersama - PP. Nurul Jadid</a
-      >
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
 
         <div class="form-check form-switch">
@@ -27,11 +36,14 @@
             role="switch"
             :checked="cekak"
             style="cursor: pointer; background-color: var(--bs-body-bg)"
-            class="form-check-input"
+            class="form-check-input mt-2"
             @click="setDark"
           />
         </div>
-        <button class="btn-kecil btn btn-outline-info me-2" type="submit">
+        <button
+          class="btn-kecil btn btn-outline-info me-2"
+          type="submit"
+        >
           <font-awesome-icon icon="brush" /> Clear Cache
         </button>
         <button
@@ -44,9 +56,25 @@
       </div>
     </div>
   </nav>
+
   <div
-    class="menu-atas shadow d-flex justify-content-start bg-white"
-    :class="isMobile ? 'fixed-top mt-5' : 'fixed-top mt-5'"
+    class="menu-atas shadow d-flex justify-content-start bg-white fixed-bottom"
+    style="overflow-x: auto"
+    v-if="isMobile"
+  >
+    <MenuItem
+      v-for="m in filterMenu()"
+      :key="m.title"
+      :title="m.title"
+      :icon="m.icon"
+      :path="m.path"
+    />
+
+  </div>
+
+  <div
+    v-else
+    class="menu-atas shadow d-flex justify-content-start bg-white fixed-top mt-5"
     style="overflow-x: auto"
   >
     <MenuItem
@@ -56,7 +84,9 @@
       :icon="m.icon"
       :path="m.path"
     />
+
   </div>
+
 </template>
 
 <script setup>
@@ -71,6 +101,7 @@ const myTheme = useThemeStore();
 const storeAuth = useAuthStore();
 const isMobile = ref("");
 const cekak = ref(false);
+// const routeDash = ref("");
 
 const menu = ref([
   {
@@ -437,6 +468,10 @@ function filterMenu() {
   return a;
 }
 
+const routeDash = computed(() => {
+  return router.options.routes[2].children[0].name;
+});
+
 onMounted(() => {
   const mobileQuery = window.matchMedia("(max-width: 767px)");
 
@@ -445,6 +480,8 @@ onMounted(() => {
   mobileQuery.addListener((query) => {
     isMobile.value = query.matches;
   });
+
+  // routeDash.value = router.options.routes[2].children[0].name;
 
   // get theme local storage
   const getTheme = JSON.parse(localStorage.getItem("pageTheme"));

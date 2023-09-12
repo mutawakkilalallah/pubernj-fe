@@ -2,7 +2,7 @@
   <navbar-menu />
   <main
     class="px-3"
-    :style="isMobile ? 'margin-top:120px' : 'margin-top: 150px;'"
+    :style="isMobile ? 'margin-top:50px' : 'margin-top: 150px;'"
   >
     <router-view />
   </main>

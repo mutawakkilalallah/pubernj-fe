@@ -10,8 +10,15 @@
         v-model="table.params.role"
         @change="table.getData"
       >
-        <option value="" selected>Semua Hak Akses</option>
-        <option v-for="r in table.roles" :key="r" :value="r.key">
+        <option
+          value=""
+          selected
+        >Semua Hak Akses</option>
+        <option
+          v-for="r in table.roles"
+          :key="r"
+          :value="r.key"
+        >
           {{ r.value }}
         </option>
       </select>
@@ -35,7 +42,10 @@
     </div>
   </div>
   <!-- tombol tambah data -->
-  <button class="btn btn-sm btn-primary" @click="form.setOpenAdd">
+  <button
+    class="btn btn-sm btn-primary"
+    @click="form.setOpenAdd"
+  >
     Tambah User
   </button>
   <!-- table data utama -->
@@ -86,7 +96,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalTambahLabel">Tambah User</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalTambahLabel"
+          >Tambah User</h1>
           <button
             class="btn-close"
             type="button"
@@ -111,8 +124,14 @@
             >
               External
             </button>
-            <input type="hidden" v-model="form.formInt.niup" />
-            <div class="form-group mb-3" v-if="form.mode === 'internal'">
+            <input
+              type="hidden"
+              v-model="form.formInt.niup"
+            />
+            <div
+              class="form-group mb-3"
+              v-if="form.mode === 'internal'"
+            >
               <div class="input-group mb-3">
                 <input
                   type="text"
@@ -134,7 +153,10 @@
                 </div>
               </div>
             </div>
-            <div class="form-group mb-3" v-if="form.mode === 'external'">
+            <div
+              class="form-group mb-3"
+              v-if="form.mode === 'external'"
+            >
               <small>Nama Lengkap</small>
               <input
                 type="text"
@@ -150,17 +172,37 @@
                 v-model="form.formInt.role"
                 :disabled="form.mode === 'external'"
               >
-                <option value="" selected>Pilih Hak Akses</option>
-                <option v-for="r in table.roles" :key="r.key" :value="r.key">
+                <option
+                  value=""
+                  selected
+                >Pilih Hak Akses</option>
+                <option
+                  v-for="r in table.roles"
+                  :key="r.key"
+                  :value="r.key"
+                >
                   {{ r.value }}
                 </option>
               </select>
             </div>
-            <div class="form-group mb-3" v-if="form.formInt.role === 'p4nj'">
+            <div
+              class="form-group mb-3"
+              v-if="form.formInt.role === 'p4nj'"
+            >
               <small>Area</small>
-              <select class="form-select" v-model="form.formInt.area_id">
-                <option value="" selected>Pilih Area</option>
-                <option v-for="a in form.isArea" :key="a" :value="a.id">
+              <select
+                class="form-select"
+                v-model="form.formInt.area_id"
+              >
+                <option
+                  value=""
+                  selected
+                >Pilih Area</option>
+                <option
+                  v-for="a in form.isArea"
+                  :key="a"
+                  :value="a.id"
+                >
                   {{ a.nama }}
                 </option>
               </select>
@@ -201,7 +243,10 @@
             >
               Tutup
             </button>
-            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >Simpan</button>
           </div>
         </form>
       </div>
@@ -221,7 +266,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">Edit User</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >Edit User</h1>
           <button
             class="btn-close"
             type="button"
@@ -230,7 +278,10 @@
         </div>
         <form @submit.prevent="form.editData">
           <div class="modal-body">
-            <input type="hidden" v-model="form.formEdit.santri_uuid" />
+            <input
+              type="hidden"
+              v-model="form.formEdit.santri_uuid"
+            />
             <div class="form-group mb-3">
               <small>Username</small>
               <input
@@ -257,16 +308,33 @@
                 :disabled="form.editMode === 'external'"
               >
                 <!-- <option value="" selected>{{ form.roleValue }}</option> -->
-                <option v-for="r in table.roles" :key="r.key" :value="r.key">
+                <option
+                  v-for="r in table.roles"
+                  :key="r.key"
+                  :value="r.key"
+                >
                   {{ r.value }}
                 </option>
               </select>
             </div>
-            <div class="form-group mb-3" v-if="form.formEdit.role === 'p4nj'">
+            <div
+              class="form-group mb-3"
+              v-if="form.formEdit.role === 'p4nj'"
+            >
               <small>Area</small>
-              <select class="form-select" v-model="form.formEdit.area_id">
-                <option value="" selected>Pilih Area</option>
-                <option v-for="a in form.isArea" :key="a" :value="a.id">
+              <select
+                class="form-select"
+                v-model="form.formEdit.area_id"
+              >
+                <option
+                  value=""
+                  selected
+                >Pilih Area</option>
+                <option
+                  v-for="a in form.isArea"
+                  :key="a"
+                  :value="a.id"
+                >
                   {{ a.nama }}
                 </option>
               </select>
@@ -287,7 +355,10 @@
             >
               Hapus
             </button>
-            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >Simpan</button>
           </div>
         </form>
       </div>
@@ -307,7 +378,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">Update Password</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >Update Password</h1>
           <button
             class="btn-close"
             type="button"
@@ -334,7 +408,10 @@
             >
               Tutup
             </button>
-            <button type="submit" class="btn btn-sm btn-primary">
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >
               Update Password
             </button>
           </div>
@@ -356,7 +433,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >
             Cari Santri/Pengurus By NIUP
           </h1>
           <button
@@ -375,11 +455,17 @@
               class="form-control mt-2"
             />
           </div>
-          <button class="btn btn-sm btn-warning" @click="form.getByNiup">
+          <button
+            class="btn btn-sm btn-warning"
+            @click="form.getByNiup"
+          >
             Preview
           </button>
           <hr />
-          <div class="text-center" v-if="form.personUser.warga_pesantren">
+          <div
+            class="text-center"
+            v-if="form.personUser.warga_pesantren"
+          >
             <img
               v-show="form.fotoDiri != ''"
               :src="form.fotoDiri"
@@ -431,11 +517,15 @@
   </div>
 </template>
 <script setup>
+import { onMounted } from "vue";
 import { useUserFrom } from "../../store/user/form";
 import { useUserTable } from "../../store/user/table";
 
 const table = useUserTable();
 const form = useUserFrom();
-table.getData();
-form.getArea();
+
+onMounted(() => {
+  table.getData();
+  form.getArea();
+});
 </script>

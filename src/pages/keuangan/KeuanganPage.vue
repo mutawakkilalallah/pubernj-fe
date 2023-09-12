@@ -248,10 +248,14 @@
   </div>
 </template>
 <script setup>
+import { onMounted } from "vue";
 import { useStatistikStore } from "../../store/auth/statistik";
 
 const store = useStatistikStore();
-store.getKeuangan();
+
+onMounted(() => {
+  store.getKeuangan();
+});
 
 const formatMinus = (i) => {
   const formatter = new Intl.NumberFormat("id-ID", {

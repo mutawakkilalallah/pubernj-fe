@@ -24,12 +24,14 @@
         v-model="table.params.wilayah"
         @change="table.getBlok"
       >
-        <option value="" selected>Semua Wilayah</option>
+        <option
+          value=""
+          selected
+        >Semua Wilayah</option>
         <option
           v-for="w in table.filter.wilayah"
           :key="w"
           :value="w.alias_wilayah"
-          @change=""
         >
           {{ w.wilayah }}
         </option>
@@ -40,8 +42,15 @@
         v-model="table.params.blok"
         @change="table.getData"
       >
-        <option value="" selected>Semua Daerah</option>
-        <option v-for="b in table.filter.blok" :key="b" :value="b.id_blok">
+        <option
+          value=""
+          selected
+        >Semua Daerah</option>
+        <option
+          v-for="b in table.filter.blok"
+          :key="b"
+          :value="b.id_blok"
+        >
           {{ b.blok }}
         </option>
       </select>
@@ -52,7 +61,10 @@
         v-model="table.params.status_kepulangan"
         @change="table.getData"
       >
-        <option value="" selected>Semua Status Kepulangan</option>
+        <option
+          value=""
+          selected
+        >Semua Status Kepulangan</option>
         <option value="rombongan">Rombongan</option>
         <option value="non-rombongan">Non Rombongan</option>
       </select>
@@ -61,7 +73,10 @@
         v-model="table.params.jenis_kelamin"
         @change="table.getData"
       >
-        <option value="" selected>Semua Jenis Kelamin</option>
+        <option
+          value=""
+          selected
+        >Semua Jenis Kelamin</option>
         <option value="L">Laki-Laki</option>
         <option value="P">Perempuan</option>
       </select>
@@ -76,7 +91,10 @@
           v-model="table.params.limit"
           @change="table.getData"
         >
-          <option value="25" selected>25</option>
+          <option
+            value="25"
+            selected
+          >25</option>
           <option value="50">50</option>
           <option value="100">100</option>
           <option value="250">250</option>
@@ -102,14 +120,17 @@
           />
         </div>
         <div class="col-auto d-flex flex-column align-items-end">
-          <button class="btn btn-danger btn-sm" @click="table.handleReset">
+          <button
+            class="btn btn-danger btn-sm"
+            @click="table.handleReset"
+          >
             RESET
           </button>
         </div>
       </div>
     </div>
   </div>
-  <div class="table-responsive">
+  <div :class="isMobile ? 'table-responsive myTable' : 'table-responsive'">
     <table class="table table-sm table-hover mt-3">
       <thead>
         <tr>
@@ -149,23 +170,26 @@
           >
             <small class="badge bg-danger">{{ d.status_kepulangan }}</small>
           </td>
-          <td class="text-capitalize" v-else>
+          <td
+            class="text-capitalize"
+            v-else
+          >
             <small class="badge bg-success">{{ d.status_kepulangan }}</small>
           </td>
         </tr>
       </tbody>
     </table>
+    <app-paginate
+      v-if="table.meta['x_total_data']"
+      :meta="table.meta"
+      :per_page="table.params.limit"
+      @set-page="(val) => table.setPage(val)"
+      @next="table.nexPage"
+      @prev="table.prevPage"
+      @last="table.setPage"
+      @first="table.setPage"
+    />
   </div>
-  <app-paginate
-    v-if="table.meta['x_total_data']"
-    :meta="table.meta"
-    :per_page="table.params.limit"
-    @set-page="(val) => table.setPage(val)"
-    @next="table.nexPage"
-    @prev="table.prevPage"
-    @last="table.setPage"
-    @first="table.setPage"
-  />
   <!-- modal detail data -->
   <div
     class="modal fade modal-lg"
@@ -180,7 +204,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalDetailLabel">Detail Santri</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalDetailLabel"
+          >Detail Santri</h1>
           <button
             class="btn-close"
             type="button"
@@ -188,12 +215,16 @@
           ></button>
         </div>
         <div class="modal-body">
-          <p class="alert alert-secondary p-1" role="alert">
-            <i
-              ><font-awesome-icon icon="bell" class="icon" /> Data santri hanya
+          <p
+            class="alert alert-secondary p-1"
+            role="alert"
+          >
+            <i><font-awesome-icon
+                icon="bell"
+                class="icon"
+              /> Data santri hanya
               bersifat temporary sebagai kebutuhan Pulang Bersama, untuk data
-              lebih detail silahkan lihat di Aplikasi PEDATREN</i
-            >
+              lebih detail silahkan lihat di Aplikasi PEDATREN</i>
           </p>
 
           <div class="row">
@@ -367,7 +398,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Dropsot</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >Edit Dropsot</h1>
           <button
             class="btn-close"
             type="button"
@@ -383,8 +417,15 @@
                 v-model="form.idArea"
                 @change="form.getDropspot"
               >
-                <option value="" selected>Pilih Area</option>
-                <option v-for="a in form.isArea" :key="a" :value="a.id">
+                <option
+                  value=""
+                  selected
+                >Pilih Area</option>
+                <option
+                  v-for="a in form.isArea"
+                  :key="a"
+                  :value="a.id"
+                >
                   {{ a.nama }}
                 </option>
               </select>
@@ -403,7 +444,11 @@
                 >
                   Pilih Dropspot
                 </option>
-                <option v-for="d in form.isDropspot" :key="d" :value="d.id">
+                <option
+                  v-for="d in form.isDropspot"
+                  :key="d"
+                  :value="d.id"
+                >
                   {{ d.nama }}
                 </option>
               </select>
@@ -417,7 +462,10 @@
             >
               Tutup
             </button>
-            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >Simpan</button>
           </div>
         </form>
       </div>
@@ -429,14 +477,26 @@ import { useSantriTable } from "../../store/santri/table";
 import { useSantriForm } from "../../store/santri/form";
 import { useAuthStore } from "../../store/auth/index";
 import * as access from "../../plugins/access";
+import { onMounted, ref } from "vue";
 
 const table = useSantriTable();
 const form = useSantriForm();
 const storeAuth = useAuthStore();
+const isMobile = ref("");
 
-form.getArea();
-table.getData();
-table.getWilayah();
+onMounted(() => {
+  form.getArea();
+  table.getData();
+  table.getWilayah();
+
+  const mobileQuery = window.matchMedia("(max-width: 767px)");
+
+  isMobile.value = mobileQuery.matches;
+
+  mobileQuery.addListener((query) => {
+    isMobile.value = query.matches;
+  });
+});
 </script>
 
 <style scoped>
@@ -451,5 +511,8 @@ input {
 }
 .btn {
   font-size: 12px;
+}
+.myTable {
+  margin-bottom: 60px;
 }
 </style>

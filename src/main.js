@@ -65,6 +65,7 @@ import {
   faCog,
   faStopwatch,
   faEye,
+  faEyeSlash,
   faTrash,
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
@@ -111,6 +112,7 @@ library.add(
   faStopwatch,
   faDownload,
   faEye,
+  faEyeSlash,
   faTrash,
   faUpload
 );

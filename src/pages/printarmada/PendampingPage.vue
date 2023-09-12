@@ -111,13 +111,15 @@
 
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { usePendampingTable } from "../../store/pendamping/table";
 import print from "vue3-print-nb";
 
 const table = usePendampingTable();
-table.getData();
 
+onMounted(() => {
+  table.getData();
+});
 const idBus = ref(0);
 
 function ambilId() {

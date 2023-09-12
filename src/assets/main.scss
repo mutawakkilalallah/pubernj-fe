@@ -3,18 +3,18 @@
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@200;400;600;700;900&family=Poppins:wght@400;600&family=Roboto:wght@400;500;700&display=swap');
 :root {
-  --bs-body-font-family : 'Roboto' !important;
+  --bs-body-font-family : 'Roboto', sans-serif !important;
 }
 
 @media (max-width: 575.98px) {
-  .titlePage {
-      margin-top: -10px;
-    }
+// .titlePageMo {
+//     margin-top: -50px;
+//   }
    }
 @media (max-width: 767.98px) {
- .titlePage{
-  margin-top: -10px;
- }
+// .titlePageMo {
+//     margin-top: -50px;
+//   }
 }
 
 // `lg` applies to medium devices (tablets, less than 992px)
@@ -24,32 +24,7 @@
 
 // `xl` applies to large devices (desktops, less than 1200px)
 @media (max-width: 1199.98px) {
-.boxLogin{
-  margin-top: 15%;
-  width: 330px !important;
-    height: 400px !important;
-}
-.appLogo {
-  position: absolute;
-  width: 130px !important;
-  margin-left: -60px !important;
-  margin-top: -150px;
-}
-.title h4{ 
-  margin-top: -55px;
-}
-.boxLogin form {
-  margin-top: -10px ;
-  button{
-    height: 30px;
-    font-size: 12px;
-  }
-  input{
-    width: 115%;
-    margin-left: -20px;
-    font-size: 15px;
-  }
-}
+
 .developer{
   margin-top: 30px !important;
   font-size: small;
@@ -66,11 +41,7 @@
    .titlePage{
       padding-top: 15px;
      };
-.boxLogin {
-    margin-top: 15%;
-    width: 330px !important;
-    height: 410px !important;
-  }
+
 
   .appLogo {
     position: absolute;
@@ -81,22 +52,7 @@
 
   .title h4 {
     margin-top: -55px;
-  }
-
-  .boxLogin form {
-    margin-top: -10px;
-
-    button {
-      height: 30px;
-      font-size: 12px;
-    }
-
-    input {
-      width: 115%;
-      margin-left: -20px;
-      font-size: 15px;
-    }
-  }
+  }  
 
   .developer {
     margin-top: 30px !important;

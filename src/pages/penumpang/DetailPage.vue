@@ -106,7 +106,7 @@
     </div>
   </div>
   <hr />
-  <div class="row">
+  <div class="row g-2">
     <div class="col-md-3">
       <div class="card">
         <div class="card-header bg-primary text-white">Tujuan</div>
@@ -150,19 +150,19 @@
           <i
             v-if="table.item.status_bayar === 'belum-lunas'"
             class="badge bg-danger"
-            >{{ table.item.status_bayar }}</i
-          >
+          >{{ table.item.status_bayar }}</i>
           <i
             v-if="table.item.status_bayar === 'lunas'"
             class="badge bg-success"
-            >{{ table.item.status_bayar }}</i
-          >
+          >{{ table.item.status_bayar }}</i>
           <i
             v-if="table.item.status_bayar === 'kurang'"
             class="badge bg-warning"
-            >{{ table.item.status_bayar }}</i
-          >
-          <i v-if="table.item.status_bayar === 'lebih'" class="badge bg-info">{{
+          >{{ table.item.status_bayar }}</i>
+          <i
+            v-if="table.item.status_bayar === 'lebih'"
+            class="badge bg-info"
+          >{{
             table.item.status_bayar
           }}</i>
         </div>
@@ -208,47 +208,57 @@
             <small
               class="badge bg-success"
               v-if="table?.item?.persyaratan?.lunas_bps"
-              >Lunas
+            >Lunas
             </small>
-            <small class="badge bg-danger" v-else>Belum Lunas </small>
+            <small
+              class="badge bg-danger"
+              v-else
+            >Belum Lunas </small>
           </div>
           <div>
             <p class="card-title mb-0">Kos Makan Santri (KOSMARA) :</p>
             <small
               class="badge bg-success"
               v-if="table?.item?.persyaratan?.lunas_kosmara"
-              >Lunas
+            >Lunas
             </small>
-            <small class="badge bg-danger" v-else>Belum Lunas </small>
+            <small
+              class="badge bg-danger"
+              v-else
+            >Belum Lunas </small>
           </div>
           <div>
             <p class="card-title mb-0">Furudhul Ainiyah (FA) :</p>
             <small
               class="badge bg-success"
               v-if="table?.item?.persyaratan?.tuntas_fa"
-              >Tuntas
+            >Tuntas
             </small>
-            <small class="badge bg-danger" v-else>Belum Tuntas </small>
+            <small
+              class="badge bg-danger"
+              v-else
+            >Belum Tuntas </small>
           </div>
           <div>
             <p class="card-title mb-0">Bebas Pelanggaran (KAMTIB)</p>
             <small
               class="badge bg-success"
               v-if="table?.item?.persyaratan?.bebas_kamtib"
-              >Bebas
+            >Bebas
             </small>
-            <small class="badge bg-danger" v-else>Belum Bebas</small>
+            <small
+              class="badge bg-danger"
+              v-else
+            >Belum Bebas</small>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="row my-3">
-    <div class="col-md-12">
+    <div :class="isMobile ? 'myMobile col-md-12':'col-md-12'">
       <div class="card">
-        <div
-          class="card-header bg-primary d-flex justify-content-between align-items-center text-white"
-        >
+        <div class="card-header bg-primary d-flex justify-content-between align-items-center text-white">
           <p class="mb-0">Berkas</p>
           <button
             class="btn btn-sm btn-outline-light btn-sm"
@@ -260,7 +270,11 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <div v-for="doc in table.berkas" :key="doc.id" class="col-md-3">
+            <div
+              v-for="doc in table.berkas"
+              :key="doc.id"
+              class="col-md-3"
+            >
               <div class="card">
                 <div class="card-body text-center">
                   <div class="row g-1 justify-content-end">
@@ -269,7 +283,10 @@
                         class="btn btn-sm btn-secondary"
                         @click="table.openInNewTab(doc.blobUrl)"
                       >
-                        <font-awesome-icon icon="eye" class="text-white" />
+                        <font-awesome-icon
+                          icon="eye"
+                          class="text-white"
+                        />
                       </button>
                     </div>
                     <div class="col-auto">
@@ -277,7 +294,10 @@
                         class="btn btn-sm btn-secondary"
                         @click="table.downloadFile(doc)"
                       >
-                        <font-awesome-icon icon="download" class="text-white" />
+                        <font-awesome-icon
+                          icon="download"
+                          class="text-white"
+                        />
                       </button>
                     </div>
                     <div class="col-auto">
@@ -285,11 +305,18 @@
                         class="btn btn-sm btn-danger"
                         @click="table.deleteBerkas(doc.id, route.params.uuid)"
                       >
-                        <font-awesome-icon icon="trash" class="text-white" />
+                        <font-awesome-icon
+                          icon="trash"
+                          class="text-white"
+                        />
                       </button>
                     </div>
                   </div>
-                  <img :src="doc.blobUrl" class="p-2 img-fluid" alt="berkas" />
+                  <img
+                    :src="doc.blobUrl"
+                    class="p-2 img-fluid"
+                    alt="berkas"
+                  />
                   <hr />
                   <small class="badge bg-primary">{{
                     doc.type
@@ -327,7 +354,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalUploadLabel">Upload Berkas</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalUploadLabel"
+          >Upload Berkas</h1>
           <button
             class="btn-close"
             type="button"
@@ -347,8 +377,14 @@
             </div>
             <div class="form-group mb-3">
               <small>Jenis Berkas</small>
-              <select class="form-select mt-2" v-model="table.form.type">
-                <option value="" selected>Pilih Jenis Berkas</option>
+              <select
+                class="form-select mt-2"
+                v-model="table.form.type"
+              >
+                <option
+                  value=""
+                  selected
+                >Pilih Jenis Berkas</option>
                 <option value="keterangan-pindah-dropspot">
                   Keterangan Pindah Dropspot
                 </option>
@@ -373,7 +409,10 @@
             >
               Tutup
             </button>
-            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >Simpan</button>
           </div>
         </form>
       </div>
@@ -381,7 +420,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { usePenumpangDetailTable } from "../../store/penumpang/table-detail";
 import { useRoute } from "vue-router";
 import router from "../../router";
@@ -391,13 +430,10 @@ import * as access from "../../plugins/access";
 const storeAuth = useAuthStore();
 const table = usePenumpangDetailTable();
 const route = useRoute();
-
-onMounted(() => {
-  table.getDataDetail(route.params.uuid);
-});
+const isMobile = ref("");
 
 function backPage() {
-  router.push("/penumpang");
+  router.back();
 }
 const formatMinus = (i) => {
   const formatter = new Intl.NumberFormat("id-ID", {
@@ -409,4 +445,21 @@ const formatMinus = (i) => {
 
   return formatter.format(i);
 };
+
+onMounted(() => {
+  table.getDataDetail(route.params.uuid);
+
+  const mobileQuery = window.matchMedia("(max-width: 767px)");
+
+  isMobile.value = mobileQuery.matches;
+
+  mobileQuery.addListener((query) => {
+    isMobile.value = query.matches;
+  });
+});
 </script>
+<style scoped>
+.myMobile {
+  margin-bottom: 60px;
+}
+</style>
