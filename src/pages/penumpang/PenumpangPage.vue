@@ -9,12 +9,18 @@
         v-if="access.keuangan()"
         class="btn btn-sm btn-outline-info me-2"
         type="button"
+        @click="form.setOpenCompareTagihan()"
+      >
+        <font-awesome-icon icon="file-import" class="icon" /> Import Tagihan
+        E-Bekal
+      </button>
+      <button
+        v-if="access.keuangan()"
+        class="btn btn-sm btn-outline-info me-2"
+        type="button"
         @click="form.setOpenImportPembayaran()"
       >
-        <font-awesome-icon
-          icon="file-import"
-          class="icon"
-        /> Import Pembayaran
+        <font-awesome-icon icon="file-import" class="icon" /> Import Pembayaran
       </button>
       <button
         v-if="access.keuangan()"
@@ -22,10 +28,7 @@
         type="button"
         @click="table.unduhTemplate"
       >
-        <font-awesome-icon
-          icon="download"
-          class="icon"
-        /> Unduh Template
+        <font-awesome-icon icon="download" class="icon" /> Unduh Template
       </button>
       <button
         class="btn btn-sm btn-outline-primary"
@@ -39,10 +42,7 @@
   <hr />
   <h6 class="text-primary">NOTE :</h6>
   <ul>
-    <li
-      class="text-primary"
-      v-if="access.keuangan"
-    >
+    <li class="text-primary" v-if="access.keuangan">
       Untuk fitur <b>"Unduh Template"</b> berlaku filter (Wilayah, Daerah, Jenis
       Kelamin dan Status Pembayaran)
     </li>
@@ -58,19 +58,13 @@
   <hr />
   <!-- menu filter -->
   <div class="filter-box row">
-    <div
-      class="col-md-2"
-      v-if="access.notInternal()"
-    >
+    <div class="col-md-2" v-if="access.notInternal()">
       <select
         class="form-select form-select-sm mb-2"
         v-model="table.params.wilayah"
         @change="table.getBlok"
       >
-        <option
-          value=""
-          selected
-        >Semua Wilayah</option>
+        <option value="" selected>Semua Wilayah</option>
         <option
           v-for="w in table.filter.wilayah"
           :key="w"
@@ -85,37 +79,20 @@
         v-model="table.params.blok"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Daerah</option>
-        <option
-          v-for="b in table.filter.blok"
-          :key="b"
-          :value="b.id_blok"
-        >
+        <option value="" selected>Semua Daerah</option>
+        <option v-for="b in table.filter.blok" :key="b" :value="b.id_blok">
           {{ b.blok }}
         </option>
       </select>
     </div>
-    <div
-      class="col-md-2"
-      v-if="access.notPendamping()"
-    >
+    <div class="col-md-2" v-if="access.notPendamping()">
       <select
         class="form-select form-select-sm mb-2"
         v-model="table.params.area"
         @change="table.getDropspot"
       >
-        <option
-          value=""
-          selected
-        >Semua Area</option>
-        <option
-          v-for="a in table.filter.area"
-          :key="a"
-          :value="a.id"
-        >
+        <option value="" selected>Semua Area</option>
+        <option v-for="a in table.filter.area" :key="a" :value="a.id">
           {{ a.nama }}
         </option>
       </select>
@@ -125,15 +102,8 @@
         v-model="table.params.dropspot"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Dropsot</option>
-        <option
-          v-for="d in table.filter.dropspot"
-          :key="d"
-          :value="d.id"
-        >
+        <option value="" selected>Semua Dropsot</option>
+        <option v-for="d in table.filter.dropspot" :key="d" :value="d.id">
           {{ d.nama }}
         </option>
       </select>
@@ -144,10 +114,7 @@
         v-model="table.params.pembayaran"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Status Pembayaran</option>
+        <option value="" selected>Semua Status Pembayaran</option>
         <option value="belum-lunas">Belum Lunas</option>
         <option value="lunas">Lunas</option>
         <option value="kurang">Kurang</option>
@@ -162,10 +129,7 @@
           table.params.pembayaran != 'lebih'
         "
       >
-        <option
-          value=""
-          selected
-        >Semua Status Persyaratan</option>
+        <option value="" selected>Semua Status Persyaratan</option>
         <option :value="1">Selesai</option>
         <option :value="0">Belum Selesai</option>
       </select>
@@ -176,10 +140,7 @@
         v-model="table.params.jenis_kelamin"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Jenis Kelamin</option>
+        <option value="" selected>Semua Jenis Kelamin</option>
         <option value="L">Laki-Laki</option>
         <option value="P">Perempuan</option>
       </select>
@@ -188,15 +149,8 @@
         v-model="table.params.armada"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Armada</option>
-        <option
-          v-for="a in table.filter.armada"
-          :key="a.id"
-          :value="a.id"
-        >
+        <option value="" selected>Semua Armada</option>
+        <option v-for="a in table.filter.armada" :key="a.id" :value="a.id">
           {{ a.nama }}
         </option>
       </select>
@@ -211,10 +165,7 @@
           v-model="table.params.limit"
           @change="table.getData"
         >
-          <option
-            value="25"
-            selected
-          >25</option>
+          <option value="25" selected>25</option>
           <option value="50">50</option>
           <option value="100">100</option>
           <option value="250">250</option>
@@ -240,10 +191,7 @@
           />
         </div>
         <div class="col-auto d-flex flex-column align-items-end">
-          <button
-            class="btn btn-danger btn-sm"
-            @click="table.handleReset"
-          >
+          <button class="btn btn-danger btn-sm" @click="table.handleReset">
             RESET
           </button>
         </div>
@@ -314,23 +262,19 @@
           <td>{{ d.santri.niup }}</td>
           <td>{{ d.santri.nama_lengkap }}</td>
           <td v-if="d.dropspot">{{ d.dropspot.nama }}</td>
-          <td
-            v-else
-            class="text-danger"
-          ><i>belum-ditentukan</i></td>
+          <td v-else class="text-danger"><i>belum-ditentukan</i></td>
           <td v-if="d.dropspot">
             {{ d.dropspot.area.nama }}
           </td>
+          <td v-else class="text-danger"><i>belum-ditentukan</i></td>
           <td
-            v-else
-            class="text-danger"
-          ><i>belum-ditentukan</i></td>
-          <td v-if="
+            v-if="
               (d.dropspot && storeAuth.user.role === 'sysadmin') ||
               storeAuth.user.role === 'admin' ||
               storeAuth.user.role === 'daerah' ||
               storeAuth.user.role === 'wilayah'
-            ">
+            "
+          >
             {{ formatMinus(d.dropspot.harga) }}
           </td>
           <td
@@ -344,37 +288,45 @@
           >
             Rp. 0
           </td>
-          <td v-if="
+          <td
+            v-if="
               storeAuth.user.role === 'sysadmin' ||
               storeAuth.user.role === 'admin' ||
               storeAuth.user.role === 'daerah' ||
               storeAuth.user.role === 'wilayah'
-            ">
+            "
+          >
             {{ formatMinus(d.jumlah_bayar) }}
           </td>
 
-          <td v-if="
+          <td
+            v-if="
               storeAuth.user.role === 'sysadmin' ||
               storeAuth.user.role === 'admin' ||
               storeAuth.user.role === 'daerah' ||
               storeAuth.user.role === 'wilayah'
-            ">
+            "
+          >
             <i
               v-if="d.status_bayar === 'belum-lunas'"
               class="badge bg-danger text-capitalize"
-            >{{ d.status_bayar === "belum-lunas" ? "belum lunas" : "" }}</i>
+              >{{ d.status_bayar === "belum-lunas" ? "belum lunas" : "" }}</i
+            >
             <i
               v-if="d.status_bayar === 'lunas'"
               class="badge bg-success text-capitalize"
-            >{{ d.status_bayar }}</i>
+              >{{ d.status_bayar }}</i
+            >
             <i
               v-if="d.status_bayar === 'kurang'"
               class="badge bg-warning text-capitalize"
-            >{{ d.status_bayar }}</i>
+              >{{ d.status_bayar }}</i
+            >
             <i
               v-if="d.status_bayar === 'lebih'"
               class="badge bg-info text-capitalize"
-            >{{ d.status_bayar }}</i>
+              >{{ d.status_bayar }}</i
+            >
           </td>
           <td>
             {{ d.santri.wilayah }}
@@ -432,10 +384,7 @@
       >
         Ubah Status Pembayaran
       </li>
-      <li
-        class="list-group-item px-5"
-        @click="form.goToDetail"
-      >
+      <li class="list-group-item px-5" @click="form.goToDetail">
         Lihat Detail Rombongan
       </li>
       <li
@@ -466,10 +415,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalEditLabel"
-          >Edit Dropsot</h1>
+          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Dropsot</h1>
           <button
             class="btn-close"
             type="button"
@@ -485,15 +431,8 @@
                 v-model="form.idArea"
                 @change="form.getDropspot"
               >
-                <option
-                  value=""
-                  selected
-                >Pilih Area</option>
-                <option
-                  v-for="a in form.isArea"
-                  :key="a"
-                  :value="a.id"
-                >
+                <option value="" selected>Pilih Area</option>
+                <option v-for="a in form.isArea" :key="a" :value="a.id">
                   {{ a.nama }}
                 </option>
               </select>
@@ -512,11 +451,7 @@
                 >
                   Pilih Dropspot
                 </option>
-                <option
-                  v-for="d in form.isDropspot"
-                  :key="d"
-                  :value="d.id"
-                >
+                <option v-for="d in form.isDropspot" :key="d" :value="d.id">
                   {{ d.nama }}
                 </option>
               </select>
@@ -530,10 +465,7 @@
             >
               Tutup
             </button>
-            <button
-              type="submit"
-              class="btn btn-sm btn-primary"
-            >Simpan</button>
+            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
           </div>
         </form>
       </div>
@@ -553,10 +485,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalEditLabel"
-          >Edit Pembayaran</h1>
+          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Pembayaran</h1>
           <button
             class="btn-close"
             type="button"
@@ -582,10 +511,7 @@
             >
               Tutup
             </button>
-            <button
-              type="submit"
-              class="btn btn-sm btn-primary"
-            >Simpan</button>
+            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
           </div>
         </form>
       </div>
@@ -605,10 +531,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalEditLabel"
-          >
+          <h1 class="modal-title fs-5" id="modalEditLabel">
             Import Pembayaran
           </h1>
           <button
@@ -637,10 +560,56 @@
             >
               Tutup
             </button>
+            <button type="submit" class="btn btn-sm btn-primary">Proses</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- modal import compare tagihan -->
+  <div
+    class="modal fade"
+    v-if="form.isOpenCompareTagihan === true"
+    :class="{ show: form.isOpenCompareTagihan }"
+    style="display: block"
+    id="modalEdit"
+    tabindex="-1"
+    aria-labelledby="modalEditLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalEditLabel">
+            Import Tagihan E-Bekal
+          </h1>
+          <button
+            class="btn-close"
+            type="button"
+            @click="form.setOpenCompareTagihan"
+          ></button>
+        </div>
+        <form @submit.prevent="form.compareTagihan">
+          <div class="modal-body">
+            <div class="form-group mb-3">
+              <small>File Excel (.xlsx only)</small>
+              <input
+                type="file"
+                @change="form.handleFileCompare"
+                accept=".xls, .xlsx"
+                class="form-control mt-2"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
             <button
-              type="submit"
-              class="btn btn-sm btn-primary"
-            >Proses</button>
+              type="button"
+              class="btn btn-sm btn-secondary"
+              @click="form.setOpenCompareTagihan"
+            >
+              Tutup
+            </button>
+            <button type="submit" class="btn btn-sm btn-primary">Proses</button>
           </div>
         </form>
       </div>
@@ -660,10 +629,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalEditLabel"
-          >Export Data</h1>
+          <h1 class="modal-title fs-5" id="modalEditLabel">Export Data</h1>
           <button
             class="btn-close"
             type="button"
@@ -678,10 +644,8 @@
               v-model="table.paramsExp.in_alamat"
               id="flexCheckDefault"
             />
-            <label
-              class="form-check-label"
-              for="flexCheckDefault"
-            >Alamat
+            <label class="form-check-label" for="flexCheckDefault"
+              >Alamat
             </label>
           </div>
           <div class="form-check">
@@ -691,10 +655,8 @@
               v-model="table.paramsExp.in_dropspot"
               id="flexCheckDefault"
             />
-            <label
-              class="form-check-label"
-              for="flexCheckDefault"
-            >Dropspot
+            <label class="form-check-label" for="flexCheckDefault"
+              >Dropspot
             </label>
           </div>
           <div class="form-check">
@@ -704,10 +666,8 @@
               v-model="table.paramsExp.in_domisili"
               id="flexCheckDefault"
             />
-            <label
-              class="form-check-label"
-              for="flexCheckDefault"
-            >Domisili Santri
+            <label class="form-check-label" for="flexCheckDefault"
+              >Domisili Santri
             </label>
           </div>
           <div class="form-check">
@@ -717,10 +677,8 @@
               v-model="table.paramsExp.in_pembayaran"
               id="flexCheckDefault"
             />
-            <label
-              class="form-check-label"
-              for="flexCheckDefault"
-            >Pembayaran (Ongkos Rombongan)
+            <label class="form-check-label" for="flexCheckDefault"
+              >Pembayaran (Ongkos Rombongan)
             </label>
           </div>
           <div class="form-check">
@@ -730,10 +688,8 @@
               v-model="table.paramsExp.in_persyaratan"
               id="flexCheckDefault"
             />
-            <label
-              class="form-check-label"
-              for="flexCheckDefault"
-            >Persyaratan
+            <label class="form-check-label" for="flexCheckDefault"
+              >Persyaratan
             </label>
           </div>
           <div class="form-check">
@@ -743,10 +699,8 @@
               v-model="table.paramsExp.in_armada"
               id="flexCheckDefault"
             />
-            <label
-              class="form-check-label"
-              for="flexCheckDefault"
-            >Armada
+            <label class="form-check-label" for="flexCheckDefault"
+              >Armada
             </label>
           </div>
           <hr />
@@ -757,28 +711,22 @@
               v-model="table.paramsExp.in_limit"
               id="flexCheckDefault"
             />
-            <label
-              class="form-check-label"
-              for="flexCheckDefault"
-            >Semua data tanpa dibatasi per halaman
+            <label class="form-check-label" for="flexCheckDefault"
+              >Semua data tanpa dibatasi per halaman
             </label>
             <br />
-            <label
-              class="form-check-label"
-              for="flexCheckDefault"
-            >(Bisa membutuhkan waktu yang lama)
+            <label class="form-check-label" for="flexCheckDefault"
+              >(Bisa membutuhkan waktu yang lama)
             </label>
           </div>
           <hr />
-          <b class="text-danger">Note: Jagalah privasi data. Haram disebar & dipergunakan untuk
-            selain kepentingan pesantren.</b>
+          <b class="text-danger"
+            >Note: Jagalah privasi data. Haram disebar & dipergunakan untuk
+            selain kepentingan pesantren.</b
+          >
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-primary"
-            @click="table.export"
-          >
+          <button type="button" class="btn btn-primary" @click="table.export">
             Export Excel
           </button>
           <button
@@ -806,10 +754,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalEditLabel"
-          >
+          <h1 class="modal-title fs-5" id="modalEditLabel">
             Detail Data Penumpang
           </h1>
           <button
@@ -997,23 +942,27 @@
                       <i
                         v-if="form.dataEdit.status_bayar === 'belum-lunas'"
                         class="badge bg-danger"
-                      >{{
+                        >{{
                           form.dataEdit.status_bayar === "belum-lunas"
                             ? "Belum Lunas"
                             : ""
-                        }}</i>
+                        }}</i
+                      >
                       <i
                         v-if="form.dataEdit.status_bayar === 'lunas'"
                         class="badge bg-success text-capitalize"
-                      >{{ form.dataEdit.status_bayar }}</i>
+                        >{{ form.dataEdit.status_bayar }}</i
+                      >
                       <i
                         v-if="form.dataEdit.status_bayar === 'kurang'"
                         class="badge bg-warning text-capitalize"
-                      >{{ form.dataEdit.status_bayar }}</i>
+                        >{{ form.dataEdit.status_bayar }}</i
+                      >
                       <i
                         v-if="form.dataEdit.status_bayar === 'lebih'"
                         class="badge bg-info text-capitalize"
-                      >{{ form.dataEdit.status_bayar }}</i>
+                        >{{ form.dataEdit.status_bayar }}</i
+                      >
                     </div>
                   </div>
                 </div>

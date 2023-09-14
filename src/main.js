@@ -68,6 +68,7 @@ import {
   faEyeSlash,
   faTrash,
   faUpload,
+  faWallet,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { registerComponents } from "./plugins/global-components";
@@ -114,7 +115,8 @@ library.add(
   faEye,
   faEyeSlash,
   faTrash,
-  faUpload
+  faUpload,
+  faWallet
 );
 const pinia = createPinia();
 const app = createApp(App);
