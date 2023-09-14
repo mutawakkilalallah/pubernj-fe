@@ -23,6 +23,7 @@ export const useCompareTable = defineStore("table_compare", {
       blok: "",
       jenis_kelamin: "",
       pembayaran: "",
+      nominal: "",
       limit: 100,
     },
     paramsNoTagihan: {
@@ -34,6 +35,15 @@ export const useCompareTable = defineStore("table_compare", {
     },
   }),
   actions: {
+    copyNiup(text) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+    },
+
     async getDataBeda() {
       const params = { params: this.paramsBeda };
       try {

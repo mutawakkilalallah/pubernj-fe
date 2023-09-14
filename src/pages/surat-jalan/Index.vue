@@ -81,49 +81,54 @@
         </div>
       </div>
       <hr />
-      <div class="mb-3">
-        <div class="row">
-          <div class="col-auto mb-2">
-            <button
-              class="btn btn-warning"
-              v-if="notSync"
-              @click="table.setOpenLogin"
-            >
-              Anda Belum Terhubung ke PEDATREN
-            </button>
-            <button class="btn btn-success" v-else>
-              Anda Terhubung ke PEDATREN sebagai
-              <b>[@{{ auth.user?.username_pedatren }}]</b>
-            </button>
-          </div>
-          <div class="col-auto mb-2">
-            <button
-              :disabled="notSync"
-              class="btn btn-secondary"
-              @click="table.syncPedatren(auth.user.uuid)"
-            >
-              Sinkronasi Ulang
-            </button>
-          </div>
-          <div class="col-auto mb-2">
-            <button
-              :disabled="notSync"
-              class="btn btn-danger"
-              @click="table.getLog"
-            >
-              Error Log
-            </button>
-          </div>
-          <div class="col-auto mb-2">
-            <button
-              :disabled="notSync"
-              class="btn btn-primary"
-              @click="table.generateIzin"
-            >
-              Proses Perizinan
-            </button>
-          </div>
-        </div>
+      <div
+        class="btn-group mb-3"
+        role="group"
+        aria-label="Basic mixed styles example"
+      >
+        <button type="button" class="btn btn-danger" v-if="notSync">
+          Not Connected
+        </button>
+        <button type="button" class="btn btn-success" v-else>
+          (@{{ auth.user?.username_pedatren }})
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          v-if="notSync"
+          @click="table.setOpenLogin"
+        >
+          <font-awesome-icon icon="right-to-bracket" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          v-else
+          @click="table.hapusPedatren(auth.user.uuid)"
+        >
+          <font-awesome-icon icon="trash" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-info"
+          @click="table.syncPedatren(auth.user.uuid)"
+        >
+          <font-awesome-icon icon="rotate" /> Sync
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-warning"
+          @click="table.getLog"
+        >
+          <font-awesome-icon icon="triangle-exclamation" /> Log
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          @click="table.generateIzin"
+        >
+          <font-awesome-icon icon="paper-plane" /> Proses Izin
+        </button>
       </div>
       <div v-if="table.loading" class="text-center mb-3">
         <div class="spinner-border text-primary mb-1" role="status"></div>
@@ -700,18 +705,3 @@ onMounted(() => {
   table.getWilayahSurat();
 });
 </script>
-
-<style scoped>
-.modal {
-  display: block !important; /* I added this to see the modal, you don't need this */
-}
-
-/* Important part */
-.modal-dialog {
-  overflow-y: initial !important;
-}
-.modal-body {
-  height: 80vh;
-  overflow-y: auto;
-}
-</style>

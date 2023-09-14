@@ -155,6 +155,16 @@
         </option>
       </select>
     </div>
+    <div class="col-md-2">
+      <select
+        class="form-select form-select-sm mb-2"
+        v-model="table.params.tagihan"
+        @change="table.getData"
+      >
+        <option value="" selected>Semua Tagihan E-Bekal</option>
+        <option value="T">Tanpa Tagihan</option>
+      </select>
+    </div>
   </div>
   <!-- jumlah data dan pencarian -->
   <div class="serach-box row mt-2">

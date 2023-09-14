@@ -84,6 +84,24 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
       }
     },
 
+    async hapusPedatren(uuid) {
+      this.loading = true;
+      try {
+        const resp = await api.put(`surat-jalan/hapus-pedatren/${uuid}`);
+        this.setOpenLogin();
+        localStorage.removeItem("x-token");
+        const user = JSON.parse(localStorage.getItem("user"));
+        user.username_pedatren = null;
+        user.password_pedatren = null;
+        localStorage.setItem("user", JSON.stringify(user));
+        this.loading = false;
+        swalSuccess("Berhasil menghapus tautan ke PEDATREN");
+        location.reload();
+      } catch (err) {
+        this.loading = false;
+      }
+    },
+
     async generateIzin() {
       this.loading = true;
       const authToken = JSON.parse(localStorage.getItem("x-token"));

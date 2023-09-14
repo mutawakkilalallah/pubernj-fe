@@ -71,6 +71,16 @@
             <option value="kurang">Kurang</option>
           </select>
         </div>
+        <div class="col-md-3">
+          <select
+            class="form-select form-select-sm mb-2"
+            v-model="table.paramsBeda.nominal"
+            @change="table.getDataBeda"
+          >
+            <option value="" selected>Semua Nominal Tagihan</option>
+            <option value="Y">Tarif & Tagihan Tidak 0</option>
+          </select>
+        </div>
       </div>
       <div class="serach-box row mt-2 mb-3">
         <div class="col-md-6 d-flex">
@@ -123,7 +133,12 @@
           <tbody>
             <tr v-for="(d, i) in table.itemsBeda">
               <td>{{ i + 1 }}</td>
-              <td>{{ d?.santri?.niup }}</td>
+              <td>
+                {{ d?.santri?.niup }}
+                <small @click="table.copyNiup(d?.santri?.niup)"
+                  ><font-awesome-icon icon="copy" color="#003E1E"
+                /></small>
+              </td>
               <td>{{ d?.santri?.nama_lengkap }}</td>
               <td>{{ toRupiah(d?.dropspot?.harga) }}</td>
               <td>{{ toRupiah(d?.tagihan_ebekal) }}</td>
