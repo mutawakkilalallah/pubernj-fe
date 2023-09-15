@@ -291,21 +291,13 @@
   <hr />
   <div class="row mb-5">
     <div class="col-md-3">
-      <button
-        :disabled="isNotDeveloper"
-        class="btn btn-warning w-100"
-        @click="table.updateSantri"
-      >
+      <button class="btn btn-warning w-100" @click="table.updateSantri">
         <font-awesome-icon icon="rotate" class="icon" /> Update - Sync Data
         Santri
       </button>
     </div>
     <div class="col-md-3">
-      <button
-        :disabled="isNotDeveloper"
-        class="btn btn-warning w-100"
-        @click="table.updateDomisiliSantri"
-      >
+      <button class="btn btn-warning w-100" @click="table.updateDomisiliSantri">
         <font-awesome-icon icon="rotate" class="icon" /> Update - Sync
         Domisili/Alamat Santri
       </button>
@@ -322,8 +314,6 @@
   </div>
 </template>
 <script setup>
-import { onMounted } from "vue";
-// import { useDropspotForm } from "../../store/dropsot/form";
 import { useSyncTable } from "../../store/sync/table";
 
 const table = useSyncTable();

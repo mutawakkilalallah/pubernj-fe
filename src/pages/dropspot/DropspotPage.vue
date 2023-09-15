@@ -23,15 +23,8 @@
         v-model="table.params.area"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Area</option>
-        <option
-          v-for="a in form.isArea"
-          :key="a"
-          :value="a.id"
-        >
+        <option value="" selected>Semua Area</option>
+        <option v-for="a in form.isArea" :key="a" :value="a.id">
           {{ a.nama }}
         </option>
       </select>
@@ -42,10 +35,7 @@
         v-model="table.params.grup"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Grup</option>
+        <option value="" selected>Semua Grup</option>
         <option value="jatim">JATIM</option>
         <option value="jawa-non-jatim">JAWA NON JATIM</option>
         <option value="luar-pulau">LUAR PULAU</option>
@@ -129,10 +119,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalTambahLabel"
-          >Tambah Dropsot</h1>
+          <h1 class="modal-title fs-5" id="modalTambahLabel">Tambah Dropsot</h1>
           <button
             class="btn-close"
             type="button"
@@ -152,14 +139,8 @@
             </div>
             <div class="form-group mb-3">
               <small>Grup</small>
-              <select
-                class="form-select mt-2"
-                v-model="form.form.grup"
-              >
-                <option
-                  value=""
-                  selected
-                >Semua Grup</option>
+              <select class="form-select mt-2" v-model="form.form.grup">
+                <option value="" selected>Semua Grup</option>
                 <option value="jatim">JATIM</option>
                 <option value="jawa-non-jatim">JAWA NON JATIM</option>
                 <option value="luar-pulau">LUAR PULAU</option>
@@ -168,19 +149,9 @@
             </div>
             <div class="form-group mb-3">
               <small>Area</small>
-              <select
-                class="form-select mt-2"
-                v-model="form.form.area_id"
-              >
-                <option
-                  value=""
-                  selected
-                >Pilih Area</option>
-                <option
-                  v-for="a in form.isArea"
-                  :key="a"
-                  :value="a.id"
-                >
+              <select class="form-select mt-2" v-model="form.form.area_id">
+                <option value="" selected>Pilih Area</option>
+                <option v-for="a in form.isArea" :key="a" :value="a.id">
                   {{ a.nama }}
                 </option>
               </select>
@@ -231,10 +202,7 @@
             >
               Tutup
             </button>
-            <button
-              type="submit"
-              class="btn btn-sm btn-primary"
-            >Simpan</button>
+            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
           </div>
         </form>
       </div>
@@ -254,10 +222,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalEditLabel"
-          >Edit Dropspot</h1>
+          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Dropspot</h1>
           <button
             class="btn-close"
             type="button"
@@ -276,10 +241,7 @@
             </div>
             <div class="form-group mb-3">
               <small>Grup</small>
-              <select
-                class="form-select mt-2"
-                v-model="form.form.grup"
-              >
+              <select class="form-select mt-2" v-model="form.form.grup">
                 <option value="jatim">JATIM</option>
                 <option value="jawa-non-jatim">JAWA NON JATIM</option>
                 <option value="luar-pulau">LUAR PULAU</option>
@@ -288,21 +250,11 @@
             </div>
             <div class="form-group mb-3">
               <small>Area</small>
-              <select
-                class="form-select mt-2"
-                v-model="form.form.area_id"
-              >
-                <option
-                  value=""
-                  selected
-                >
+              <select class="form-select mt-2" v-model="form.form.area_id">
+                <option value="" selected>
                   {{ form.namaArea }}
                 </option>
-                <option
-                  v-for="a in form.isArea"
-                  :key="a"
-                  :value="a.id"
-                >
+                <option v-for="a in form.isArea" :key="a" :value="a.id">
                   {{ a.nama }}
                 </option>
               </select>

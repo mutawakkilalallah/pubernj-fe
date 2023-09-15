@@ -46,9 +46,7 @@ export const useSantriForm = defineStore("form_santri", {
             table.isOpenDetail = false;
             table.getData();
           });
-      } catch (err) {
-        Swal.fire(err.response.data.message, err.response.data.error, "error");
-      }
+      } catch (err) {}
     },
   },
 });

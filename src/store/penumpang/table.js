@@ -25,6 +25,7 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       jenis_kelamin: "",
       armada: "",
       hak_pulang: "",
+      tagihan: "",
       page: 1,
       limit: 25,
     },
@@ -88,7 +89,7 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       try {
         await api
           .get(
-            `penumpang/unduh-template?wilayah=${this.params.wilayah}&blok=${this.params.blok}&pembayaran=${this.params.pembayaran}&jenis_kelamin=${this.params.jenis_kelamin}`,
+            `penumpang/unduh-template?wilayah=${this.params.wilayah}&blok=${this.params.blok}&pembayaran=${this.params.pembayaran}&jenis_kelamin=${this.params.jenis_kelamin}&tagihan=${this.params.tagihan}`,
             {
               responseType: "blob",
             }

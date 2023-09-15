@@ -111,6 +111,11 @@ const routes = [
         name: "cetak-surat",
         component: () => import("@/pages/surat-jalan/Index.vue"),
       },
+      {
+        path: "compare-ebekal",
+        name: "compare-ebekal",
+        component: () => import("@/pages/compare/Index.vue"),
+      },
     ],
   },
 ];

@@ -11,6 +11,7 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     isOpenEditDropspot: false,
     isOpenEditPembayaran: false,
     isOpenImportPembayaran: false,
+    isOpenCompareTagihan: false,
     isArea: [],
     isDropspot: [],
     idEdit: "",
@@ -18,6 +19,9 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     idArea: "",
     dataEdit: {},
     formImportPembayaran: {
+      excelFile: null,
+    },
+    formCompareTagihan: {
       excelFile: null,
     },
     formEditDropspot: {
@@ -62,6 +66,9 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     resetFormImportPembayaran() {
       this.formImportPembayaran.excelFile = null;
     },
+    resetFormCompareTagihan() {
+      this.formCompareTagihan.excelFile = null;
+    },
     setOpenEditDropspot() {
       this.isOpenEditDropspot = !this.isOpenEditDropspot;
       this.resetFormEditDropspot();
@@ -73,6 +80,10 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     setOpenImportPembayaran() {
       this.isOpenImportPembayaran = !this.isOpenImportPembayaran;
       this.resetFormImportPembayaran();
+    },
+    setOpenCompareTagihan() {
+      this.isOpenCompareTagihan = !this.isOpenCompareTagihan;
+      this.resetFormCompareTagihan();
     },
     handleOpenEditDropspot() {
       this.idArea = this.dataEdit.dropspot.area_id;
@@ -108,6 +119,9 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     },
     handleFileChange(event) {
       this.formImportPembayaran.excelFile = event.target.files[0];
+    },
+    handleFileCompare(event) {
+      this.formCompareTagihan.excelFile = event.target.files[0];
     },
     getArea() {
       try {
@@ -168,6 +182,18 @@ export const usePenumpangForm = defineStore("form_penumpang", {
         await api.post(`penumpang/import-pembayaran`, formData).then((resp) => {
           this.isOpenImportPembayaran = false;
           this.resetFormImportPembayaran();
+          const table = usePenumpangTable();
+          table.getData();
+        });
+      } catch (err) {}
+    },
+    async compareTagihan() {
+      try {
+        const formData = new FormData();
+        formData.append("excelFile", this.formCompareTagihan.excelFile);
+        await api.post(`penumpang/compare-tagihan`, formData).then((resp) => {
+          this.isOpenCompareTagihan = false;
+          this.resetFormCompareTagihan();
           const table = usePenumpangTable();
           table.getData();
         });
