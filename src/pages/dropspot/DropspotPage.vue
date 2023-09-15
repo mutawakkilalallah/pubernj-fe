@@ -105,10 +105,10 @@
           <td>{{ "Rp. " + d.harga }}</td>
           <td>{{ d.area.nama }}</td>
           <td>
-            {{ toTglIndo(d.jam_berangkat_pa) }}
+            {{ toTglIndo(d.jam_berangkat_pi) }}
           </td>
           <td>
-            {{ toTglIndo(d.jam_berangkat_pi) }}
+            {{ toTglIndo(d.jam_berangkat_pa) }}
           </td>
           <td>{{ d.cakupan }}</td>
         </tr>
@@ -212,17 +212,6 @@
                     v-model="form.form.jam_berangkat_pi"
                     time-picker-inline
                   />
-                  <!-- <div class="demo-datetime-picker">
-                    <el-date-picker
-                      v-model="form.form.jam_berangkat_pi"
-                      format="YYYY-MM-DD HH:mm:ss"
-                      value-format="YYYY-MM-DDTHH:mm:ssZZ"
-                      clearable
-                      :default-time="defaultTime"
-                      type="datetime"
-                      placeholder="Pilih tanggal dan waktu"
-                    />
-                  </div> -->
                 </div>
                 <div class="col">
                   <small>Waktu Keberangkatan Putra</small>
@@ -230,17 +219,6 @@
                     v-model="form.form.jam_berangkat_pa"
                     time-picker-inline
                   />
-
-                  <!-- <div class="demo-datetime-picker">
-                    <el-date-picker
-                      v-model="form.form.jam_berangkat_pa"
-                      format="YYYY-MM-DD HH:mm:ss"
-                      value-format="YYYY-MM-DDTHH:mm:ssZZ"
-                      clearable
-                      :default-time="defaultTime"
-                      type="datetime"
-                    />
-                  </div> -->
                 </div>
               </div>
             </div>
@@ -344,6 +322,25 @@
                 class="form-control mt-2"
                 v-model="form.form.harga"
               />
+            </div>
+            <div class="form-group mb-3">
+              <div class="row g-2">
+                <div class="col">
+                  <small>Waktu Keberangkatan Putri</small>
+
+                  <VueDatePicker
+                    v-model="form.form.jam_berangkat_pi"
+                    time-picker-inline
+                  />
+                </div>
+                <div class="col">
+                  <small>Waktu Keberangkatan Putra</small>
+                  <VueDatePicker
+                    v-model="form.form.jam_berangkat_pa"
+                    time-picker-inline
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">

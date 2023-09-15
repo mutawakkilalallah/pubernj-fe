@@ -46,12 +46,15 @@ export const usePenumpangForm = defineStore("form_penumpang", {
       document.addEventListener("click", this.handleOutsideClick);
     },
     handleOutsideClick(event) {
-      // console.log('event', event);
       this.contextMenuVisible = false;
       document.removeEventListener("click", this.handleOutsideClick);
     },
     resetFormEditDropspot() {
       this.formEditDropspot.dropspot_id = "";
+    },
+       setOpenEditPembayaran() {
+      this.isOpenEditPembayaran = !this.isOpenEditPembayaran;
+      this.resetFormEditPembayaran();
     },
     resetFormEditPembayaran() {
       this.formEditPembayaran.jumlah_bayar = "";
