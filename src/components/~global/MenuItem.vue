@@ -132,7 +132,10 @@ onMounted(() => {
   // border-bottom: 5px solid #02582c;
 }
 .menu-atas-item-m {
-  transform: translateY(10px);
+  transform: translateY(5px);
+  // margin-top: 5px;
+  margin-bottom: -10px;
+  overflow-y: auto;
 }
 .menu-dark {
   background-color: #7b7b7b;

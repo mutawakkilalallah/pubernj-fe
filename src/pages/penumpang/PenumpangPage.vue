@@ -1,13 +1,13 @@
 <template>
   <!-- judul -->
   <div class="row align-items-center">
-    <div class="col-md-6 text-start">
+    <div class="col-md-2 text-start">
       <h3 class="titlePage">Data Penumpang</h3>
     </div>
-    <div class="col-md-6 text-end g-3">
+    <div class="col-md-10 text-end g-3">
       <button
         v-if="access.keuangan()"
-        class="btn btn-sm btn-outline-info me-2"
+        class="btn btn-sm btn-outline-info my-1 mx-1"
         type="button"
         @click="form.setOpenCompareTagihan()"
       >
@@ -19,7 +19,7 @@
       </button>
       <button
         v-if="access.keuangan()"
-        class="btn btn-sm btn-outline-info me-2"
+        class="btn btn-sm btn-outline-info my-1 mx-1"
         type="button"
         @click="form.setOpenImportPembayaran()"
       >
@@ -30,7 +30,7 @@
       </button>
       <button
         v-if="access.keuangan()"
-        class="btn btn-sm btn-outline-warning me-2"
+        class="btn btn-sm btn-outline-warning my-1 mx-1"
         type="button"
         @click="table.unduhTemplate"
       >
