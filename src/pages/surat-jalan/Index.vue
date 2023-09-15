@@ -16,13 +16,19 @@
       </ul>
       <hr />
       <div class="filter-box row">
-        <div class="col-md-4" v-if="access.notInternal()">
+        <div
+          class="col-md-4"
+          v-if="access.notInternal()"
+        >
           <select
             class="form-select form-select-sm mb-2"
             v-model="table.paramsIzin.wilayah"
             @change="table.getBlokIzin"
           >
-            <option value="" selected>Semua Wilayah</option>
+            <option
+              value=""
+              selected
+            >Semua Wilayah</option>
             <option
               v-for="w in table.filterIzin.wilayah"
               :key="w"
@@ -37,7 +43,10 @@
             v-model="table.paramsIzin.blok"
             @change="table.getDataIzin"
           >
-            <option value="" selected>Semua Daerah</option>
+            <option
+              value=""
+              selected
+            >Semua Daerah</option>
             <option
               v-for="b in table.filterIzin.blok"
               :key="b"
@@ -56,7 +65,10 @@
               v-model="table.paramsIzin.limit"
               @change="table.getDataIzin"
             >
-              <option value="50" selected>50</option>
+              <option
+                value="50"
+                selected
+              >50</option>
               <option value="100">100</option>
             </select>
           </div>
@@ -86,10 +98,18 @@
         role="group"
         aria-label="Basic mixed styles example"
       >
-        <button type="button" class="btn btn-danger" v-if="notSync">
+        <button
+          type="button"
+          class="btn btn-danger"
+          v-if="notSync"
+        >
           Not Connected
         </button>
-        <button type="button" class="btn btn-success" v-else>
+        <button
+          type="button"
+          class="btn btn-success"
+          v-else
+        >
           (@{{ auth.user?.username_pedatren }})
         </button>
         <button
@@ -130,27 +150,28 @@
           <font-awesome-icon icon="paper-plane" /> Proses Izin
         </button>
       </div>
-      <div v-if="table.loading" class="text-center mb-3">
-        <div class="spinner-border text-primary mb-1" role="status"></div>
+      <div
+        v-if="table.loading"
+        class="text-center mb-3"
+      >
+        <div
+          class="spinner-border text-primary mb-1"
+          role="status"
+        ></div>
         <p>Sedang Memproses Data ...</p>
       </div>
-      <div class="text-center" v-if="table.successIzin">
+      <div
+        class="text-center"
+        v-if="table.successIzin"
+      >
         <p>
-          <small class="text-dark"
-            ><b>Dikirim</b> : {{ table.logIzin?.send }} Data</small
-          >
+          <small class="text-dark"><b>Dikirim</b> : {{ table.logIzin?.send }} Data</small>
           |
-          <small class="text-warning"
-            ><b>Diproses</b> : {{ table.logIzin?.process }} Data</small
-          >
+          <small class="text-warning"><b>Diproses</b> : {{ table.logIzin?.process }} Data</small>
           |
-          <small class="text-success"
-            ><b>Berhasil</b> : {{ table.logIzin?.success }} Data</small
-          >
+          <small class="text-success"><b>Berhasil</b> : {{ table.logIzin?.success }} Data</small>
           |
-          <small class="text-danger"
-            ><b>Gagal</b> : {{ table.logIzin?.failed }} Data</small
-          >
+          <small class="text-danger"><b>Gagal</b> : {{ table.logIzin?.failed }} Data</small>
         </p>
       </div>
       <div class="table-responsive">
@@ -165,7 +186,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(d, i) in table.itemsIzin">
+            <tr
+              v-for="(d, i) in table.itemsIzin"
+              :key="i"
+            >
               <td>{{ i + 1 }}</td>
               <td>{{ d?.santri?.niup }}</td>
               <td>{{ d?.santri?.nama_lengkap }}</td>
@@ -186,13 +210,19 @@
       </ul>
       <hr />
       <div class="filter-box row">
-        <div class="col-md-4" v-if="access.notInternal()">
+        <div
+          class="col-md-4"
+          v-if="access.notInternal()"
+        >
           <select
             class="form-select form-select-sm mb-2"
             v-model="table.paramsKonfir.wilayah"
             @change="table.getBlokKonfir"
           >
-            <option value="" selected>Semua Wilayah</option>
+            <option
+              value=""
+              selected
+            >Semua Wilayah</option>
             <option
               v-for="w in table.filterSurat.wilayah"
               :key="w"
@@ -207,7 +237,10 @@
             v-model="table.paramsKonfir.blok"
             @change="table.getDataKonfir"
           >
-            <option value="" selected>Semua Daerah</option>
+            <option
+              value=""
+              selected
+            >Semua Daerah</option>
             <option
               v-for="b in table.filterSurat.blok"
               :key="b"
@@ -226,7 +259,10 @@
               v-model="table.paramsKonfir.limit"
               @change="table.getDataKonfir"
             >
-              <option value="50" selected>50</option>
+              <option
+                value="50"
+                selected
+              >50</option>
               <option value="100">100</option>
             </select>
           </div>
@@ -268,7 +304,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(d, i) in table.itemsKonfir">
+            <tr
+              v-for="(d, i) in table.itemsKonfir"
+              :key="i"
+            >
               <td>{{ i + 1 }}</td>
               <td>{{ d?.santri?.niup }}</td>
               <td>{{ d?.santri?.nama_lengkap }}</td>
@@ -289,13 +328,19 @@
       </ul>
       <hr />
       <div class="filter-box row">
-        <div class="col-md-4" v-if="access.notInternal()">
+        <div
+          class="col-md-4"
+          v-if="access.notInternal()"
+        >
           <select
             class="form-select form-select-sm mb-2"
             v-model="table.paramsSurat.wilayah"
             @change="table.getBlokSurat"
           >
-            <option value="" selected>Semua Wilayah</option>
+            <option
+              value=""
+              selected
+            >Semua Wilayah</option>
             <option
               v-for="w in table.filterSurat.wilayah"
               :key="w"
@@ -310,7 +355,10 @@
             v-model="table.paramsSurat.blok"
             @change="table.getDataSurat"
           >
-            <option value="" selected>Semua Daerah</option>
+            <option
+              value=""
+              selected
+            >Semua Daerah</option>
             <option
               v-for="b in table.filterSurat.blok"
               :key="b"
@@ -320,14 +368,20 @@
             </option>
           </select>
         </div>
-        <div class="col-md-4" v-if="access.notInternal()">
+        <div
+          class="col-md-4"
+          v-if="access.notInternal()"
+        >
           <select
             class="form-select form-select-sm mb-2"
             v-model="table.paramsSurat.cetak"
             @change="table.getDataSurat"
           >
             <option value="">Semua Status Cetak</option>
-            <option value="T" selected>Belum Cetak Surat</option>
+            <option
+              value="T"
+              selected
+            >Belum Cetak Surat</option>
             <option value="Y">Sudah Pernah Cetak Surat</option>
           </select>
         </div>
@@ -340,7 +394,10 @@
               v-model="table.paramsSurat.limit"
               @change="table.getDataSurat"
             >
-              <option value="50" selected>50</option>
+              <option
+                value="50"
+                selected
+              >50</option>
               <option value="100">100</option>
             </select>
           </div>
@@ -364,10 +421,13 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-sm btn-primary mt-2 mb-3" @click="generatePDF">
+      <button
+        class="btn btn-sm btn-primary mt-2 mb-3"
+        @click="generatePDF"
+      >
         Print
       </button>
-      <div class="table-responsive">
+      <div :class="isMobile ? 'table-responsive myTable' : 'table-responsive'">
         <table class="table">
           <thead>
             <tr>
@@ -379,7 +439,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(d, i) in table.itemsSurat">
+            <tr
+              v-for="(d, i) in table.itemsSurat"
+              :key="i"
+            >
               <td>{{ i + 1 }}</td>
               <td>{{ d?.santri?.niup }}</td>
               <td>{{ d?.santri?.nama_lengkap }}</td>
@@ -405,7 +468,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">PEDATREN</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >PEDATREN</h1>
           <button
             class="btn-close"
             type="button"
@@ -439,7 +505,10 @@
                 v-model="table.form.password"
               />
             </div>
-            <button type="submit" class="btn w-100 btn-sm btn-info">
+            <button
+              type="submit"
+              class="btn w-100 btn-sm btn-info"
+            >
               Login
             </button>
           </div>
@@ -476,7 +545,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >
             Log Error PEDATREN
           </h1>
           <button
@@ -500,7 +572,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(log, i) in table.itemsLog" :key="log">
+                <tr
+                  v-for="(log, i) in table.itemsLog"
+                  :key="log"
+                >
                   <td>
                     <button class="btn btn-sm btn-danger">
                       <font-awesome-icon icon="trash" />
@@ -529,12 +604,14 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useSuratJalanTable } from "../../store/surat-jalan/table";
 import { useAuthStore } from "../../store/auth";
 import * as access from "../../plugins/access";
 import { DateTime } from "luxon";
 import jsPDF from "jspdf";
+
+const isMobile = ref("");
 
 const table = useSuratJalanTable();
 const auth = useAuthStore();
@@ -703,5 +780,18 @@ onMounted(() => {
   table.getWilayahIzin();
   table.getWilayahKonfir();
   table.getWilayahSurat();
+
+  const mobileQuery = window.matchMedia("(max-width: 767px)");
+
+  isMobile.value = mobileQuery.matches;
+
+  mobileQuery.addListener((query) => {
+    isMobile.value = query.matches;
+  });
 });
 </script>
+<style scoped>
+.myTable {
+  margin-bottom: 60px;
+}
+</style>

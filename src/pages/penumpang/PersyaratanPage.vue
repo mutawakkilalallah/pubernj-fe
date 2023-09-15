@@ -1,7 +1,7 @@
 <template>
   <!-- judul -->
   <div class="row align-items-center">
-    <div class="col-md-4">
+    <div class="col-md-4 text-start">
       <h3 class="titlePage">Data Persyaratan</h3>
     </div>
     <div class="col-md-8 text-end g-2">
@@ -11,7 +11,10 @@
         type="button"
         @click="table.setOpenKosmara"
       >
-        <font-awesome-icon icon="file-import" class="icon" /> Import KOSMARA
+        <font-awesome-icon
+          icon="file-import"
+          class="icon"
+        /> Import KOSMARA
       </button>
       <button
         v-if="access.keuangan()"
@@ -19,7 +22,10 @@
         type="button"
         @click="table.export('kosmara')"
       >
-        <font-awesome-icon icon="download" class="icon" /> Unduh Template
+        <font-awesome-icon
+          icon="download"
+          class="icon"
+        /> Unduh Template
         KOSMARA
       </button>
       <button
@@ -28,7 +34,10 @@
         type="button"
         @click="table.setOpenBps"
       >
-        <font-awesome-icon icon="file-import" class="icon" /> Import BPS
+        <font-awesome-icon
+          icon="file-import"
+          class="icon"
+        /> Import BPS
       </button>
       <button
         v-if="access.sysadmin()"
@@ -36,14 +45,20 @@
         type="button"
         @click="table.export('bps')"
       >
-        <font-awesome-icon icon="download" class="icon" /> Unduh Template BPS
+        <font-awesome-icon
+          icon="download"
+          class="icon"
+        /> Unduh Template BPS
       </button>
     </div>
   </div>
   <hr />
   <h6 class="text-primary">NOTE :</h6>
   <ul>
-    <li class="text-primary" v-if="access.keuangan()">
+    <li
+      class="text-primary"
+      v-if="access.keuangan()"
+    >
       Untuk fitur <b>"Unduh Template"</b> berlaku filter (Wilayah, Daerah dan
       Jenis Kelamin)
     </li>
@@ -52,7 +67,10 @@
       <b class="text-danger">(lunas & belum lunas)</b> dengan huruf kecil semua
       untuk memudahkan penulisan
     </li> -->
-    <li class="text-primary" v-if="access.keuangan()">
+    <li
+      class="text-primary"
+      v-if="access.keuangan()"
+    >
       Untuk KOSMARA otomatis menyesuaikan template aplikasi Admin PSP
     </li>
   </ul>
@@ -72,7 +90,10 @@
         v-model="table.params.wilayah"
         @change="table.getBlok"
       >
-        <option value="" selected>Semua Wilayah</option>
+        <option
+          value=""
+          selected
+        >Semua Wilayah</option>
         <option
           v-for="w in table.filter.wilayah"
           :key="w"
@@ -87,8 +108,15 @@
         v-model="table.params.blok"
         @change="table.getData"
       >
-        <option value="" selected>Semua Daerah</option>
-        <option v-for="b in table.filter.blok" :key="b" :value="b.id_blok">
+        <option
+          value=""
+          selected
+        >Semua Daerah</option>
+        <option
+          v-for="b in table.filter.blok"
+          :key="b"
+          :value="b.id_blok"
+        >
           {{ b.blok }}
         </option>
       </select>
@@ -99,7 +127,10 @@
         v-model="table.params.lunas_bps"
         @change="table.getData"
       >
-        <option value="" selected>Semua Status BPS</option>
+        <option
+          value=""
+          selected
+        >Semua Status BPS</option>
         <option :value="1">Lunas</option>
         <option :value="0">Belum Lunas</option>
       </select>
@@ -109,7 +140,10 @@
         @change="table.getData"
         v-if="storeAuth.user.role != 'bps'"
       >
-        <option value="" selected>Semua Status KOSMARA</option>
+        <option
+          value=""
+          selected
+        >Semua Status KOSMARA</option>
         <option :value="1">Lunas</option>
         <option :value="0">Belum Lunas</option>
       </select>
@@ -119,7 +153,10 @@
         @change="table.getData"
         v-if="storeAuth.user.role != 'bps'"
       >
-        <option value="" selected>Semua Status FA</option>
+        <option
+          value=""
+          selected
+        >Semua Status FA</option>
         <option :value="1">Tuntas</option>
         <option :value="0">Belum Tuntas</option>
       </select>
@@ -129,7 +166,10 @@
         @change="table.getData"
         v-if="storeAuth.user.role != 'bps'"
       >
-        <option value="" selected>Semua Status KAMTIB</option>
+        <option
+          value=""
+          selected
+        >Semua Status KAMTIB</option>
         <option :value="1">Bebas</option>
         <option :value="0">Belum Bebas</option>
       </select>
@@ -140,7 +180,10 @@
         v-model="table.params.jenis_kelamin"
         @change="table.getData"
       >
-        <option value="" selected>Semua Jenis Kelamin</option>
+        <option
+          value=""
+          selected
+        >Semua Jenis Kelamin</option>
         <option value="L">Laki-Laki</option>
         <option value="P">Perempuan</option>
       </select>
@@ -155,7 +198,10 @@
           v-model="table.params.limit"
           @change="table.getData"
         >
-          <option value="25" selected>25</option>
+          <option
+            value="25"
+            selected
+          >25</option>
           <option value="50">50</option>
           <option value="100">100</option>
           <option value="250">250</option>
@@ -181,7 +227,10 @@
           />
         </div>
         <div class="col-auto d-flex flex-column align-items-end">
-          <button class="btn btn-danger btn-sm" @click="table.handleReset">
+          <button
+            class="btn btn-danger btn-sm"
+            @click="table.handleReset"
+          >
             RESET
           </button>
         </div>
@@ -196,10 +245,22 @@
           <th scope="col">No</th>
           <th scope="col">NIUP</th>
           <th scope="col">Nama Santri</th>
-          <th scope="col" class="text-center">BPS</th>
-          <th scope="col" class="text-center">KOSMARA</th>
-          <th scope="col" class="text-center">FA</th>
-          <th scope="col" class="text-center">KAMTIB</th>
+          <th
+            scope="col"
+            class="text-center"
+          >BPS</th>
+          <th
+            scope="col"
+            class="text-center"
+          >KOSMARA</th>
+          <th
+            scope="col"
+            class="text-center"
+          >FA</th>
+          <th
+            scope="col"
+            class="text-center"
+          >KAMTIB</th>
           <th scope="col">Wilayah</th>
           <th scope="col">Daerah</th>
         </tr>
@@ -229,7 +290,10 @@
                 )
             "
           >
-            <font-awesome-icon icon="check-circle" class="icon text-white" />
+            <font-awesome-icon
+              icon="check-circle"
+              class="icon text-white"
+            />
           </td>
           <td
             v-else
@@ -246,7 +310,10 @@
                 )
             "
           >
-            <font-awesome-icon icon="times-square" class="icon text-white" />
+            <font-awesome-icon
+              icon="times-square"
+              class="icon text-white"
+            />
           </td>
           <td
             v-if="d.persyaratan.lunas_kosmara"
@@ -263,7 +330,10 @@
                 )
             "
           >
-            <font-awesome-icon icon="check-circle" class="icon text-white" />
+            <font-awesome-icon
+              icon="check-circle"
+              class="icon text-white"
+            />
           </td>
           <td
             v-else
@@ -280,7 +350,10 @@
                 )
             "
           >
-            <font-awesome-icon icon="times-square" class="icon text-white" />
+            <font-awesome-icon
+              icon="times-square"
+              class="icon text-white"
+            />
           </td>
           <td
             v-if="d.persyaratan.tuntas_fa"
@@ -297,7 +370,10 @@
                 )
             "
           >
-            <font-awesome-icon icon="check-circle" class="icon text-white" />
+            <font-awesome-icon
+              icon="check-circle"
+              class="icon text-white"
+            />
           </td>
           <td
             v-else
@@ -314,7 +390,10 @@
                 )
             "
           >
-            <font-awesome-icon icon="times-square" class="icon text-white" />
+            <font-awesome-icon
+              icon="times-square"
+              class="icon text-white"
+            />
           </td>
           <td
             v-if="d.persyaratan.bebas_kamtib"
@@ -331,7 +410,10 @@
                 )
             "
           >
-            <font-awesome-icon icon="check-circle" class="icon text-white" />
+            <font-awesome-icon
+              icon="check-circle"
+              class="icon text-white"
+            />
           </td>
           <td
             v-else
@@ -348,7 +430,10 @@
                 )
             "
           >
-            <font-awesome-icon icon="times-square" class="icon text-white" />
+            <font-awesome-icon
+              icon="times-square"
+              class="icon text-white"
+            />
           </td>
           <td>
             {{ d.santri.wilayah }}
@@ -386,7 +471,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">Import BPS</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >Import BPS</h1>
           <button
             class="btn-close"
             type="button"
@@ -413,7 +501,10 @@
             >
               Tutup
             </button>
-            <button type="submit" class="btn btn-sm btn-primary">Proses</button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >Proses</button>
           </div>
         </form>
       </div>
@@ -433,7 +524,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">Import KOSMARA</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >Import KOSMARA</h1>
           <button
             class="btn-close"
             type="button"
@@ -460,7 +554,10 @@
             >
               Tutup
             </button>
-            <button type="submit" class="btn btn-sm btn-primary">Proses</button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >Proses</button>
           </div>
         </form>
       </div>
