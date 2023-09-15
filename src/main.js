@@ -20,6 +20,10 @@ import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 import VueApexCharts from "vue3-apexcharts";
 import print from "vue3-print-nb";
 
+// vuedatepicker
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+
 import {
   faArrowLeft,
   faArrowRight,
@@ -123,7 +127,7 @@ app.component("font-awesome-icon", FontAwesomeIcon);
 app.component("pagination", VPagination);
 app.component("datetime-picker", DatetimePicker);
 app.use(router);
-
+app.component('VueDatePicker', VueDatePicker);
 app.use(pinia);
 app.use(VueApexCharts);
 app.use(print);

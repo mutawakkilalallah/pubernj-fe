@@ -203,6 +203,47 @@
                 class="form-control mt-2"
               />
             </div>
+            <div class="form-group mb-3">
+              <div class="row g-2">
+                <div class="col">
+                  <small>Waktu Keberangkatan Putri</small>
+
+                  <VueDatePicker
+                    v-model="form.form.jam_berangkat_pi"
+                    time-picker-inline
+                  />
+                  <!-- <div class="demo-datetime-picker">
+                    <el-date-picker
+                      v-model="form.form.jam_berangkat_pi"
+                      format="YYYY-MM-DD HH:mm:ss"
+                      value-format="YYYY-MM-DDTHH:mm:ssZZ"
+                      clearable
+                      :default-time="defaultTime"
+                      type="datetime"
+                      placeholder="Pilih tanggal dan waktu"
+                    />
+                  </div> -->
+                </div>
+                <div class="col">
+                  <small>Waktu Keberangkatan Putra</small>
+                  <VueDatePicker
+                    v-model="form.form.jam_berangkat_pa"
+                    time-picker-inline
+                  />
+
+                  <!-- <div class="demo-datetime-picker">
+                    <el-date-picker
+                      v-model="form.form.jam_berangkat_pa"
+                      format="YYYY-MM-DD HH:mm:ss"
+                      value-format="YYYY-MM-DDTHH:mm:ssZZ"
+                      clearable
+                      :default-time="defaultTime"
+                      type="datetime"
+                    />
+                  </div> -->
+                </div>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button
@@ -339,11 +380,14 @@ import { onMounted } from "vue";
 import { useDropspotForm } from "../../store/dropsot/form";
 import { useDropsotTable } from "../../store/dropsot/table";
 import { DateTime } from "luxon";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 
 const table = useDropsotTable();
 const form = useDropspotForm();
+// const defaultTime = new Date(2000, 1, 1, 6, 0, 0);
 const toTglIndo = (tgl) => {
-  const dateTimeWIB = DateTime.fromISO(tgl, { zone: "UTC" });
+  const dateTimeWIB = DateTime.fromISO(tgl, { zone: "Asia/Jakarta" });
   return dateTimeWIB.toFormat("dd LLLL yyyy HH:mm");
 };
 
@@ -353,3 +397,5 @@ onMounted(() => {
   form.getArea();
 });
 </script>
+<style scoped>
+</style>
