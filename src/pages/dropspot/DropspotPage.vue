@@ -82,7 +82,7 @@
           <td>{{ i + 1 }}</td>
           <td>{{ d.nama }}</td>
           <td>{{ d.grup.toUpperCase() }}</td>
-          <td>{{ "Rp. " + d.harga }}</td>
+          <td>{{ formatMinus(d.harga) }}</td>
           <td>{{ d.area.nama }}</td>
           <td>
             {{ toTglIndo(d.jam_berangkat_pi) }}
@@ -121,18 +121,15 @@
         </div>
         <form @submit.prevent="form.tambahData">
           <div class="modal-body">
-            <div class="form-group mb-3">
-              <small>Nama Dropspot</small>
-              <input
-                type="text"
-                v-model="form.form.nama"
-                placeholder="Masukkan nama dropspot .."
-                class="form-control mt-2"
-              />
-            </div>
+            <app-input
+              label="Nama dropspot"
+              placeholder="Masukkan nama dropspot"
+              @set-model-input="(val)=>{form.form.nama=val}"
+            />
             <div class="form-group mb-3">
               <small>Grup</small>
               <app-select
+                my-class="form-select mt-2"
                 :data="form.opsiGrup"
                 label="Pilih grup"
                 @set-model="(val)=>{form.form.grup=val}"
@@ -140,47 +137,30 @@
             </div>
             <div class="form-group mb-3">
               <small>Area</small>
-              <select
-                class="form-select mt-2"
-                v-model="form.form.area_id"
-              >
-                <option
-                  value=""
-                  selected
-                >Pilih Area</option>
-                <option
-                  v-for="a in form.isArea"
-                  :key="a"
-                  :value="a.id"
-                >
-                  {{ a.nama }}
-                </option>
-              </select>
-            </div>
-            <div class="form-group mb-3">
-              <small>Cakupan Daerah</small>
-              <input
-                type="text"
-                v-model="form.form.cakupan"
-                placeholder="Masukkan cakupan daerah .."
-                class="form-control mt-2"
+              <app-select
+                my-class="form-select mt-2"
+                :data="form.isArea"
+                label="Semua Area"
+                @set-model="(val)=>{form.form.area_id=val}"
               />
             </div>
-            <div class="form-group mb-3">
-              <small>Harga</small>
-              <input
-                type="text"
-                v-model="form.form.harga"
-                placeholder="Masukkan cakupan harga .."
-                class="form-control mt-2"
-              />
-            </div>
+            <app-input
+              label="Cakupan daerah"
+              placeholder="Masukkan cakupan"
+              @set-model-input="(val)=>{form.form.cakupan=val}"
+            />
+            <app-input
+              label="Harga"
+              type="number"
+              placeholder="Masukkan cakupan harga"
+              @set-model-input="(val)=>{form.form.harga=val}"
+            />
             <div class="form-group mb-3">
               <div class="row g-2">
                 <div class="col">
                   <small>Waktu Keberangkatan Putri</small>
-
                   <VueDatePicker
+                    class="mt-2"
                     v-model="form.form.jam_berangkat_pi"
                     time-picker-inline
                   />
@@ -188,6 +168,7 @@
                 <div class="col">
                   <small>Waktu Keberangkatan Putra</small>
                   <VueDatePicker
+                    class="mt-2"
                     v-model="form.form.jam_berangkat_pa"
                     time-picker-inline
                   />
@@ -358,6 +339,16 @@ const form = useDropspotForm();
 const toTglIndo = (tgl) => {
   const dateTimeWIB = DateTime.fromISO(tgl, { zone: "Asia/Jakarta" });
   return dateTimeWIB.toFormat("dd LLLL yyyy HH:mm");
+};
+const formatMinus = (i) => {
+  const formatter = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+
+  return formatter.format(i);
 };
 onMounted(() => {
   table.getData();

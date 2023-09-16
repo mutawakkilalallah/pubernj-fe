@@ -29,4 +29,8 @@ export const registerComponents = (app) => {
     "app-select",
     defineAsyncComponent(() => import("@/components/~global/AppSelect.vue"))
   );
+  app.component(
+    "app-input",
+    defineAsyncComponent(() => import("@/components/~global/AppInput.vue"))
+  );
 };

@@ -65,16 +65,15 @@ export const useDropspotForm = defineStore("form_dropspot", {
       } catch (error) {}
     },
     async tambahData() {
-      console.log('form', this.form);
-      // this.form.jam_berangkat_pa = this.formatDateUTC(this.form.jam_berangkat_pa)
-      // this.form.jam_berangkat_pi = this.formatDateUTC(this.form.jam_berangkat_pi)
-      // try {
-      //   await api.post("dropspot", this.form);
-      //   this.isOpenAdd = false;
-      //   const table = useDropsotTable();
-      //   table.getData();
-      //   this.resetForm();
-      // } catch (err) {}
+      this.form.jam_berangkat_pa = this.formatDateUTC(this.form.jam_berangkat_pa)
+      this.form.jam_berangkat_pi = this.formatDateUTC(this.form.jam_berangkat_pi)
+      try {
+        await api.post("dropspot", this.form);
+        this.isOpenAdd = false;
+        const table = useDropsotTable();
+        table.getData();
+        this.resetForm();
+      } catch (err) {}
     },
     formatDateUTC(a) {
      return new Date(a).toUTCString();
