@@ -16,31 +16,21 @@
   </div>
   <hr />
   <!-- menu filter -->
-  <div class="filter-box row">
+  <div class="filter-box row g-2">
     <div class="col-md-2">
-      <select
-        class="form-select form-select-sm"
-        v-model="table.params.area"
-        @change="table.getData"
-      >
-        <option value="" selected>Semua Area</option>
-        <option v-for="a in form.isArea" :key="a" :value="a.id">
-          {{ a.nama }}
-        </option>
-      </select>
+      <app-select
+        :data="form.isArea"
+        label="Semua Area"
+        @setChange="table.changeArea"
+      />
     </div>
     <div class="col-md-2">
-      <select
-        class="form-select form-select-sm"
-        v-model="table.params.grup"
-        @change="table.getData"
-      >
-        <option value="" selected>Semua Grup</option>
-        <option value="jatim">JATIM</option>
-        <option value="jawa-non-jatim">JAWA NON JATIM</option>
-        <option value="luar-pulau">LUAR PULAU</option>
-        <option value="luar-jawa">LUAR JAWA</option>
-      </select>
+      <app-select
+        v-model="table.params.grub"
+        :data="form.opsiGrup"
+        label="Semua Grub"
+        @setChange="table.changeGrub"
+      />
     </div>
   </div>
   <!-- jumlah data dan pencarian -->
@@ -119,7 +109,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalTambahLabel">Tambah Dropsot</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalTambahLabel"
+          >Tambah Dropsot</h1>
           <button
             class="btn-close"
             type="button"
@@ -139,19 +132,27 @@
             </div>
             <div class="form-group mb-3">
               <small>Grup</small>
-              <select class="form-select mt-2" v-model="form.form.grup">
-                <option value="" selected>Semua Grup</option>
-                <option value="jatim">JATIM</option>
-                <option value="jawa-non-jatim">JAWA NON JATIM</option>
-                <option value="luar-pulau">LUAR PULAU</option>
-                <option value="luar-jawa">LUAR JAWA</option>
-              </select>
+              <app-select
+                :data="form.opsiGrup"
+                label="Pilih grup"
+                @set-model="(val)=>{form.form.grup=val}"
+              />
             </div>
             <div class="form-group mb-3">
               <small>Area</small>
-              <select class="form-select mt-2" v-model="form.form.area_id">
-                <option value="" selected>Pilih Area</option>
-                <option v-for="a in form.isArea" :key="a" :value="a.id">
+              <select
+                class="form-select mt-2"
+                v-model="form.form.area_id"
+              >
+                <option
+                  value=""
+                  selected
+                >Pilih Area</option>
+                <option
+                  v-for="a in form.isArea"
+                  :key="a"
+                  :value="a.id"
+                >
                   {{ a.nama }}
                 </option>
               </select>
@@ -202,7 +203,10 @@
             >
               Tutup
             </button>
-            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >Simpan</button>
           </div>
         </form>
       </div>
@@ -222,7 +226,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Dropspot</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >Edit Dropspot</h1>
           <button
             class="btn-close"
             type="button"
@@ -241,7 +248,10 @@
             </div>
             <div class="form-group mb-3">
               <small>Grup</small>
-              <select class="form-select mt-2" v-model="form.form.grup">
+              <select
+                class="form-select mt-2"
+                v-model="form.form.grup"
+              >
                 <option value="jatim">JATIM</option>
                 <option value="jawa-non-jatim">JAWA NON JATIM</option>
                 <option value="luar-pulau">LUAR PULAU</option>
@@ -250,11 +260,21 @@
             </div>
             <div class="form-group mb-3">
               <small>Area</small>
-              <select class="form-select mt-2" v-model="form.form.area_id">
-                <option value="" selected>
+              <select
+                class="form-select mt-2"
+                v-model="form.form.area_id"
+              >
+                <option
+                  value=""
+                  selected
+                >
                   {{ form.namaArea }}
                 </option>
-                <option v-for="a in form.isArea" :key="a" :value="a.id">
+                <option
+                  v-for="a in form.isArea"
+                  :key="a"
+                  :value="a.id"
+                >
                   {{ a.nama }}
                 </option>
               </select>
@@ -339,7 +359,6 @@ const toTglIndo = (tgl) => {
   const dateTimeWIB = DateTime.fromISO(tgl, { zone: "Asia/Jakarta" });
   return dateTimeWIB.toFormat("dd LLLL yyyy HH:mm");
 };
-
 onMounted(() => {
   table.getData();
   form.getArea();

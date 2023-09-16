@@ -25,4 +25,8 @@ export const registerComponents = (app) => {
     "set-time",
     defineAsyncComponent(() => import("@/components/~global/SetTime.vue"))
   );
+  app.component(
+    "app-select",
+    defineAsyncComponent(() => import("@/components/~global/AppSelect.vue"))
+  );
 };

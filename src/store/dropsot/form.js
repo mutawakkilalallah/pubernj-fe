@@ -19,6 +19,24 @@ export const useDropspotForm = defineStore("form_dropspot", {
       jam_berangkat_pa: "" ,
       jam_berangkat_pi: "",
     },
+    opsiGrup: [
+      {
+        id: 'jatim',
+        nama:'JATIM'
+      },
+      {
+        id: 'jawa-non-jatim',
+        nama: 'JAWA NON JATIM'
+      },
+      {
+        id: 'luar-pulau',
+        nama: 'LUAR PULAU'
+      },
+      {
+        id: 'luar-jawa',
+        nama: 'LUAR JAWA'
+      },
+    ]
   }),
   actions: {
     resetForm() {
@@ -47,15 +65,16 @@ export const useDropspotForm = defineStore("form_dropspot", {
       } catch (error) {}
     },
     async tambahData() {
-      this.form.jam_berangkat_pa = this.formatDateUTC(this.form.jam_berangkat_pa)
-      this.form.jam_berangkat_pi = this.formatDateUTC(this.form.jam_berangkat_pi)
-      try {
-        await api.post("dropspot", this.form);
-        this.isOpenAdd = false;
-        const table = useDropsotTable();
-        table.getData();
-        this.resetForm();
-      } catch (err) {}
+      console.log('form', this.form);
+      // this.form.jam_berangkat_pa = this.formatDateUTC(this.form.jam_berangkat_pa)
+      // this.form.jam_berangkat_pi = this.formatDateUTC(this.form.jam_berangkat_pi)
+      // try {
+      //   await api.post("dropspot", this.form);
+      //   this.isOpenAdd = false;
+      //   const table = useDropsotTable();
+      //   table.getData();
+      //   this.resetForm();
+      // } catch (err) {}
     },
     formatDateUTC(a) {
      return new Date(a).toUTCString();
