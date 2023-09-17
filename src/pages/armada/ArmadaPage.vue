@@ -22,24 +22,14 @@
   <hr />
   <!-- menu filter -->
   <div class="filter-box row">
-    <div
-      class="col-md-2"
-      v-if="storeAuth.user.role != 'pendamping'"
-    >
+    <div class="col-md-2" v-if="storeAuth.user.role != 'pendamping'">
       <select
         class="form-select form-select-sm mb-2"
         v-model="table.params.area"
         @change="table.getDropspot"
       >
-        <option
-          value=""
-          selected
-        >Semua Area</option>
-        <option
-          v-for="a in table.filter.area"
-          :key="a"
-          :value="a.id"
-        >
+        <option value="" selected>Semua Area</option>
+        <option v-for="a in table.filter.area" :key="a" :value="a.id">
           {{ a.nama }}
         </option>
       </select>
@@ -49,15 +39,8 @@
         v-model="table.params.dropspot"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Dropsot</option>
-        <option
-          v-for="d in table.filter.dropspot"
-          :key="d"
-          :value="d.id"
-        >
+        <option value="" selected>Semua Dropsot</option>
+        <option v-for="d in table.filter.dropspot" :key="d" :value="d.id">
           {{ d.nama }}
         </option>
       </select>
@@ -68,48 +51,21 @@
         v-model="table.params.type"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Type</option>
-        <option
-          value="bus"
-          selected
-        >BUS</option>
-        <option
-          value="minibus"
-          selected
-        >MINIBUS</option>
-        <option
-          value="elf"
-          selected
-        >ELF</option>
-        <option
-          value="hiace"
-          selected
-        >HIACE</option>
-        <option
-          value="mpv"
-          selected
-        >MPV</option>
+        <option value="" selected>Semua Type</option>
+        <option value="bus" selected>BUS</option>
+        <option value="minibus" selected>MINIBUS</option>
+        <option value="elf" selected>ELF</option>
+        <option value="hiace" selected>HIACE</option>
+        <option value="mpv" selected>MPV</option>
       </select>
       <select
         class="form-select form-select-sm mb-2"
         v-model="table.params.jenis"
         @change="table.getData"
       >
-        <option
-          value=""
-          selected
-        >Semua Jenis</option>
-        <option
-          value="putra"
-          selected
-        >PUTRA</option>
-        <option
-          value="putri"
-          selected
-        >PUTRI</option>
+        <option value="" selected>Semua Jenis</option>
+        <option value="putra" selected>PUTRA</option>
+        <option value="putri" selected>PUTRI</option>
       </select>
     </div>
   </div>
@@ -145,20 +101,11 @@
         <tr>
           <th scope="col">No</th>
           <th scope="col">Nama Armada</th>
-          <th
-            scope="col"
-            v-if="access.armada()"
-          >Harga Sewa</th>
+          <th scope="col" v-if="access.armada()">Harga Sewa</th>
           <th scope="col">Type</th>
           <th scope="col">Jenis</th>
-          <th
-            scope="col"
-            v-if="access.admin()"
-          >Penumpang</th>
-          <th
-            scope="col"
-            v-if="access.admin()"
-          >Pendamping</th>
+          <th scope="col" v-if="access.admin()">Penumpang</th>
+          <th scope="col" v-if="access.admin()">Pendamping</th>
           <th scope="col">Dropspot</th>
           <th scope="col">Harga</th>
         </tr>
@@ -178,11 +125,8 @@
           <td v-if="access.admin()">
             <router-link :to="{ name: 'armada-detail', params: { id: d.id } }">
               <button class="btn btn-primary btn-sm">
-                {{ d.penumpang ? d.penumpang.length :'' }}
-                <font-awesome-icon
-                  icon="clipboard"
-                  class="ps-1 icon"
-                /> Daftar
+                {{ d.penumpang ? d.penumpang.length : "" }}
+                <font-awesome-icon icon="clipboard" class="ps-1 icon" /> Daftar
                 Penumpang
               </button>
             </router-link>
@@ -193,10 +137,7 @@
               class="btn btn-primary btn-sm"
               @click="form.setOpenPendamping(d)"
             >
-              <font-awesome-icon
-                icon="user-md"
-                class="icon"
-              /> Pendamping
+              <font-awesome-icon icon="user-md" class="icon" /> Pendamping
             </button>
           </td>
           <td>{{ d.dropspot.nama }}</td>
@@ -219,10 +160,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalTambahLabel"
-          >Tambah Armada</h1>
+          <h1 class="modal-title fs-5" id="modalTambahLabel">Tambah Armada</h1>
           <button
             class="btn-close"
             type="button"
@@ -239,59 +177,28 @@
                 placeholder="Masukkan urutan armada .."
                 class="form-control mt-2"
               />
-              <small class="text-danger">*) saat membuat armada penamaan masukkan urutan saja contoh
-                1,2,3 dari setiap dropspot</small>
+              <small class="text-danger"
+                >*) saat membuat armada penamaan masukkan urutan saja contoh
+                1,2,3 dari setiap dropspot</small
+              >
             </div>
             <div class="form-group mb-3">
               <small>Type</small>
-              <select
-                class="form-select"
-                v-model="form.form.type"
-              >
-                <option
-                  value=""
-                  selected
-                >Pilih Type</option>
-                <option
-                  value="bus"
-                  selected
-                >bus</option>
-                <option
-                  value="minibus"
-                  selected
-                >minibus</option>
-                <option
-                  value="elf"
-                  selected
-                >elf</option>
-                <option
-                  value="hiace"
-                  selected
-                >hiace</option>
-                <option
-                  value="mpv"
-                  selected
-                >mpv</option>
+              <select class="form-select" v-model="form.form.type">
+                <option value="" selected>Pilih Type</option>
+                <option value="bus" selected>bus</option>
+                <option value="minibus" selected>minibus</option>
+                <option value="elf" selected>elf</option>
+                <option value="hiace" selected>hiace</option>
+                <option value="mpv" selected>mpv</option>
               </select>
             </div>
             <div class="form-group mb-3">
               <small>Jenis</small>
-              <select
-                class="form-select"
-                v-model="form.form.jenis"
-              >
-                <option
-                  value=""
-                  selected
-                >Pilih Jenis</option>
-                <option
-                  value="putra"
-                  selected
-                >putra</option>
-                <option
-                  value="putri"
-                  selected
-                >putri</option>
+              <select class="form-select" v-model="form.form.jenis">
+                <option value="" selected>Pilih Jenis</option>
+                <option value="putra" selected>putra</option>
+                <option value="putri" selected>putri</option>
               </select>
             </div>
             <div class="form-group mb-3">
@@ -301,15 +208,8 @@
                 v-model="form.idArea"
                 @change="form.getDropspot"
               >
-                <option
-                  value=""
-                  selected
-                >Pilih Area</option>
-                <option
-                  v-for="a in form.isArea"
-                  :key="a"
-                  :value="a.id"
-                >
+                <option value="" selected>Pilih Area</option>
+                <option v-for="a in form.isArea" :key="a" :value="a.id">
                   {{ a.nama }}
                 </option>
               </select>
@@ -321,15 +221,8 @@
                 v-model="form.form.dropspot_id"
                 :disabled="form.idArea === ''"
               >
-                <option
-                  value=""
-                  selected
-                >Pilih Dropsot</option>
-                <option
-                  v-for="d in form.isDropspot"
-                  :key="d"
-                  :value="d.id"
-                >
+                <option value="" selected>Pilih Dropsot</option>
+                <option v-for="d in form.isDropspot" :key="d" :value="d.id">
                   {{ d.nama }}
                 </option>
               </select>
@@ -352,10 +245,7 @@
             >
               Tutup
             </button>
-            <button
-              type="submit"
-              class="btn btn-sm btn-primary"
-            >Simpan</button>
+            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
           </div>
         </form>
       </div>
@@ -375,10 +265,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalEditLabel"
-          >Edit Armada</h1>
+          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Armada</h1>
           <button
             class="btn-close"
             type="button"
@@ -397,46 +284,19 @@
             </div>
             <div class="form-group mb-3">
               <small>Type</small>
-              <select
-                class="form-select"
-                v-model="form.form.type"
-              >
-                <option
-                  value="bus"
-                  selected
-                >bus</option>
-                <option
-                  value="minibus"
-                  selected
-                >minibus</option>
-                <option
-                  value="elf"
-                  selected
-                >elf</option>
-                <option
-                  value="hiace"
-                  selected
-                >hiace</option>
-                <option
-                  value="mpv"
-                  selected
-                >mpv</option>
+              <select class="form-select" v-model="form.form.type">
+                <option value="bus" selected>bus</option>
+                <option value="minibus" selected>minibus</option>
+                <option value="elf" selected>elf</option>
+                <option value="hiace" selected>hiace</option>
+                <option value="mpv" selected>mpv</option>
               </select>
             </div>
             <div class="form-group mb-3">
               <small>Jenis</small>
-              <select
-                class="form-select"
-                v-model="form.form.jenis"
-              >
-                <option
-                  value="putra"
-                  selected
-                >putra</option>
-                <option
-                  value="putri"
-                  selected
-                >putri</option>
+              <select class="form-select" v-model="form.form.jenis">
+                <option value="putra" selected>putra</option>
+                <option value="putri" selected>putri</option>
               </select>
             </div>
             <div class="form-group mb-3">
@@ -446,15 +306,8 @@
                 v-model="form.idArea"
                 @change="form.getDropspot"
               >
-                <option
-                  value=""
-                  selected
-                >Pilih Area</option>
-                <option
-                  v-for="a in form.isArea"
-                  :key="a"
-                  :value="a.id"
-                >
+                <option value="" selected>Pilih Area</option>
+                <option v-for="a in form.isArea" :key="a" :value="a.id">
                   {{ a.nama }}
                 </option>
               </select>
@@ -466,19 +319,11 @@
                 v-model="form.form.dropspot_id"
                 :disabled="form.idArea === ''"
               >
-                <option
-                  v-if="form.form.dropspot_id === ''"
-                  value=""
-                  selected
-                >
+                <option v-if="form.form.dropspot_id === ''" value="" selected>
                   Pilih Dropspot
                 </option>
                 <!-- <option value="" selected>{{ form.namaDropsot }}</option> -->
-                <option
-                  v-for="d in form.isDropspot"
-                  :key="d"
-                  :value="d.id"
-                >
+                <option v-for="d in form.isDropspot" :key="d" :value="d.id">
                   {{ d.nama }}
                 </option>
               </select>
@@ -502,7 +347,7 @@
               Tutup
             </button>
             <button
-              v-if="table.user.role == 'sysadmin'"
+              v-if="access.armada()"
               type="button"
               class="btn btn-sm btn-danger"
               @click="form.deleteData"
@@ -510,7 +355,7 @@
               Hapus
             </button>
             <button
-              v-if="table.user.role == 'sysadmin'"
+              v-if="access.armada()"
               type="submit"
               class="btn btn-sm btn-primary"
             >
@@ -535,10 +380,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalEditLabel"
-          >
+          <h1 class="modal-title fs-5" id="modalEditLabel">
             Kelola Pendamping
           </h1>
           <button
@@ -550,12 +392,14 @@
         <form>
           <div class="modal-body">
             <p>
-              <b>Nama Pendamping : </b>{{
+              <b>Nama Pendamping : </b
+              >{{
                 form.data_pendamping ? form.data_pendamping.nama_lengkap : "-"
               }}
             </p>
             <p>
-              <b>NO. HP : </b>{{ form.data_pendamping ? form.data_pendamping.no_hp : "-" }}
+              <b>NO. HP : </b
+              >{{ form.data_pendamping ? form.data_pendamping.no_hp : "-" }}
             </p>
             <button
               v-if="form.data_pendamping.nama_lengkap"
@@ -584,10 +428,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    v-for="(d, i) in table.itemsPendamping"
-                    :key="i"
-                  >
+                  <tr v-for="(d, i) in table.itemsPendamping" :key="i">
                     <td>{{ i + 1 }}</td>
                     <td>{{ d.nama_lengkap }}</td>
                     <td>
