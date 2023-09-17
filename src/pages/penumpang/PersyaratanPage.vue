@@ -1,13 +1,13 @@
 <template>
   <!-- judul -->
   <div class="row align-items-center">
-    <div class="col-md-4">
+    <div class="col-md-2 text-start">
       <h3 class="titlePage">Data Persyaratan</h3>
     </div>
-    <div class="col-md-8 text-end g-2">
+    <div class="col-md-10 text-end g-2">
       <button
         v-if="access.keuangan()"
-        class="btn btn-sm btn-outline-info me-2"
+        class="btn btn-sm btn-outline-info mx-1 my-1"
         type="button"
         @click="table.setOpenKosmara"
       >
@@ -15,7 +15,7 @@
       </button>
       <button
         v-if="access.keuangan()"
-        class="btn btn-sm btn-outline-warning me-2"
+        class="btn btn-sm btn-outline-warning mx-1 my-1"
         type="button"
         @click="table.export('kosmara')"
       >

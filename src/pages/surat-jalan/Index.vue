@@ -374,7 +374,7 @@
       >
         <font-awesome-icon icon="print" /> Print
       </button>
-      <div class="table-responsive">
+      <div :class="isMobile ? 'table-responsive myTable' : 'table-responsive'">
         <table class="table">
           <thead>
             <tr>
@@ -536,12 +536,14 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useSuratJalanTable } from "../../store/surat-jalan/table";
 import { useAuthStore } from "../../store/auth";
 import * as access from "../../plugins/access";
 import { DateTime } from "luxon";
 import jsPDF from "jspdf";
+
+const isMobile = ref("");
 
 const table = useSuratJalanTable();
 const auth = useAuthStore();
@@ -710,5 +712,18 @@ onMounted(() => {
   table.getWilayahIzin();
   table.getWilayahKonfir();
   table.getWilayahSurat();
+
+  const mobileQuery = window.matchMedia("(max-width: 767px)");
+
+  isMobile.value = mobileQuery.matches;
+
+  mobileQuery.addListener((query) => {
+    isMobile.value = query.matches;
+  });
 });
 </script>
+<style scoped>
+.myTable {
+  margin-bottom: 60px;
+}
+</style>

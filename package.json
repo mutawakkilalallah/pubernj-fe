@@ -14,6 +14,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "@hennge/vue3-pagination": "^1.0.17",
     "@livelybone/vue-datepicker": "^4.1.2",
+    "@vuepic/vue-datepicker": "^6.1.0",
     "apexcharts": "^3.41.1",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",

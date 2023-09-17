@@ -16,9 +16,27 @@ export const useDropspotForm = defineStore("form_dropspot", {
       area_id: "",
       cakupan: "",
       harga: "",
-      jam_berangkat_pa: "",
+      jam_berangkat_pa: "" ,
       jam_berangkat_pi: "",
     },
+    opsiGrup: [
+      {
+        id: 'jatim',
+        nama:'JATIM'
+      },
+      {
+        id: 'jawa-non-jatim',
+        nama: 'JAWA NON JATIM'
+      },
+      {
+        id: 'luar-pulau',
+        nama: 'LUAR PULAU'
+      },
+      {
+        id: 'luar-jawa',
+        nama: 'LUAR JAWA'
+      },
+    ]
   }),
   actions: {
     resetForm() {
@@ -27,11 +45,12 @@ export const useDropspotForm = defineStore("form_dropspot", {
       this.form.area_id = "";
       this.form.cakupan = "";
       this.form.harga = "";
-      this.jam_berangkat_pa = "";
-      this.jam_berangkat_pi = "";
+      this.form.jam_berangkat_pa = "";
+      this.form.jam_berangkat_pi = "";
     },
     setOpenAdd() {
       this.isOpenAdd = !this.isOpenAdd;
+     this.resetForm();
     },
     setOpenEdit() {
       this.isOpenEdit = !this.isOpenEdit;
@@ -46,13 +65,18 @@ export const useDropspotForm = defineStore("form_dropspot", {
       } catch (error) {}
     },
     async tambahData() {
+      this.form.jam_berangkat_pa = this.formatDateUTC(this.form.jam_berangkat_pa)
+      this.form.jam_berangkat_pi = this.formatDateUTC(this.form.jam_berangkat_pi)
       try {
-        const resp = await api.post("dropspot", this.form);
+        await api.post("dropspot", this.form);
         this.isOpenAdd = false;
         const table = useDropsotTable();
         table.getData();
         this.resetForm();
       } catch (err) {}
+    },
+    formatDateUTC(a) {
+     return new Date(a).toUTCString();
     },
     handleDoubleClik(d) {
       this.idEdit = d.id;

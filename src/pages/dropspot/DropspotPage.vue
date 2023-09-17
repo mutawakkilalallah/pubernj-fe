@@ -16,31 +16,21 @@
   </div>
   <hr />
   <!-- menu filter -->
-  <div class="filter-box row">
+  <div class="filter-box row g-2">
     <div class="col-md-2">
-      <select
-        class="form-select form-select-sm"
-        v-model="table.params.area"
-        @change="table.getData"
-      >
-        <option value="" selected>Semua Area</option>
-        <option v-for="a in form.isArea" :key="a" :value="a.id">
-          {{ a.nama }}
-        </option>
-      </select>
+      <app-select
+        :data="form.isArea"
+        label="Semua Area"
+        @setChange="table.changeArea"
+      />
     </div>
     <div class="col-md-2">
-      <select
-        class="form-select form-select-sm"
-        v-model="table.params.grup"
-        @change="table.getData"
-      >
-        <option value="" selected>Semua Grup</option>
-        <option value="jatim">JATIM</option>
-        <option value="jawa-non-jatim">JAWA NON JATIM</option>
-        <option value="luar-pulau">LUAR PULAU</option>
-        <option value="luar-jawa">LUAR JAWA</option>
-      </select>
+      <app-select
+        v-model="table.params.grub"
+        :data="form.opsiGrup"
+        label="Semua Grub"
+        @setChange="table.changeGrub"
+      />
     </div>
   </div>
   <!-- jumlah data dan pencarian -->
@@ -92,13 +82,13 @@
           <td>{{ i + 1 }}</td>
           <td>{{ d.nama }}</td>
           <td>{{ d.grup.toUpperCase() }}</td>
-          <td>{{ "Rp. " + d.harga }}</td>
+          <td>{{ formatMinus(d.harga) }}</td>
           <td>{{ d.area.nama }}</td>
           <td>
-            {{ toTglIndo(d.jam_berangkat_pa) }}
+            {{ toTglIndo(d.jam_berangkat_pi) }}
           </td>
           <td>
-            {{ toTglIndo(d.jam_berangkat_pi) }}
+            {{ toTglIndo(d.jam_berangkat_pa) }}
           </td>
           <td>{{ d.cakupan }}</td>
         </tr>
@@ -119,7 +109,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalTambahLabel">Tambah Dropsot</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalTambahLabel"
+          >Tambah Dropsot</h1>
           <button
             class="btn-close"
             type="button"
@@ -128,51 +121,59 @@
         </div>
         <form @submit.prevent="form.tambahData">
           <div class="modal-body">
-            <div class="form-group mb-3">
-              <small>Nama Dropspot</small>
-              <input
-                type="text"
-                v-model="form.form.nama"
-                placeholder="Masukkan nama dropspot .."
-                class="form-control mt-2"
-              />
-            </div>
+            <app-input
+              label="Nama dropspot"
+              placeholder="Masukkan nama dropspot"
+              @set-model-input="(val)=>{form.form.nama=val}"
+            />
             <div class="form-group mb-3">
               <small>Grup</small>
-              <select class="form-select mt-2" v-model="form.form.grup">
-                <option value="" selected>Semua Grup</option>
-                <option value="jatim">JATIM</option>
-                <option value="jawa-non-jatim">JAWA NON JATIM</option>
-                <option value="luar-pulau">LUAR PULAU</option>
-                <option value="luar-jawa">LUAR JAWA</option>
-              </select>
+              <app-select
+                my-class="form-select mt-2"
+                :data="form.opsiGrup"
+                label="Pilih grup"
+                @set-model="(val)=>{form.form.grup=val}"
+              />
             </div>
             <div class="form-group mb-3">
               <small>Area</small>
-              <select class="form-select mt-2" v-model="form.form.area_id">
-                <option value="" selected>Pilih Area</option>
-                <option v-for="a in form.isArea" :key="a" :value="a.id">
-                  {{ a.nama }}
-                </option>
-              </select>
-            </div>
-            <div class="form-group mb-3">
-              <small>Cakupan Daerah</small>
-              <input
-                type="text"
-                v-model="form.form.cakupan"
-                placeholder="Masukkan cakupan daerah .."
-                class="form-control mt-2"
+              <app-select
+                my-class="form-select mt-2"
+                :data="form.isArea"
+                label="Semua Area"
+                @set-model="(val)=>{form.form.area_id=val}"
               />
             </div>
+            <app-input
+              label="Cakupan daerah"
+              placeholder="Masukkan cakupan"
+              @set-model-input="(val)=>{form.form.cakupan=val}"
+            />
+            <app-input
+              label="Harga"
+              type="number"
+              placeholder="Masukkan cakupan harga"
+              @set-model-input="(val)=>{form.form.harga=val}"
+            />
             <div class="form-group mb-3">
-              <small>Harga</small>
-              <input
-                type="text"
-                v-model="form.form.harga"
-                placeholder="Masukkan cakupan harga .."
-                class="form-control mt-2"
-              />
+              <div class="row g-2">
+                <div class="col">
+                  <small>Waktu Keberangkatan Putri</small>
+                  <VueDatePicker
+                    class="mt-2"
+                    v-model="form.form.jam_berangkat_pi"
+                    time-picker-inline
+                  />
+                </div>
+                <div class="col">
+                  <small>Waktu Keberangkatan Putra</small>
+                  <VueDatePicker
+                    class="mt-2"
+                    v-model="form.form.jam_berangkat_pa"
+                    time-picker-inline
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -183,7 +184,10 @@
             >
               Tutup
             </button>
-            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+            <button
+              type="submit"
+              class="btn btn-sm btn-primary"
+            >Simpan</button>
           </div>
         </form>
       </div>
@@ -203,7 +207,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalEditLabel">Edit Dropspot</h1>
+          <h1
+            class="modal-title fs-5"
+            id="modalEditLabel"
+          >Edit Dropspot</h1>
           <button
             class="btn-close"
             type="button"
@@ -222,7 +229,10 @@
             </div>
             <div class="form-group mb-3">
               <small>Grup</small>
-              <select class="form-select mt-2" v-model="form.form.grup">
+              <select
+                class="form-select mt-2"
+                v-model="form.form.grup"
+              >
                 <option value="jatim">JATIM</option>
                 <option value="jawa-non-jatim">JAWA NON JATIM</option>
                 <option value="luar-pulau">LUAR PULAU</option>
@@ -231,11 +241,21 @@
             </div>
             <div class="form-group mb-3">
               <small>Area</small>
-              <select class="form-select mt-2" v-model="form.form.area_id">
-                <option value="" selected>
+              <select
+                class="form-select mt-2"
+                v-model="form.form.area_id"
+              >
+                <option
+                  value=""
+                  selected
+                >
                   {{ form.namaArea }}
                 </option>
-                <option v-for="a in form.isArea" :key="a" :value="a.id">
+                <option
+                  v-for="a in form.isArea"
+                  :key="a"
+                  :value="a.id"
+                >
                   {{ a.nama }}
                 </option>
               </select>
@@ -255,6 +275,25 @@
                 class="form-control mt-2"
                 v-model="form.form.harga"
               />
+            </div>
+            <div class="form-group mb-3">
+              <div class="row g-2">
+                <div class="col">
+                  <small>Waktu Keberangkatan Putri</small>
+
+                  <VueDatePicker
+                    v-model="form.form.jam_berangkat_pi"
+                    time-picker-inline
+                  />
+                </div>
+                <div class="col">
+                  <small>Waktu Keberangkatan Putra</small>
+                  <VueDatePicker
+                    v-model="form.form.jam_berangkat_pa"
+                    time-picker-inline
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -291,17 +330,31 @@ import { onMounted } from "vue";
 import { useDropspotForm } from "../../store/dropsot/form";
 import { useDropsotTable } from "../../store/dropsot/table";
 import { DateTime } from "luxon";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 
 const table = useDropsotTable();
 const form = useDropspotForm();
+// const defaultTime = new Date(2000, 1, 1, 6, 0, 0);
 const toTglIndo = (tgl) => {
   const dateTimeWIB = DateTime.fromISO(tgl, { zone: "Asia/Jakarta" });
   return dateTimeWIB.toFormat("dd LLLL yyyy HH:mm");
 };
+const formatMinus = (i) => {
+  const formatter = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
 
+  return formatter.format(i);
+};
 onMounted(() => {
   table.getData();
   form.getArea();
   form.getArea();
 });
 </script>
+<style scoped>
+</style>

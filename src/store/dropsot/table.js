@@ -27,8 +27,17 @@ export const useDropsotTable = defineStore("table_dropspot", {
         });
       } catch (error) {}
     },
+
+    changeArea(val) {
+      this.params.area = val
+      this.getData()
+    },
+    changeGrub(val) {
+      this.params.grup = val
+      this.getData()
+    },
+
     exportExel() {
-      // console.log(this.items);
       const tanggal = this.tanggal();
       const data = this.formatJson(this.items);
       const worksheet = utils.json_to_sheet(data);

@@ -116,23 +116,22 @@ onMounted(() => {
 <style lang="scss" scoped>
 .menu-active {
   background-color: #02582c;
-  border-bottom: 5px solid #9b9999;
+  border-bottom: 5px solid #189c07;
   border-radius: 0 0 10px 10px;
-
-  // background-color: #61616137;
-  // border-bottom: 5px solid #02582c;
+  transition: 0.5s;
 }
 .menu-active-mobile {
   background-color: #02582c;
   border-bottom: 3px solid #189c07;
   border-radius: 0 0 10px 10px;
   transform: translateY(-3px);
-
-  // background-color: #61616137;
-  // border-bottom: 5px solid #02582c;
+  transition: 0.5s;
 }
 .menu-atas-item-m {
-  transform: translateY(10px);
+  transform: translateY(5px);
+  margin-bottom: -10px;
+  overflow-y: auto;
+  transition: 0.5s;
 }
 .menu-dark {
   background-color: #7b7b7b;
