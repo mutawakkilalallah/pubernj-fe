@@ -85,6 +85,15 @@ export const bps = () => {
     return false;
   }
 };
+export const biktren = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const roles = ["sysadmin", "admin", "biktren"];
+  if (roles.includes(user.role)) {
+    return true;
+  } else {
+    return false;
+  }
+};
 export const armada = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const roles = ["sysadmin", "admin", "armada"];
@@ -143,6 +152,15 @@ export const internalNonDaerah = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const roles = ["sysadmin", "admin", "wilayah"];
   if (roles.includes(user.role)) {
+    return true;
+  } else {
+    return false;
+  }
+};
+export const notBpsBiktren = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const roles = ["bps", "biktren"];
+  if (!roles.includes(user.role)) {
     return true;
   } else {
     return false;

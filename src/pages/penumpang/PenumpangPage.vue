@@ -164,6 +164,15 @@
         <option value="" selected>Semua Tagihan E-Bekal</option>
         <option value="T">Tanpa Tagihan</option>
       </select>
+      <select
+        class="form-select form-select-sm mb-2"
+        v-model="table.params.nominal"
+        @change="table.getData"
+      >
+        <option value="" selected>Semua Nominal Tarif</option>
+        <option value="Y">Tarif 0</option>
+        <option value="T">Tarif Tidak 0</option>
+      </select>
     </div>
   </div>
   <!-- jumlah data dan pencarian -->

@@ -1,14 +1,52 @@
 <template>
-  <h3 class="titlePage">Cetak Surat Jalan</h3>
+  <div class="row">
+    <div class="col-md-8">
+      <h3 class="titlePage">Cetak Surat Jalan</h3>
+    </div>
+    <div class="col-md-4 text-end">
+      <div
+        class="btn-group"
+        role="group"
+        aria-label="Basic mixed styles example"
+      >
+        <button type="button" class="btn btn-danger" v-if="notSync">
+          Not Connected
+        </button>
+        <button type="button" class="btn btn-success" v-else>
+          (@{{ auth.user?.username_pedatren }})
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          v-if="notSync"
+          @click="table.setOpenLogin"
+        >
+          <font-awesome-icon icon="right-to-bracket" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          v-else
+          @click="table.hapusPedatren(auth.user.uuid)"
+        >
+          <font-awesome-icon icon="trash" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-info"
+          :disabled="notSync"
+          @click="table.syncPedatren(auth.user.uuid)"
+        >
+          <font-awesome-icon icon="rotate" /> Sync
+        </button>
+      </div>
+    </div>
+  </div>
   <hr />
   <div class="row">
-    <div class="col-md-4">
+    <div class="col" v-if="access.wilayah()">
       <h6 class="text-primary">NOTE :</h6>
       <ul>
-        <li class="text-primray">
-          Harap selalu lakukan <b>"Sinkronasi Ulang"</b> setiap mumulai sesi
-          baru
-        </li>
         <li class="text-primray">
           Data yang di tampilkan adalah data yang akan di proses perizinan ke
           PEDATREN
@@ -48,7 +86,7 @@
           </select>
         </div>
       </div>
-      <div class="serach-box row mt-2">
+      <div class="serach-box row mt-2 mb-3">
         <div class="col-md-6 d-flex">
           <div class="col-auto me-3">
             <select
@@ -80,56 +118,20 @@
           </div>
         </div>
       </div>
-      <hr />
-      <div
-        class="btn-group mb-3"
-        role="group"
-        aria-label="Basic mixed styles example"
+      <button
+        class="btn btn-sm btn-outline-warning mt-2 mb-3 me-3"
+        :disabled="notSync"
+        @click="table.getLog"
       >
-        <button type="button" class="btn btn-danger" v-if="notSync">
-          Not Connected
-        </button>
-        <button type="button" class="btn btn-success" v-else>
-          (@{{ auth.user?.username_pedatren }})
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-success"
-          v-if="notSync"
-          @click="table.setOpenLogin"
-        >
-          <font-awesome-icon icon="right-to-bracket" />
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-danger"
-          v-else
-          @click="table.hapusPedatren(auth.user.uuid)"
-        >
-          <font-awesome-icon icon="trash" />
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-info"
-          @click="table.syncPedatren(auth.user.uuid)"
-        >
-          <font-awesome-icon icon="rotate" /> Sync
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-warning"
-          @click="table.getLog"
-        >
-          <font-awesome-icon icon="triangle-exclamation" /> Log
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-primary"
-          @click="table.generateIzin"
-        >
-          <font-awesome-icon icon="paper-plane" /> Proses Izin
-        </button>
-      </div>
+        <font-awesome-icon icon="triangle-exclamation" /> View Error Log
+      </button>
+      <button
+        class="btn btn-sm btn-outline-info mt-2 mb-3"
+        :disabled="notSync"
+        @click="table.generateIzin"
+      >
+        <font-awesome-icon icon="paper-plane" /> Proses Izin
+      </button>
       <div v-if="table.loading" class="text-center mb-3">
         <div class="spinner-border text-primary mb-1" role="status"></div>
         <p>Sedang Memproses Data ...</p>
@@ -176,7 +178,7 @@
         </table>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col" v-if="access.biktren()">
       <h6 class="text-primary">NOTE :</h6>
       <ul>
         <li class="text-primray">
@@ -251,10 +253,11 @@
         </div>
       </div>
       <button
-        class="btn btn-sm btn-primary mt-2 mb-3"
+        class="btn btn-sm btn-outline-primary mt-2 mb-3"
+        :disabled="notSync"
         @click="table.konfirIzin"
       >
-        Konfirmasi Perizinan
+        <font-awesome-icon icon="check-double" /> Konfirmasi BIKTREN
       </button>
       <div class="table-responsive">
         <table class="table">
@@ -279,7 +282,7 @@
         </table>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col" v-if="access.wilayah()">
       <h6 class="text-primary">NOTE :</h6>
       <ul>
         <li class="text-primray">
@@ -364,8 +367,12 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-sm btn-primary mt-2 mb-3" @click="generatePDF">
-        Print
+      <button
+        class="btn btn-sm btn-outline-secondary mt-2 mb-3"
+        :disabled="notSync"
+        @click="generatePDF"
+      >
+        <font-awesome-icon icon="print" /> Print
       </button>
       <div class="table-responsive">
         <table class="table">
@@ -683,7 +690,7 @@ const generatePDF = () => {
     doc.addImage(item.qrIzin, "PNG", 12, 17, 2, 2);
     doc.text(`Tanggal Cetak`, 12.1, 19.3);
     doc.text(`${tglCetak()}`, 12.1, 19.6);
-    doc.text(`Petugas : Mutawakkil Alallah`, 12.1, 19.9);
+    doc.text(`Petugas : ${auth.user.nama_lengkap}`, 12.1, 19.9);
   });
 
   doc.setProperties({

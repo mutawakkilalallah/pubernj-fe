@@ -66,6 +66,7 @@ import {
   faRightToBracket,
   faPaperPlane,
   faCopy,
+  faCheckDouble,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { registerComponents } from "./plugins/global-components";
@@ -118,7 +119,8 @@ library.add(
   faTriangleExclamation,
   faRightToBracket,
   faPaperPlane,
-  faCopy
+  faCopy,
+  faCheckDouble
 );
 const pinia = createPinia();
 const app = createApp(App);

@@ -88,7 +88,6 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
       this.loading = true;
       try {
         const resp = await api.put(`surat-jalan/hapus-pedatren/${uuid}`);
-        this.setOpenLogin();
         localStorage.removeItem("x-token");
         const user = JSON.parse(localStorage.getItem("user"));
         user.username_pedatren = null;
@@ -189,7 +188,6 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
           for (const d of this.itemsSurat) {
             d.qrIzin = await this.getQR(d.santri.niup);
           }
-          console.log(this.itemsSurat);
         }
       } catch (error) {}
     },

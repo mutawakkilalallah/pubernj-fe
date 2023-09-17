@@ -134,6 +134,10 @@ const menu = ref([
         id: 10,
         name: "bps",
       },
+      {
+        id: 11,
+        name: "biktren",
+      },
     ],
   },
   {
@@ -310,10 +314,14 @@ const menu = ref([
       },
       {
         id: 3,
+        name: "biktren",
+      },
+      {
+        id: 4,
         name: "wilayah",
       },
       {
-        id: 3,
+        id: 5,
         name: "daerah",
       },
     ],

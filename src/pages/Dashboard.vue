@@ -319,7 +319,7 @@
         </div>
       </div>
 
-      <div class="col-sm-3 mb-3 mb-sm-0" v-if="storeAuth.user.role != 'bps'">
+      <div class="col-sm-3 mb-3 mb-sm-0" v-if="access.notBpsBiktren()">
         <div
           class="card text-bg-primary"
           style="cursor: pointer"
@@ -368,7 +368,10 @@
         </div>
       </div>
 
-      <div class="col-sm-3 mb-3 mb-sm-0" v-if="access.notWilayahKeuangan()">
+      <div
+        class="col-sm-3 mb-3 mb-sm-0"
+        v-if="access.notWilayahKeuangan() && access.notBpsBiktren()"
+      >
         <div
           class="card"
           style="background-color: #cd0052; cursor: pointer"
@@ -400,7 +403,7 @@
           class="card"
           style="background-color: #315200; cursor: pointer"
           @click="toDataArea"
-          v-if="access.notInternal()"
+          v-if="access.notInternal() && access.notBpsBiktren()"
         >
           <div class="card-body">
             <div class="row">
@@ -426,7 +429,7 @@
           class="card"
           style="background-color: #2d0063; cursor: pointer"
           @click="toDataDropspot"
-          v-if="access.notInternal()"
+          v-if="access.notInternal() && access.notBpsBiktren()"
         >
           <div class="card-body">
             <div class="row">

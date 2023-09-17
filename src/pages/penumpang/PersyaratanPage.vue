@@ -23,7 +23,7 @@
         KOSMARA
       </button>
       <button
-        v-if="access.sysadmin()"
+        v-if="access.bps()"
         class="btn btn-sm btn-outline-info me-2"
         type="button"
         @click="table.setOpenBps"
@@ -31,7 +31,7 @@
         <font-awesome-icon icon="file-import" class="icon" /> Import BPS
       </button>
       <button
-        v-if="access.sysadmin()"
+        v-if="access.bps()"
         class="btn btn-sm btn-outline-warning me-2"
         type="button"
         @click="table.export('bps')"
@@ -43,15 +43,10 @@
   <hr />
   <h6 class="text-primary">NOTE :</h6>
   <ul>
-    <li class="text-primary" v-if="access.keuangan()">
+    <li class="text-primary" v-if="access.keuangan() || access.bps()">
       Untuk fitur <b>"Unduh Template"</b> berlaku filter (Wilayah, Daerah dan
       Jenis Kelamin)
     </li>
-    <!-- <li class="text-primary" v-if="access.bps">
-      Penulisan status untuk import BPS ada dua, yaitu
-      <b class="text-danger">(lunas & belum lunas)</b> dengan huruf kecil semua
-      untuk memudahkan penulisan
-    </li> -->
     <li class="text-primary" v-if="access.keuangan()">
       Untuk KOSMARA otomatis menyesuaikan template aplikasi Admin PSP
     </li>

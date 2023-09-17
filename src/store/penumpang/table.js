@@ -26,6 +26,7 @@ export const usePenumpangTable = defineStore("table_penumpang", {
       armada: "",
       hak_pulang: "",
       tagihan: "",
+      nominal: "",
       page: 1,
       limit: 25,
     },
