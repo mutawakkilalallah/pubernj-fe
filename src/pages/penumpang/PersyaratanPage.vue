@@ -22,7 +22,7 @@
         <font-awesome-icon icon="download" class="icon" /> Unduh Template
         KOSMARA
       </button>
-      <button
+      <!-- <button
         v-if="access.bps()"
         class="btn btn-sm btn-outline-info me-2"
         type="button"
@@ -37,13 +37,13 @@
         @click="table.export('bps')"
       >
         <font-awesome-icon icon="download" class="icon" /> Unduh Template BPS
-      </button>
+      </button> -->
     </div>
   </div>
   <hr />
-  <h6 class="text-primary">NOTE :</h6>
+  <h6 class="text-primary" v-if="access.keuangan()">NOTE :</h6>
   <ul>
-    <li class="text-primary" v-if="access.keuangan() || access.bps()">
+    <li class="text-primary" v-if="access.keuangan()">
       Untuk fitur <b>"Unduh Template"</b> berlaku filter (Wilayah, Daerah dan
       Jenis Kelamin)
     </li>
@@ -51,7 +51,7 @@
       Untuk KOSMARA otomatis menyesuaikan template aplikasi Admin PSP
     </li>
   </ul>
-  <hr />
+  <hr v-if="access.keuangan()" />
   <!-- menu filter -->
   <div class="filter-box row">
     <div
