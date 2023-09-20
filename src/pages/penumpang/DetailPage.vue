@@ -206,8 +206,16 @@
           <div>
             <p class="card-title mb-0">Biaya Pendidikan Santri (BPS) :</p>
             <small
+              class="badge bg-warning"
+              v-if="
+                table?.item?.persyaratan?.lunas_bps &&
+                table?.item?.persyaratan?.is_dispen_bps === 'Y'
+              "
+              >Dispensasi
+            </small>
+            <small
               class="badge bg-success"
-              v-if="table?.item?.persyaratan?.lunas_bps"
+              v-else-if="table?.item?.persyaratan?.lunas_bps"
               >Lunas
             </small>
             <small class="badge bg-danger" v-else>Belum Lunas </small>

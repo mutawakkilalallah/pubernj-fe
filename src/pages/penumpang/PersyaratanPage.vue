@@ -22,7 +22,7 @@
         <font-awesome-icon icon="download" class="icon" /> Unduh Template
         KOSMARA
       </button>
-      <!-- <button
+      <button
         v-if="access.bps()"
         class="btn btn-sm btn-outline-info me-2"
         type="button"
@@ -37,7 +37,7 @@
         @click="table.export('bps')"
       >
         <font-awesome-icon icon="download" class="icon" /> Unduh Template BPS
-      </button> -->
+      </button>
     </div>
   </div>
   <hr />
@@ -209,7 +209,7 @@
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
           <td>{{ d.santri.niup }}</td>
           <td>{{ d.santri.nama_lengkap }}</td>
-          <td
+          <!-- <td
             v-if="d.persyaratan.lunas_bps"
             class="text-center bg-success"
             @click="
@@ -242,6 +242,23 @@
             "
           >
             <font-awesome-icon icon="times-square" class="icon text-white" />
+          </td> -->
+          <td
+            v-if="
+              d.persyaratan.lunas_bps && d.persyaratan.is_dispen_bps === 'Y'
+            "
+            class="text-center bg-warning"
+          >
+            <font-awesome-icon icon="info-circle" class="icon text-white" />
+          </td>
+          <td
+            v-else-if="d.persyaratan.lunas_bps"
+            class="text-center bg-success"
+          >
+            <font-awesome-icon icon="check-circle" class="icon text-white" />
+          </td>
+          <td v-else class="text-center bg-danger">
+            <font-awesome-icon icon="check-circle" class="icon text-white" />
           </td>
           <td
             v-if="d.persyaratan.lunas_kosmara"
