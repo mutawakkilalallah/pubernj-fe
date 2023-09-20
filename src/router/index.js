@@ -12,6 +12,11 @@ const routes = [
     component: () => import("@/pages/NotFound.vue"),
   },
   {
+    path: "/privacy",
+    name: "privacy",
+    component: () => import("@/pages/Kebijakan.vue"),
+  },
+  {
     path: "/",
     name: "main",
     component: () => import("@/layouts/Main.vue"),
@@ -247,7 +252,11 @@ router.beforeEach((to, from, next) => {
     },
   ];
   // set permission
-  if (to.name !== "login" && !localStorage.getItem("token")) {
+  if (
+    to.name !== "login" &&
+    to.name !== "privacy" &&
+    !localStorage.getItem("token")
+  ) {
     next({ name: "login" });
   } else if (to.name === "login" && localStorage.getItem("token")) {
     next({ name: "dashboard" });

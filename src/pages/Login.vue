@@ -24,19 +24,12 @@
           height="100"
         />
         <br />
-        <h4
-          style="color: #01351b"
-          class="mb-0"
-        >PULANG BERSAMA</h4>
-        <small
-          style="color: #a47c24"
-          class="mt-0"
-        >Pondok Pesantren Nurul Jadid</small>
+        <h4 style="color: #01351b" class="mb-0">PULANG BERSAMA</h4>
+        <small style="color: #a47c24" class="mt-0"
+          >Pondok Pesantren Nurul Jadid</small
+        >
       </div>
-      <form
-        @submit.prevent="prosesLogin"
-        ref="myForm"
-      >
+      <form @submit.prevent="prosesLogin" ref="myForm">
         <input
           v-model="form.username"
           id="username"
@@ -48,24 +41,20 @@
         />
 
         <div class="input-group mb-3">
-
           <input
             v-model="form.password"
             :class="valid2 === true ? 'is-invalid' : ''"
             id="password"
-            :type="rePass ? 'text' :'password'"
+            :type="rePass ? 'text' : 'password'"
             class="form-control form-control-sm mb-3"
             placeholder="Password"
             aria-describedby="password"
             @blur="validInput2(form.password)"
           />
-          <span
-            class="input-group-text"
-            id="password"
-          >
+          <span class="input-group-text" id="password">
             <font-awesome-icon
-              style="cursor: pointer;"
-              :icon="rePass ?'eye': 'eye-slash'"
+              style="cursor: pointer"
+              :icon="rePass ? 'eye' : 'eye-slash'"
               @click="readPassword"
             />
           </span>
@@ -88,6 +77,11 @@
         <br />
         <small>@mutawakkilalallah @farhandardiri</small>
       </div>
+      <router-link to="privacy">
+        <div class="developerName text-center text-muted mt-3">
+          <small>Kebijakan Privasi</small>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
