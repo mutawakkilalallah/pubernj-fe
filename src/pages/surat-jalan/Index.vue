@@ -656,8 +656,7 @@ const generatePDF = () => {
       doc.addPage();
     }
 
-    const kop = "../../../public/kop.png";
-    doc.addImage(kop, "PNG", 1, 0.5, 14.5, 3);
+    doc.addImage(table.kop, "PNG", 1, 0.5, 14.5, 3);
 
     doc.setFont("Helvetica");
     doc.setFontSize(8);
@@ -735,14 +734,11 @@ const generatePDF = () => {
     doc.text(`2 Rabi’ul Awwal 1445 H`, 2, 11.1);
     doc.text("Kepala,", 1, 11.7);
 
-    const qrKepala = "../../../public/ttd-qr.png";
-    doc.addImage(qrKepala, "PNG", 1, 11.9, 2.5, 2.5);
+    doc.addImage(table.qr, "PNG", 1, 11.9, 2.5, 2.5);
 
     doc.text("KH. ABD. HAMID WAHID, M.Ag.", 1, 14.7);
-    const paraf1 = "../../../public/paraf1.png";
-    doc.addImage(paraf1, "PNG", 0.5, 14.5, 0.6, 0.6);
-    const paraf2 = "../../../public/paraf2.png";
-    doc.addImage(paraf2, "PNG", 5, 14.5, 0.6, 0.6);
+    doc.addImage(table.paraf1, "PNG", 0.5, 14.5, 0.6, 0.6);
+    doc.addImage(table.paraf2, "PNG", 5, 14.5, 0.6, 0.6);
     doc.text(
       `NIUP. 31820500002
 `,

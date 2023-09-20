@@ -19,6 +19,10 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
     metaSurat: {},
     logIzin: {},
     blob: "",
+    kop: "",
+    qr: "",
+    paraf1: "",
+    paraf2: "",
     form: {
       username: "",
       password: "",
@@ -180,6 +184,10 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
     },
 
     async getDataSurat() {
+      this.kop = await this.getImageSurat("kop.png");
+      this.qr = await this.getImageSurat("ttd-qr.png");
+      this.paraf1 = await this.getImageSurat("paraf1.png");
+      this.paraf2 = await this.getImageSurat("paraf2.png");
       const params = { params: this.paramsSurat };
       try {
         const resp = await api.get("surat-jalan/cetak-surat", params);
@@ -204,6 +212,21 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
           },
         };
         const response = await api.get(`surat-jalan/qr-izin/${niup}`, params);
+        return URL.createObjectURL(response.data);
+      } catch (err) {
+        this.errorSurat.push(niup);
+      }
+    },
+
+    async getImageSurat(image) {
+      try {
+        const params = {
+          responseType: "blob",
+        };
+        const response = await api.get(
+          `cari-santri/surat-image/${image}`,
+          params
+        );
         return URL.createObjectURL(response.data);
       } catch (err) {
         this.errorSurat.push(niup);
