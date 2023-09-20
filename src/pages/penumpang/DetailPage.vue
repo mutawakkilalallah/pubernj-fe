@@ -150,19 +150,19 @@
           <i
             v-if="table.item.status_bayar === 'belum-lunas'"
             class="badge bg-danger"
-          >{{ table.item.status_bayar }}</i>
+            >{{ table.item.status_bayar }}</i
+          >
           <i
             v-if="table.item.status_bayar === 'lunas'"
             class="badge bg-success"
-          >{{ table.item.status_bayar }}</i>
+            >{{ table.item.status_bayar }}</i
+          >
           <i
             v-if="table.item.status_bayar === 'kurang'"
             class="badge bg-warning"
-          >{{ table.item.status_bayar }}</i>
-          <i
-            v-if="table.item.status_bayar === 'lebih'"
-            class="badge bg-info"
-          >{{
+            >{{ table.item.status_bayar }}</i
+          >
+          <i v-if="table.item.status_bayar === 'lebih'" class="badge bg-info">{{
             table.item.status_bayar
           }}</i>
         </div>
@@ -208,57 +208,84 @@
             <small
               class="badge bg-success"
               v-if="table?.item?.persyaratan?.lunas_bps"
-            >Lunas
+              >Lunas
             </small>
-            <small
-              class="badge bg-danger"
-              v-else
-            >Belum Lunas </small>
+            <small class="badge bg-danger" v-else>Belum Lunas </small>
           </div>
           <div>
             <p class="card-title mb-0">Kos Makan Santri (KOSMARA) :</p>
             <small
               class="badge bg-success"
               v-if="table?.item?.persyaratan?.lunas_kosmara"
-            >Lunas
+              >Lunas
             </small>
-            <small
-              class="badge bg-danger"
-              v-else
-            >Belum Lunas </small>
+            <small class="badge bg-danger" v-else>Belum Lunas </small>
           </div>
           <div>
             <p class="card-title mb-0">Furudhul Ainiyah (FA) :</p>
             <small
               class="badge bg-success"
               v-if="table?.item?.persyaratan?.tuntas_fa"
-            >Tuntas
+              >Tuntas
             </small>
-            <small
-              class="badge bg-danger"
-              v-else
-            >Belum Tuntas </small>
+            <small class="badge bg-danger" v-else>Belum Tuntas </small>
           </div>
           <div>
             <p class="card-title mb-0">Bebas Pelanggaran (KAMTIB)</p>
             <small
               class="badge bg-success"
               v-if="table?.item?.persyaratan?.bebas_kamtib"
-            >Bebas
+              >Bebas
             </small>
-            <small
-              class="badge bg-danger"
-              v-else
-            >Belum Bebas</small>
+            <small class="badge bg-danger" v-else>Belum Bebas</small>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="row my-3">
-    <div :class="isMobile ? 'myMobile col-md-12':'col-md-12'">
+    <div :class="isMobile ? 'myMobile col-md-12' : 'col-md-4'">
       <div class="card">
-        <div class="card-header bg-primary d-flex justify-content-between align-items-center text-white">
+        <div
+          class="card-header bg-primary d-flex justify-content-between align-items-center text-white"
+        >
+          <p class="mb-0">Mahrom</p>
+          <button
+            class="btn btn-sm btn-outline-light btn-sm"
+            v-if="access.admin()"
+            @click="table.setAddMahrom"
+          >
+            <font-awesome-icon icon="plus" /> Tambah Mahrom
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="row align-items-center" v-if="table.item.mahrom">
+            <div class="col-md-3">
+              <img :src="table?.item?.mahrom?.foto" alt="foto-mahrom" />
+            </div>
+            <div class="col-md-9">
+              <b>{{ table?.item?.mahrom?.santri?.nama_lengkap }}</b>
+              <p class="mb-0">
+                {{ table?.item?.mahrom?.santri?.niup }}
+              </p>
+              <p class="mb-2">
+                {{
+                  `${table?.item?.mahrom?.santri?.blok} / ${table?.item?.mahrom?.santri?.wilayah}`
+                }}
+              </p>
+              <button class="btn btn-sm btn-danger" @click="table.deleteMahrom">
+                Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div :class="isMobile ? 'myMobile col-md-12' : 'col-md-8'">
+      <div class="card">
+        <div
+          class="card-header bg-primary d-flex justify-content-between align-items-center text-white"
+        >
           <p class="mb-0">Berkas</p>
           <button
             class="btn btn-sm btn-outline-light btn-sm"
@@ -270,11 +297,7 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <div
-              v-for="doc in table.berkas"
-              :key="doc.id"
-              class="col-md-3"
-            >
+            <div v-for="doc in table.berkas" :key="doc.id" class="col-md-3">
               <div class="card">
                 <div class="card-body text-center">
                   <div class="row g-1 justify-content-end">
@@ -283,10 +306,7 @@
                         class="btn btn-sm btn-secondary"
                         @click="table.openInNewTab(doc.blobUrl)"
                       >
-                        <font-awesome-icon
-                          icon="eye"
-                          class="text-white"
-                        />
+                        <font-awesome-icon icon="eye" class="text-white" />
                       </button>
                     </div>
                     <div class="col-auto">
@@ -294,10 +314,7 @@
                         class="btn btn-sm btn-secondary"
                         @click="table.downloadFile(doc)"
                       >
-                        <font-awesome-icon
-                          icon="download"
-                          class="text-white"
-                        />
+                        <font-awesome-icon icon="download" class="text-white" />
                       </button>
                     </div>
                     <div class="col-auto">
@@ -305,18 +322,11 @@
                         class="btn btn-sm btn-danger"
                         @click="table.deleteBerkas(doc.id, route.params.uuid)"
                       >
-                        <font-awesome-icon
-                          icon="trash"
-                          class="text-white"
-                        />
+                        <font-awesome-icon icon="trash" class="text-white" />
                       </button>
                     </div>
                   </div>
-                  <img
-                    :src="doc.blobUrl"
-                    class="p-2 img-fluid"
-                    alt="berkas"
-                  />
+                  <img :src="doc.blobUrl" class="p-2 img-fluid" alt="berkas" />
                   <hr />
                   <small class="badge bg-primary">{{
                     doc.type
@@ -340,7 +350,7 @@
       </div>
     </div>
   </div>
-  <!-- modal upload -->
+  <!-- modal add mahrom -->
   <div
     class="modal fade"
     v-if="table.isOpenUpload === true"
@@ -354,10 +364,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1
-            class="modal-title fs-5"
-            id="modalUploadLabel"
-          >Upload Berkas</h1>
+          <h1 class="modal-title fs-5" id="modalUploadLabel">Upload Berkas</h1>
           <button
             class="btn-close"
             type="button"
@@ -377,14 +384,8 @@
             </div>
             <div class="form-group mb-3">
               <small>Jenis Berkas</small>
-              <select
-                class="form-select mt-2"
-                v-model="table.form.type"
-              >
-                <option
-                  value=""
-                  selected
-                >Pilih Jenis Berkas</option>
+              <select class="form-select mt-2" v-model="table.form.type">
+                <option value="" selected>Pilih Jenis Berkas</option>
                 <option value="keterangan-pindah-dropspot">
                   Keterangan Pindah Dropspot
                 </option>
@@ -409,12 +410,63 @@
             >
               Tutup
             </button>
-            <button
-              type="submit"
-              class="btn btn-sm btn-primary"
-            >Simpan</button>
+            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade"
+    v-if="table.isAddMahrom === true"
+    :class="{ show: table.isAddMahrom }"
+    style="display: block"
+    id="modalUpload"
+    tabindex="-1"
+    aria-labelledby="modalUploadLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalUploadLabel">Tambah Mahrom</h1>
+          <button
+            class="btn-close"
+            type="button"
+            @click="table.setAddMahrom"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="row align-items-center" v-for="d in table.mahrom">
+            <div class="col-md-3">
+              <img :src="d?.foto" alt="foto-mahrom" />
+            </div>
+            <div class="col-md-9">
+              <b>{{ d?.santri?.nama_lengkap }}</b>
+              <p class="mb-0">
+                {{ d?.santri?.niup }}
+              </p>
+              <p class="mb-2">
+                {{ `${d.santri?.blok} / ${d.santri?.wilayah}` }}
+              </p>
+              <button
+                class="btn btn-sm btn-primary"
+                @click="table.saveMahrom(d.id)"
+              >
+                Pilih
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-sm btn-secondary"
+            @click="table.setAddMahrom"
+          >
+            Tutup
+          </button>
+        </div>
       </div>
     </div>
   </div>

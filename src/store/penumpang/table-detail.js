@@ -6,8 +6,10 @@ import Swal from "sweetalert2";
 export const usePenumpangDetailTable = defineStore("table_penumpang_detail", {
   state: () => ({
     isOpenUpload: false,
+    isAddMahrom: false,
     item: {},
     berkas: [],
+    mahrom: [],
     fotoDiri: "",
     form: {
       type: "",
@@ -24,6 +26,10 @@ export const usePenumpangDetailTable = defineStore("table_penumpang_detail", {
     setOpenUpload() {
       this.isOpenUpload = !this.isOpenUpload;
       this.resetForm();
+    },
+    setAddMahrom() {
+      this.getMahrom();
+      this.isAddMahrom = !this.isAddMahrom;
     },
     handleFileChange(event) {
       this.form.berkas = event.target.files[0];
@@ -42,12 +48,45 @@ export const usePenumpangDetailTable = defineStore("table_penumpang_detail", {
         const resp = await api.get(`penumpang/${uuid}`);
         if (resp.data.code === 200) {
           this.item = resp.data.data;
+          if (this.item.mahrom) {
+            this.item.mahrom.foto = await this.getFoto(
+              this.item.mahrom.santri.niup
+            );
+          }
           this.berkas = resp?.data?.data?.berkas;
           this.getImage(resp.data.data.santri.niup, "medium");
           for (const doc of this.berkas) {
             doc.blobUrl = await this.getPathBlob(doc.path);
           }
         }
+      } catch (err) {}
+    },
+    async getMahrom() {
+      try {
+        const resp = await api.get(`penumpang/mahrom/${this.item.santri_uuid}`);
+        if (resp.data.code === 200) {
+          this.mahrom = resp.data.data;
+          for (const d of this.mahrom) {
+            d.foto = await this.getFoto(d?.santri?.niup);
+          }
+        }
+      } catch (err) {}
+    },
+    async saveMahrom(id) {
+      try {
+        const resp = await api.put(`penumpang/mahrom/${this.item.id}`, {
+          mahrom_id: id,
+        });
+        if (resp.data.code === 201) {
+          this.setAddMahrom();
+          this.getDataDetail(this.item.santri_uuid);
+        }
+      } catch (err) {}
+    },
+    async deleteMahrom() {
+      try {
+        await api.delete(`penumpang/mahrom/${this.item.id}`);
+        this.getDataDetail(this.item.santri_uuid);
       } catch (err) {}
     },
     async getImage(uuid) {
@@ -58,6 +97,15 @@ export const usePenumpangDetailTable = defineStore("table_penumpang_detail", {
         await api.get("santri/image/" + uuid, params).then((resp) => {
           this.fotoDiri = URL.createObjectURL(resp.data);
         });
+      } catch (err) {}
+    },
+    async getFoto(niup) {
+      try {
+        const params = {
+          responseType: "blob",
+        };
+        const resp = await api.get(`santri/image/${niup}?size=small`, params);
+        return URL.createObjectURL(resp.data);
       } catch (err) {}
     },
     async getPathBlob(path) {
@@ -101,17 +149,5 @@ export const usePenumpangDetailTable = defineStore("table_penumpang_detail", {
         }
       });
     },
-    // async izinPedatren(niup, uuid) {
-    //   try {
-    //     await api.post(`/penumpang/qrcode/${niup}`).then((resp) => {
-    //       this.getDataDetail(uuid);
-    //     });
-    //   } catch (error) {
-    //     console.log("error", error);
-    //   }
-    // },
-    // goToSuratJalan(niup) {
-    //   router.push(`/penumpang/surat-jalan/${niup}`);
-    // },
   },
 });

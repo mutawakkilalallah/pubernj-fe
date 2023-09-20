@@ -347,10 +347,18 @@
               <option value="100">100</option>
             </select>
           </div>
-          <div class="col-auto">
+          <div class="col-auto me-3">
             <div class="form-control-plaintext form-control-sm">
               Total data {{ table.metaSurat["x_total_data"] }}
             </div>
+          </div>
+          <div class="col-auto">
+            <button
+              class="btn btn-sm btn-primary"
+              @click="aktifMemilih = !aktifMemilih"
+            >
+              <font-awesome-icon icon="check-square" /> Aktifkan Memilih
+            </button>
           </div>
         </div>
         <div class="col-md-6">
@@ -369,15 +377,48 @@
       </div>
       <button
         class="btn btn-sm btn-outline-secondary mt-2 mb-3"
-        :disabled="notSync"
+        v-if="!table.btnPrint"
+        :disabled="notSync && table.btnPrint"
         @click="generatePDF"
       >
         <font-awesome-icon icon="print" /> Print
       </button>
+      <button
+        class="btn btn-sm btn-danger mt-2 mb-3"
+        disabled
+        v-if="table.btnPrint"
+      >
+        <font-awesome-icon icon="stopwatch" /> Loading ...
+      </button>
+      <button
+        class="btn btn-sm btn-outline-success ms-3 mt-2 mb-3"
+        v-if="aktifMemilih"
+        :disabled="itemDipilih.length < 1"
+        @click="prosesData"
+      >
+        <font-awesome-icon icon="check-double" /> Sudah Cetak
+      </button>
+      <br />
+      <b v-if="table.errorSurat.length > 0">List Error : </b>
+      <ul>
+        <li v-for="e in table.errorSurat" class="text-danger">
+          {{ `Santri dengan NIUP "${e}" tidak dapat di proses cetak surat` }}
+        </li>
+      </ul>
+      <p v-if="table.errorSurat.length > 0" class="badge bg-success fst-italic">
+        Coba <b>Refresh Ulang</b> Pastikan tidak ada error sebelum cetak surat
+      </p>
       <div :class="isMobile ? 'table-responsive myTable' : 'table-responsive'">
         <table class="table">
           <thead>
             <tr>
+              <th v-if="aktifMemilih">
+                <input
+                  type="checkbox"
+                  :checked="semuaTerpilih"
+                  @click="pilihSemua"
+                />
+              </th>
               <th>No</th>
               <th>NIUP</th>
               <th>Nama</th>
@@ -387,6 +428,14 @@
           </thead>
           <tbody>
             <tr v-for="(d, i) in table.itemsSurat">
+              <td v-if="aktifMemilih">
+                <input
+                  type="checkbox"
+                  :id="d.id"
+                  :value="d.persyaratan.id"
+                  v-model="itemDipilih"
+                />
+              </td>
               <td>{{ i + 1 }}</td>
               <td>{{ d?.santri?.niup }}</td>
               <td>{{ d?.santri?.nama_lengkap }}</td>
@@ -536,17 +585,47 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { useSuratJalanTable } from "../../store/surat-jalan/table";
 import { useAuthStore } from "../../store/auth";
 import * as access from "../../plugins/access";
 import { DateTime } from "luxon";
 import jsPDF from "jspdf";
+import { api } from "../../plugins/axios";
 
 const isMobile = ref("");
 
 const table = useSuratJalanTable();
 const auth = useAuthStore();
+
+const aktifMemilih = ref(false);
+const itemDipilih = ref([]);
+
+// Menghitung apakah semua item telah dicentang
+const semuaTerpilih = computed(() => {
+  return itemDipilih.value.length === table.itemsSurat.length;
+});
+
+// Function untuk toggle semua item
+const pilihSemua = () => {
+  if (semuaTerpilih.value) {
+    itemDipilih.value = [];
+  } else {
+    itemDipilih.value = table.itemsSurat.map((item) => item.persyaratan.id);
+  }
+};
+
+const prosesData = async () => {
+  try {
+    await api.put("surat-jalan/status-cetak", {
+      status: "Y",
+      id_persyaratan: itemDipilih.value,
+    });
+    itemDipilih.value = [];
+    aktifMemilih.value = false;
+    table.getDataSurat();
+  } catch (err) {}
+};
 
 const toTglIndo = (tgl) => {
   const dateTimeWIB = DateTime.fromISO(tgl, { zone: "Asia/Jakarta" });
@@ -571,18 +650,20 @@ const generatePDF = () => {
     unit: "cm", // Satuan ukuran dalam cm
     format: [pageWidth, pageHeight], // Atur ukuran kertas
   });
+  // Tambahkan header (gambar)
   table.itemsSurat.forEach((item, index) => {
     if (index > 0) {
       doc.addPage();
     }
 
-    // Tambahkan header (gambar)
-    const imageSrc = "../../../public/kop.jpg";
-    doc.addImage(imageSrc, "JPG", 1, 0.5, 14.5, 3);
+    const kop = "../../../public/kop.png";
+    doc.addImage(kop, "PNG", 1, 0.5, 14.5, 3);
 
     doc.setFont("Helvetica");
     doc.setFontSize(8);
-    doc.text("SURAT IZIN LIBUR MAULID 1445 H", 8.25, 3.8, { align: "center" });
+    doc.text("SURAT IZIN LIBUR MAULID 1445 H", 8.25, 3.8, {
+      align: "center",
+    });
 
     // Tambahkan nomor surat
     doc.setFont("Helvetica");
@@ -625,21 +706,21 @@ const generatePDF = () => {
     );
 
     doc.text(
-      `Santri putri tanggal 9 Rabi’ul Awal 1445 H/25 September 2023 M s.d.`,
+      `Santri putri tanggal 9 Rabi’ul Awal 1445 H/25 September 2023 M`,
       8.25,
       8,
       { align: "center" }
     );
-    doc.text(`18 Rabi’ul Awal 1445 H/4 Oktober 2023 M.`, 8.25, 8.4, {
+    doc.text(`s.d 18 Rabi’ul Awal 1445 H/4 Oktober 2023 M.`, 8.25, 8.4, {
       align: "center",
     });
     doc.text(
-      `Santri putra tanggal 10 Rabi’ul Awal 1445 H/26 September 2023 M s.d.`,
+      `Santri putra tanggal 10 Rabi’ul Awal 1445 H/26 September 2023 M`,
       8.25,
       8.8,
       { align: "center" }
     );
-    doc.text(`19 Rabi’ul Awal 1445 H/5 Oktober 2023 M.`, 8.25, 9.2, {
+    doc.text(`s.d 19 Rabi’ul Awal 1445 H/5 Oktober 2023 M.`, 8.25, 9.2, {
       align: "center",
     });
 
@@ -650,8 +731,8 @@ const generatePDF = () => {
       10.1
     );
 
-    doc.text(`Paiton, 12 September 2023 M`, 1, 10.7);
-    doc.text(`26 Shaffar 1445 H`, 2, 11.1);
+    doc.text(`Paiton, 17 September 2023 M`, 1, 10.7);
+    doc.text(`2 Rabi’ul Awwal 1445 H`, 2, 11.1);
     doc.text("Kepala,", 1, 11.7);
 
     const qrKepala = "../../../public/ttd-qr.png";

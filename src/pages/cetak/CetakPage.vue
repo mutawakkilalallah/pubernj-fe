@@ -10,7 +10,7 @@
       id="kertas"
       style="width: 15.5cm; height: 21.5cm; margin: 0 auto; font-size: 11px"
     >
-      <img src="/kop.jpg" style="width: 15cm" />
+      <img src="/kop.png" style="width: 15cm" />
       <p class="fw-bold mt-1 mb-0 text-center text-decoration-underline">
         SURAT IZIN LIBUR MAULID 1445 H
       </p>

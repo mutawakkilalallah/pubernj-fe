@@ -21,8 +21,8 @@ import VueApexCharts from "vue3-apexcharts";
 import print from "vue3-print-nb";
 
 // vuedatepicker
-import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 
 import {
   faArrowLeft,
@@ -71,6 +71,8 @@ import {
   faPaperPlane,
   faCopy,
   faCheckDouble,
+  faCheckSquare,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { registerComponents } from "./plugins/global-components";
@@ -124,7 +126,9 @@ library.add(
   faRightToBracket,
   faPaperPlane,
   faCopy,
-  faCheckDouble
+  faCheckDouble,
+  faCheckSquare,
+  faPlus
 );
 const pinia = createPinia();
 const app = createApp(App);
@@ -133,7 +137,7 @@ app.component("font-awesome-icon", FontAwesomeIcon);
 app.component("pagination", VPagination);
 app.component("datetime-picker", DatetimePicker);
 app.use(router);
-app.component('VueDatePicker', VueDatePicker);
+app.component("VueDatePicker", VueDatePicker);
 app.use(pinia);
 app.use(VueApexCharts);
 app.use(print);

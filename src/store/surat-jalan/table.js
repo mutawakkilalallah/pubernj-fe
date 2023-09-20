@@ -5,9 +5,11 @@ import { swalSuccess } from "../../modules/untils";
 export const useSuratJalanTable = defineStore("table_surat_jalan", {
   state: () => ({
     loading: false,
+    btnPrint: true,
     openLogin: false,
     openLog: false,
     successIzin: false,
+    errorSurat: [],
     itemsLog: [],
     itemsIzin: [],
     itemsKonfir: [],
@@ -188,6 +190,7 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
           for (const d of this.itemsSurat) {
             d.qrIzin = await this.getQR(d.santri.niup);
           }
+          this.btnPrint = false;
         }
       } catch (error) {}
     },
@@ -202,7 +205,9 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
         };
         const response = await api.get(`surat-jalan/qr-izin/${niup}`, params);
         return URL.createObjectURL(response.data);
-      } catch (err) {}
+      } catch (err) {
+        this.errorSurat.push(niup);
+      }
     },
 
     async getLog() {
