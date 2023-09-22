@@ -1,9 +1,11 @@
 import { defineStore } from "pinia";
 import { api } from "../../plugins/axios";
 import { swalSuccess } from "../../modules/untils";
+import * as access from "../../plugins/access";
 
 export const useSuratJalanTable = defineStore("table_surat_jalan", {
   state: () => ({
+    load: false,
     loading: false,
     btnPrint: true,
     openLogin: false,
@@ -30,33 +32,45 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
     filterIzin: {
       wilayah: [],
       blok: [],
+      area: [],
+      dropspot: [],
     },
     filterKonfir: {
       wilayah: [],
       blok: [],
+      area: [],
+      dropspot: [],
     },
     filterSurat: {
       wilayah: [],
       blok: [],
+      area: [],
+      dropspot: [],
     },
     paramsIzin: {
       cari: "",
       wilayah: "",
       blok: "",
-      limit: 50,
+      area: "",
+      dropspot: "",
+      limit: 10,
     },
     paramsKonfir: {
       cari: "",
       wilayah: "",
       blok: "",
-      limit: 50,
+      area: "",
+      dropspot: "",
+      limit: 10,
     },
     paramsSurat: {
       cari: "",
       wilayah: "",
       blok: "",
+      area: "",
+      dropspot: "",
       cetak: "T",
-      limit: 50,
+      limit: 10,
     },
   }),
   actions: {
@@ -70,7 +84,7 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
     },
 
     async loginPedatren(uuid) {
-      this.loading = true;
+      this.load = true;
       try {
         const resp = await api.put(
           `surat-jalan/tautkan-pedatren/${uuid}`,
@@ -82,16 +96,16 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
         user.username_pedatren = resp.data.value.username;
         user.password_pedatren = resp.data.value.password;
         localStorage.setItem("user", JSON.stringify(user));
-        this.loading = false;
+        this.load = false;
         swalSuccess("Berhasil Menghubungkan ke PEDATREN");
         location.reload();
       } catch (err) {
-        this.loading = false;
+        this.load = false;
       }
     },
 
     async hapusPedatren(uuid) {
-      this.loading = true;
+      this.load = true;
       try {
         const resp = await api.put(`surat-jalan/hapus-pedatren/${uuid}`);
         localStorage.removeItem("x-token");
@@ -99,16 +113,16 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
         user.username_pedatren = null;
         user.password_pedatren = null;
         localStorage.setItem("user", JSON.stringify(user));
-        this.loading = false;
+        this.load = false;
         swalSuccess("Berhasil menghapus tautan ke PEDATREN");
         location.reload();
       } catch (err) {
-        this.loading = false;
+        this.load = false;
       }
     },
 
     async generateIzin() {
-      this.loading = true;
+      this.load = true;
       const authToken = JSON.parse(localStorage.getItem("x-token"));
       const params = {
         params: this.paramsIzin,
@@ -120,16 +134,22 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
         const resp = await api.post(`surat-jalan/create-izin`, null, params);
         this.successIzin = true;
         this.logIzin = resp.data.data;
-        this.getDataIzin();
-        this.getDataKonfir();
-        this.getDataSurat();
-        this.loading = false;
+        if (access.wilayah()) {
+          this.getDataIzin();
+        } else if (access.biktren()) {
+          this.getDataKonfir();
+        } else if (access.admin()) {
+          this.getDataIzin();
+          this.getDataKonfir();
+        }
+        this.load = false;
       } catch (err) {
-        this.loading = false;
+        this.load = false;
       }
     },
 
     async konfirIzin() {
+      this.load = true;
       const authToken = JSON.parse(localStorage.getItem("x-token"));
       const params = {
         params: this.paramsKonfir,
@@ -139,51 +159,66 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
       };
       try {
         const resp = await api.put(`surat-jalan/konfirmasi-izin`, null, params);
-        this.getDataIzin();
-        this.getDataKonfir();
-        this.getDataSurat();
-      } catch (err) {}
+        this.load = false;
+        swalSuccess(resp?.data?.message);
+        if (access.biktren()) {
+          this.getDataKonfir();
+        } else if (access.admin()) {
+          this.getDataKonfir();
+          this.getDataSurat();
+        }
+      } catch (err) {
+        this.load = false;
+      }
     },
 
     async syncPedatren(uuid) {
-      this.loading = true;
+      this.load = true;
       try {
         const resp = await api.get(`surat-jalan/login-pedatren/${uuid}`);
         localStorage.setItem("x-token", JSON.stringify(resp.data.token));
         swalSuccess("Berhasil Sinkronasi Ulang ke PEDATREN");
-        this.loading = false;
+        location.reload();
+        this.load = false;
       } catch (err) {
-        this.loading = false;
+        this.load = false;
       }
     },
 
     async getDataIzin() {
+      this.load = true;
       const params = { params: this.paramsIzin };
       try {
         await api.get("surat-jalan/izin-pedatren", params).then((resp) => {
           if ((resp.data.code = 200)) {
             this.itemsIzin = resp.data.data;
             this.metaIzin = resp.headers;
-            this.filterIzin.area = resp.data.filter.area;
+            this.load = false;
           }
         });
-      } catch (error) {}
+      } catch (error) {
+        this.load = false;
+      }
     },
 
     async getDataKonfir() {
+      this.load = true;
       const params = { params: this.paramsKonfir };
       try {
         await api.get("surat-jalan/konfirmasi-izin", params).then((resp) => {
           if ((resp.data.code = 200)) {
             this.itemsKonfir = resp.data.data;
             this.metaKonfir = resp.headers;
-            this.filterKonfir.area = resp.data.filter.area;
+            this.load = false;
           }
         });
-      } catch (error) {}
+      } catch (error) {
+        this.load = false;
+      }
     },
 
     async getDataSurat() {
+      this.load = true;
       this.kop = await this.getImageSurat("kop.png");
       this.qr = await this.getImageSurat("ttd-qr.png");
       this.paraf1 = await this.getImageSurat("paraf1.png");
@@ -194,13 +229,21 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
         if ((resp.data.code = 200)) {
           this.itemsSurat = resp.data.data;
           this.metaSurat = resp.headers;
-          this.filterSurat.area = resp.data.filter.area;
           for (const d of this.itemsSurat) {
-            d.qrIzin = await this.getQR(d.santri.niup);
+            if (this.errorSurat.length >= 1) {
+              break;
+            }
+            try {
+              d.qrIzin = await this.getQR(d.santri.niup);
+            } catch (err) {
+              this.errorSurat.push(d.niup);
+            }
           }
-          this.btnPrint = false;
+          this.load = false;
         }
-      } catch (error) {}
+      } catch (error) {
+        this.load = false;
+      }
     },
 
     async getQR(niup) {
@@ -245,15 +288,20 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
     },
 
     async getWilayahIzin() {
+      this.load = true;
       try {
         await api.get("santri/filter/wilayah").then((resp) => {
           if ((resp.data.code = 200)) {
             this.filterIzin.wilayah = resp.data;
+            this.load = false;
           }
         });
-      } catch (error) {}
+      } catch (error) {
+        this.load = false;
+      }
     },
     async getBlokIzin() {
+      this.load = true;
       this.paramsIzin.blok = "";
       this.getDataIzin();
       try {
@@ -262,21 +310,57 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
           .then((resp) => {
             if ((resp.data.code = 200)) {
               this.filterIzin.blok = resp.data;
+              this.load = false;
             }
           });
-      } catch (error) {}
+      } catch (error) {
+        this.load = false;
+      }
+    },
+    async getAreaIzin() {
+      this.load = true;
+      try {
+        await api.get("area").then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.filterIzin.area = resp.data.data;
+            this.load = false;
+          }
+        });
+      } catch (error) {
+        this.load = false;
+      }
+    },
+    async getDropIzin() {
+      this.load = true;
+      this.paramsIzin.dropspot = "";
+      this.getDataIzin();
+      try {
+        await api.get(`dropspot?area=${this.paramsIzin.area}`).then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.filterIzin.dropspot = resp.data.data;
+            this.load = false;
+          }
+        });
+      } catch (error) {
+        this.load = false;
+      }
     },
 
     async getWilayahKonfir() {
+      this.load = true;
       try {
         await api.get("santri/filter/wilayah").then((resp) => {
           if ((resp.data.code = 200)) {
             this.filterKonfir.wilayah = resp.data;
+            this.load = false;
           }
         });
-      } catch (error) {}
+      } catch (error) {
+        this.load = false;
+      }
     },
     async getBlokKonfir() {
+      this.load = true;
       this.paramsKonfir.blok = "";
       this.getDataKonfir();
       try {
@@ -285,21 +369,60 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
           .then((resp) => {
             if ((resp.data.code = 200)) {
               this.filterKonfir.blok = resp.data;
+              this.load = false;
             }
           });
-      } catch (error) {}
+        this.load = false;
+      } catch (error) {
+        this.load = false;
+      }
+    },
+    async getAreaKonfir() {
+      this.load = true;
+      try {
+        await api.get("area").then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.filterKonfir.area = resp.data.data;
+            this.load = false;
+          }
+        });
+      } catch (error) {
+        this.load = false;
+      }
+    },
+    async getDropKonfir() {
+      this.load = true;
+      this.paramsKonfir.dropspot = "";
+      this.getDataKonfir();
+      try {
+        await api
+          .get(`dropspot?area=${this.paramsKonfir.area}`)
+          .then((resp) => {
+            if ((resp.data.code = 200)) {
+              this.filterKonfir.dropspot = resp.data.data;
+              this.load = false;
+            }
+          });
+      } catch (error) {
+        this.load = false;
+      }
     },
 
     async getWilayahSurat() {
+      this.load = true;
       try {
         await api.get("santri/filter/wilayah").then((resp) => {
           if ((resp.data.code = 200)) {
             this.filterSurat.wilayah = resp.data;
+            this.load = false;
           }
         });
-      } catch (error) {}
+      } catch (error) {
+        this.load = false;
+      }
     },
     async getBlokSurat() {
+      this.load = true;
       this.paramsSurat.blok = "";
       this.getDataSurat();
       try {
@@ -308,9 +431,40 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
           .then((resp) => {
             if ((resp.data.code = 200)) {
               this.filterSurat.blok = resp.data;
+              this.load = false;
             }
           });
-      } catch (error) {}
+      } catch (error) {
+        this.load = false;
+      }
+    },
+    async getAreaSurat() {
+      this.load = true;
+      try {
+        await api.get("area").then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.filterSurat.area = resp.data.data;
+            this.load = false;
+          }
+        });
+      } catch (error) {
+        this.load = false;
+      }
+    },
+    async getDropSurat() {
+      this.load = true;
+      this.paramsSurat.dropspot = "";
+      this.getDataSurat();
+      try {
+        await api.get(`dropspot?area=${this.paramsSurat.area}`).then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.filterSurat.dropspot = resp.data.data;
+            this.load = false;
+          }
+        });
+      } catch (error) {
+        this.load = false;
+      }
     },
   },
 });
