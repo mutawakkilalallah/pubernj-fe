@@ -20,14 +20,17 @@ export const usePendampingTable = defineStore("table_pendamping", {
         armada: {},
         namaArmada: '',
         namaDropspot: '',
-        jumlahPenumpang:''
+      jumlahPenumpang: '',
+      namaPendamping: "",
+        noPendamping:''
+        
     
   }),
   actions: {
     async getData() {
       const params = { params: this.params };
       try {
-          await api.get("armada", params).then((resp) => {
+        await api.get("armada", params).then((resp) => {
             if ((resp.data.code = 200)) {
                   this.items = resp.data.data;
                   this.filter.area = resp.data.filter.area;
@@ -36,29 +39,31 @@ export const usePendampingTable = defineStore("table_pendamping", {
             });
         } catch (error) {}
     },
+     async getDropspot() {
+      this.params.dropspot = "";
+      this.getData();
+      const params = { params: { area: this.params.area } };
+      try {
+        await api.get("dropspot", params).then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.filter.dropspot = resp.data.data;
+          }
+        });
+      } catch (error) {}
+    },
     async getDataDetail(id) {
         try {
-            await api.get(`armada/${id}`).then((resp) => {
+          await api.get(`armada/${id}`).then((resp) => {
           if ((resp.data.code = 200)) {
               this.armada = resp.data.data;
               this.jumlahPenumpang = resp.data.data.penumpang;
               this.namaArmada = resp.data.data.nama
               this.namaDropspot = resp.data.data.dropspot.nama
+              this.namaPendamping = resp.data.data.user.nama_lengkap
+              this.noPendamping = resp.data.data.user.no_hp
           }
         });
       } catch (error) {}
     },
-    // async getDropspot() {
-    //   this.params.dropspot = "";
-    //   this.getData();
-    //   const params = { params: { area: this.params.area } };
-    //   try {
-    //     await api.get("dropspot", params).then((resp) => {
-    //       if ((resp.data.code = 200)) {
-    //         this.filter.dropspot = resp.data.data;
-    //       }
-    //     });
-    //   } catch (error) {}
-    // },
   },
 });
