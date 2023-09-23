@@ -207,5 +207,16 @@ export const useSyncTable = defineStore("table_sync", {
         });
       } catch (error) {}
     },
+    async updateRawSantri() {
+      try {
+        this.isLoading = true;
+        await api.put("sync/update/santri/raw").then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.isLoading = false;
+            swalSuccess(resp.data.message);
+          }
+        });
+      } catch (error) {}
+    },
   },
 });

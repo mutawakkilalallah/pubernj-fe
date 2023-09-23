@@ -126,8 +126,8 @@
         @change="table.getData"
       >
         <option value="" selected>Semua Status Persyaratan</option>
-        <option :value="1">Selesai</option>
-        <option :value="0">Belum Selesai</option>
+        <option value="Y">Selesai</option>
+        <option value="T">Belum Selesai</option>
       </select>
     </div>
     <div class="col-md-2">
@@ -221,8 +221,10 @@
           <th scope="col">No</th>
           <th scope="col">NIUP</th>
           <th scope="col">Nama Santri</th>
-          <th scope="col">Dropsot</th>
-          <th scope="col">Area</th>
+          <th scope="col">BPS</th>
+          <th scope="col">KOSMARA</th>
+          <th scope="col">FA</th>
+          <th scope="col">KAMTIB</th>
           <th
             scope="col"
             v-if="
@@ -256,6 +258,8 @@
           >
             Status Pembayaran
           </th>
+          <th scope="col">Dropsot</th>
+          <th scope="col">Area</th>
           <th scope="col">Wilayah</th>
           <th scope="col">Daerah</th>
           <th scope="col">Kecamatan</th>
@@ -276,12 +280,68 @@
           <td>{{ i + 1 + (table.params.page - 1) * table.params.limit }}</td>
           <td>{{ d.santri.niup }}</td>
           <td>{{ d.santri.nama_lengkap }}</td>
-          <td v-if="d.dropspot">{{ d.dropspot.nama }}</td>
-          <td v-else class="text-danger"><i>belum-ditentukan</i></td>
-          <td v-if="d.dropspot">
-            {{ d.dropspot.area.nama }}
+          <td
+            class="text-center"
+            :class="
+              d?.persyaratan?.lunas_bps && d?.persyaratan?.is_dispen_bps === 'T'
+                ? ''
+                : d?.persyaratan?.lunas_bps &&
+                  d?.persyaratan?.is_dispen_bps === 'Y'
+                ? 'table-warning'
+                : 'table-danger'
+            "
+          >
+            <font-awesome-icon
+              v-if="
+                d?.persyaratan?.lunas_bps &&
+                d?.persyaratan?.is_dispen_bps === 'T'
+              "
+              icon="check"
+              class="icon text-success"
+            />
+            <font-awesome-icon
+              v-else-if="
+                d?.persyaratan?.lunas_bps &&
+                d?.persyaratan?.is_dispen_bps === 'Y'
+              "
+              icon="info"
+              class="icon text-warning"
+            />
+            <font-awesome-icon v-else icon="times" class="icon text-danger" />
           </td>
-          <td v-else class="text-danger"><i>belum-ditentukan</i></td>
+          <td
+            class="text-center"
+            :class="d?.persyaratan?.lunas_kosmara ? '' : 'table-danger'"
+          >
+            <font-awesome-icon
+              v-if="d?.persyaratan?.lunas_kosmara"
+              icon="check"
+              class="icon text-success"
+            />
+            <font-awesome-icon v-else icon="times" class="icon text-danger" />
+          </td>
+          <td
+            class="text-center"
+            :class="d?.persyaratan?.tuntas_fa ? '' : 'table-danger'"
+          >
+            <font-awesome-icon
+              v-if="d?.persyaratan?.tuntas_fa"
+              icon="check"
+              class="icon text-success"
+            />
+            <font-awesome-icon v-else icon="times" class="icon text-danger" />
+          </td>
+          <td
+            class="text-center"
+            :class="d?.persyaratan?.bebas_kamtib ? '' : 'table-danger'"
+          >
+            <font-awesome-icon
+              v-if="d?.persyaratan?.bebas_kamtib"
+              icon="check"
+              class="icon text-success"
+            />
+            <font-awesome-icon v-else icon="times" class="icon text-danger" />
+          </td>
           <td
             v-if="
               (d.dropspot && storeAuth.user.role === 'sysadmin') ||
@@ -343,6 +403,12 @@
               >{{ d.status_bayar }}</i
             >
           </td>
+          <td v-if="d.dropspot">{{ d.dropspot.nama }}</td>
+          <td v-else class="text-danger"><i>belum-ditentukan</i></td>
+          <td v-if="d.dropspot">
+            {{ d.dropspot.area.nama }}
+          </td>
+          <td v-else class="text-danger"><i>belum-ditentukan</i></td>
           <td>
             {{ d.santri.wilayah }}
           </td>

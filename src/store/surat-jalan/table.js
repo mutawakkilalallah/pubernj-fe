@@ -53,7 +53,7 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
       blok: "",
       area: "",
       dropspot: "",
-      limit: 10,
+      limit: 25,
     },
     paramsKonfir: {
       cari: "",
@@ -61,7 +61,7 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
       blok: "",
       area: "",
       dropspot: "",
-      limit: 10,
+      limit: 25,
     },
     paramsSurat: {
       cari: "",
@@ -70,7 +70,7 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
       area: "",
       dropspot: "",
       cetak: "T",
-      limit: 10,
+      limit: 25,
     },
   }),
   actions: {

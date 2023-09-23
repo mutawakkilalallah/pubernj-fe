@@ -6,7 +6,7 @@ export const useErrorTable = defineStore("table_error", {
     items: [],
     totaldata: 0,
     params: {
-      limit: 100000,
+      limit: 1000,
       page: 1,
     },
   }),

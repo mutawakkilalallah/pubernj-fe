@@ -74,6 +74,9 @@ import {
   faCheckSquare,
   faPlus,
   faInfoCircle,
+  faTimes,
+  faCheck,
+  faInfo,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { registerComponents } from "./plugins/global-components";
@@ -130,7 +133,10 @@ library.add(
   faCheckDouble,
   faCheckSquare,
   faPlus,
-  faInfoCircle
+  faInfoCircle,
+  faTimes,
+  faCheck,
+  faInfo
 );
 const pinia = createPinia();
 const app = createApp(App);
