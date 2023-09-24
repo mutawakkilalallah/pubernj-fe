@@ -222,34 +222,34 @@
             </div>
             <div class="col">
               <div class="float-start mt-4">
-                <p class="text-capitalize"><strong>Paiton, ................... </strong></p>
-                <p class="text-capitalize"><strong>Bendahara Pulang Bersama </strong></p>
+                <p class="text-capitalize"><strong>Paiton, {{ waktu }} </strong></p>
+                <p class="text-capitalize"><strong>Bendahara </strong></p>
                 <br>
                 <br>
                 <br>
-                <p class="text-capitalize"><strong>(............................) </strong></p>
+                <p class="text-uppercase"><strong>MUHAMMAD HESIM, S.E M.H </strong></p>
 
               </div>
             </div>
             <div class="col">
               <div class="text-center mt-5 pt-5">
                 <p class="text-capitalize"><strong>Mengetahui,</strong></p>
-                <p class="text-capitalize"><strong>Ketua Pulang Bersama </strong></p>
+                <p class="text-capitalize"><strong>Ketua </strong></p>
                 <br>
                 <br>
                 <br>
-                <p class="text-capitalize"><strong>(............................) </strong></p>
+                <p class="text-uppercase"><strong>MUJIBUL KHOIR, M.H </strong></p>
               </div>
             </div>
             <div class="col">
               <div class="float-end mt-4">
                 <br>
                 <br>
-                <p class="text-capitalize"><strong>Koordinator Armada </strong></p>
+                <p class="text-capitalize"><strong>Koord Armada </strong></p>
                 <br>
                 <br>
                 <br>
-                <p class="text-capitalize"><strong>(............................) </strong></p>
+                <p class=""><strong>BAHRUDDIN, S.Pd </strong></p>
 
               </div>
             </div>
@@ -286,6 +286,20 @@ import print from "vue3-print-nb";
 import * as access from "../../plugins/access";
 
 const table = usePendampingTable();
+
+const waktu = computed(() => {
+  const b = new Date();
+  let day = b.getDate();
+
+  let month = b.getMonth();
+
+  let year = b.getFullYear();
+
+  const myDay = day < "10" ? "0" + day : day;
+  const myMonth = month < "10" ? "0" + month : month;
+
+  return `${myDay}-${myMonth}-${year}`;
+});
 
 onMounted(() => {
   table.getDropspot();
