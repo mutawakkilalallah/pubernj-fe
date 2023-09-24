@@ -83,8 +83,29 @@
             {{ a.nama }}
           </option>
         </select>
-      </div>
 
+      </div>
+      <div class="col-md-3">
+        <select
+          :disabled="table.params.area === ''"
+          class="form-select form-select-sm mb-2"
+          v-model="table.params.jenis"
+          @change="table.getData"
+        >
+          <option
+            value=""
+            selected
+          >Semua Jenis</option>
+          <option
+            value="putra"
+            selected
+          >PUTRA</option>
+          <option
+            value="putri"
+            selected
+          >PUTRI</option>
+        </select>
+      </div>
     </div>
 
     <div
