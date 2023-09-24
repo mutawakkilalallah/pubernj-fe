@@ -12,7 +12,7 @@
           v-print="'#printMe'"
         >Print</button>
         <button
-          v-if="idBus > 0"
+          v-if="table.params.area !== '' && access.admin"
           class="btn btn-outline-warning mx-1"
           type="button"
           v-print="'#printNota'"
@@ -27,7 +27,7 @@
     <div class="row g-2">
       <div class="col-md-3">
         <select
-          class="form-select form-select-sm mb-2"
+          class="form-select select-area form-select-sm mb-2"
           v-model="table.params.area"
           @change="table.getDropspot"
         >
@@ -140,6 +140,9 @@
         </div>
 
       </div>
+
+    </div>
+    <div v-else-if="table.params.area !=='' && access.admin">
       <div
         class="row g-0 px-4"
         id="printNota"
@@ -163,10 +166,43 @@
         </div>
         <div class="col-sm-6 col-md-12 mt-5 p-2">
           <div class="row">
+            <div class="col-sm-6 col-md-12">
+              <div class="table-responsive">
+                <table class="table table-secondary ">
+                  <thead>
+                    <tr scop="col">
+                      <th>No</th>
+                      <th>Area</th>
+                      <th>Dropspot</th>
+                      <th>Type</th>
+                      <th>Harga</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(item, i) in table.items"
+                      :key="i"
+                    >
+                      <td>{{ i+1 }}</td>
+                      <td>{{ item.dropspot?.area?.nama}}</td>
+                      <td>{{ item.dropspot?.nama}}</td>
+                      <td class="text-capitalize">{{ item.type +" - "+ item.jenis}}</td>
+                      <td>{{formatMinus( item.harga)}}</td>
+                    </tr>
+                    <tr class="text-center">
+                      <td colspan="4">
+                        <strong><em>JUMLAH</em></strong>
+                      </td>
+                      <td> <strong><em>{{ formatMinus(table.jumlahHarga) }}</em></strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
             <div class="col">
-              <div class="float-start mt-5">
+              <div class="float-start mt-4">
                 <p class="text-capitalize"><strong>Paiton, ................... </strong></p>
-                <p class="text-capitalize"><strong>Bendahara Pulang Bersama, </strong></p>
+                <p class="text-capitalize"><strong>Bendahara Pulang Bersama </strong></p>
                 <br>
                 <br>
                 <br>
@@ -175,14 +211,17 @@
               </div>
             </div>
             <div class="col">
-              <div class="text-center">
-                <p class="text-capitalize"><strong>area : {{ table.armada ?.dropspot?.area?.nama }} <small>( {{ table.armada ?.dropspot?.nama }} )</small></strong></p>
-                <p class="text-capitalize"><strong>type : {{ table.armada ?.type }} <small>({{ table.armada ?.jenis }})</small></strong></p>
-                <p class="text-capitalize"><strong>Tarif : {{ table.armada ? formatMinus(table.armada.harga):"-" }}</strong></p>
+              <div class="text-center mt-5 pt-5">
+                <p class="text-capitalize"><strong>Mengetahui,</strong></p>
+                <p class="text-capitalize"><strong>Ketua Pulang Bersama </strong></p>
+                <br>
+                <br>
+                <br>
+                <p class="text-capitalize"><strong>(............................) </strong></p>
               </div>
             </div>
             <div class="col">
-              <div class="float-end mt-5">
+              <div class="float-end mt-4">
                 <br>
                 <br>
                 <p class="text-capitalize"><strong>Koordinator Armada </strong></p>
@@ -220,9 +259,10 @@
 
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { usePendampingTable } from "../../store/pendamping/table";
 import print from "vue3-print-nb";
+import * as access from "../../plugins/access";
 
 const table = usePendampingTable();
 

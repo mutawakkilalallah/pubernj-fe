@@ -20,9 +20,11 @@ export const usePendampingTable = defineStore("table_pendamping", {
         armada: {},
         namaArmada: '',
         namaDropspot: '',
-      jumlahPenumpang: '',
-      namaPendamping: "",
-        noPendamping:''
+       jumlahPenumpang: '',
+        namaPendamping: "",
+       noPendamping: '',
+    // nota
+    jumlahHarga: '',
         
     
   }),
@@ -32,9 +34,10 @@ export const usePendampingTable = defineStore("table_pendamping", {
       try {
         await api.get("armada", params).then((resp) => {
             if ((resp.data.code = 200)) {
-                  this.items = resp.data.data;
-                  this.filter.area = resp.data.filter.area;
-                  this.meta = resp.headers;
+              this.items = resp.data.data;
+              this.filter.area = resp.data.filter.area;
+              this.meta = resp.headers;
+              this.myHarga(resp.data.data)
                 }
             });
         } catch (error) {}
@@ -51,6 +54,20 @@ export const usePendampingTable = defineStore("table_pendamping", {
         });
       } catch (error) {}
     },
+     
+    myHarga(data) {
+   const total = data.map(a=>a.harga).reduce((b,c)=>b+c,0)
+   this.jumlahHarga = total
+  //     const dataNama = data.map(a => a.dropspot.nama)
+  //     const namaArray = [...new Set(dataNama)]
+  //     // convert stirng
+  //     const namaStirng = namaArray.join(', ')
+  //  console.log('total',namaStirng);
+   
+    },
+ 
+  
+     
     async getDataDetail(id) {
         try {
           await api.get(`armada/${id}`).then((resp) => {
