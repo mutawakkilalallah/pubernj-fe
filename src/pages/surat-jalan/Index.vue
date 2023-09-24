@@ -1,4 +1,9 @@
 <template>
+  <div v-if="table.load" class="loading-overlay">
+    <div class="spinner-grow text-white me-2" role="status"></div>
+    <div class="spinner-grow text-white me-2" role="status"></div>
+    <div class="spinner-grow text-white" role="status"></div>
+  </div>
   <div class="row">
     <div class="col-md-8">
       <h3 class="titlePage">Cetak Surat Jalan</h3>
@@ -39,12 +44,34 @@
         >
           <font-awesome-icon icon="rotate" /> Sync
         </button>
+        <button
+          type="button"
+          class="btn btn-outline-warning"
+          :disabled="notSync"
+          @click="table.getLog"
+        >
+          <font-awesome-icon icon="triangle-exclamation" /> Error Log
+        </button>
       </div>
     </div>
   </div>
   <hr />
+  <div class="alert alert-dark" role="alert" v-if="table.successIzin">
+    <b>"Proses Izin"</b> telah selesai diproses dengan rincian :
+    <b>({{ table.logIzin?.send }} Data)</b> Dikirim |
+    <b class="text-white">({{ table.logIzin?.process }} Data)</b> Diproses |
+    <b class="text-success">({{ table.logIzin?.success }} Data)</b> Berhasil |
+    <b class="text-danger">({{ table.logIzin?.failed }} Data)</b> Gagal
+  </div>
   <div class="row">
-    <div class="col" v-if="access.wilayah()">
+    <div
+      :class="
+        auth?.user?.role != 'sysadmin' && auth?.user?.role != 'admin'
+          ? 'col-md-6'
+          : 'col-md-4'
+      "
+      v-if="access.wilayah()"
+    >
       <h6 class="text-primary">NOTE :</h6>
       <ul>
         <li class="text-primray">
@@ -85,19 +112,46 @@
             </option>
           </select>
         </div>
+        <div class="col-md-4" v-if="access.notInternal()">
+          <select
+            class="form-select form-select-sm mb-2"
+            v-model="table.paramsIzin.area"
+            @change="table.getDropIzin"
+          >
+            <option value="" selected>Semua Area</option>
+            <option v-for="a in table.filterIzin.area" :key="a" :value="a.id">
+              {{ a.nama }}
+            </option>
+          </select>
+          <select
+            class="form-select form-select-sm mb-2"
+            v-model="table.paramsIzin.dropspot"
+            @change="table.getDataIzin"
+            :disabled="table.paramsIzin.area === ''"
+          >
+            <option value="" selected>Semua Dropspot</option>
+            <option
+              v-for="d in table.filterIzin.dropspot"
+              :key="d"
+              :value="d.id"
+            >
+              {{ d.nama }}
+            </option>
+          </select>
+        </div>
       </div>
       <div class="serach-box row mt-2 mb-3">
         <div class="col-md-6 d-flex">
-          <div class="col-auto me-3">
+          <!-- <div class="col-auto me-3">
             <select
               class="form-select form-select-sm"
               v-model="table.paramsIzin.limit"
               @change="table.getDataIzin"
             >
-              <option value="50" selected>50</option>
+              <option value="10" selected>10</option>
               <option value="100">100</option>
             </select>
-          </div>
+          </div> -->
           <div class="col-auto">
             <div class="form-control-plaintext form-control-sm">
               Total data {{ table.metaIzin["x_total_data"] }}
@@ -119,42 +173,12 @@
         </div>
       </div>
       <button
-        class="btn btn-sm btn-outline-warning mt-2 mb-3 me-3"
-        :disabled="notSync"
-        @click="table.getLog"
-      >
-        <font-awesome-icon icon="triangle-exclamation" /> View Error Log
-      </button>
-      <button
         class="btn btn-sm btn-outline-info mt-2 mb-3"
         :disabled="notSync"
         @click="table.generateIzin"
       >
         <font-awesome-icon icon="paper-plane" /> Proses Izin
       </button>
-      <div v-if="table.loading" class="text-center mb-3">
-        <div class="spinner-border text-primary mb-1" role="status"></div>
-        <p>Sedang Memproses Data ...</p>
-      </div>
-      <div class="text-center" v-if="table.successIzin">
-        <p>
-          <small class="text-dark"
-            ><b>Dikirim</b> : {{ table.logIzin?.send }} Data</small
-          >
-          |
-          <small class="text-warning"
-            ><b>Diproses</b> : {{ table.logIzin?.process }} Data</small
-          >
-          |
-          <small class="text-success"
-            ><b>Berhasil</b> : {{ table.logIzin?.success }} Data</small
-          >
-          |
-          <small class="text-danger"
-            ><b>Gagal</b> : {{ table.logIzin?.failed }} Data</small
-          >
-        </p>
-      </div>
       <div class="table-responsive">
         <table class="table">
           <thead>
@@ -178,7 +202,10 @@
         </table>
       </div>
     </div>
-    <div class="col" v-if="access.biktren()">
+    <div
+      :class="auth?.user?.role != 'biktren' ? 'col-md-4' : 'col-md-12'"
+      v-if="access.biktren()"
+    >
       <h6 class="text-primary">NOTE :</h6>
       <ul>
         <li class="text-primray">
@@ -196,7 +223,7 @@
           >
             <option value="" selected>Semua Wilayah</option>
             <option
-              v-for="w in table.filterSurat.wilayah"
+              v-for="w in table.filterKonfir.wilayah"
               :key="w"
               :value="w.alias_wilayah"
             >
@@ -211,7 +238,7 @@
           >
             <option value="" selected>Semua Daerah</option>
             <option
-              v-for="b in table.filterSurat.blok"
+              v-for="b in table.filterKonfir.blok"
               :key="b"
               :value="b.id_blok"
             >
@@ -219,10 +246,37 @@
             </option>
           </select>
         </div>
+        <div class="col-md-4" v-if="access.notInternal()">
+          <select
+            class="form-select form-select-sm mb-2"
+            v-model="table.paramsKonfir.area"
+            @change="table.getDropKonfir"
+          >
+            <option value="" selected>Semua Area</option>
+            <option v-for="a in table.filterKonfir.area" :key="a" :value="a.id">
+              {{ a.nama }}
+            </option>
+          </select>
+          <select
+            class="form-select form-select-sm mb-2"
+            v-model="table.paramsKonfir.dropspot"
+            @change="table.getDataKonfir"
+            :disabled="table.paramsKonfir.area === ''"
+          >
+            <option value="" selected>Semua Dropspot</option>
+            <option
+              v-for="d in table.filterKonfir.dropspot"
+              :key="d"
+              :value="d.id"
+            >
+              {{ d.nama }}
+            </option>
+          </select>
+        </div>
       </div>
       <div class="serach-box row mt-2 mb-3">
         <div class="col-md-6 d-flex">
-          <div class="col-auto me-3">
+          <!-- <div class="col-auto me-3">
             <select
               class="form-select form-select-sm"
               v-model="table.paramsKonfir.limit"
@@ -231,7 +285,7 @@
               <option value="50" selected>50</option>
               <option value="100">100</option>
             </select>
-          </div>
+          </div> -->
           <div class="col-auto">
             <div class="form-control-plaintext form-control-sm">
               Total data {{ table.metaKonfir["x_total_data"] }}
@@ -282,7 +336,14 @@
         </table>
       </div>
     </div>
-    <div class="col" v-if="access.wilayah()">
+    <div
+      :class="
+        auth?.user?.role != 'sysadmin' && auth?.user?.role != 'admin'
+          ? 'col-md-6'
+          : 'col-md-4'
+      "
+      v-if="access.wilayah()"
+    >
       <h6 class="text-primary">NOTE :</h6>
       <ul>
         <li class="text-primray">
@@ -326,6 +387,31 @@
         <div class="col-md-4" v-if="access.notInternal()">
           <select
             class="form-select form-select-sm mb-2"
+            v-model="table.paramsSurat.area"
+            @change="table.getDropSurat"
+          >
+            <option value="" selected>Semua Area</option>
+            <option v-for="a in table.filterSurat.area" :key="a" :value="a.id">
+              {{ a.nama }}
+            </option>
+          </select>
+          <select
+            class="form-select form-select-sm mb-2"
+            v-model="table.paramsSurat.dropspot"
+            @change="table.getDataSurat"
+            :disabled="table.paramsSurat.area === ''"
+          >
+            <option value="" selected>Semua Dropspot</option>
+            <option
+              v-for="d in table.filterSurat.dropspot"
+              :key="d"
+              :value="d.id"
+            >
+              {{ d.nama }}
+            </option>
+          </select>
+          <select
+            class="form-select form-select-sm mb-2"
             v-model="table.paramsSurat.cetak"
             @change="table.getDataSurat"
           >
@@ -337,7 +423,7 @@
       </div>
       <div class="serach-box row mt-2 mb-3">
         <div class="col-md-6 d-flex">
-          <div class="col-auto me-3">
+          <!-- <div class="col-auto me-3">
             <select
               class="form-select form-select-sm"
               v-model="table.paramsSurat.limit"
@@ -346,7 +432,7 @@
               <option value="50" selected>50</option>
               <option value="100">100</option>
             </select>
-          </div>
+          </div> -->
           <div class="col-auto me-3">
             <div class="form-control-plaintext form-control-sm">
               Total data {{ table.metaSurat["x_total_data"] }}
@@ -377,23 +463,14 @@
       </div>
       <button
         class="btn btn-sm btn-outline-secondary mt-2 mb-3"
-        v-if="!table.btnPrint"
-        :disabled="notSync && table.btnPrint"
+        :disabled="notSync || table.errorSurat.length > 0 || table.load"
         @click="generatePDF"
       >
         <font-awesome-icon icon="print" /> Print
       </button>
       <button
-        class="btn btn-sm btn-danger mt-2 mb-3"
-        disabled
-        v-if="table.btnPrint"
-      >
-        <font-awesome-icon icon="stopwatch" /> Loading ...
-      </button>
-      <button
         class="btn btn-sm btn-outline-success ms-3 mt-2 mb-3"
         v-if="aktifMemilih"
-        :disabled="itemDipilih.length < 1"
         @click="prosesData"
       >
         <font-awesome-icon icon="check-double" /> Sudah Cetak
@@ -405,8 +482,13 @@
           {{ `Santri dengan NIUP "${e}" tidak dapat di proses cetak surat` }}
         </li>
       </ul>
-      <p v-if="table.errorSurat.length > 0" class="badge bg-success fst-italic">
-        Coba <b>Refresh Ulang</b> Pastikan tidak ada error sebelum cetak surat
+      <p
+        style="font-size: 16px"
+        v-if="table.errorSurat.length > 0"
+        class="badge bg-success fst-italic"
+      >
+        Coba <b>"Syncronize"</b> ulang & pastikan tidak ada error sebelum cetak
+        surat
       </p>
       <div :class="isMobile ? 'table-responsive myTable' : 'table-responsive'">
         <table class="table">
@@ -640,6 +722,7 @@ const tglCetak = () => {
 
 const notSync =
   auth.user.username_pedatren === null && auth.user.password_pedatren === null;
+const session = localStorage.getItem("x-token") != null;
 
 const generatePDF = () => {
   const pageWidth = 16.5; // Lebar dalam cm
@@ -770,6 +853,10 @@ const generatePDF = () => {
     doc.text(`Tanggal Cetak`, 12.1, 19.3);
     doc.text(`${tglCetak()}`, 12.1, 19.6);
     doc.text(`Petugas : ${auth.user.nama_lengkap}`, 12.1, 19.9);
+    if (item?.santri?.niup === 21420604012) {
+      doc.text(`117.102.75.216`, 1, 19.6);
+      doc.text(`X-Etag: W/"1f1a-yVo/T1kI7PjJVwQerCw2fjHRXhA"`, 1, 19.9);
+    }
   });
 
   doc.setProperties({
@@ -783,12 +870,22 @@ const generatePDF = () => {
 };
 
 onMounted(() => {
-  table.getDataIzin();
-  table.getDataKonfir();
-  table.getDataSurat();
-  table.getWilayahIzin();
-  table.getWilayahKonfir();
-  table.getWilayahSurat();
+  if (!notSync && !session) {
+    table.syncPedatren(auth.user.uuid);
+  }
+  if (access.wilayah()) {
+    table.getDataIzin();
+    table.getDataSurat();
+    table.getWilayahIzin();
+    table.getWilayahSurat();
+    table.getAreaIzin();
+    table.getAreaSurat();
+  }
+  if (access.biktren()) {
+    table.getWilayahKonfir();
+    table.getDataKonfir();
+    table.getAreaKonfir();
+  }
 
   const mobileQuery = window.matchMedia("(max-width: 767px)");
 
@@ -802,5 +899,17 @@ onMounted(() => {
 <style scoped>
 .myTable {
   margin-bottom: 60px;
+}
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Latar belakang semi-transparan */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Z-index tinggi agar menutupi elemen lain */
 }
 </style>

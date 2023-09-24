@@ -24,7 +24,7 @@
           <td>Tapal Kuda by Kecamatan</td>
           <td>
             <button
-              :disabled="isNotDeveloper"
+              disabled
               class="btn btn-primary"
               @click="table.generatePenumpangv1"
             >
@@ -42,7 +42,7 @@
           <td>Jawa Timur by Kabupaten</td>
           <td>
             <button
-              :disabled="isNotDeveloper"
+              disabled
               class="btn btn-primary"
               @click="table.generatePenumpangv2"
             >
@@ -64,7 +64,7 @@
           <td>Tapal Kuda by Kecamatan Area Khusus 1</td>
           <td>
             <button
-              :disabled="isNotDeveloper"
+              disabled
               class="btn btn-primary"
               @click="table.generatePenumpangv3"
             >
@@ -85,7 +85,7 @@
           <td>Tapal Kuda by Kecamatan Area Khusus 2</td>
           <td>
             <button
-              :disabled="isNotDeveloper"
+              disabled
               class="btn btn-primary"
               @click="table.generatePenumpangv4"
             >
@@ -104,7 +104,7 @@
           <td>Bali by Kabupaten</td>
           <td>
             <button
-              :disabled="isNotDeveloper"
+              disabled
               class="btn btn-primary"
               @click="table.generatePenumpangv5"
             >
@@ -123,7 +123,7 @@
           <td>Jawa Tengah & DIY by Kabupaten</td>
           <td>
             <button
-              :disabled="isNotDeveloper"
+              disabled
               class="btn btn-primary"
               @click="table.generatePenumpangv6"
             >
@@ -144,7 +144,7 @@
           <td>Banten Only</td>
           <td>
             <button
-              :disabled="isNotDeveloper"
+              disabled
               class="btn btn-primary"
               @click="table.generatePenumpangv7"
             >
@@ -159,7 +159,7 @@
           <td>Jabodetabek Not Banten & Jawa barat</td>
           <td>
             <button
-              :disabled="isNotDeveloper"
+              disabled
               class="btn btn-primary"
               @click="table.generatePenumpangv8"
             >
@@ -180,7 +180,7 @@
           <td>Luar Jawa by Provinsi</td>
           <td>
             <button
-              :disabled="isNotDeveloper"
+              disabled
               class="btn btn-primary"
               @click="table.generatePenumpangv9"
             >
@@ -203,7 +203,7 @@
           <td>Luar Negeri by Negara</td>
           <td>
             <button
-              :disabled="isNotDeveloper"
+              disabled
               class="btn btn-primary"
               @click="table.generatePenumpangv10"
             >
@@ -218,7 +218,7 @@
           <td>Paiton Only</td>
           <td>
             <button
-              :disabled="isNotDeveloper"
+              disabled
               class="btn btn-primary"
               @click="table.generatePenumpangv11"
             >
@@ -233,7 +233,7 @@
           <td>Sumenep & Gresik by Kabupaten</td>
           <td>
             <button
-              :disabled="isNotDeveloper"
+              disabled
               class="btn btn-primary"
               @click="table.generatePenumpangv12"
             >
@@ -253,7 +253,7 @@
   <div class="row">
     <div class="col-md-3 mb-3">
       <button
-        :disabled="isNotDeveloper"
+        disabled
         class="btn btn-warning w-100"
         @click="table.generateSantri"
       >
@@ -263,7 +263,7 @@
     </div>
     <div class="col-md-3 mb-3">
       <button
-        :disabled="isNotDeveloper"
+        disabled
         class="btn btn-danger w-100"
         @click="table.excludePenumpang"
       >
@@ -279,7 +279,7 @@
       :key="index"
     >
       <button
-        :disabled="isNotDeveloper"
+        disabled
         class="btn btn-info w-100"
         @click="table.generatePenumpang(index)"
       >
@@ -291,13 +291,21 @@
   <hr />
   <div class="row mb-5">
     <div class="col-md-3">
-      <button class="btn btn-warning w-100" @click="table.updateSantri">
+      <button
+        :disabled="isNotDeveloper"
+        class="btn btn-warning w-100"
+        @click="table.updateSantri"
+      >
         <font-awesome-icon icon="rotate" class="icon" /> Update - Sync Data
         Santri
       </button>
     </div>
     <div class="col-md-3">
-      <button class="btn btn-warning w-100" @click="table.updateDomisiliSantri">
+      <button
+        :disabled="isNotDeveloper"
+        class="btn btn-warning w-100"
+        @click="table.updateDomisiliSantri"
+      >
         <font-awesome-icon icon="rotate" class="icon" /> Update - Sync
         Domisili/Alamat Santri
       </button>
@@ -306,8 +314,14 @@
       <button
         :disabled="isNotDeveloper"
         class="btn btn-warning w-100"
-        @click="table.updateUser"
+        @click="table.updateRawSantri"
       >
+        <font-awesome-icon icon="rotate" class="icon" /> Update - Sync RAW
+        Santri
+      </button>
+    </div>
+    <div class="col-md-3">
+      <button disabled class="btn btn-warning w-100" @click="table.updateUser">
         <font-awesome-icon icon="rotate" class="icon" /> Update - Sync Data User
       </button>
     </div>

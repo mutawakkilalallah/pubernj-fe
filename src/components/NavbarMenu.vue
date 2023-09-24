@@ -11,22 +11,13 @@
     "
   >
     <div class="container-fluid">
-      <a
-        v-if="isMobile"
-        class="navbar-brand"
-        style="font-size: 14px"
-        href="#"
-      >PUBER NJ</a>
-      <a
-        v-else
-        class="navbar-brand"
-        style="font-size: 14px"
-        href="#"
-      >Pulang Bersama - PP. Nurul Jadid</a>
-      <div
-        class="collapse navbar-collapse"
-        id="navbarSupportedContent"
+      <a v-if="isMobile" class="navbar-brand" style="font-size: 14px" href="#"
+        >PUBER NJ</a
       >
+      <a v-else class="navbar-brand" style="font-size: 14px" href="#"
+        >Pulang Bersama - PP. Nurul Jadid</a
+      >
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
 
         <div class="form-check form-switch">
@@ -40,10 +31,7 @@
             @click="setDark"
           />
         </div>
-        <button
-          class="btn-kecil btn btn-outline-info me-2"
-          type="submit"
-        >
+        <button class="btn-kecil btn btn-outline-info me-2" type="submit">
           <font-awesome-icon icon="brush" /> Clear Cache
         </button>
         <button
