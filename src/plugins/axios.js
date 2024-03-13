@@ -2,10 +2,8 @@ import axios from "axios";
 import { getLocalToken } from "../modules/storage";
 import { swalError, swalSuccess, swalSuccessDelete } from "../modules/untils";
 
-// const SERVER = "https://api.puber.phii.xyz";
-// const SERVER = "http://localhost:3004";
+// const SERVER = "http://localhost:4001";
 const SERVER = "https://api-puber.nuruljadid.io";
-// const SERVER = "https://api-puber.nuruljadid.dev";
 
 const base = SERVER;
 
@@ -15,10 +13,7 @@ api.defaults.headers.common["x-auth-token"] = getLocalToken();
 
 const interceptResErrors = (err) => {
   try {
-    swalError(
-      err.response.data ? err.response.data : null,
-      err.response.status
-    );
+    swalError(err.response.data ? err.response.data : null, err.response.status);
   } catch (error) {}
   return Promise.reject(err);
 };

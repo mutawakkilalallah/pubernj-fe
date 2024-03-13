@@ -86,10 +86,7 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
     async loginPedatren(uuid) {
       this.load = true;
       try {
-        const resp = await api.put(
-          `surat-jalan/tautkan-pedatren/${uuid}`,
-          this.form
-        );
+        const resp = await api.put(`surat-jalan/tautkan-pedatren/${uuid}`, this.form);
         this.setOpenLogin();
         localStorage.setItem("x-token", JSON.stringify(resp.data.token));
         const user = JSON.parse(localStorage.getItem("user"));
@@ -229,16 +226,16 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
         if ((resp.data.code = 200)) {
           this.itemsSurat = resp.data.data;
           this.metaSurat = resp.headers;
-          for (const d of this.itemsSurat) {
-            if (this.errorSurat.length >= 1) {
-              break;
-            }
-            try {
-              d.qrIzin = await this.getQR(d.santri.niup);
-            } catch (err) {
-              this.errorSurat.push(d.niup);
-            }
-          }
+          // for (const d of this.itemsSurat) {
+          //   if (this.errorSurat.length >= 1) {
+          //     break;
+          //   }
+          //   try {
+          //     d.qrIzin = await this.getQR(d.santri.niup);
+          //   } catch (err) {
+          //     this.errorSurat.push(d.niup);
+          //   }
+          // }
           this.load = false;
         }
       } catch (error) {
@@ -266,13 +263,10 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
         const params = {
           responseType: "blob",
         };
-        const response = await api.get(
-          `cari-santri/surat-image/${image}`,
-          params
-        );
+        const response = await api.get(`cari-santri/surat-image/${image}`, params);
         return URL.createObjectURL(response.data);
       } catch (err) {
-        this.errorSurat.push(niup);
+        // this.errorSurat.push(niup);
       }
     },
 
@@ -305,14 +299,12 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
       this.paramsIzin.blok = "";
       this.getDataIzin();
       try {
-        await api
-          .get(`santri/filter/blok?alias_wilayah=${this.paramsIzin.wilayah}`)
-          .then((resp) => {
-            if ((resp.data.code = 200)) {
-              this.filterIzin.blok = resp.data;
-              this.load = false;
-            }
-          });
+        await api.get(`santri/filter/blok?alias_wilayah=${this.paramsIzin.wilayah}`).then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.filterIzin.blok = resp.data;
+            this.load = false;
+          }
+        });
       } catch (error) {
         this.load = false;
       }
@@ -364,14 +356,12 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
       this.paramsKonfir.blok = "";
       this.getDataKonfir();
       try {
-        await api
-          .get(`santri/filter/blok?alias_wilayah=${this.paramsKonfir.wilayah}`)
-          .then((resp) => {
-            if ((resp.data.code = 200)) {
-              this.filterKonfir.blok = resp.data;
-              this.load = false;
-            }
-          });
+        await api.get(`santri/filter/blok?alias_wilayah=${this.paramsKonfir.wilayah}`).then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.filterKonfir.blok = resp.data;
+            this.load = false;
+          }
+        });
         this.load = false;
       } catch (error) {
         this.load = false;
@@ -395,14 +385,12 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
       this.paramsKonfir.dropspot = "";
       this.getDataKonfir();
       try {
-        await api
-          .get(`dropspot?area=${this.paramsKonfir.area}`)
-          .then((resp) => {
-            if ((resp.data.code = 200)) {
-              this.filterKonfir.dropspot = resp.data.data;
-              this.load = false;
-            }
-          });
+        await api.get(`dropspot?area=${this.paramsKonfir.area}`).then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.filterKonfir.dropspot = resp.data.data;
+            this.load = false;
+          }
+        });
       } catch (error) {
         this.load = false;
       }
@@ -426,14 +414,12 @@ export const useSuratJalanTable = defineStore("table_surat_jalan", {
       this.paramsSurat.blok = "";
       this.getDataSurat();
       try {
-        await api
-          .get(`santri/filter/blok?alias_wilayah=${this.paramsSurat.wilayah}`)
-          .then((resp) => {
-            if ((resp.data.code = 200)) {
-              this.filterSurat.blok = resp.data;
-              this.load = false;
-            }
-          });
+        await api.get(`santri/filter/blok?alias_wilayah=${this.paramsSurat.wilayah}`).then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.filterSurat.blok = resp.data;
+            this.load = false;
+          }
+        });
       } catch (error) {
         this.load = false;
       }

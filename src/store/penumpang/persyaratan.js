@@ -118,13 +118,11 @@ export const usePersyaratanTable = defineStore("table_persyaratan", {
       this.params.blok = "";
       this.getData();
       try {
-        await api
-          .get(`santri/filter/blok?alias_wilayah=${this.params.wilayah}`)
-          .then((resp) => {
-            if ((resp.data.code = 200)) {
-              this.filter.blok = resp.data;
-            }
-          });
+        await api.get(`santri/filter/blok?alias_wilayah=${this.params.wilayah}`).then((resp) => {
+          if ((resp.data.code = 200)) {
+            this.filter.blok = resp.data;
+          }
+        });
       } catch (error) {}
     },
     async ubahPersyaratan(type, id, swType, textOne, textTwo, nama) {
@@ -179,18 +177,17 @@ export const usePersyaratanTable = defineStore("table_persyaratan", {
         } else if (jenis === "kosmara") {
           formData.append("excelFile", this.formKosmara.excelFile);
         }
-        await api
-          .post(`penumpang/import-persyaratan?jenis=${jenis}`, formData)
-          .then((resp) => {
-            if (jenis === "bps") {
-              this.openBps = false;
-              this.resetFormBps();
-            } else if (jenis === "kosmara") {
-              this.openKosmara = false;
-              this.resetFormKosmara();
-            }
+        await api.post(`penumpang/import-persyaratan?jenis=${jenis}`, formData).then((resp) => {
+          if (jenis === "bps") {
+            this.openBps = false;
+            this.resetFormBps();
             this.getData();
-          });
+          } else if (jenis === "kosmara") {
+            this.openKosmara = false;
+            this.resetFormKosmara();
+            this.getData();
+          }
+        });
       } catch (err) {}
     },
   },

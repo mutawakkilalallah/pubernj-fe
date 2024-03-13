@@ -35,6 +35,15 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     editedDrop: false,
     person: {},
     fotoDiri: "",
+    modalTambah: false,
+    cariSantri: false,
+    daftarPenumpang: {
+      nama_santri: "",
+      santri_uuid: "",
+      dropspot_id: "",
+    },
+    santri: [],
+    cari: "",
   }),
 
   actions: {
@@ -56,7 +65,7 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     resetFormEditDropspot() {
       this.formEditDropspot.dropspot_id = "";
     },
-       setOpenEditPembayaran() {
+    setOpenEditPembayaran() {
       this.isOpenEditPembayaran = !this.isOpenEditPembayaran;
       this.resetFormEditPembayaran();
     },
@@ -163,16 +172,14 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     },
     async editDropspot() {
       try {
-        await api
-          .put(`penumpang/dropspot/${this.idEdit}`, this.formEditDropspot)
-          .then((resp) => {
-            this.isOpenEditDropspot = false;
-            this.resetFormEditDropspot();
-            const table = usePenumpangTable();
-            table.getData();
-            this.editedDrop = false;
-            this.isOpen = false;
-          });
+        await api.put(`penumpang/dropspot/${this.idEdit}`, this.formEditDropspot).then((resp) => {
+          this.isOpenEditDropspot = false;
+          this.resetFormEditDropspot();
+          const table = usePenumpangTable();
+          table.getData();
+          this.editedDrop = false;
+          this.isOpen = false;
+        });
       } catch (err) {}
     },
     async importPembayaran() {
@@ -201,16 +208,14 @@ export const usePenumpangForm = defineStore("form_penumpang", {
     },
     async editPembayaran() {
       try {
-        await api
-          .put(`penumpang/pembayaran/${this.idEdit}`, this.formEditPembayaran)
-          .then((resp) => {
-            this.isOpenEditPembayaran = false;
-            this.dataEdit.jumlah_bayar = this.formEditPembayaran.jumlah_bayar;
-            this.resetFormEditPembayaran();
-            const table = usePenumpangTable();
-            table.getData();
-            this.edited = false;
-          });
+        await api.put(`penumpang/pembayaran/${this.idEdit}`, this.formEditPembayaran).then((resp) => {
+          this.isOpenEditPembayaran = false;
+          this.dataEdit.jumlah_bayar = this.formEditPembayaran.jumlah_bayar;
+          this.resetFormEditPembayaran();
+          const table = usePenumpangTable();
+          table.getData();
+          this.edited = false;
+        });
       } catch (err) {}
     },
     async deleteRombongan() {
@@ -225,15 +230,53 @@ export const usePenumpangForm = defineStore("form_penumpang", {
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          api
-            .delete(`penumpang/${this.dataEdit.santri_uuid}`)
-            .then((result) => {
-              this.isOpenEdit = false;
-              const table = usePenumpangTable();
-              table.getData();
-            });
+          api.delete(`penumpang/${this.dataEdit.santri_uuid}`).then((result) => {
+            this.isOpenEdit = false;
+            const table = usePenumpangTable();
+            table.getData();
+          });
         }
       });
+    },
+    showModalTambah() {
+      this.modalTambah = !this.modalTambah;
+    },
+    showCariSantri() {
+      this.modalTambah = !this.modalTambah;
+      this.cariSantri = !this.cariSantri;
+    },
+    async getSantri() {
+      try {
+        const resp = await api.get("/santri/cari", {
+          params: {
+            cari: this.cari,
+            limit: 10,
+          },
+        });
+        this.santri = resp.data;
+      } catch (error) {}
+    },
+    setSantri(d) {
+      this.daftarPenumpang.nama_santri = d.nama_lengkap;
+      this.daftarPenumpang.santri_uuid = d.uuid;
+      this.showCariSantri();
+    },
+    async daftarRombongan() {
+      try {
+        await api
+          .post(`santri/daftar/${this.daftarPenumpang.santri_uuid}`, {
+            dropspot_id: this.daftarPenumpang.dropspot_id,
+          })
+          .then((resp) => {
+            this.showModalTambah();
+            this.daftarPenumpang.nama_santri = "";
+            this.daftarPenumpang.santri_uuid = "";
+            this.daftarPenumpang.dropspot_id = "";
+            const table = usePenumpangTable();
+            table.getData();
+            this.isArea = [];
+          });
+      } catch (err) {}
     },
   },
 });

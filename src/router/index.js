@@ -31,11 +31,11 @@ const routes = [
         name: "statistik",
         component: () => import("@/pages/statistik/Index.vue"),
       },
-      {
-        path: "/santri",
-        name: "santri",
-        component: () => import("@/pages/santri/Index.vue"),
-      },
+      // {
+      //   path: "/santri",
+      //   name: "santri",
+      //   component: () => import("@/pages/santri/Index.vue"),
+      // },
       {
         path: "/penumpang",
         name: "penumpang",
@@ -252,11 +252,7 @@ router.beforeEach((to, from, next) => {
     },
   ];
   // set permission
-  if (
-    to.name !== "login" &&
-    to.name !== "privacy" &&
-    !localStorage.getItem("token")
-  ) {
+  if (to.name !== "login" && to.name !== "privacy" && !localStorage.getItem("token")) {
     next({ name: "login" });
   } else if (to.name === "login" && localStorage.getItem("token")) {
     next({ name: "dashboard" });

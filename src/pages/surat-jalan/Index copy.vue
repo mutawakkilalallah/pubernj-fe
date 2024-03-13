@@ -8,6 +8,52 @@
     <div class="col-md-8">
       <h3 class="titlePage">Cetak Surat Jalan</h3>
     </div>
+    <!-- <div class="col-md-4 text-end">
+      <div
+        class="btn-group"
+        role="group"
+        aria-label="Basic mixed styles example"
+      >
+        <button type="button" class="btn btn-danger" v-if="notSync">
+          Not Connected
+        </button>
+        <button type="button" class="btn btn-success" v-else>
+          (@{{ auth.user?.username_pedatren }})
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          v-if="notSync"
+          @click="table.setOpenLogin"
+        >
+          <font-awesome-icon icon="right-to-bracket" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          v-else
+          @click="table.hapusPedatren(auth.user.uuid)"
+        >
+          <font-awesome-icon icon="trash" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-info"
+          :disabled="notSync"
+          @click="table.syncPedatren(auth.user.uuid)"
+        >
+          <font-awesome-icon icon="rotate" /> Sync
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-warning"
+          :disabled="notSync"
+          @click="table.getLog"
+        >
+          <font-awesome-icon icon="triangle-exclamation" /> Error Log
+        </button>
+      </div>
+    </div> -->
   </div>
   <hr />
   <div class="alert alert-dark" role="alert" v-if="table.successIzin">
@@ -15,7 +61,180 @@
     <b class="text-success">({{ table.logIzin?.success }} Data)</b> Berhasil | <b class="text-danger">({{ table.logIzin?.failed }} Data)</b> Gagal
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div :class="auth?.user?.role != 'sysadmin' && auth?.user?.role != 'admin' ? 'col-md-6' : 'col-md-4'" v-if="access.wilayah()">
+      <h6 class="text-primary">NOTE :</h6>
+      <ul>
+        <li class="text-primray">Data yang di tampilkan adalah data yang akan di proses perizinan ke PEDATREN</li>
+      </ul>
+      <hr />
+      <div class="filter-box row">
+        <div class="col-md-4" v-if="access.notInternal()">
+          <select class="form-select form-select-sm mb-2" v-model="table.paramsIzin.wilayah" @change="table.getBlokIzin">
+            <option value="" selected>Semua Wilayah</option>
+            <option v-for="w in table.filterIzin.wilayah" :key="w" :value="w.alias_wilayah">
+              {{ w.wilayah }}
+            </option>
+          </select>
+          <select class="form-select form-select-sm mb-2" :disabled="table.paramsIzin.wilayah === ''" v-model="table.paramsIzin.blok" @change="table.getDataIzin">
+            <option value="" selected>Semua Daerah</option>
+            <option v-for="b in table.filterIzin.blok" :key="b" :value="b.id_blok">
+              {{ b.blok }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4" v-if="access.notInternal()">
+          <select class="form-select form-select-sm mb-2" v-model="table.paramsIzin.area" @change="table.getDropIzin">
+            <option value="" selected>Semua Area</option>
+            <option v-for="a in table.filterIzin.area" :key="a" :value="a.id">
+              {{ a.nama }}
+            </option>
+          </select>
+          <select class="form-select form-select-sm mb-2" v-model="table.paramsIzin.dropspot" @change="table.getDataIzin" :disabled="table.paramsIzin.area === ''">
+            <option value="" selected>Semua Dropspot</option>
+            <option v-for="d in table.filterIzin.dropspot" :key="d" :value="d.id">
+              {{ d.nama }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="serach-box row mt-2 mb-3">
+        <div class="col-md-6 d-flex">
+          <!-- <div class="col-auto me-3">
+            <select
+              class="form-select form-select-sm"
+              v-model="table.paramsIzin.limit"
+              @change="table.getDataIzin"
+            >
+              <option value="10" selected>10</option>
+              <option value="100">100</option>
+            </select>
+          </div> -->
+          <div class="col-auto">
+            <div class="form-control-plaintext form-control-sm">Total data {{ table.metaIzin["x_total_data"] }}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row justify-content-end">
+            <div class="col-md-4">
+              <input type="text" v-model="table.paramsIzin.cari" class="form-control form-control-sm" placeholder="Cari ..." @update:model-value="table.getDataIzin" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-sm btn-outline-info mt-2 mb-3" :disabled="notSync" @click="table.generateIzin"><font-awesome-icon icon="paper-plane" /> Proses Izin</button>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>NIUP</th>
+              <th>Nama</th>
+              <th>Daerah</th>
+              <th>Wilayah</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(d, i) in table.itemsIzin">
+              <td>{{ i + 1 }}</td>
+              <td>{{ d?.santri?.niup }}</td>
+              <td>{{ d?.santri?.nama_lengkap }}</td>
+              <td>{{ d?.santri?.blok }}</td>
+              <td>{{ d?.santri?.wilayah }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div :class="auth?.user?.role != 'biktren' ? 'col-md-4' : 'col-md-12'" v-if="access.biktren()">
+      <h6 class="text-primary">NOTE :</h6>
+      <ul>
+        <li class="text-primray">Data yang di tampilkan adalah data yang akan di proses konfirmasi Perizinan di PEDATREN</li>
+      </ul>
+      <hr />
+      <div class="filter-box row">
+        <div class="col-md-4" v-if="access.notInternal()">
+          <select class="form-select form-select-sm mb-2" v-model="table.paramsKonfir.wilayah" @change="table.getBlokKonfir">
+            <option value="" selected>Semua Wilayah</option>
+            <option v-for="w in table.filterKonfir.wilayah" :key="w" :value="w.alias_wilayah">
+              {{ w.wilayah }}
+            </option>
+          </select>
+          <select class="form-select form-select-sm mb-2" :disabled="table.paramsKonfir.wilayah === ''" v-model="table.paramsKonfir.blok" @change="table.getDataKonfir">
+            <option value="" selected>Semua Daerah</option>
+            <option v-for="b in table.filterKonfir.blok" :key="b" :value="b.id_blok">
+              {{ b.blok }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4" v-if="access.notInternal()">
+          <select class="form-select form-select-sm mb-2" v-model="table.paramsKonfir.area" @change="table.getDropKonfir">
+            <option value="" selected>Semua Area</option>
+            <option v-for="a in table.filterKonfir.area" :key="a" :value="a.id">
+              {{ a.nama }}
+            </option>
+          </select>
+          <select class="form-select form-select-sm mb-2" v-model="table.paramsKonfir.dropspot" @change="table.getDataKonfir" :disabled="table.paramsKonfir.area === ''">
+            <option value="" selected>Semua Dropspot</option>
+            <option v-for="d in table.filterKonfir.dropspot" :key="d" :value="d.id">
+              {{ d.nama }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="serach-box row mt-2 mb-3">
+        <div class="col-md-6 d-flex">
+          <!-- <div class="col-auto me-3">
+            <select
+              class="form-select form-select-sm"
+              v-model="table.paramsKonfir.limit"
+              @change="table.getDataKonfir"
+            >
+              <option value="50" selected>50</option>
+              <option value="100">100</option>
+            </select>
+          </div> -->
+          <div class="col-auto">
+            <div class="form-control-plaintext form-control-sm">Total data {{ table.metaKonfir["x_total_data"] }}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row justify-content-end">
+            <div class="col-md-4">
+              <input type="text" v-model="table.paramsKonfir.cari" class="form-control form-control-sm" placeholder="Cari ..." @update:model-value="table.getDataKonfir" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-sm btn-outline-primary mt-2 mb-3" :disabled="notSync" @click="table.konfirIzin"><font-awesome-icon icon="check-double" /> Konfirmasi BIKTREN</button>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>NIUP</th>
+              <th>Nama</th>
+              <th>Daerah</th>
+              <th>Wilayah</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(d, i) in table.itemsKonfir">
+              <td>{{ i + 1 }}</td>
+              <td>{{ d?.santri?.niup }}</td>
+              <td>{{ d?.santri?.nama_lengkap }}</td>
+              <td>{{ d?.santri?.blok }}</td>
+              <td>{{ d?.santri?.wilayah }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div :class="auth?.user?.role != 'sysadmin' && auth?.user?.role != 'admin' ? 'col-md-6' : 'col-md-4'" v-if="access.wilayah()">
+      <h6 class="text-primary">NOTE :</h6>
+      <ul>
+        <li class="text-primray">Data yang di tampilkan adalah data yang akan di proses cetak Surat Izin</li>
+      </ul>
+      <hr />
       <div class="filter-box row">
         <div class="col-md-4" v-if="access.notInternal()">
           <select class="form-select form-select-sm mb-2" v-model="table.paramsSurat.wilayah" @change="table.getBlokSurat">
@@ -78,8 +297,16 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-sm btn-outline-secondary mt-2 mb-3" @click="generatePDF"><font-awesome-icon icon="print" /> Print</button>
+      <button class="btn btn-sm btn-outline-secondary mt-2 mb-3" :disabled="notSync || table.errorSurat.length > 0 || table.load" @click="generatePDF"><font-awesome-icon icon="print" /> Print</button>
       <button class="btn btn-sm btn-outline-success ms-3 mt-2 mb-3" v-if="aktifMemilih" @click="prosesData"><font-awesome-icon icon="check-double" /> Sudah Cetak</button>
+      <br />
+      <b v-if="table.errorSurat.length > 0">List Error : </b>
+      <ul>
+        <li v-for="e in table.errorSurat" class="text-danger">
+          {{ `Santri dengan NIUP "${e}" tidak dapat di proses cetak surat` }}
+        </li>
+      </ul>
+      <p style="font-size: 16px" v-if="table.errorSurat.length > 0" class="badge bg-success fst-italic">Coba <b>"Syncronize"</b> ulang & pastikan tidak ada error sebelum cetak surat</p>
       <div :class="isMobile ? 'table-responsive myTable' : 'table-responsive'">
         <table class="table">
           <thead>
@@ -267,7 +494,7 @@ const generatePDF = () => {
 
     doc.setFont("Helvetica");
     doc.setFontSize(8);
-    doc.text("SURAT IZIN LIBUR RAMADHAN 1445 H", 8.25, 3.8, {
+    doc.text("SURAT IZIN LIBUR MAULID 1445 H", 8.25, 3.8, {
       align: "center",
     });
 
@@ -275,7 +502,7 @@ const generatePDF = () => {
     doc.setFont("Helvetica");
     doc.setFontSize(8);
     doc.text(
-      `NOMOR : NJ-B/0000/A.IX/03.2024
+      `NOMOR : NJ-B/0605/A.IX/09.2023
 `,
       8.25,
       4.2,
@@ -303,20 +530,20 @@ const generatePDF = () => {
     doc.text(`:`, 4, 7.4);
     doc.text(`${item.santri.kecamatan}, ${item.santri.kabupaten}, ${item.santri.provinsi}`, 4.2, 7.4);
 
-    doc.text(`Santri putri tanggal 16 Ramadhan 1445 H/27 Maret 2024 M`, 8.25, 8, { align: "center" });
-    doc.text(`s.d 11 Syawal 1445 H/20 April 2024 M.`, 8.25, 8.4, {
+    doc.text(`Santri putri tanggal 9 Rabi’ul Awal 1445 H/25 September 2023 M`, 8.25, 8, { align: "center" });
+    doc.text(`s.d 18 Rabi’ul Awal 1445 H/4 Oktober 2023 M.`, 8.25, 8.4, {
       align: "center",
     });
-    doc.text(`Santri putra tanggal 17 Ramadhan Awal 1445 H/28 Maret 2024 M`, 8.25, 8.8, { align: "center" });
-    doc.text(`s.d 12 Syawal 1445 H/21 April 2024 M.`, 8.25, 9.2, {
+    doc.text(`Santri putra tanggal 10 Rabi’ul Awal 1445 H/26 September 2023 M`, 8.25, 8.8, { align: "center" });
+    doc.text(`s.d 19 Rabi’ul Awal 1445 H/5 Oktober 2023 M.`, 8.25, 9.2, {
       align: "center",
     });
 
     // Tambahkan paragraf lainnya
     doc.text(`Demikian surat izin ini dibuat dengan sebenarnya dan untuk digunakan sebagaimana mestinya`, 1, 10.1);
 
-    doc.text(`Paiton, 18 Maret 2024 M`, 1, 10.7);
-    doc.text(`7 Ramadhan 1445 H`, 2, 11.1);
+    doc.text(`Paiton, 17 September 2023 M`, 1, 10.7);
+    doc.text(`2 Rabi’ul Awwal 1445 H`, 2, 11.1);
     doc.text("Kepala,", 1, 11.7);
 
     doc.addImage(table.qr, "PNG", 1, 11.9, 2.5, 2.5);
@@ -336,18 +563,18 @@ const generatePDF = () => {
     doc.text(`Kedatangan Santri dan penyerahan surat izin libur ke KAMTIB Wilayah/Daerah selambat-lambatnya`, 1.2, 16.1);
     doc.text(`pukul 17.00 WIB (Ba’da Maghrib).`, 1.2, 16.5);
     doc.text(`2.`, 1, 16.9);
-    doc.text(`Layanan Informasi Pulang Bersama;`, 1.2, 16.9);
+    doc.text(`Pusat layanan Pulang Bersama;`, 1.2, 16.9);
     doc.text(`a.`, 1.2, 17.3);
-    // doc.text(`Poni ruddin`, 1.4, 17.3);
-    doc.text(`: 0852 5830 2284`, 1.4, 17.3);
+    doc.text(`Informasi Umum`, 1.4, 17.3);
+    doc.text(`: 0888-307-7077`, 3.3, 17.3);
     doc.text(`b.`, 1.2, 17.7);
-    // doc.text(`Tai ruddin`, 1.4, 17.7);
-    doc.text(`: 0856 9736 7832`, 1.4, 17.7);
+    doc.text(`Putra`, 1.4, 17.7);
+    doc.text(`: 0896-5479-0122`, 3.3, 17.7);
     doc.text(`c.`, 1.2, 18.1);
-    // doc.text(`Musle ruddin`, 1.4, 18.1);
-    doc.text(`: 0813 3622 2034`, 1.4, 18.1);
+    doc.text(`Putri`, 1.4, 18.1);
+    doc.text(`: 0822-3105-8592`, 3.3, 18.1);
 
-    // doc.addImage(item.qrIzin, "PNG", 12, 17, 2, 2);
+    doc.addImage(item.qrIzin, "PNG", 12, 17, 2, 2);
     doc.text(`Tanggal Cetak`, 12.1, 19.3);
     doc.text(`${tglCetak()}`, 12.1, 19.6);
     doc.text(`Petugas : ${auth.user.nama_lengkap}`, 12.1, 19.9);
@@ -358,7 +585,7 @@ const generatePDF = () => {
   });
 
   doc.setProperties({
-    title: "Cetak Surat Jalan Libur Ramadhan 1445",
+    title: "Cetak Surat Jalan Libur Maulid",
     zoom: 1.2,
     marginLeft: 10,
   });
@@ -368,22 +595,22 @@ const generatePDF = () => {
 };
 
 onMounted(() => {
-  // if (!notSync && !session) {
-  //   table.syncPedatren(auth.user.uuid);
-  // }
+  if (!notSync && !session) {
+    table.syncPedatren(auth.user.uuid);
+  }
   if (access.wilayah()) {
-    // table.getDataIzin();
+    table.getDataIzin();
     table.getDataSurat();
     table.getWilayahIzin();
     table.getWilayahSurat();
     table.getAreaIzin();
     table.getAreaSurat();
   }
-  // if (access.biktren()) {
-  //   table.getWilayahKonfir();
-  //   table.getDataKonfir();
-  //   table.getAreaKonfir();
-  // }
+  if (access.biktren()) {
+    table.getWilayahKonfir();
+    table.getDataKonfir();
+    table.getAreaKonfir();
+  }
 
   const mobileQuery = window.matchMedia("(max-width: 767px)");
 

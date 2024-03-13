@@ -1,76 +1,27 @@
 <template>
   <!-- <nav class="navbar navbar-dark navbar-expand bg-primary p-2 fixed-top"> -->
-  <nav
-    class="navbar navbar-dark navbar-expand p-2 fixed-top"
-    :style="
-      myTheme.themes === 'light'
-        ? 'background-color: #003E1E'
-        : myTheme.themes === 'dark'
-        ? 'background-color: var(--bs-body-bg)'
-        : 'background-color: #003E1E'
-    "
-  >
+  <nav class="navbar navbar-dark navbar-expand p-2 fixed-top" :style="myTheme.themes === 'light' ? 'background-color: #003E1E' : myTheme.themes === 'dark' ? 'background-color: var(--bs-body-bg)' : 'background-color: #003E1E'">
     <div class="container-fluid">
-      <a v-if="isMobile" class="navbar-brand" style="font-size: 14px" href="#"
-        >PUBER NJ</a
-      >
-      <a v-else class="navbar-brand" style="font-size: 14px" href="#"
-        >Pulang Bersama - PP. Nurul Jadid</a
-      >
+      <a v-if="isMobile" class="navbar-brand" style="font-size: 14px" href="#">PUBER NJ</a>
+      <a v-else class="navbar-brand" style="font-size: 14px" href="#">Pulang Bersama - PP. Nurul Jadid</a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
 
         <div class="form-check form-switch">
-          <input
-            type="checkbox"
-            id="flexSwitchCheckCheked"
-            role="switch"
-            :checked="cekak"
-            style="cursor: pointer; background-color: var(--bs-body-bg)"
-            class="form-check-input mt-2"
-            @click="setDark"
-          />
+          <input type="checkbox" id="flexSwitchCheckCheked" role="switch" :checked="cekak" style="cursor: pointer; background-color: var(--bs-body-bg)" class="form-check-input mt-2" @click="setDark" />
         </div>
-        <button class="btn-kecil btn btn-outline-info me-2" type="submit">
-          <font-awesome-icon icon="brush" /> Clear Cache
-        </button>
-        <button
-          class="btn-kecil btn btn-outline-danger"
-          type="button"
-          @click="prosesLogout"
-        >
-          <font-awesome-icon icon="sign-out-alt" /> Keluar
-        </button>
+        <button class="btn-kecil btn btn-outline-info me-2" type="submit"><font-awesome-icon icon="brush" /> Clear Cache</button>
+        <button class="btn-kecil btn btn-outline-danger" type="button" @click="prosesLogout"><font-awesome-icon icon="sign-out-alt" /> Keluar</button>
       </div>
     </div>
   </nav>
 
-  <div
-    class="menu-atas shadow d-flex justify-content-start bg-white fixed-bottom"
-    style="overflow-x: auto"
-    v-if="isMobile"
-  >
-    <MenuItem
-      v-for="m in filterMenu()"
-      :key="m.title"
-      :title="m.title"
-      :icon="m.icon"
-      :path="m.path"
-    />
+  <div class="menu-atas shadow d-flex justify-content-start bg-white fixed-bottom" style="overflow-x: auto" v-if="isMobile">
+    <MenuItem v-for="m in filterMenu()" :key="m.title" :title="m.title" :icon="m.icon" :path="m.path" />
   </div>
 
-  <div
-    v-else
-    class="menu-atas shadow d-flex justify-content-start bg-white fixed-top mt-5"
-    style="overflow-x: auto"
-  >
-    <MenuItem
-      v-for="m in filterMenu()"
-      :key="m.title"
-      :title="m.title"
-      :icon="m.icon"
-      :path="m.path"
-    />
+  <div v-else class="menu-atas shadow d-flex justify-content-start bg-white fixed-top mt-5" style="overflow-x: auto">
+    <MenuItem v-for="m in filterMenu()" :key="m.title" :title="m.title" :icon="m.icon" :path="m.path" />
   </div>
 </template>
 
@@ -163,33 +114,33 @@ const menu = ref([
       },
     ],
   },
-  {
-    icon: "user",
-    title: "Santri",
-    path: "santri",
-    rules: [
-      {
-        id: 1,
-        name: "sysadmin",
-      },
-      {
-        id: 2,
-        name: "supervisor",
-      },
-      {
-        id: 3,
-        name: "admin",
-      },
-      {
-        id: 4,
-        name: "wilayah",
-      },
-      {
-        id: 5,
-        name: "daerah",
-      },
-    ],
-  },
+  // {
+  //   icon: "user",
+  //   title: "Santri",
+  //   path: "santri",
+  //   rules: [
+  //     {
+  //       id: 1,
+  //       name: "sysadmin",
+  //     },
+  //     {
+  //       id: 2,
+  //       name: "supervisor",
+  //     },
+  //     {
+  //       id: 3,
+  //       name: "admin",
+  //     },
+  //     {
+  //       id: 4,
+  //       name: "wilayah",
+  //     },
+  //     {
+  //       id: 5,
+  //       name: "daerah",
+  //     },
+  //   ],
+  // },
   {
     icon: "briefcase",
     title: "Penumpang",

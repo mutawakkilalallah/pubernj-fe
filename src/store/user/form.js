@@ -83,7 +83,7 @@ export const useUserFrom = defineStore("form_user", {
         const table = useUserTable();
         table.getData();
         this.resetForm();
-        this.namaSantri = "";
+        this.namaPerson = "";
         this.santriUser = {};
       } catch (err) {}
     },
@@ -156,15 +156,13 @@ export const useUserFrom = defineStore("form_user", {
     },
     async editDataPassword() {
       try {
-        await api
-          .put(`user/password/${this.idEdit}`, this.formEditPassword)
-          .then((resp) => {
-            this.isOpenEditPassword = false;
-            this.idEdit = "";
-            this.formEditPassword.password = "";
-            const table = useUserTable();
-            table.getData();
-          });
+        await api.put(`user/password/${this.idEdit}`, this.formEditPassword).then((resp) => {
+          this.isOpenEditPassword = false;
+          this.idEdit = "";
+          this.formEditPassword.password = "";
+          const table = useUserTable();
+          table.getData();
+        });
       } catch (err) {}
     },
     async deleteData() {
