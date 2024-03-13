@@ -274,7 +274,8 @@ export const usePenumpangForm = defineStore("form_penumpang", {
             this.daftarPenumpang.dropspot_id = "";
             const table = usePenumpangTable();
             table.getData();
-            this.isArea = [];
+            this.santri = [];
+            this.cari = "";
           });
       } catch (err) {}
     },
