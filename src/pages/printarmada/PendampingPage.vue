@@ -168,18 +168,18 @@
         class="row g-0 px-4"
         id="printNota"
       >
-        <div class="col-md-4">
-          <div class="text-center">
+        <div class="col-md-5 myColum">
+          <div class="text-right myImage">
             <img
-              src="../../../public/logo-puber.png"
+              src="../../../public/logo.png"
               class="rounded mx-auto d-block"
-              style="width: 250px"
-              alt="..."
+              style="width: 100px"
+              alt="logo puber"
             >
           </div>
         </div>
-        <div class="col-md-8">
-          <div class="text-center mt-4">
+        <div class="col-md-7">
+          <div class="text-left mt-5 ml-n4 myText">
             <h3 class="text-uppercase">pulang dan kembali bersama ramadhan 1445 h</h3>
             <h2 class="text-uppercase">pondok pesantren nurul jadid</h2>
             <h6 class="text-uppercase">paiton probolinggo</h6>
@@ -222,7 +222,7 @@
             </div>
             <div class="col">
               <div class="float-start mt-4">
-                <p class="text-capitalize"><strong>Paiton, {{ waktu }} </strong></p>
+                <p class="text-capitalize"><strong>Paiton, {{ waktu1 }} </strong></p>
                 <p class="text-capitalize"><strong>Bendahara </strong></p>
                 <br>
                 <br>
@@ -301,6 +301,33 @@ const waktu = computed(() => {
   return `${myDay}-${myMonth}-${year}`;
 });
 
+const waktu1 = computed(() => {
+  const arrbulan = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+  ];
+  const date = new Date();
+  const millisecond = date.getMilliseconds();
+  const detik = date.getSeconds();
+  const menit = date.getMinutes();
+  const jam = date.getHours();
+  const hari = date.getDay();
+  const tanggal = date.getDate();
+  const bulan = date.getMonth();
+  const tahun = date.getFullYear();
+  return `${tanggal}-${arrbulan[bulan]}-${tahun}`;
+});
+
 onMounted(() => {
   table.getDropspot();
 });
@@ -324,3 +351,14 @@ const formatMinus = (i) => {
   return formatter.format(i);
 };
 </script>
+<style scoped>
+.myImage {
+  margin-right: -200px;
+}
+.mytext {
+  margin-left: -100px;
+}
+.myColum {
+  margin-right: -160px;
+}
+</style>
