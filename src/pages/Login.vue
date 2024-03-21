@@ -17,19 +17,25 @@
     >
       <div class="text-center mb-5">
         <img
-          src="/logo-puber.png"
+          src="/logo.png"
           alt="logo-puber"
           class="mb-3"
-          width="200"
-          height="100"
+          width="50"
         />
         <br />
-        <h4 style="color: #01351b" class="mb-0">PULANG BERSAMA</h4>
-        <small style="color: #a47c24" class="mt-0"
-          >Pondok Pesantren Nurul Jadid</small
-        >
+        <h4
+          style="color: #01351b"
+          class="mb-0"
+        >PULANG BERSAMA</h4>
+        <small
+          style="color: #a47c24"
+          class="mt-0"
+        >Pondok Pesantren Nurul Jadid</small>
       </div>
-      <form @submit.prevent="prosesLogin" ref="myForm">
+      <form
+        @submit.prevent="prosesLogin"
+        ref="myForm"
+      >
         <input
           v-model="form.username"
           id="username"
@@ -51,7 +57,10 @@
             aria-describedby="password"
             @blur="validInput2(form.password)"
           />
-          <span class="input-group-text" id="password">
+          <span
+            class="input-group-text"
+            id="password"
+          >
             <font-awesome-icon
               style="cursor: pointer"
               :icon="rePass ? 'eye' : 'eye-slash'"

@@ -1,5 +1,5 @@
 <template>
-  <div class="z-3 d-flex justify-content-center ">
+  <div class="boxx ">
     <div class="lds-grid">
       <div></div>
       <div></div>
@@ -14,6 +14,12 @@
   </div>
 </template>
 <style scoped >
+.boxx {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .lds-grid {
   display: inline-block !important;
   position: relative !important;
@@ -26,7 +32,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #1b1a1a;
+  background: #027a0c;
   animation: lds-grid 1.2s linear infinite;
 }
 .lds-grid div:nth-child(1) {
