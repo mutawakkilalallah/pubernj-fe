@@ -67,16 +67,8 @@ export const usePendampingTable = defineStore("table_pendamping", {
     },
 
     myHarga(data) {
-      console.log('data',data);
-   const total = data.map(a=>a.harga).reduce((b,c)=>b+c,0)
-      this.jumlahHarga = total
-      console.log('harga', this.jumlahHarga);
-  //     const dataNama = data.map(a => a.dropspot.nama)
-  //     const namaArray = [...new Set(dataNama)]
-  //     // convert stirng
-  //     const namaStirng = namaArray.join(', ')
-  //  console.log('total',namaStirng);
-   
+        const total = data.map(a=>a.harga).reduce((b,c)=>b+c,0)
+        this.jumlahHarga = total   
     },
  
   
